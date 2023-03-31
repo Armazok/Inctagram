@@ -10,18 +10,29 @@
     "eslint": "eslint --fix --ext .js,.jsx,.ts,.tsx src",
     "prettier": "prettier . --write",
     "stylelint": "stylelint \"**/*.{css,scss}\" --fix",
-    "fix": "yarn eslint && yarn prettier && yarn stylelint"
+    "fix": "yarn eslint && yarn prettier && yarn stylelint",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.10",
+    "@graphql-tools/schema": "^9.0.17",
+    "@tanstack/react-query": "^4.28.0",
     "@types/node": "18.15.11",
     "@types/react": "18.0.31",
     "@types/react-dom": "18.0.11",
+    "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "5.0.3"
+    "react-query": "^2.24.0-next.8",
+    "socket.io": "^4.6.1",
+    "typescript": "5.0.3",
+    "zustand": "^4.3.7"
   },
   "devDependencies": {
+    "@types/socket.io": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
     "eslint": "^8.32.0",
@@ -32,6 +43,7 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-storybook": "^0.6.11",
     "prettier": "^2.7.1",
     "prettier-config-it-incubator": "^1.0.1",
     "prettier-stylelint": "^0.4.2",
