@@ -1,8 +1,8 @@
-@tailwind base;
+@import 'tailwindcss/base';
 
-@tailwind components;
+@import 'tailwindcss/components';
 
-@tailwind utilities;
+@import 'tailwindcss/utilities';
 
 * {
   box-sizing: border-box;
@@ -18,5 +18,5 @@ a {
 body {
   font-size: 20px;
 
-  background-color: #09131b;
+  background-color: white;
 }
