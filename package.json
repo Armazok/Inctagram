@@ -36,10 +36,23 @@
     "typescript": "5.0.3",
     "zustand": "^4.3.7"
   },
+  "resolutions": {
+    "@storybook/react-docgen-typescript-plugin": "1.0.6--canary.9.cd77847.0"
+  },
   "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-webpack5": "^6.5.16",
+    "@storybook/manager-webpack5": "^6.5.16",
+    "@storybook/react": "^6.5.16",
+    "@storybook/testing-library": "^0.0.13",
     "@types/socket.io": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
+    "babel-loader": "^8.3.0",
     "eslint": "^8.32.0",
     "eslint-config-it-incubator": "^1.0.10",
     "eslint-config-prettier": "^8.5.0",
