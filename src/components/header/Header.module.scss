@@ -1,12 +1,12 @@
-//@import '../../styles/tainwind';
-//@import '../../tailwind.config';
+@import '../../styles/tainwind';
 
 .header {
   display: flex;
-
+  border: $dark-300;
   width: 100%;
+  height: 50px;
 
-  color: red;
+  color: $light-100;
 
-  //background-color: $success-700;
+  background-color: $dark-700;
 }

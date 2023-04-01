@@ -6,7 +6,6 @@ export const Header = () => {
   return (
     <header className={style.header}>
       <div>Inctagram</div>
-      <button className="uk-button uk-button-default">LINK</button>
     </header>
   )
 }

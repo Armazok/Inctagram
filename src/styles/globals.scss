@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import '../styles/tainwind';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,6 +17,8 @@ a {
 
 body {
   font-size: 20px;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
 
-  background-color: white;
+  background-color: $dark-500;
 }
