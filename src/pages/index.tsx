@@ -2,7 +2,7 @@ import { Inter } from 'next/font/google'
 import Head from 'next/head'
 
 import { Header } from '@/components/header/Header'
-import Register from '@/pages/auth/register'
+import Registration from '@/pages/auth/registration'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,7 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Register />
+      <Registration />
       {/*<Login />*/}
     </>
   )

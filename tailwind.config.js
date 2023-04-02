@@ -46,9 +46,8 @@ module.exports = {
           700: '#d5dae0',
           900: '#bdc1c7',
         },
-        secondBgColor: {
-          100: '#171717',
-        },
+        secondBgColor: '#171717',
+        bgColor: '#0d0d0d',
       },
     },
   },
