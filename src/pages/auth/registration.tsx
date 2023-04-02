@@ -7,12 +7,12 @@ import facebook from '../../../public/icons/facebook-svgrepo.png'
 import google from '../../../public/icons/google-svgrepo.png'
 import containerBlock from '../../styles/container.module.scss'
 
-import style from './register.module.scss'
+import style from './registration.module.scss'
 
 import Button from '@/components/buttons/button'
 import Heading from '@/components/Heading'
 
-const Register = () => {
+const Registration = () => {
   return (
     <div className={`${containerBlock.container} ${style.registerBlock}`}>
       <div className={style.formContainer}>
@@ -68,4 +68,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default Registration

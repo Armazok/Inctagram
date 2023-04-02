@@ -1,20 +1,21 @@
 @import '../../styles/sass/mixins';
+@import '../../styles/buttonTest';
 
-.but {
-  cursor: pointer;
+.button {
+  @extend .btn-link;
 
-  display: inline-block;
-
-  width: 330px;
-  height: 36px;
-
-  background-color: #397df6;
+  //cursor: pointer;
+  //
+  //display: inline-block;
+  //
+  //width: 330px;
+  //height: 36px;
+  //
+  //background-color: #397df6;
 }
 
-.title {
-
+.button-title {
   @include text($fontFamily, 16px, 24px);
-
   padding: 6px 24px;
 
   font-weight: 600;
