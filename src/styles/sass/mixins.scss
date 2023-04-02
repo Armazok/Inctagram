@@ -1,0 +1,13 @@
+@import "./variables";
+
+@mixin text ($fontFamily, $fontSize, $lineHeight) {
+  font-family: $fontFamily;
+  font-size: $fontSize;
+  line-height: $lineHeight;
+  color: $textColor;
+}
+
+@mixin borderBottom ($border) {
+  border-bottom: 1px solid $border;
+}
+

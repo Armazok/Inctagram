@@ -1,0 +1,15 @@
+@import '../../styles/sass/mixins';
+
+.but {
+  width: 330px;
+  height: 36px;
+  cursor: pointer;
+  display: inline-block;
+  background-color: #397DF6;
+}
+
+.title {
+  @include text($fontFamily, 16px, 24px);
+  font-weight: 600;
+  padding: 6px 24px;
+}

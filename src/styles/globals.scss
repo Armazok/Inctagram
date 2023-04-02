@@ -3,7 +3,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import '../styles/sass/variables';
 * {
   box-sizing: border-box;
   margin: 0;
@@ -19,6 +19,7 @@ body {
   font-size: 20px;
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
-
-  background-color: $dark-500;
+  background-color: $bgColor;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
