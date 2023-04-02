@@ -1,31 +1,24 @@
-@import '../../styles/tainwind';
-
 @import '../../styles/sass/variables';
 
 @import '../../styles/sass/mixins';
 
 .header {
-
+  @apply relative flex items-center w-full h-16 text-light-100 bg-bgColor;
   @include borderBottom($border);
 
-  position: relative;
-
-  display: flex;
-  align-items: center;
-
-  width: 100%;
-  height: 60px;
-
-  color: $light-100;
-
-  background-color: $bgColor;
+  //position: relative;
+  //display: flex;
+  //align-items: center;
+  //width: 100%;
+  //height: 60px;
+  //color: #fff;
+  //background-color: $bgColor;
 
   .title {
-
+    @apply absolute px-0 py-12 pl-60;
     @include text($fontFamily, 26px, 36px);
 
-    position: absolute;
-
-    padding: 12px 0 12px 60px;
+    //position: absolute;
+    //padding: 12px 0 12px 60px;
   }
 }
