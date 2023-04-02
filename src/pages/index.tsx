@@ -2,7 +2,7 @@ import { Inter } from 'next/font/google'
 import Head from 'next/head'
 
 import { Header } from '@/components/header/Header'
-import { Register } from '@/pages/auth/register'
+import Register from '@/pages/auth/register'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,6 +17,7 @@ export default function Home() {
       </Head>
       <Header />
       <Register />
+      {/*<Login />*/}
     </>
   )
 }
