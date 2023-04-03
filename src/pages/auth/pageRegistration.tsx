@@ -9,7 +9,7 @@ import containerBlock from '../../styles/container.module.scss'
 
 import style from './pageRegistration.module.scss'
 
-import Button from '@/components /atoms/buttons/button'
+import Button from '@/components/atoms/buttons/button'
 
 const PageRegistration = () => {
   return (
