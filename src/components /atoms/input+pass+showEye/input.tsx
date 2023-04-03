@@ -4,12 +4,15 @@ import style from './input.module.scss'
 
 interface IInput {
   nameInput: string
-  placeholder: string
+  placeholder?: string
   id?: string
   typeInput: 'text' | 'password' | 'email'
+  labelName?: string;
+  value: string;
+  onChange: (e: any) => void;
 }
 
-export const Input: FC<IInput> = memo(({ nameInput, placeholder, id, typeInput }) => {
+export const Input: FC<IInput> = memo(({ nameInput, placeholder = '', id, typeInput, labelName = '', value, onChange}) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const handleShowPass = () => {
@@ -17,7 +20,7 @@ export const Input: FC<IInput> = memo(({ nameInput, placeholder, id, typeInput }
   }
 
   // eslint-disable-next-line no-nested-ternary
-  const inputType = typeInput === 'password' ? (isPasswordVisible ? 'email' : 'password') : 'email'
+  const inputType = typeInput === 'password' ? (isPasswordVisible ? 'text' : 'password') : 'text'
   const inputClass = typeInput === 'password' ? 'z-0' : 'z-10'
   const wrapperClass = typeInput === 'password' ? 'relative' : ''
 
@@ -25,7 +28,7 @@ export const Input: FC<IInput> = memo(({ nameInput, placeholder, id, typeInput }
     <div className={`w-auto ${wrapperClass}`}>
       <div className="flex flex-col">
         <label htmlFor={id} className={style.label}>
-          {nameInput}
+          {labelName}
         </label>
         <input
           id={id}
@@ -33,6 +36,8 @@ export const Input: FC<IInput> = memo(({ nameInput, placeholder, id, typeInput }
           type={inputType}
           className={`${inputClass} ${style.input}`}
           placeholder={placeholder}
+          onChange={onChange}
+          value={value}
         />
         {typeInput === 'password' ? (
           <div onClick={handleShowPass} className={style.showHidePassword} />
