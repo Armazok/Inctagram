@@ -1,20 +1,12 @@
 import React from 'react'
+import {FieldValues, SubmitHandler, useForm} from 'react-hook-form'
+import {InputWithValidation} from '@/components /InputWithValidation/InputWithValidation';
+import style from '@/pages/auth/pageLogin.module.scss';
+import {NameTitle} from '@/components /atoms/title/nameTitle';
+import Button from '@/components /atoms/buttons/button';
 
-import { NextPage } from 'next'
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
-import style from './registration.module.scss'
-
-import containerBlock from '@/styles/container.module.scss'
-import {InputWithValidation} from '@/components/InputWithValidation/InputWithValidation';
-
-// export interface CreateNewPasswordFormData {
-//   password: string
-//   passwordConfirmation: string
-// }
-
-
-const MAX_LENGTH = 20;
-const MIN_LENGTH = 6;
+const MAX_LENGTH_PASSWORD = 20;
+const MIN_LENGTH_PASSWORD = 6;
 
 const CreateNewPassword = () => {
   const {
@@ -22,6 +14,7 @@ const CreateNewPassword = () => {
     handleSubmit,
     watch,
     reset,
+    control,
     formState: { errors },
   } = useForm({
     mode: 'onSubmit',
@@ -33,69 +26,45 @@ const CreateNewPassword = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = data => {
     const { password, passwordConfirmation } = data
-
-    console.log(errors)
+    console.log(password, passwordConfirmation )
     reset()
   }
 
   return (
-    <div
-        // className={`${containerBlock.container} ${style.registerBlock}`}
-    >
-      <div className={style.formContainer}>
-        <h2>Create New Password</h2>
+      <div className={style.container}>
+        <div
+            className={
+              'flex flex-col items-center content-center max-w-full border border-bgLogBorder w-4/12 bg-bgLog mt-24 mr-auto ml-auto mb-36'
+            }
+        >
+          <NameTitle nameTitle={'Create New Password'} className={style.nameTitle} />
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
 
           <InputWithValidation name={'password'}
                                label={"New password"}
                                register={register}
-                               maxLength={MAX_LENGTH}
-                               minLength={MIN_LENGTH}
+                               maxLength={MAX_LENGTH_PASSWORD}
+                               minLength={MIN_LENGTH_PASSWORD}
                                errors={errors.password ? errors.password : undefined}
+                               type={"password"}
+                               control={control}
           />
-
-
           <InputWithValidation name={'passwordConfirmation'}
                                label={"Password confirmation"}
                                register={register}
-                               maxLength={MAX_LENGTH}
-                               minLength={MIN_LENGTH}
+                               maxLength={MAX_LENGTH_PASSWORD}
+                               minLength={MIN_LENGTH_PASSWORD}
                                errors={errors.passwordConfirmation ? errors.passwordConfirmation : undefined}
                                watch={watch}
+                               type={"password"}
+                               control={control}
           />
+            <Button type={'submit'} textBtn={'Create new password'} tag={'btn'} callback={() => {}} />
 
-          {/*<label>New password</label>*/}
-          {/*<input {*/}
-          {/*    ...register('password',*/}
-          {/*        {required: { value: true, message: 'This is required'},*/}
-          {/*            maxLength: { value: MAX_LENGTH, message: `Max length exceeded, ${MAX_LENGTH} symbols`},*/}
-          {/*            minLength: { value: MIN_LENGTH, message: `Max length exceeded, ${MIN_LENGTH} symbols`},*/}
-          {/*        })*/}
-          {/*         // ,pattern*/}
-          {/*}*/}
-          {/*/>*/}
-          {/*<div style={{width: '200px', color: 'red'}}>{ <span> Error: {errors.password?.message}</span>}</div>*/}
-
-          {/*<label>Password confirmation</label>*/}
-          {/*<input*/}
-          {/*    {...register('passwordConfirmation',*/}
-          {/*        { required: { value: true, message: 'This is required'},*/}
-          {/*          maxLength: { value: MAX_LENGTH, message: `Max length exceeded, ${MAX_LENGTH} symbols`},*/}
-          {/*          minLength: { value: MIN_LENGTH, message: `Min length is ${MIN_LENGTH} symbols`},*/}
-          {/*         validate: (value: string) => {*/}
-          {/*          //@ts-ignore*/}
-          {/*            if (watch && watch('password') !== value) {*/}
-          {/*            return 'Your passwords do no match';*/}
-          {/*            }},*/}
-          {/*          // pattern*/}
-          {/*        }*/}
-          {/*    )*/}
-          {/*  }*/}
-          {/*/>*/}
-          <button type="submit" onClick={() => {}}>
-            Create new password
-          </button>
+          {/*  <button type="submit" onClick={() => {}}>*/}
+          {/*  Create new password*/}
+          {/*</button>*/}
         </form>
       </div>
     </div>
