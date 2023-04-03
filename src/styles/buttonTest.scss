@@ -1,9 +1,0 @@
-.btn-link {
-  @apply bg-success-300 cursor-pointer inline-block w-80;
-  &:hover {
-    @apply bg-success-900;
-  }
-  &:active {
-    @apply bg-danger-700;
-  }
-}
