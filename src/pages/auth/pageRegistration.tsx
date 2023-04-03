@@ -7,16 +7,15 @@ import facebook from '../../../public/icons/facebook-svgrepo.png'
 import google from '../../../public/icons/google-svgrepo.png'
 import containerBlock from '../../styles/container.module.scss'
 
-import style from './registration.module.scss'
+import style from './pageRegistration.module.scss'
 
-import Button from '@/components/buttons/button'
-import Heading from '@/components/Heading'
+import Button from '@/components /atoms/buttons/button'
 
-const Registration = () => {
+const PageRegistration = () => {
   return (
     <div className={`${containerBlock.container} ${style.registerBlock}`}>
       <div className={style.formContainer}>
-        <Heading style={style.title} tag={'h1'} text={'Sign Up'} />
+        {/*<Heading style={style.title} tag={'h1'} text={'Sign Up'} />*/}
         <div className={style.iconContainer}>
           <Link href={'https://www.google.com/'} target="_blank">
             <Image src={facebook} width={36} height={36} alt={'googleIcon'} />
@@ -52,7 +51,7 @@ const Registration = () => {
               <Link href={''}>Forgot Password</Link>
             </div>
           </div>
-          <Button text={'Sign In'} tag={'h3'} />
+          <Button textBtn={'Sign In'} tag={'h3'} type={'submit'} callback={() => {}} />
           {/*<button>Sign In</button>*/}
         </form>
         <div className={style.desciptionAccount}>
@@ -60,7 +59,7 @@ const Registration = () => {
         </div>
         <div>
           <Link href={''}>
-            <Heading style={style.desciptionSignIn} tag={'h3'} text={'Sign In'} />
+            {/*<Heading style={style.desciptionSignIn} tag={'h3'} text={'Sign In'} />*/}
           </Link>
         </div>
       </div>
@@ -68,4 +67,4 @@ const Registration = () => {
   )
 }
 
-export default Registration
+export default PageRegistration

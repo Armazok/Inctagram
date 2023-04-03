@@ -1,5 +1,5 @@
 import '@/styles/globals.scss'
-import '@/components/buttons/button.module.scss'
+import '@/components /atoms/buttons/button.module.scss'
 
 import { ApolloProvider } from '@apollo/client'
 import type { AppProps } from 'next/app'

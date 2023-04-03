@@ -1,0 +1,12 @@
+.container {
+
+  @apply flex flex-col items-center justify-center content-center;
+}
+
+.nameTitle {
+
+  @apply font-bold text-light-100 mt-6;
+}
+
+.questionTitle {
+}
