@@ -48,6 +48,8 @@ module.exports = {
         },
         secondBgColor: '#171717',
         bgColor: '#0d0d0d',
+        bgLog: '#101010',
+        bgLogBorder: '#333333',
       },
     },
   },
