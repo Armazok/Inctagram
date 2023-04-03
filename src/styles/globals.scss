@@ -1,8 +1,16 @@
+/* Fonts */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@import '../styles/tainwind';
+
+/* Tailwind base */
+
 @tailwind base;
+
 @tailwind components;
+
 @tailwind utilities;
+
+@import '../styles/sass/variables';
 
 * {
   box-sizing: border-box;
@@ -16,9 +24,12 @@ a {
 }
 
 body {
-  font-size: 20px;
-  font-family: 'Inter', sans-serif;
   min-height: 100vh;
 
-  background-color: $dark-500;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+
+  background-color: $bgColor;
 }
