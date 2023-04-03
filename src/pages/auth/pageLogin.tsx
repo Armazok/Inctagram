@@ -7,11 +7,11 @@ import GoogleSVG from '../../../public/icons/google-svgrepo.png'
 
 import style from './pageLogin.module.scss'
 
-import Button from '@/components /atoms/buttons/button'
-import { Input } from '@/components /atoms/input+pass+showEye/input'
-import { LogOn } from '@/components /atoms/logOnByUsing/logOn'
-import { QuestionsTitle } from '@/components /atoms/questionsTitle/questionsTitle'
-import { NameTitle } from '@/components /atoms/title/nameTitle'
+import Button from '@/components/atoms/buttons/button'
+import { Input } from '@/components/atoms/input+pass+showEye/input'
+import { LogOn } from '@/components/atoms/logOnByUsing/logOn'
+import { QuestionsTitle } from '@/components/atoms/questionsTitle/questionsTitle'
+import { NameTitle } from '@/components/atoms/title/nameTitle'
 interface ILogin {}
 
 type Inputs = {

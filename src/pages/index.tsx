@@ -1,9 +1,8 @@
 import { Inter } from 'next/font/google'
 import Head from 'next/head'
 
-import { Header } from '@/components /atoms/header/Header'
+import { Header } from '@/components/atoms/header/Header'
 import PageLogin from '@/pages/auth/pageLogin'
-import PageRegistration from '@/pages/auth/pageRegistration'
 
 const inter = Inter({ subsets: ['latin'] })
 

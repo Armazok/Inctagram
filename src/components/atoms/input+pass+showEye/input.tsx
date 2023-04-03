@@ -4,6 +4,7 @@ import style from './input.module.scss'
 
 interface IInput {
   nameInput: string
+
   placeholder?: string
   id?: string
   typeInput: 'text' | 'password' | 'email'
@@ -13,6 +14,7 @@ interface IInput {
 }
 
 export const Input: FC<IInput> = memo(({ nameInput, placeholder = '', id, typeInput, labelName = '', value, onChange}) => {
+
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const handleShowPass = () => {
@@ -28,6 +30,7 @@ export const Input: FC<IInput> = memo(({ nameInput, placeholder = '', id, typeIn
     <div className={`w-auto ${wrapperClass}`}>
       <div className="flex flex-col">
         <label htmlFor={id} className={style.label}>
+
           {labelName}
         </label>
         <input

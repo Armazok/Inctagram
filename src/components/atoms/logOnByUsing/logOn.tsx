@@ -2,9 +2,6 @@ import React, { FC, memo } from 'react'
 
 import { StaticImageData } from 'next/image'
 
-import FacebookSVF from '../../../../public/icons/facebook-svgrepo.png'
-import GoogleSVG from '../../../../public/icons/google-svgrepo.png'
-
 interface ILogOn {
   urlImg: StaticImageData
   width: string
