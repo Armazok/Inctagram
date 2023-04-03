@@ -2,8 +2,7 @@ import { FC, useState } from 'react'
 
 import { useRouter } from 'next/router'
 
-import styles from '../Header.module.scss'
-
+import styles from '@/components/atoms/header/Header.module.scss'
 import { Confirm } from '@/components/modals/confirm/Confirm'
 import { useUserStore } from '@/store'
 

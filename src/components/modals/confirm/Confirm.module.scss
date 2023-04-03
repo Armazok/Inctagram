@@ -1,9 +1,9 @@
 .modalOverlay {
-  @apply fixed w-full h-full top-0 left-0 bg-black/80;
+  @apply fixed w-full h-full top-0 left-0 bg-black/80 z-[100];
 }
 
 .modal {
-  @apply absolute w-full max-w-[440px] bg-black border-[#4C4C4C] border rounded-sm top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  @apply absolute w-full max-w-[440px] bg-black border-[#4C4C4C] border rounded-sm top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200];
 }
 
 .modalHeader {
