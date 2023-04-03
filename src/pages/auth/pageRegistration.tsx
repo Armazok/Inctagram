@@ -3,12 +3,12 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import facebook from '../../../public/icons/facebook-svgrepo.png'
-import google from '../../../public/icons/google-svgrepo.png'
 import containerBlock from '../../styles/container.module.scss'
 
 import style from './pageRegistration.module.scss'
 
+import facebook from '@/assets/icons/facebook-svgrepo.png'
+import google from '@/assets/icons/google-svgrepo.png'
 import Button from '@/components/atoms/buttons/button'
 
 const PageRegistration = () => {

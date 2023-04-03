@@ -1,12 +1,11 @@
-import React, { FC, memo, useState } from 'react'
+import React, { FC } from 'react'
 
 import { useForm } from 'react-hook-form'
 
-import FacebookSVG from '../../../public/icons/facebook-svgrepo.png'
-import GoogleSVG from '../../../public/icons/google-svgrepo.png'
-
 import style from './pageLogin.module.scss'
 
+import FacebookSVG from '@/assets/icons/facebook-svgrepo.png'
+import GoogleSVG from '@/assets/icons/google-svgrepo.png'
 import Button from '@/components/atoms/buttons/button'
 import { Input } from '@/components/atoms/input+pass+showEye/input'
 import { LogOn } from '@/components/atoms/logOnByUsing/logOn'
@@ -45,13 +44,13 @@ const PageLogin: FC<ILogin> = ({}) => {
             <Input
               {...register('email')}
               typeInput={'email'}
-              nameInput={'Email'}
+              labelName={'Email'}
               placeholder={'Email'}
             />
             <Input
               {...register('password')}
               typeInput={'password'}
-              nameInput={'Password'}
+              labelName={'Password'}
               placeholder={'Password'}
             />
           </div>
