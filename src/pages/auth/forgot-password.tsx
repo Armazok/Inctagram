@@ -1,12 +1,12 @@
 import React from 'react'
 
 import {NextPage} from 'next'
-import {InputWithValidation} from '@/components /InputWithValidation/InputWithValidation';
+import {InputWithValidation} from '@/components/InputWithValidation/InputWithValidation';
 import {FieldValues, SubmitHandler, useForm} from 'react-hook-form';
 import style from '@/pages/auth/pageLogin.module.scss';
-import {NameTitle} from '@/components /atoms/title/nameTitle';
-import Button from '@/components /atoms/buttons/button';
-import Link from '@/components /atoms/link/Link';
+import {NameTitle} from '@/components/atoms/title/nameTitle';
+import Button from '@/components/atoms/buttons/button';
+import Link from '@/components/atoms/link/Link';
 
 const MAX_LENGTH_EMAIL = 100;
 const MIN_LENGTH_EMAIL = 5;

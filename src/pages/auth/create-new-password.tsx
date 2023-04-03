@@ -1,9 +1,9 @@
 import React from 'react'
 import {FieldValues, SubmitHandler, useForm} from 'react-hook-form'
-import {InputWithValidation} from '@/components /InputWithValidation/InputWithValidation';
+import {InputWithValidation} from '@/components/InputWithValidation/InputWithValidation';
 import style from '@/pages/auth/pageLogin.module.scss';
-import {NameTitle} from '@/components /atoms/title/nameTitle';
-import Button from '@/components /atoms/buttons/button';
+import {NameTitle} from '@/components/atoms/title/nameTitle';
+import Button from '@/components/atoms/buttons/button';
 
 const MAX_LENGTH_PASSWORD = 20;
 const MIN_LENGTH_PASSWORD = 6;
@@ -61,10 +61,6 @@ const CreateNewPassword = () => {
                                control={control}
           />
             <Button type={'submit'} textBtn={'Create new password'} tag={'btn'} callback={() => {}} />
-
-          {/*  <button type="submit" onClick={() => {}}>*/}
-          {/*  Create new password*/}
-          {/*</button>*/}
         </form>
       </div>
     </div>
