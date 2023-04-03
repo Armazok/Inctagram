@@ -1,0 +1,22 @@
+.showHidePassword {
+  @apply cursor-pointer absolute z-0;
+
+  right: 13px;
+  bottom: 7px;
+
+  width: 24px;
+  height: 24px;
+
+  background-image: url('../../../../public/icons/eye.svg');
+}
+
+.label {
+  @apply text-gray-800 text-sm font-bold leading-tight tracking-normal mb-2;
+}
+
+$common-input-styles: 'text-gray-600 dark:text-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2';
+
+.input {
+  @apply #{$common-input-styles} focus:ring-indigo-700 dark:focus:border-indigo-700;
+  @apply dark:border-gray-700 dark:bg-dark-500 bg-white font-normal w-64 h-10 pl-3 text-sm border-gray-300 border shadow;
+}

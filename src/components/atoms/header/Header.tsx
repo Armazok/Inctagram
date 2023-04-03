@@ -1,6 +1,6 @@
 import React from 'react'
 
-import containerBlock from '../../styles/container.module.scss'
+import containerBlock from '../../../styles/container.module.scss'
 
 import style from './Header.module.scss'
 

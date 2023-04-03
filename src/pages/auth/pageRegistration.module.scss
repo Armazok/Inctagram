@@ -1,0 +1,109 @@
+@import '../../styles/sass/variables';
+@import '../../styles/sass/mixins';
+
+.registerBlock {
+  @apply flex justify-center pt-32;
+
+  //display: flex;
+  //justify-content: center;
+  //
+  //padding-top: 120px;
+
+  .formContainer {
+    @apply flex flex-col items-center w-full max-w-sm bg-secondBgColor;
+
+    //display: flex;
+    //flex-direction: column;
+    //align-items: center;
+    //
+    //width: 100%;
+    //max-width: 378px;
+    //
+    //background-color: $secondBgColor;
+
+    .title {
+      @include text($fontFamily, 20px, 36px);
+      @apply font-bold;
+
+      //font-weight: 700;
+    }
+
+    .iconContainer {
+      @apply flex gap-9 items-center;
+
+      //display: flex;
+      //gap: 35px;
+      //align-items: center;
+    }
+
+    .form {
+      @apply relative flex flex-col place-content-center w-4/5;
+
+      //position: relative;
+      //display: flex;
+      //flex-direction: column;
+      //place-content: center;
+      //width: 80%;
+
+      .inputContainer {
+        @apply flex flex-col grow justify-start;
+
+        //display: flex;
+        //flex-direction: column;
+        //flex-grow: 1;
+        //justify-content: flex-start;
+        .label {
+          @apply inline-block mt-6 text-sm font-normal text-light-100 opacity-50;
+
+          //display: inline-block;
+          //margin-top: 24px;
+          //font-size: 13px;
+          //font-weight: 400;
+          //line-height: 20px;
+          //color: lavender;
+          //opacity: 0.5;
+        }
+      }
+
+      .showHidePassword {
+      }
+
+      .forgotPassword {
+        @apply flex justify-end py-5;
+
+        //display: flex;
+        //justify-content: flex-end;
+        //padding: 20px 0;
+        & a {
+          @include text($fontFamily, 14px, 24px);
+          @apply font-normal text-light-900 no-underline;
+
+          //font-weight: 400;
+          //color: #bdc1c7;
+          //text-decoration: none;
+        }
+      }
+    }
+
+    .descriptionAccount {
+      @include text($fontFamily, 16px, 24px);
+      @apply font-normal;
+
+      //font-weight: 400;
+      & a {
+        @apply text-light-100 no-underline;
+
+        //color: $textColor;
+        //text-decoration: none;
+      }
+    }
+
+    .descriptionSignIn {
+      @include text($fontFamily, 16px, 24px);
+      @apply font-semibold text-accent-500;
+
+      //font-weight: 600;
+      //color: #397df6;
+    }
+  }
+}

@@ -1,6 +1,8 @@
+/* Fonts */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-@import '../styles/tainwind';
+/* Tailwind base */
 
 @tailwind base;
 
@@ -9,6 +11,7 @@
 @tailwind utilities;
 
 @import '../styles/sass/variables';
+
 * {
   box-sizing: border-box;
   margin: 0;
