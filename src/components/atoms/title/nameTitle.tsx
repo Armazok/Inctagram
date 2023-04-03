@@ -1,7 +1,5 @@
 import React, { FC, memo } from 'react'
 
-import { Properties } from 'hast'
-
 interface INameTitle {
   nameTitle: string
   className: string
