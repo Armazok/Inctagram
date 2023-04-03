@@ -5,7 +5,6 @@
 @import '../../styles/sass/mixins';
 
 .header {
-
   @include borderBottom($border);
 
   position: relative;
@@ -21,11 +20,14 @@
   background-color: $bgColor;
 
   .title {
-
     @include text($fontFamily, 26px, 36px);
 
     position: absolute;
 
     padding: 12px 0 12px 60px;
+  }
+
+  .logout {
+    @apply ml-auto;
   }
 }
