@@ -7,10 +7,8 @@ import style from './pageLogin.module.scss'
 import FacebookSVG from '@/assets/icons/facebook-svgrepo.png'
 import GoogleSVG from '@/assets/icons/google-svgrepo.png'
 import Button from '@/components/atoms/buttons/button'
-import { Input } from '@/components/atoms/input+pass+showEye/input'
 import Link from '@/components/atoms/link/Link'
 import { LogOn } from '@/components/atoms/logOnByUsing/logOn'
-import { QuestionsTitle } from '@/components/atoms/questionsTitle/questionsTitle'
 import { NameTitle } from '@/components/atoms/title/nameTitle'
 import { InputWithValidation } from '@/components/InputWithValidation/InputWithValidation'
 import { useLoginMutation } from '@/services/api/auth/hoook'
@@ -21,7 +19,7 @@ type Inputs = {
   password: string
 }
 
-const PageLogin: FC<ILogin> = memo(({}) => {
+const Login: FC<ILogin> = memo(({}) => {
   const { mutate: login } = useLoginMutation()
   const {
     control,
@@ -73,4 +71,4 @@ const PageLogin: FC<ILogin> = memo(({}) => {
   )
 })
 
-export default PageLogin
+export default Login

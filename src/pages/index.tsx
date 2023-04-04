@@ -2,7 +2,7 @@ import { Inter } from 'next/font/google'
 import Head from 'next/head'
 
 import { Header } from '@/components/atoms/header/Header'
-import PageLogin from '@/pages/auth/pageLogin'
+import Login from '@/pages/auth/login'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +17,7 @@ export default function Home() {
       </Head>
       <Header />
       {/*<Registration />*/}
-      <PageLogin />
+      <Login />
     </>
   )
 }

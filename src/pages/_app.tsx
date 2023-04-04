@@ -5,7 +5,6 @@ import '@/components/atoms/buttons/button.module.scss'
 import { QueryClient } from '@tanstack/query-core'
 import { QueryClientProvider } from '@tanstack/react-query'
 import type { AppProps } from 'next/app'
-
 import 'uikit/dist/css/uikit.min.css'
 
 import client from '@/apolloClient'

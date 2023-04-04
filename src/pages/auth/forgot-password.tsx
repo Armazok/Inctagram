@@ -1,38 +1,23 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import { useMutation } from '@tanstack/react-query'
 import { NextPage } from 'next'
-
-import { authAPI } from '../../services/api/auth/authAPI'
 
 import Link from '@/components/atoms/link/Link'
 import { NameTitle } from '@/components/atoms/title/nameTitle'
 import { Confirm } from '@/components/modals/confirm/Confirm'
 import ForgotPasswordForm from '@/modules/passwordRecovery/forgotPassword/ForgotPasswordForm'
 import style from '@/pages/auth/pageLogin.module.scss'
+import { useForgotPassMutation } from '@/services/api/auth/hoook'
 import { useUserStore } from '@/store'
 
 const ForgotPassword: NextPage = () => {
-  const { email } = useUserStore()
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const { mutate } = useMutation({
-    mutationFn: authAPI.passwordRecovery,
-    onSuccess: () => {
-      setIsModalOpen(true)
-    },
-  })
-
-  const onConfirm = () => {
-    setIsModalOpen(false)
-  }
+  const { mutate: forgotPass } = useForgotPassMutation()
+  const { state, isModalOpen, setIsModalOpen, setEmail } = useUserStore()
+  const { email } = state
 
   const onSubmitHandler = (email: string) => {
-    mutate({ email })
-  }
-
-  const onClose = () => {
-    setIsModalOpen(false)
+    forgotPass({ email })
+    setEmail(email)
   }
 
   return (
@@ -48,8 +33,8 @@ const ForgotPassword: NextPage = () => {
 
         <Confirm
           isOpen={isModalOpen}
-          onConfirm={onConfirm}
-          onClose={onClose}
+          onConfirm={() => setIsModalOpen(false)}
+          onClose={() => setIsModalOpen(false)}
           title={'Email sent'}
           text={`We have sent a link to confirm your email to ${email}`}
           confirmButtonText={'Ok'}

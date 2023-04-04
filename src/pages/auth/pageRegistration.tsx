@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import containerBlock from '../../styles/container.module.scss'
 
-import style from './pageRegistration.module.scss'
+import style from './login.module.scss'
 
 import facebook from '@/assets/icons/facebook-svgrepo.png'
 import google from '@/assets/icons/google-svgrepo.png'
