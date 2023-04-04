@@ -1,22 +1,22 @@
 import React from 'react'
-import {NameTitle} from '@/components/atoms/title/nameTitle'
-import style from '@/pages/auth/pageLogin.module.scss'
-import CreateNewPasswordForm from '@/modules/passwordRecovery/createNewPassword/CreateNewPasswordForm';
-import {useCreateNewPasswordMutation} from '@/services/api/auth/hoook';
-import {useRouter} from 'next/router'
 
+import { useRouter } from 'next/router'
+
+import { NameTitle } from '@/components/atoms/title/nameTitle'
+import CreateNewPasswordForm from '@/modules/passwordRecovery/createNewPassword/CreateNewPasswordForm'
+import style from '@/pages/auth/pageLogin.module.scss'
+import { useCreateNewPasswordMutation } from '@/services/api/auth/hoook'
 
 const CreateNewPassword = () => {
+  const router = useRouter()
 
-    const router = useRouter();
+  const recoveryCode = 'placeholder'
+  const { mutate } = useCreateNewPasswordMutation()
 
-    const recoveryCode = 'placeholder'
-    const { mutate } = useCreateNewPasswordMutation()
-
-    const onSubmitHandler = (newPassword: string) => {
-        mutate({newPassword, recoveryCode})
-        // router.push('/auth/login')
-    }
+  const onSubmitHandler = (newPassword: string) => {
+    mutate({ newPassword, recoveryCode })
+    // router.push('/auth/login')
+  }
 
   return (
     <div className={style.container}>
@@ -26,7 +26,7 @@ const CreateNewPassword = () => {
         }
       >
         <NameTitle nameTitle={'Create New Password'} className={style.nameTitle} />
-        <CreateNewPasswordForm onSubmitHandler={onSubmitHandler}/>
+        <CreateNewPasswordForm onSubmitHandler={onSubmitHandler} />
       </div>
     </div>
   )
