@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { FieldError, UseFormWatch, Controller } from 'react-hook-form'
+import {FieldError, UseFormWatch, Controller, FieldValues} from 'react-hook-form'
 
 import style from './InputWithValidation.module.scss'
 
@@ -20,7 +20,8 @@ type PropsType = {
   maxLength: number
   minLength: number
   placeholder?: string
-  watch?: UseFormWatch<{ password: string; passwordConfirmation: string }>
+  // watch?: UseFormWatch<{ password: string; passwordConfirmation: string }>
+  watch?: UseFormWatch<FieldValues>
   errors?: FieldError | undefined
   type: InputType
   control: any
@@ -39,6 +40,7 @@ export const InputWithValidation = ({
   type,
   control,
 }: PropsType) => {
+
   return (
     <div>
       <Controller
@@ -55,17 +57,10 @@ export const InputWithValidation = ({
             />
           </>
         )}
-        rules={
-          {
+        rules={{
             required: 'This field is required',
-            maxLength: {
-              value: maxLength || 100,
-              message: `Max length exceeded, ${maxLength || 100} symbols`,
-            },
-            minLength: {
-              value: minLength || 1,
-              message: `Min length required, ${minLength || 1} symbols`,
-            },
+            maxLength: {value: maxLength, message: `Max length exceeded, ${maxLength} symbols`},
+            minLength: {value: minLength, message: `Min length required, ${minLength} symbols`},
             validate: (value: string) => {
               const trimmedValue = value.trim()
 
@@ -79,7 +74,6 @@ export const InputWithValidation = ({
               if (watch && watch('password') !== value) {
                 return 'Your passwords do no match'
               }
-
               return true
             },
           } as any

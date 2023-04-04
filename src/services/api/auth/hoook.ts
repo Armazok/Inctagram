@@ -7,3 +7,9 @@ export const useLoginMutation = () => {
     mutationFn: authAPI.login,
   })
 }
+
+export const useCreateNewPasswordMutation = () => {
+  return useMutation({
+    mutationFn: authAPI.createNewPassword,
+  })
+}
