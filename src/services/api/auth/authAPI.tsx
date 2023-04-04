@@ -11,8 +11,6 @@ export const authAPI: IAuthAPI = {
   login: data => {
     const { email, password } = data
 
-    debugger
-
     return authInstance.post('auth/login', { email, password })
   },
 }
