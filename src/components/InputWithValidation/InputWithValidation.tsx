@@ -48,7 +48,6 @@ export const InputWithValidation = ({
           <>
             <Input
               typeInput={type}
-              nameInput={name}
               labelName={label!}
               placeholder={placeholder!}
               value={value}
