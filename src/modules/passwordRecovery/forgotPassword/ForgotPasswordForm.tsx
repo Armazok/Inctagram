@@ -25,6 +25,7 @@ const ForgotPasswordForm = ({onSubmitHandler}: PropsType) => {
     }
 
     return (
+        <div className={'relative flex flex-col place-content-center w-4/5'}>
         <form onSubmit={handleSubmit(onSubmit)}>
             <InputWithValidation
                 type={'text'}
@@ -40,6 +41,7 @@ const ForgotPasswordForm = ({onSubmitHandler}: PropsType) => {
             <Button type={'submit'} textBtn={'Send instructions'} tag={'btn'} callback={() => {
             }}/>
         </form>
+        </div>
     );
 };
 
