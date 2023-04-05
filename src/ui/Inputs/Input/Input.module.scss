@@ -1,0 +1,96 @@
+@import "/src/styles/sass/variables";
+@import "/src/styles/sass/mixins";
+
+.container {
+  width: 100%;
+  height: 100%;
+
+
+  .label {
+    @apply flex flex-col justify-center;
+    @include textInput(14px, 24px, #4C4C4C, $weight);
+  }
+
+  input {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 36px;
+    background: transparent;
+    outline: none;
+    outline-offset: 0;
+    @include borderBottom($borderInput);
+    padding: 0 45px 0 0;
+    @include textInput(16px, 24px, #BDC1C7, $weight);
+
+
+    &.inputBottomError {
+      @include borderBottom(#CC1439);
+    }
+
+    &::placeholder {
+      @include textInput(16px, 24px, #BDC1C7, $weight);
+      background: transparent;
+      outline: none;
+      outline-offset: 0;
+    }
+
+    &:hover {
+      @include borderBottom(#BDC1C7);
+      color: #BDC1C7;
+      background: transparent;
+      outline: none;
+      outline-offset: 0;
+    }
+
+    &:active {
+      @include borderBottom(#FFFFFF);
+      color: #FFFFFF;
+      outline: none;
+      outline-offset: 0;
+    }
+
+    &:focus {
+      @include borderBottom(#FFFFFF);
+      color: #FFFFFF;
+      outline: none;
+      outline-offset: 0;
+
+    }
+
+
+    &:disabled {
+      color: #4C4C4C;
+      @include borderBottom(#4C4C4C);
+      background: transparent;
+      outline: none;
+      outline-offset: 0;
+    }
+  }
+
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+
+    -webkit-text-fill-color: #BDC1C7;
+    -webkit-box-shadow: 0 0 0 1000px transparent inset;
+    transition: background-color 5000s ease-in-out 0s;
+    background: transparent;
+  }
+
+}
+
+.error {
+  position: absolute;
+  top: 38px;
+  @include textInput(14px, 18px, #CC1439, $weight);
+}
+
