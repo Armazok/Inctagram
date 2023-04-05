@@ -4,13 +4,13 @@ import { useMutation } from '@tanstack/react-query'
 import { NextPage } from 'next'
 
 import Link from '@/components/atoms/link/Link'
+import Preloader from '@/components/atoms/preloader/Preloader'
 import { NameTitle } from '@/components/atoms/title/nameTitle'
 import { Confirm } from '@/components/modals/confirm/Confirm'
 import ForgotPasswordForm from '@/modules/passwordRecovery/forgotPassword/ForgotPasswordForm'
-import style from '@/pages/auth/pageLogin.module.scss'
+import style from '@/pages/auth/login.module.scss'
 import { authAPI } from '@/services/api/auth/authAPI'
 import { useUserStore } from '@/store'
-import Preloader from '@/components/atoms/preloader/Preloader';
 
 const ForgotPassword: NextPage = () => {
   const { email } = useUserStore()
@@ -37,7 +37,7 @@ const ForgotPassword: NextPage = () => {
 
   if (isLoading) {
     return <Preloader />
-  };
+  }
 
   return (
     <div className={style.container}>

@@ -1,26 +1,27 @@
 import React from 'react'
-import {NameTitle} from '@/components/atoms/title/nameTitle'
-import style from '@/pages/auth/pageLogin.module.scss'
-import CreateNewPasswordForm from '@/modules/passwordRecovery/createNewPassword/CreateNewPasswordForm';
-import {useCreateNewPasswordMutation} from '@/services/api/auth/hoook';
-import {useRouter} from 'next/router'
-import Preloader from '@/components/atoms/preloader/Preloader';
 
+import { useRouter } from 'next/router'
+
+import Preloader from '@/components/atoms/preloader/Preloader'
+import { NameTitle } from '@/components/atoms/title/nameTitle'
+import CreateNewPasswordForm from '@/modules/passwordRecovery/createNewPassword/CreateNewPasswordForm'
+import style from '@/pages/auth/login.module.scss'
+import { useCreateNewPasswordMutation } from '@/services/api/auth/hoook'
 
 const CreateNewPassword = () => {
-    const router = useRouter();
+  const router = useRouter()
 
-    const {code} = router.query
-    const recoveryCode = code
+  const { code } = router.query
+  const recoveryCode = code
 
-    const { mutate, isLoading } = useCreateNewPasswordMutation()
+  const { mutate, isLoading } = useCreateNewPasswordMutation()
 
-    const onSubmitHandler = async (newPassword: string) => {
-        await mutate({newPassword, recoveryCode})
-        // router.push('/auth/login')
-    }
+  const onSubmitHandler = async (newPassword: string) => {
+    await mutate({ newPassword, recoveryCode })
+    // router.push('/auth/login')
+  }
 
-    if (isLoading) return <Preloader />
+  if (isLoading) return <Preloader />
 
   return (
     <div className={style.container}>
@@ -30,7 +31,7 @@ const CreateNewPassword = () => {
         }
       >
         <NameTitle nameTitle={'Create New Password'} className={style.nameTitle} />
-        <CreateNewPasswordForm onSubmitHandler={onSubmitHandler}/>
+        <CreateNewPasswordForm onSubmitHandler={onSubmitHandler} />
       </div>
     </div>
   )
