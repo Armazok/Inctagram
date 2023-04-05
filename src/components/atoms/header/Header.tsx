@@ -1,9 +1,5 @@
 import React from 'react'
 
-import containerBlock from '../../../styles/container.module.scss'
-
-import style from './Header.module.scss'
-
 import Logout from '@/components/header/Logout/Logout'
 import { useUserStore } from '@/store'
 
@@ -11,12 +7,11 @@ export const Header = () => {
   const { isLoggedIn } = useUserStore()
 
   return (
-    <div className={containerBlock.container}>
-      <header className={style.header}>
-        <div className={style.title}>Inctagram</div>
-
-        {isLoggedIn && <Logout />}
-      </header>
-    </div>
+    <header className="flex items-center w-full h-16 text-light-100 bg-bgColor border-b-[1px] border-b-bgLogBorder">
+      <div className="px-[60px] flex justify-between w-full">
+        <span className="">Inctagram</span>
+        <div>{isLoggedIn && <Logout />}</div>
+      </div>
+    </header>
   )
 }
