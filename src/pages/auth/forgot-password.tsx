@@ -10,12 +10,13 @@ import ForgotPasswordForm from '@/modules/passwordRecovery/forgotPassword/Forgot
 import style from '@/pages/auth/pageLogin.module.scss'
 import { authAPI } from '@/services/api/auth/authAPI'
 import { useUserStore } from '@/store'
+import Preloader from '@/components/atoms/preloader/Preloader';
 
 const ForgotPassword: NextPage = () => {
   const { email } = useUserStore()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: authAPI.passwordRecovery,
     onSuccess: () => {
       setIsModalOpen(true)
@@ -26,13 +27,17 @@ const ForgotPassword: NextPage = () => {
     setIsModalOpen(false)
   }
 
-  const onSubmitHandler = (email: string) => {
-    mutate({ email })
+  const onSubmitHandler = async (email: string) => {
+    await mutate({ email })
   }
 
   const onClose = () => {
     setIsModalOpen(false)
   }
+
+  if (isLoading) {
+    return <Preloader />
+  };
 
   return (
     <div className={style.container}>
