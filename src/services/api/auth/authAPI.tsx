@@ -18,7 +18,6 @@ export const authAPI: IAuthAPI = {
   },
   passwordRecovery: data => {
     const { email } = data
-    debugger
     return authInstance.post('auth/password-recovery', { email })
   },
   passwordRecoveryEmailResending: data => {
