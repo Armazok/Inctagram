@@ -1,9 +1,13 @@
-import Link from "next/link";
 import Image from "next/image";
-import EmailResendingImg from "../../../assets/images/rafiki.svg";
+import EmailResendingImg from "../../assets/images/rafiki.svg";
 import { FC } from "react";
 
-const RegistrationEmailResending: FC = () => {
+
+type PropsType = {
+  callback: () => void
+}
+
+const RegistrationEmailResending: FC<PropsType> = ({ callback }) => {
   return (
     <div
       className={"flex justify-center items-center flex-col text-light-100 h-screen"}
@@ -13,14 +17,14 @@ const RegistrationEmailResending: FC = () => {
       <span className={"mb-12 w-96 text-center"}>
           Looks like the verification link has expired. Not to worry, we can send the link again
         </span>
-      <Link
+      <button
         className={
           "hover:no-underline hover:text-light-100 hover:bg-accent-100 text-light-100 inline-block text-center bg-accent-500 px-6 py-1.5 rounded-sm item leading-6"
         }
-        href={"/"}
+        onClick={callback}
       >
         Resend verification link
-      </Link>
+      </button>
       <Image className={"mt-20"} src={EmailResendingImg} alt={"bro"} height={473} width={353} />
 
     </div>
