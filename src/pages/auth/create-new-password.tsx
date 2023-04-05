@@ -6,18 +6,18 @@ import {useCreateNewPasswordMutation} from '@/services/api/auth/hoook';
 import {useRouter} from 'next/router'
 import Preloader from '@/components/atoms/preloader/Preloader';
 
+type PropsType = {
+    recoveryCode: string
+}
 
-const CreateNewPassword = () => {
+const CreateNewPassword = ({recoveryCode}: PropsType) => {
     const router = useRouter();
-
-    const {code} = router.query
-    const recoveryCode = code
 
     const { mutate, isLoading } = useCreateNewPasswordMutation()
 
     const onSubmitHandler = async (newPassword: string) => {
         await mutate({newPassword, recoveryCode})
-        // router.push('/auth/login')
+        router.push('/auth/login')
     }
 
     if (isLoading) return <Preloader />

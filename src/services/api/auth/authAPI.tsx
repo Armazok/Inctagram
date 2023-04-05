@@ -10,7 +10,7 @@ interface IAuthAPI {
   createNewPassword: (data: ReqNewPassword) => Promise<AxiosResponse>
   registrationConfirmation: (data: RegConfirmation) => Promise<AxiosResponse>
   registrationEmailResending: (data: RegEmailResenging ) => Promise<AxiosResponse>
-
+  checkRecoveryCode: (data: Omit<ReqNewPassword, 'newPassword'>) => Promise<AxiosResponse>
 }
 
 export const authAPI: IAuthAPI = {
@@ -38,5 +38,9 @@ export const authAPI: IAuthAPI = {
   registrationEmailResending: data => {
     const { email } = data
     return authInstance.post('/auth/registration-email-resending', { email })
+  },
+  checkRecoveryCode: data => {
+    const { recoveryCode } = data
+    return authInstance.post('auth/check-recovery-code', { recoveryCode })
   }
 }
