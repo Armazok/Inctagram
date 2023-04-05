@@ -1,30 +1,18 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-interface IUserStore {
-  state: { email: string }
+interface UserStore {
+  email: string | null
   isLoggedIn: boolean
-  isModalOpen: boolean
-  setIsModalOpen: (isModalOpen: boolean) => void
-  setEmail: (email: string) => void
+  logout: () => void
 }
 
-export const useUserStore = create<IUserStore>()(
+export const useUserStore = create<UserStore>()(
   devtools(set => ({
-    state: {
-      email: '',
+    email: 'test1337@gmail.com',
+    isLoggedIn: true,
+    logout() {
+      set({ email: null, isLoggedIn: false })
     },
-    isLoggedIn: false,
-    isModalOpen: false,
-    setIsModalOpen: (isModalOpen: boolean) =>
-      set(state => ({
-        ...state,
-        isModalOpen,
-      })),
-    setEmail: (email: string) =>
-      set(state => ({
-        ...state,
-        state: { email },
-      })),
   }))
 )
