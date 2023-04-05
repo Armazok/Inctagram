@@ -1,31 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 
+import { useMutation } from '@tanstack/react-query'
 import { NextPage } from 'next'
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 
-import Button from '@/components/atoms/buttons/button'
+import { authAPI } from '../../services/api/auth/authAPI'
+
 import Link from '@/components/atoms/link/Link'
 import { NameTitle } from '@/components/atoms/title/nameTitle'
-import { InputWithValidation } from '@/components/InputWithValidation/InputWithValidation'
+import { Confirm } from '@/components/modals/confirm/Confirm'
+import ForgotPasswordForm from '@/modules/passwordRecovery/forgotPassword/ForgotPasswordForm'
 import style from '@/pages/auth/pageLogin.module.scss'
-
-const MAX_LENGTH_EMAIL = 100
-const MIN_LENGTH_EMAIL = 5
+import { useUserStore } from '@/store'
+import Preloader from '@/components/atoms/preloader/Preloader';
 
 const ForgotPassword: NextPage = () => {
-  const {
-    handleSubmit,
-    reset,
-    control,
-    formState: { errors },
-  } = useForm({ mode: 'onBlur', defaultValues: { email: '' } })
+  const { email } = useUserStore()
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const onSubmit: SubmitHandler<FieldValues> = data => {
-    const { email } = data
+  const { mutate, isLoading } = useMutation({
+    mutationFn: authAPI.passwordRecovery,
+    onSuccess: () => {
+      setIsModalOpen(true)
+    },
+  })
 
-    console.log(email)
-    reset()
+  const onConfirm = () => {
+    setIsModalOpen(false)
   }
+
+  const onSubmitHandler = async (email: string) => {
+    await mutate({ email })
+  }
+
+  const onClose = () => {
+    setIsModalOpen(false)
+  }
+
+  if (isLoading) {
+    return <Preloader />
+  };
 
   return (
     <div className={style.container}>
@@ -35,20 +48,18 @@ const ForgotPassword: NextPage = () => {
         }
       >
         <NameTitle nameTitle={'Forgot Password'} className={style.nameTitle} />
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <InputWithValidation
-            type={'text'}
-            name={'email'}
-            label={'Email'}
-            maxLength={MAX_LENGTH_EMAIL}
-            minLength={MIN_LENGTH_EMAIL}
-            errors={errors.email ? errors.email : undefined}
-            control={control}
-          />
 
-          <div>Enter your email address and we will send you further instructions</div>
-          <Button type={'submit'} textBtn={'Send instructions'} tag={'btn'} callback={() => {}} />
-        </form>
+        <ForgotPasswordForm onSubmitHandler={onSubmitHandler} />
+
+        <Confirm
+          isOpen={isModalOpen}
+          onConfirm={onConfirm}
+          onClose={onClose}
+          title={'Email sent'}
+          text={`We have sent a link to confirm your email to ${email}`}
+          confirmButtonText={'Ok'}
+        />
+
         <Link href={'/auth/login'} title={'Back to Sign In'} className={'text-blue-600'} />
       </div>
     </div>

@@ -8,7 +8,7 @@ import styles from './Confirm.module.scss'
 interface Props {
   isOpen: boolean
   onConfirm: () => void
-  onDecline: () => void
+  onDecline?: () => void
   onClose: () => void
   title: string
   text: string
@@ -46,7 +46,7 @@ export const Confirm: FC<Props> = ({
 
       <div className={styles.modalFooter}>
         <button onClick={() => onConfirm()}>{confirmButtonText ?? 'Yes'}</button>
-        <button onClick={() => onDecline()}>{declineButtonText ?? 'No'}</button>
+        {onDecline ? <button onClick={() => onDecline()}>{declineButtonText ?? 'No'}</button> : ''}
       </div>
     </Modal>
   )

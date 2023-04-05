@@ -3,6 +3,11 @@ export type ReqLogin = {
   password: string
 }
 
-export type RegConfirmation = {
-  confirmationCode: string
+export type ReqPasswordRecovery = {
+  email: string
+}
+
+export type ReqNewPassword = {
+  newPassword: string
+  recoveryCode: string
 }

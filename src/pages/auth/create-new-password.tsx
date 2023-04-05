@@ -1,36 +1,26 @@
 import React from 'react'
-
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
-
-import Button from '@/components/atoms/buttons/button'
-import { NameTitle } from '@/components/atoms/title/nameTitle'
-import { InputWithValidation } from '@/components/InputWithValidation/InputWithValidation'
+import {NameTitle} from '@/components/atoms/title/nameTitle'
 import style from '@/pages/auth/pageLogin.module.scss'
+import CreateNewPasswordForm from '@/modules/passwordRecovery/createNewPassword/CreateNewPasswordForm';
+import {useCreateNewPasswordMutation} from '@/services/api/auth/hoook';
+import {useRouter} from 'next/router'
+import Preloader from '@/components/atoms/preloader/Preloader';
 
-const MAX_LENGTH_PASSWORD = 20
-const MIN_LENGTH_PASSWORD = 6
 
 const CreateNewPassword = () => {
-  const {
-    handleSubmit,
-    watch,
-    reset,
-    control,
-    formState: { errors },
-  } = useForm({
-    mode: 'onSubmit',
-    defaultValues: {
-      password: '',
-      passwordConfirmation: '',
-    },
-  })
+    const router = useRouter();
 
-  const onSubmit: SubmitHandler<FieldValues> = data => {
-    const { password, passwordConfirmation } = data
+    const {code} = router.query
+    const recoveryCode = code
 
-    console.log(password, passwordConfirmation)
-    reset()
-  }
+    const { mutate, isLoading } = useCreateNewPasswordMutation()
+
+    const onSubmitHandler = async (newPassword: string) => {
+        await mutate({newPassword, recoveryCode})
+        // router.push('/auth/login')
+    }
+
+    if (isLoading) return <Preloader />
 
   return (
     <div className={style.container}>
@@ -40,29 +30,7 @@ const CreateNewPassword = () => {
         }
       >
         <NameTitle nameTitle={'Create New Password'} className={style.nameTitle} />
-
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <InputWithValidation
-            name={'password'}
-            label={'New password'}
-            maxLength={MAX_LENGTH_PASSWORD}
-            minLength={MIN_LENGTH_PASSWORD}
-            errors={errors.password ? errors.password : undefined}
-            type={'password'}
-            control={control}
-          />
-          <InputWithValidation
-            name={'passwordConfirmation'}
-            label={'Password confirmation'}
-            maxLength={MAX_LENGTH_PASSWORD}
-            minLength={MIN_LENGTH_PASSWORD}
-            errors={errors.passwordConfirmation ? errors.passwordConfirmation : undefined}
-            watch={watch}
-            type={'password'}
-            control={control}
-          />
-          <Button type={'submit'} textBtn={'Create new password'} tag={'btn'} callback={() => {}} />
-        </form>
+        <CreateNewPasswordForm onSubmitHandler={onSubmitHandler}/>
       </div>
     </div>
   )
