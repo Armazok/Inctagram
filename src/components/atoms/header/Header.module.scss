@@ -3,8 +3,7 @@
 @import '../../../styles/sass/mixins';
 
 .header {
-
-  @apply relative flex items-center w-full h-16 text-light-100 bg-bgColor;
+ 
 
   @include borderBottom($border);
 
@@ -18,7 +17,6 @@
   //width: 100%;
 
   .title {
-
     @apply absolute px-0 py-12 pl-60;
 
     @include text($fontFamily, 26px, 36px);
@@ -29,7 +27,6 @@
   }
 
   .logout {
-
     @apply ml-auto;
   }
 }
