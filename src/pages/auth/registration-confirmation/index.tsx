@@ -3,26 +3,25 @@ import EmailConfirmationImg from "../../../assets/images/bro.svg";
 import Image from "next/image";
 import { FC } from "react";
 import { useRouter } from "next/router";
-import { useQuery } from "@tanstack/react-query";
-import { authAPI } from "@/services/api/auth/authAPI";
+import Preloader from "@/components/atoms/preloader/Preloader";
+import RegistrationEmailResending from "@/modules/registration-email-resending";
+import { useUserStore } from "@/store";
+import { useRegistrationConfirmationQuery, useRegistrationEmailResendingMutation } from "@/services/api/auth/hoook";
 
 const RegistrationConfirmation: FC = () => {
-  const { push, query } = useRouter();
-  const { isLoading, isError } = useQuery({
-    queryKey: ["regConfirmation"],
-    queryFn: () => authAPI.registrationConfirmation({ confirmationCode: String(query.code) }),
-    enabled: !!query.code,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-    refetchOnMount: false,
-    refetchIntervalInBackground: false,
-    retry: false
-  });
+  const { query } = useRouter();
+  const { isLoading, isError } = useRegistrationConfirmationQuery(String(query.code))
+  const { email } = useUserStore();
+  const { mutate: resendLink } = useRegistrationEmailResendingMutation(email);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return <div className={"flex justify-center items-center h-screen"}>
+      <Preloader />
+    </div>;
+  }
 
   if (isError) {
-    push("/auth/registration-email-resending");
+    return <RegistrationEmailResending callback={resendLink} />;
   }
 
   return (
