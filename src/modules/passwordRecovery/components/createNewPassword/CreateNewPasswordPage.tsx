@@ -17,7 +17,7 @@ export const CreateNewPasswordPage = ({recoveryCode= ''}: PropsType) => {
 
     const onSubmitHandler = async (newPassword: string) => {
         await createNewPassword({newPassword, recoveryCode})
-        router.push('/auth/forgot-password')
+        router.push('/')
     }
 
     if (isLoading) return <Preloader />

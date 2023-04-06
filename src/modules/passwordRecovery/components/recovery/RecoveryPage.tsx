@@ -34,7 +34,7 @@ export const RecoveryPage = () => {
 
     const onResendClick = async () => {
         await mutate()
-        router.push('/auth/forgot-password')
+        router.push('/')
     }
 
     debugger
