@@ -1,6 +1,8 @@
 import React from 'react'
-import Link from 'next/link'
+
 import Image from 'next/image'
+import Link from 'next/link'
+
 import facebook from '@/assets/icons/facebook-svgrepo.png'
 import google from '@/assets/icons/google-svgrepo.png'
 

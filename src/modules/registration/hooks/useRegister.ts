@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+
 import { sendRegisterRequest } from '@/modules/registration/api/sendRegisterRequest'
 
 export const useRegisterMutation = (setCustomError: any, setToggleModal: any, reset: any) => {
@@ -18,6 +19,7 @@ export const useRegisterMutation = (setCustomError: any, setToggleModal: any, re
       setCustomError('email', `User with this ${error.response.data.messages[0].message}`)
     },
   })
+
   return {
     data,
     sendRegisteredData,

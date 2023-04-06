@@ -1,26 +1,23 @@
-import React, { FC, memo } from 'react'
+import React from 'react'
 
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 
-import Button from '@/components/atoms/buttons/button'
-import Link from '@/components/atoms/link/Link'
 import Preloader from '@/components/atoms/preloader/Preloader'
-import { InputWithValidation } from '@/components/InputWithValidation/InputWithValidation'
 import { useLoginMutation } from '@/services/api/auth/hoook'
+import GlobalButton from '@/ui/buttons/GlobalButton'
+import GlobalInput from '@/ui/Inputs/Input/Input'
+import InputWithEye from '@/ui/Inputs/InputWithEye/InputWithEye'
 
 type Inputs = {
   email: string
   password: string
 }
 
-interface ILoginForm {}
-export const BlockLoginForm: FC<ILoginForm> = memo(({}) => {
-  const router = useRouter()
-
+export const BlockLoginForm = () => {
   const { mutate: login, status } = useLoginMutation()
   const {
-    control,
+    register,
     formState: { errors, isLoading },
     handleSubmit,
   } = useForm<Inputs>()
@@ -32,35 +29,35 @@ export const BlockLoginForm: FC<ILoginForm> = memo(({}) => {
     })
   }
 
-  if (status === 'loading') return <Preloader />
-  if (status === 'success') {
-    router.push('/auth/register')
-  }
-
   return (
     <>
-      <form onSubmit={handleSubmit(handleFormSubmit)}>
-        <InputWithValidation
-          type={'email'}
-          name={'email'}
-          label={'Email'}
-          control={control}
-          errors={errors.email ? errors.email : undefined}
-          maxLength={25}
-          minLength={5}
+      {isLoading && <Preloader />}
+      <form
+        className="flex flex-col grow gap-[10px] pt-[22px]  pb-[18px] w-full gap-[24px]"
+        onSubmit={handleSubmit(handleFormSubmit)}
+      >
+        <GlobalInput
+          type="email"
+          id="email"
+          placeholder="Email"
+          label="Email"
+          error={errors?.email?.message}
+          {...register('email')}
         />
-        <InputWithValidation
-          type={'password'}
-          name={'password'}
-          label={'Password'}
-          control={control}
-          errors={errors.password ? errors.password : undefined}
-          maxLength={10}
-          minLength={5}
+        <InputWithEye
+          label="Password"
+          id="password"
+          placeholder="Password"
+          error={errors?.password?.message}
+          {...register('password')}
         />
-        <Link href={'/'} title={'Forgot Password?'} className={'text-blue-600'} />
-        <Button type={'submit'} textBtn={'Sign In'} callback={() => {}} />
+        <Link href={'/auth/forgot-password'} className={'flex justify-end text-light-900 text-xs'}>
+          Forgot password?
+        </Link>
+        <GlobalButton variant="default" type="submit">
+          Sign In
+        </GlobalButton>
       </form>
     </>
   )
-})
+}

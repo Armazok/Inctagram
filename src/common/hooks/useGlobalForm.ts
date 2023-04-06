@@ -1,5 +1,5 @@
-import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
 
 export const useGlobalForm = (schema: any) => {
   const {
@@ -18,6 +18,7 @@ export const useGlobalForm = (schema: any) => {
       message: message,
     })
   }
+
   return {
     register,
     reset,

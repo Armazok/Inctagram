@@ -1,9 +1,12 @@
 import React, { FC, forwardRef, useState } from 'react'
-import GlobalInput from '@/ui/Inputs/Input/Input'
-import style from './Input-with-eye.module.scss'
-import eyeOutline from './../../../assets/icons/eye-outline-white.svg'
-import eyeOff from './../../../assets/icons/eye-off-outline-white.svg'
+
 import Image from 'next/image'
+
+import eyeOff from './../../../assets/icons/eye-off-outline-white.svg'
+import eyeOutline from './../../../assets/icons/eye-outline-white.svg'
+import style from './Input-with-eye.module.scss'
+
+import GlobalInput from '@/ui/Inputs/Input/Input'
 
 interface PropsType {
   id: string

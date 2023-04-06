@@ -8,7 +8,7 @@ import Preloader from '@/components/atoms/preloader/Preloader'
 import { NameTitle } from '@/components/atoms/title/nameTitle'
 import { Confirm } from '@/components/modals/confirm/Confirm'
 import ForgotPasswordForm from '@/modules/passwordRecovery/forgotPassword/ForgotPasswordForm'
-import style from '@/pages/auth/login.module.scss'
+// import style from '@/pages/auth/login.module.scss'
 import { authAPI } from '@/services/api/auth/authAPI'
 import { useUserStore } from '@/store'
 
@@ -40,13 +40,13 @@ const ForgotPassword: NextPage = () => {
   }
 
   return (
-    <div className={style.container}>
+    <div className={'style.container'}>
       <div
         className={
           'flex flex-col items-center content-center max-w-full border border-bgLogBorder w-4/12 bg-bgLog mt-24 mr-auto ml-auto mb-36'
         }
       >
-        <NameTitle nameTitle={'Forgot Password'} className={style.nameTitle} />
+        <NameTitle nameTitle={'Forgot Password'} className={'style.nameTitle'} />
 
         <ForgotPasswordForm onSubmitHandler={onSubmitHandler} />
 

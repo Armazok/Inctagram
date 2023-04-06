@@ -1,16 +1,18 @@
 import React from 'react'
-import FormLayout from '@/components/FormLayout/FormLayout'
-import { NameTitle } from '@/components/atoms/title/nameTitle'
-import GlobalInput from '@/ui/Inputs/Input/Input'
-import GlobalButton from '@/ui/buttons/GlobalButton'
+
+import { useRouter } from 'next/router'
+
 import { useGlobalForm } from '@/common'
 import Preloader from '@/components/atoms/preloader/Preloader'
+import { NameTitle } from '@/components/atoms/title/nameTitle'
+import FormLayout from '@/components/FormLayout/FormLayout'
 import {
   FormData,
   verificationSchema,
 } from '@/modules/resend-verification-form/constants/verificationSchema'
-import { useRouter } from 'next/router'
 import { useSendVerifyEmailMutation } from '@/modules/resend-verification-form/hooks/useSendVerifyEmailMutation'
+import GlobalButton from '@/ui/buttons/GlobalButton'
+import GlobalInput from '@/ui/Inputs/Input/Input'
 
 export const ResendVerificationForm = () => {
   const { push } = useRouter()

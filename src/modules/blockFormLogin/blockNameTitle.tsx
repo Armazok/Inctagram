@@ -7,7 +7,10 @@ interface IBlockNameTitle {}
 export const BlockNameTitle: FC<IBlockNameTitle> = memo(({}) => {
   return (
     <>
-      <NameTitle nameTitle={'Sign In'} className={'font-bold text-light-100 mt-6'} />
+      <NameTitle
+        nameTitle={'Sign In'}
+        className={'font-bold text-light-100 text-[20px] leading-[36px]'}
+      />
     </>
   )
 })

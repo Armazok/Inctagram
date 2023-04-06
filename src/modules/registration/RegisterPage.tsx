@@ -1,9 +1,11 @@
 import React from 'react'
-import FormLayout from '@/components/FormLayout/FormLayout'
-import { NameTitle } from '@/components/atoms/title/nameTitle'
+
 import Link from 'next/link'
-import GoogleFacebook from '@/ui/GoogleFacebook/GoogleFacebook'
+
+import { NameTitle } from '@/components/atoms/title/nameTitle'
+import FormLayout from '@/components/FormLayout/FormLayout'
 import RegistrationForm from '@/modules/registration/components/registraion-form/RegistrationForm'
+import GoogleFacebook from '@/ui/GoogleFacebook/GoogleFacebook'
 
 export const RegisterPage = () => {
   return (
