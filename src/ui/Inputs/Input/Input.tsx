@@ -1,12 +1,14 @@
 import { CSSProperties, FC, forwardRef, HTMLInputTypeAttribute } from 'react'
 
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form'
+
 import style from './Input.module.scss'
 type InputType = {
   type: HTMLInputTypeAttribute
   id?: string
   label?: string
   placeholder?: string
-  error?: string
+  error?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined
   classNameContainer?: CSSProperties
 }
 

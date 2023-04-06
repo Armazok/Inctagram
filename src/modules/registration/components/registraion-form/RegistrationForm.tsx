@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useGlobalForm } from '@/common'
 import Preloader from '@/components/atoms/preloader/Preloader'
 import { Confirm } from '@/components/modals/confirm/Confirm'
-import { schema } from '@/modules/registration/constants/registerValidateSchema'
+import { schema, FormData } from '@/modules/registration/constants/registerValidateSchema'
 import { useRegisterMutation } from '@/modules/registration/hooks/useRegister'
 import GlobalButton from '@/ui/buttons/GlobalButton'
 import GlobalInput from '@/ui/Inputs/Input/Input'
@@ -22,7 +22,7 @@ const RegistrationForm = () => {
     reset
   )
 
-  const formSubmit = (data: FormData) => {
+  const formSubmit = (data: any) => {
     const { email, password } = data
 
     sendRegisteredData({ email, password })
