@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-
-import { sendVerificationLink } from '@/modules/resend-verification-form/api/sendVerificationLink'
+import { sendVerificationLink } from '@/modules/auth-modules/registraion-module/resend-verification-form/api/sendVerificationLink'
 
 export const useSendVerifyEmailMutation = (setCustomError: any, reset: any, push: any) => {
   const { isLoading, mutate: resendVerification } = useMutation({
