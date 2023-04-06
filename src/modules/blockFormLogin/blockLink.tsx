@@ -11,7 +11,7 @@ export const BlockLink: FC<IBlockLink> = memo(({}) => {
         Don`t have account?
       </span>
       <Link
-        href={'auth/page-registration'}
+        href={'registration'}
         className="font-semibold text-[16px] leading-[24px] text-accent-500"
       >
         Sing Up

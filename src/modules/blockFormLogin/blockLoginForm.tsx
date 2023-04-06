@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 
 import Preloader from '@/components/atoms/preloader/Preloader'
@@ -15,10 +16,11 @@ type Inputs = {
 }
 
 export const BlockLoginForm = () => {
-  const { mutate: login, status } = useLoginMutation()
+  const router = useRouter()
+  const { mutate: login, isLoading } = useLoginMutation()
   const {
     register,
-    formState: { errors, isLoading },
+    formState: { errors },
     handleSubmit,
   } = useForm<Inputs>()
 
@@ -27,7 +29,10 @@ export const BlockLoginForm = () => {
       email,
       password,
     })
+    router.push('./TEST_PAGE')
   }
+
+  if (isLoading) return <Preloader />
 
   return (
     <>
