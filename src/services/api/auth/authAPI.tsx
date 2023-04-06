@@ -1,7 +1,15 @@
 import { AxiosResponse } from 'axios'
 
 import { authInstance } from '@/services/api/auth/instanse'
-import { RegConfirmation, RegEmailResenging, ReqLogin, ReqNewPassword, ReqPasswordRecovery, ResLogin } from "@/types/";
+import {
+  RegConfirmation,
+  RegEmailResenging,
+  ReqLogin,
+  ReqNewPassword,
+  ReqPasswordRecovery, ReqPasswordRecoveryWithRecaptcha,
+  ResCheckRecoveryCode,
+  ResLogin
+} from '@/types/';
 
 interface IAuthAPI {
   login: (data: ReqLogin) => Promise<AxiosResponse<ResLogin>>
@@ -10,7 +18,8 @@ interface IAuthAPI {
   createNewPassword: (data: ReqNewPassword) => Promise<AxiosResponse>
   registrationConfirmation: (data: RegConfirmation) => Promise<AxiosResponse>
   registrationEmailResending: (data: RegEmailResenging ) => Promise<AxiosResponse>
-  checkRecoveryCode: (data: Omit<ReqNewPassword, 'newPassword'>) => Promise<AxiosResponse>
+  checkRecoveryCode: (data: Omit<ReqNewPassword, 'newPassword'>) => Promise<AxiosResponse<ResCheckRecoveryCode>>
+  passwordRecoveryWithRecaptcha: (data: ReqPasswordRecoveryWithRecaptcha) => Promise<AxiosResponse>
 }
 
 export const authAPI: IAuthAPI = {
@@ -20,8 +29,8 @@ export const authAPI: IAuthAPI = {
     return authInstance.post('auth/login', { email, password })
   },
   passwordRecovery: data => {
-    const { email } = data
-    return authInstance.post('auth/password-recovery', { email })
+    const { email} = data
+    return authInstance.post('auth/password-recovery', { email})
   },
   passwordRecoveryEmailResending: data => {
     const { email } = data
@@ -42,5 +51,9 @@ export const authAPI: IAuthAPI = {
   checkRecoveryCode: data => {
     const { recoveryCode } = data
     return authInstance.post('auth/check-recovery-code', { recoveryCode })
-  }
+  },
+  passwordRecoveryWithRecaptcha: data => {
+    const { email, recaptcha} = data
+    return authInstance.post('auth/password-recovery', { email, recaptcha})
+  },
 }

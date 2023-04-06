@@ -9,6 +9,12 @@ export const useLoginMutation = () => {
   })
 }
 
+export const useRecoveryEmailResending = (email: string) => {
+  return useMutation({
+    mutationFn: () => authAPI.passwordRecoveryEmailResending({ email }),
+  });
+}
+
 export const useCreateNewPasswordMutation = () => {
   return useMutation({
     mutationFn: authAPI.createNewPassword,
