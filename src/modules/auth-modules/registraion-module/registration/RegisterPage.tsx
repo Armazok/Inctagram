@@ -2,8 +2,10 @@ import React from 'react'
 import FormLayout from '@/components/FormLayout/FormLayout'
 import { NameTitle } from '@/components/atoms/title/nameTitle'
 import Link from 'next/link'
+
+import RegistrationForm from '@/modules/auth-modules/registraion-module/registration/components/registraion-form/RegistrationForm'
 import GoogleFacebook from '@/ui/GoogleFacebook/GoogleFacebook'
-import RegistrationForm from '@/modules/registration/components/registraion-form/RegistrationForm'
+import { PATH_ROUTE } from '@/common/constants/PATH_ROUTE'
 
 export const RegisterPage = () => {
   return (
@@ -15,7 +17,7 @@ export const RegisterPage = () => {
       <GoogleFacebook />
       <RegistrationForm />
       <Link
-        href={'page-registration/resend-form'}
+        href={PATH_ROUTE.RESEND_FORM}
         className="font-semibold text-[16px] leading-[24px] text-dark-100"
       >
         Didn't receive a confirmation message?
@@ -23,7 +25,7 @@ export const RegisterPage = () => {
       <span className="pt-[18px] pb-[12px] text-[16px] leading-[24px] text-light-100 font-normal">
         Do you have an account?
       </span>
-      <Link href={'/login'} className="font-semibold text-[16px] leading-[24px] text-accent-500">
+      <Link href={'/'} className="font-semibold text-[16px] leading-[24px] text-accent-500">
         Sing In
       </Link>
     </FormLayout>
