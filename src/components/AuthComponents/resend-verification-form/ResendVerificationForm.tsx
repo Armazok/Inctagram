@@ -1,29 +1,25 @@
-import React from 'react'
+import React, { FC } from 'react'
 import FormLayout from '@/components/FormLayout/FormLayout'
+import Preloader from '@/components/atoms/preloader/Preloader'
 import { NameTitle } from '@/components/atoms/title/nameTitle'
 import GlobalInput from '@/ui/Inputs/Input/Input'
 import GlobalButton from '@/ui/buttons/GlobalButton'
-import { useGlobalForm } from '@/common'
-import Preloader from '@/components/atoms/preloader/Preloader'
-import {
-  FormData,
-  verificationSchema,
-} from '@/modules/resend-verification-form/constants/verificationSchema'
-import { useRouter } from 'next/router'
-import { useSendVerifyEmailMutation } from '@/modules/resend-verification-form/hooks/useSendVerifyEmailMutation'
 
-export const ResendVerificationForm = () => {
-  const { push } = useRouter()
+interface PropsType {
+  isLoading: boolean
+  handleSubmit: any
+  submitData: any
+  error: string | any
+  register: any
+}
 
-  const { handleSubmit, register, reset, setCustomError, errors } =
-    useGlobalForm(verificationSchema)
-
-  const { isLoading, resendVerification } = useSendVerifyEmailMutation(setCustomError, reset, push)
-
-  const submitData = (data: FormData) => {
-    resendVerification(data)
-  }
-
+const ResendVerificationForm: FC<PropsType> = ({
+  isLoading,
+  handleSubmit,
+  submitData,
+  error,
+  register,
+}) => {
   return (
     <FormLayout className="mt-[180px]">
       <div className="w-full">
@@ -39,7 +35,7 @@ export const ResendVerificationForm = () => {
           <GlobalInput
             type="email"
             label="Email"
-            error={errors.email?.message}
+            error={error}
             placeholder="Restore verification"
             {...register('email')}
           />
@@ -51,3 +47,5 @@ export const ResendVerificationForm = () => {
     </FormLayout>
   )
 }
+
+export default ResendVerificationForm
