@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { authAPI } from '@/services/api/auth/authAPI'
+
 import { noRefetch } from '@/helpers/no-refetch'
+import { authAPI } from '@/services/api/auth/authAPI'
 
 export const useConfirmationQuery = (confirmationCode: string) => {
   return useQuery({

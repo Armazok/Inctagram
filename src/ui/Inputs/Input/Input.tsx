@@ -1,6 +1,8 @@
 import { CSSProperties, FC, ForwardedRef, forwardRef, HTMLInputTypeAttribute } from 'react'
-import style from './Input.module.scss'
+
 import { FieldValues } from 'react-hook-form'
+
+import style from './Input.module.scss'
 type InputType = {
   type: HTMLInputTypeAttribute
   ref?: ForwardedRef<any>
@@ -17,6 +19,7 @@ const GlobalInput: FC<InputType> = forwardRef(
     ref: ForwardedRef<any>
   ) => {
     console.log(error, 'input')
+
     return (
       <div className={`${style.container} ${classNameContainer}`}>
         <label htmlFor={id} className={`${style.label}`}>
@@ -37,4 +40,5 @@ const GlobalInput: FC<InputType> = forwardRef(
     )
   }
 )
+
 export default GlobalInput

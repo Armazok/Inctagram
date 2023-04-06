@@ -9,7 +9,7 @@ export const useLoginMutation = () => {
   })
 }
 
-export const useRecoveryEmailResending = (email: string) => {
+export const useRecoveryEmailResending = (email: string | null) => {
   return useMutation({
     mutationFn: () => authAPI.passwordRecoveryEmailResending({ email }),
   })

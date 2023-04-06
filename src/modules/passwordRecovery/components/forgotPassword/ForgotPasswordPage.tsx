@@ -8,7 +8,6 @@ import Preloader from '@/components/atoms/preloader/Preloader'
 import { NameTitle } from '@/components/atoms/title/nameTitle'
 import { Confirm } from '@/components/modals/confirm/Confirm'
 import ForgotPasswordForm from '@/modules/passwordRecovery/components/forgotPassword/forgotPasswordForm/ForgotPasswordForm'
-import style from '@/pages/auth/pageLogin.module.scss'
 import { authAPI } from '@/services/api/auth/authAPI'
 
 export const ForgotPasswordPage: NextPage = () => {
@@ -36,31 +35,29 @@ export const ForgotPasswordPage: NextPage = () => {
   if (isLoading) return <Preloader />
 
   return (
-    <div className={style.container}>
-      <div
-        className={
-          'flex flex-col items-center content-center max-w-full border border-bgLogBorder w-4/12 bg-bgLog mt-24 mr-auto ml-auto mb-36'
-        }
-      >
-        <NameTitle nameTitle={'Forgot Password'} className={style.nameTitle} />
+    <div
+      className={
+        'flex flex-col items-center content-center max-w-full border border-bgLogBorder w-4/12 bg-bgLog mt-24 mr-auto ml-auto mb-36'
+      }
+    >
+      <NameTitle nameTitle={'Forgot Password'} className={'text-light-100 mt-6'} />
 
-        <ForgotPasswordForm onSubmitHandler={onSubmitHandler} />
+      <ForgotPasswordForm onSubmitHandler={onSubmitHandler} />
 
-        <Confirm
-          isOpen={isModalOpen}
-          onConfirm={onConfirm}
-          onClose={onClose}
-          title={'Email sent'}
-          text={`We have sent a link to confirm your email to ${variables?.email}`}
-          confirmButtonText={'Ok'}
-        />
+      <Confirm
+        isOpen={isModalOpen}
+        onConfirm={onConfirm}
+        onClose={onClose}
+        title={'Email sent'}
+        text={`We have sent a link to confirm your email to ${variables?.email}`}
+        confirmButtonText={'Ok'}
+      />
 
-        <Link
-          href={'/auth/login'}
-          title={'Back to Sign In'}
-          className={'font-semibold text-[16px] leading-[24px] text-accent-500'}
-        />
-      </div>
+      <Link
+        href={'/auth/login'}
+        title={'Back to Sign In'}
+        className={'font-semibold text-[16px] leading-[24px] text-accent-500 mt-2 mb-4'}
+      />
     </div>
   )
 }

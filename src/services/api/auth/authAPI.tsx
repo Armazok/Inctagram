@@ -58,7 +58,7 @@ export const authAPI: IAuthAPI = {
 interface IAuthAPI {
   login: (data: ReqLogin) => Promise<AxiosResponse<ResLogin>>
   passwordRecovery: (data: ReqPasswordRecovery) => Promise<AxiosResponse>
-  passwordRecoveryEmailResending: (data: ReqPasswordRecovery) => Promise<AxiosResponse>
+  passwordRecoveryEmailResending: (data: { email: string | null }) => Promise<AxiosResponse>
   createNewPassword: (data: ReqNewPassword) => Promise<AxiosResponse>
   registrationConfirmation: (data: RegConfirmation) => Promise<AxiosResponse>
   registrationEmailResending: (data: RegEmailResenging) => Promise<AxiosResponse>
