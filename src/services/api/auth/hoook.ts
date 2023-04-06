@@ -31,7 +31,7 @@ export const useRegistrationConfirmationQuery = (confirmationCode: string) => {
   return useQuery({
     queryKey: ['regConfirmation'],
     queryFn: () => authAPI.registrationConfirmation({ confirmationCode }),
-    enabled: confirmationCode !== 'undefined',
+    enabled: confirmationCode !== undefined,
     retry: false,
     ...noRefetch,
   })

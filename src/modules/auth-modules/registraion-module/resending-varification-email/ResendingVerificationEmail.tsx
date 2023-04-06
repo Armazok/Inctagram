@@ -1,18 +1,16 @@
 import React from 'react'
 
-import { useRouter } from 'next/router'
-
 import { PATH_ROUTE } from '@/common/constants/PATH_ROUTE'
 import Preloader from '@/components/atoms/preloader/Preloader'
 import EmailSuccessMessage from '@/components/AuthComponents/email-success-message/EmailSuccesMessage'
 import ResendingVerificationLink from '@/components/AuthComponents/resending-verification-link/ResendingVerificationLink'
 import { useConfirmationQuery } from '@/modules/auth-modules/registraion-module/resending-varification-email/api/confirmationRequest'
 
-const ResendingVerificationEmail = () => {
-  const {
+const ResendingVerificationEmail = (props: any) => {
+  /* const {
     query: { code },
-  } = useRouter()
-  const { isLoading, isError } = useConfirmationQuery(code as string)
+  } = useRouter()*/
+  const { isLoading, isError } = useConfirmationQuery(props as string)
 
   if (isLoading) return <Preloader />
 

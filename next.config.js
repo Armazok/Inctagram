@@ -7,6 +7,9 @@ const nextConfig = withTM({
   future: {
     webpack5: true,
   },
+  images: {
+    unoptimized: true,
+  },
   outDir: 'build',
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
