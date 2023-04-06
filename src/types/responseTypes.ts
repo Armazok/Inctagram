@@ -12,3 +12,8 @@ export type ResRegConfirmation = {
   ]
   error: string
 }
+
+
+export type ResCheckRecoveryCode = {
+  email: string
+}

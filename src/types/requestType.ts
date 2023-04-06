@@ -19,3 +19,8 @@ export type RegConfirmation = {
 export type RegEmailResenging = {
   email: string
 }
+
+export type ReqPasswordRecoveryWithRecaptcha = {
+  email: string
+  recaptcha: string
+}
