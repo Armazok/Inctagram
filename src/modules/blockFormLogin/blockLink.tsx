@@ -1,14 +1,21 @@
 import React, { FC, memo } from 'react'
 
-import Link from '@/components/atoms/link/Link'
+import Link from 'next/link'
 
 interface IBlockLink {}
 
 export const BlockLink: FC<IBlockLink> = memo(({}) => {
   return (
     <>
-      <Link href={'/'} title={'Dont`t have an account?'} className={'text-danger-300'} />
-      <Link href={'/'} title={'Sign Up'} className={'text-blue-600'} />
+      <span className="pb-[12px] text-[16px] leading-[24px] text-light-100 font-normal">
+        Don`t have account?
+      </span>
+      <Link
+        href={'auth/page-registration'}
+        className="font-semibold text-[16px] leading-[24px] text-accent-500"
+      >
+        Sing Up
+      </Link>
     </>
   )
 })
