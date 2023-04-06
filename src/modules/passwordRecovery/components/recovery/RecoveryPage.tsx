@@ -19,7 +19,7 @@ export const RecoveryPage = () => {
 
   const recoveryCode = router.query && (router.query.code as string)
 
-  const { isError, status, isSuccess, data } = useQuery({
+  const { isError, status, isSuccess } = useQuery({
     queryKey: ['recovery'],
     queryFn: async () => {
       const response = await authAPI.checkRecoveryCode({ recoveryCode })
