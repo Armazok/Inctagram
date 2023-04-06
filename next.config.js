@@ -8,7 +8,7 @@ const nextConfig = withTM({
     webpack5: true,
   },
   images: {
-    unoptimized: true,
+    unoptimized: false,
   },
   outDir: 'build',
   sassOptions: {
