@@ -15,7 +15,7 @@ export const RecoveryPage = () => {
     console.log(email);
     const router = useRouter();
 
-    const recoveryCode = router.query && router.query.code
+    const recoveryCode = router.query && router.query.code as string;
 
 
     const {isError, status, isSuccess, data} = useQuery({

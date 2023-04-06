@@ -31,6 +31,7 @@ const ForgotPasswordForm = ({onSubmitHandler}: PropsType) => {
                 id="email"
                 placeholder=""
                 label="Email"
+                //@ts-ignore
                 error={errors?.email?.message}
                 {...register('email')}
             />

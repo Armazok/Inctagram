@@ -38,6 +38,7 @@ const CreateNewPasswordForm = ({onSubmitHandler}: PropsType) => {
                     placeholder=""
                     label="Password"
                     id="confirmPassword"
+                    //@ts-ignore
                     error={errors?.confirmPassword?.message}
                     {...register('confirmPassword')}
                 />
