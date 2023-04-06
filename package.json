@@ -15,7 +15,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -b inctagram-pages -d .next"
   },
   "dependencies": {
     "@apollo/client": "^3.7.10",
