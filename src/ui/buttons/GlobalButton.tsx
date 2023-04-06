@@ -11,7 +11,7 @@ interface PropsType {
   variant?: ButtonVariant
 }
 
-type variantClassNameType = { [Key in ButtonVariant]: string }
+type variantClassNameType = { [Key in ButtonVariant]: Key }
 const variantClassName: variantClassNameType = {
   black: 'black',
   default: 'default',
@@ -24,7 +24,7 @@ const GlobalButton: FC<PropsType> = ({
   callback,
   type = 'button',
   disabled,
-  variant,
+  variant = 'default',
   className,
   ...restProps
 }) => {

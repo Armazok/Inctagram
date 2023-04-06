@@ -1,19 +1,20 @@
-import React, { FC, forwardRef, useState } from 'react'
+import React, { FC, ForwardedRef, forwardRef, useState } from 'react'
 import GlobalInput from '@/ui/Inputs/Input/Input'
 import style from './Input-with-eye.module.scss'
 import eyeOutline from './../../../assets/icons/eye-outline-white.svg'
 import eyeOff from './../../../assets/icons/eye-off-outline-white.svg'
 import Image from 'next/image'
+import { FieldValues } from 'react-hook-form'
 
 interface PropsType {
   id: string
   label: string
   placeholder: string
-  error: string
+  error: string | FieldValues | any
 }
 
 const InputWithEye: FC<Partial<PropsType>> = forwardRef(
-  ({ label, id, placeholder, error, ...restProps }, ref) => {
+  ({ label, id, placeholder, error, ...restProps }, ref: ForwardedRef<any>) => {
     const [showPass, setShowPass] = useState(false)
 
     return (
