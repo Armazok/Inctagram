@@ -1,9 +1,10 @@
 import React, { FC } from 'react'
-import FormLayout from '@/components/FormLayout/FormLayout'
+
 import Preloader from '@/components/atoms/preloader/Preloader'
 import { NameTitle } from '@/components/atoms/title/nameTitle'
-import GlobalInput from '@/ui/Inputs/Input/Input'
+import FormLayout from '@/components/FormLayout/FormLayout'
 import GlobalButton from '@/ui/buttons/GlobalButton'
+import GlobalInput from '@/ui/Inputs/Input/Input'
 
 interface PropsType {
   isLoading: boolean

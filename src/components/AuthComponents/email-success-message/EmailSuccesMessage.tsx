@@ -1,7 +1,9 @@
 import React from 'react'
+
 import Image from 'next/image'
-import EmailConfirmationImg from '@/assets/images/bro.svg'
 import Link from 'next/link'
+
+import EmailConfirmationImg from '@/assets/images/bro.svg'
 
 const EmailSuccessMessage = () => {
   return (

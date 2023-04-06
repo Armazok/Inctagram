@@ -3,16 +3,15 @@ export type ResLogin = {
 }
 
 export type ResRegConfirmation = {
-  statusCode: number,
+  statusCode: number
   messages: [
     {
-      message: string,
+      message: string
       field: string
     }
-  ],
+  ]
   error: string
 }
-
 
 export type ResCheckRecoveryCode = {
   email: string

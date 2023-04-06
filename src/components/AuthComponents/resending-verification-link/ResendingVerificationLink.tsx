@@ -1,7 +1,9 @@
 import React, { FC } from 'react'
+
 import Image from 'next/image'
-import EmailResendingImg from '@/assets/images/rafiki.svg'
 import Link from 'next/link'
+
+import EmailResendingImg from '@/assets/images/rafiki.svg'
 
 const ResendingVerificationLink: FC<{ path: string }> = ({ path }) => {
   return (

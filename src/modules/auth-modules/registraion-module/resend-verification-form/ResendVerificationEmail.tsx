@@ -1,13 +1,14 @@
 import React from 'react'
-import { useGlobalForm } from '@/common'
 
 import { useRouter } from 'next/router'
-import { useSendVerifyEmailMutation } from '@/modules/auth-modules/registraion-module/resend-verification-form/hooks/useSendVerifyEmailMutation'
+
+import { useGlobalForm } from '@/common'
+import ResendVerificationForm from '@/components/AuthComponents/resend-verification-form/ResendVerificationForm'
 import {
   FormDataVerification,
   verificationSchema,
 } from '@/modules/auth-modules/registraion-module/resend-verification-form/constants/verificationSchema'
-import ResendVerificationForm from '@/components/AuthComponents/resend-verification-form/ResendVerificationForm'
+import { useSendVerifyEmailMutation } from '@/modules/auth-modules/registraion-module/resend-verification-form/hooks/useSendVerifyEmailMutation'
 
 export const ResendVerificationEmail = () => {
   const { push } = useRouter()

@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
+
+import { useGlobalForm } from '@/common'
+import Preloader from '@/components/atoms/preloader/Preloader'
+import { Confirm } from '@/components/modals/confirm/Confirm'
+import { schema } from '@/modules/auth-modules/registraion-module/registration/constants/registerValidateSchema'
+import { useRegisterMutation } from '@/modules/auth-modules/registraion-module/registration/hooks/useRegister'
+import GlobalButton from '@/ui/buttons/GlobalButton'
 import GlobalInput from '@/ui/Inputs/Input/Input'
 import InputWithEye from '@/ui/Inputs/InputWithEye/InputWithEye'
-import GlobalButton from '@/ui/buttons/GlobalButton'
-import { useGlobalForm } from '@/common'
-
-import { Confirm } from '@/components/modals/confirm/Confirm'
-import Preloader from '@/components/atoms/preloader/Preloader'
-import { useRegisterMutation } from '@/modules/auth-modules/registraion-module/registration/hooks/useRegister'
-import { schema } from '@/modules/auth-modules/registraion-module/registration/constants/registerValidateSchema'
 
 const titleForModal = 'Email sent'
 const messageModal = 'We have sent a link to confirm your email to'
@@ -24,6 +24,7 @@ const RegistrationForm = () => {
 
   const formSubmit = (data: any) => {
     const { email, password } = data
+
     sendRegisteredData({ email, password })
   }
 

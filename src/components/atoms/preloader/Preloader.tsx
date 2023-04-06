@@ -1,9 +1,12 @@
 import React from 'react'
+
 import Image from 'next/image'
+
 import preloader from '../../../assets/gif/loadingGrey.gif'
 
 const Preloader = () => {
   console.log(preloader)
+
   return (
     <div
       className={
