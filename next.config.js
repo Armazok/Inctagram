@@ -7,6 +7,7 @@ const nextConfig = withTM({
   future: {
     webpack5: true,
   },
+  outDir: 'build',
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
     tsconfigPaths: [path.join(__dirname, 'tsconfig.json')],
