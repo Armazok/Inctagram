@@ -17,7 +17,7 @@ type Inputs = {
 
 export const BlockLoginForm = () => {
   const router = useRouter()
-  const { mutate: login, isLoading, isSuccess } = useLoginMutation()
+  const { mutate: login, isLoading, isSuccess, isError } = useLoginMutation()
   const {
     register,
     formState: { errors },
@@ -39,6 +39,13 @@ export const BlockLoginForm = () => {
   if (isSuccess) {
     router.push('/future/future')
   }
+  if (isError)
+    return (
+      <div className={'flex m-7 text-center'}>
+        Решил оставить минимализм, к слову запрос упал. <br />
+        Либо пароль, либо мыло неверно
+      </div>
+    )
 
   return (
     <>
