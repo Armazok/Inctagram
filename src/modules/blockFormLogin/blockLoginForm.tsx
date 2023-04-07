@@ -42,8 +42,9 @@ export const BlockLoginForm = () => {
   if (isError)
     return (
       <div className={'flex m-7 text-center'}>
-        Решил оставить минимализм, к слову запрос упал. <br />
-        Либо пароль, либо мыло неверно
+        Да,да я знаю что что-то пошло ни так <br />
+        Либо пароль, либо мыло,а может и CORS
+        <br /> Чек network
       </div>
     )
 
