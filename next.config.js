@@ -10,7 +10,7 @@ const nextConfig = withTM({
   images: {
     unoptimized: true,
   },
-  outDir: 'build',
+  outDir: '.next',
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
     tsconfigPaths: [path.join(__dirname, 'tsconfig.json')],
