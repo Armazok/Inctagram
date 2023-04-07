@@ -17,7 +17,7 @@ type Inputs = {
 
 export const BlockLoginForm = () => {
   const router = useRouter()
-  const { mutate: login, isLoading } = useLoginMutation()
+  const { mutate: login, isLoading, isSuccess } = useLoginMutation()
   const {
     register,
     formState: { errors },
@@ -25,18 +25,23 @@ export const BlockLoginForm = () => {
   } = useForm<Inputs>()
 
   const handleFormSubmit = async ({ email, password }: Inputs) => {
-    await login({
-      email,
-      password,
-    })
-    router.push('./TEST_PAGE')
+    try {
+      await login({
+        email,
+        password,
+      })
+    } catch (e) {
+      router.push('/')
+    }
   }
 
   if (isLoading) return <Preloader />
+  if (isSuccess) {
+    router.push('/future/future')
+  }
 
   return (
     <>
-      {isLoading && <Preloader />}
       <form
         className="flex flex-col grow gap-[10px] pt-[22px]  pb-[18px] w-full gap-[24px]"
         onSubmit={handleSubmit(handleFormSubmit)}
