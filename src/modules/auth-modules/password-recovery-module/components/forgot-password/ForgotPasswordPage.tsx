@@ -7,14 +7,14 @@ import Link from '@/components/atoms/link/Link'
 import Preloader from '@/components/atoms/preloader/Preloader'
 import { NameTitle } from '@/components/atoms/title/nameTitle'
 import { Confirm } from '@/components/modals/confirm/Confirm'
-import ForgotPasswordForm from '@/modules/passwordRecovery/components/forgotPassword/forgotPasswordForm/ForgotPasswordForm'
-import { authAPI } from '@/services/api/auth/authAPI'
+import { passwordRecoveryAPI } from '@/modules/auth-modules/password-recovery-module/api/passwordRecovary'
+import ForgotPasswordForm from '@/modules/auth-modules/password-recovery-module/components/forgot-password/forgot-password-form/ForgotPasswordForm'
 
 export const ForgotPasswordPage: NextPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const { mutate, isLoading, variables } = useMutation({
-    mutationFn: authAPI.passwordRecovery,
+    mutationFn: passwordRecoveryAPI.passwordRecovery,
     onSuccess: () => {
       setIsModalOpen(true)
     },
