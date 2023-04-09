@@ -3,7 +3,7 @@ import React from 'react'
 import { FieldValues, SubmitHandler } from 'react-hook-form'
 
 import { useGlobalForm } from '@/common'
-import { schema } from '@/modules/passwordRecovery/constants/createNewPasswordSchema'
+import { schema } from '@/modules/auth-modules/password-recovery-module/constants/createNewPasswordSchema'
 import GlobalButton from '@/ui/buttons/GlobalButton'
 import InputWithEye from '@/ui/Inputs/InputWithEye/InputWithEye'
 
