@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios'
 
 import { authInstance } from '@/services/api/auth/instanse'
-import { RegConfirmation, RegEmailResenging} from '@/types/'
+import { RegConfirmation, RegEmailResenging } from '@/types/'
 
 export const authAPI: IAuthAPI = {
   registrationConfirmation: data => {
@@ -13,7 +13,7 @@ export const authAPI: IAuthAPI = {
     const { email } = data
 
     return authInstance.post('/auth/registration-email-resending', { email })
-  }
+  },
 }
 
 interface IAuthAPI {

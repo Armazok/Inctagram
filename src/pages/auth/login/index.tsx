@@ -6,7 +6,7 @@ import { LoginPage } from '@/modules/auth-modules/login-module/login/LoginPage'
 
 interface ILogin {}
 
-export const PageLogin: FC<ILogin> = memo(({}) => {
+const PageLogin: FC<ILogin> = memo(({}) => {
   return (
     <div>
       <Head>Login</Head>
@@ -14,3 +14,5 @@ export const PageLogin: FC<ILogin> = memo(({}) => {
     </div>
   )
 })
+
+export default PageLogin

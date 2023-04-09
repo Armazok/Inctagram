@@ -6,8 +6,6 @@ import '@/styles/globals.scss'
 import '@/components/atoms/buttons/button.module.scss'
 import type { AppProps } from 'next/app'
 
-import 'uikit/dist/css/uikit.min.css'
-
 import client from '@/apolloClient'
 import { Header } from '@/components/atoms/header/Header'
 

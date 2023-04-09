@@ -1,6 +1,6 @@
-import {useMutation} from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 
-import {passwordRecoveryAPI} from '@/modules/auth-modules/password-recovery-module/api/passwordRecovary'
+import { passwordRecoveryAPI } from '@/modules/auth-modules/password-recovery-module/api/passwordRecovary'
 
 export const useCreateNewPasswordMutation = () => {
   return useMutation({
@@ -18,11 +18,11 @@ export const useRecoveryEmailResending = (setCustomError: any, reset: any, push:
     onError: error => {
       // @ts-ignore
       setCustomError('email', error.response.data.messages[0].message)
-    }
+    },
   })
 
   return {
     isLoading,
-    resendRecoverCode
+    resendRecoverCode,
   }
 }

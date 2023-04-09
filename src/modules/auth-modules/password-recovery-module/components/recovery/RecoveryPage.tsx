@@ -1,17 +1,14 @@
 import React from 'react'
 
-import {useQuery} from '@tanstack/react-query'
-import {useRouter} from 'next/router'
+import { useQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/router'
 
-import {PATH_ROUTE} from '@/common/constants/PATH_ROUTE'
+import { PATH_ROUTE } from '@/common/constants/PATH_ROUTE'
 import Preloader from '@/components/atoms/preloader/Preloader'
-import ResendingVerificationLink
-  from '@/components/AuthComponents/resending-verification-link/ResendingVerificationLink'
-import {noRefetch} from '@/helpers/no-refetch'
-import {passwordRecoveryAPI} from '@/modules/auth-modules/password-recovery-module/api/passwordRecovary'
-import {
-  CreateNewPasswordPage
-} from '@/modules/auth-modules/password-recovery-module/components/recovery/create-new-password/CreateNewPasswordPage'
+import ResendingVerificationLink from '@/components/AuthComponents/resending-verification-link/ResendingVerificationLink'
+import { noRefetch } from '@/helpers/no-refetch'
+import { passwordRecoveryAPI } from '@/modules/auth-modules/password-recovery-module/api/passwordRecovary'
+import { CreateNewPasswordPage } from '@/modules/auth-modules/password-recovery-module/components/recovery/create-new-password/CreateNewPasswordPage'
 
 export const RecoveryPage = () => {
   const router = useRouter()
@@ -22,6 +19,7 @@ export const RecoveryPage = () => {
     queryKey: ['recovery'],
     queryFn: async () => {
       const response = await passwordRecoveryAPI.checkRecoveryCode({ recoveryCode })
+
       return response.data
     },
     enabled: !!recoveryCode,
