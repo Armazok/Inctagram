@@ -3,17 +3,17 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { noRefetch } from '@/helpers/no-refetch'
 import { authAPI } from '@/services/api/auth/authAPI'
 
-export const useRecoveryEmailResending = (email: string | null) => {
-  return useMutation({
-    mutationFn: () => authAPI.passwordRecoveryEmailResending({ email }),
-  })
-}
-
-export const useCreateNewPasswordMutation = () => {
-  return useMutation({
-    mutationFn: authAPI.createNewPassword,
-  })
-}
+// export const useRecoveryEmailResending = (email: string | null) => {
+//   return useMutation({
+//     mutationFn: () => authAPI.passwordRecoveryEmailResending({ email }),
+//   })
+// }
+//
+// export const useCreateNewPasswordMutation = () => {
+//   return useMutation({
+//     mutationFn: authAPI.createNewPassword,
+//   })
+// }
 
 export const useRegistrationEmailResendingMutation = (email: string) => {
   return useMutation({
