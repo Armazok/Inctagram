@@ -1,5 +1,6 @@
 {
   "name": "inctagram",
+  "homepage": "https://Armazok.github.io/Inctagram",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,7 +13,9 @@
     "stylelint": "stylelint \"**/*.{css,scss}\" --fix",
     "fix": "yarn eslint && yarn prettier",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@apollo/client": "^3.7.10",
@@ -25,6 +28,7 @@
     "@types/react-dom": "18.0.11",
     "autoprefixer": "^10.4.14",
     "axios": "^1.3.4",
+    "gh-pages": "^5.0.0",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "next": "13.2.4",
