@@ -3,12 +3,6 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { noRefetch } from '@/helpers/no-refetch'
 import { authAPI } from '@/services/api/auth/authAPI'
 
-export const useLoginMutation = () => {
-  return useMutation({
-    mutationFn: authAPI.login,
-  })
-}
-
 export const useRecoveryEmailResending = (email: string | null) => {
   return useMutation({
     mutationFn: () => authAPI.passwordRecoveryEmailResending({ email }),
