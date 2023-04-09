@@ -6,7 +6,7 @@ type PropsType = {
     value: string
     label?: string
     id?: string
-    onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void
+    onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void
     error?: string | FieldValues | any
     rows?: string
     cols?: string,
