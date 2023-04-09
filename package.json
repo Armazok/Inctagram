@@ -11,7 +11,7 @@
     "eslint": "eslint --fix --ext .js,.jsx,.ts,.tsx src",
     "prettier": "prettier . --write",
     "stylelint": "stylelint \"**/*.{css,scss}\" --fix",
-    "fix": "yarn eslint && yarn prettier && yarn stylelint",
+    "fix": "yarn eslint && yarn prettier",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "predeploy": "npm run build",

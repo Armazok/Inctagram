@@ -13,11 +13,6 @@ import {
 } from '@/types/'
 
 export const authAPI: IAuthAPI = {
-  login: data => {
-    const { email, password } = data
-
-    return authInstance.post('auth/login', { email, password })
-  },
   passwordRecovery: data => {
     const { email } = data
 
@@ -56,7 +51,6 @@ export const authAPI: IAuthAPI = {
 }
 
 interface IAuthAPI {
-  login: (data: ReqLogin) => Promise<AxiosResponse<ResLogin>>
   passwordRecovery: (data: ReqPasswordRecovery) => Promise<AxiosResponse>
   passwordRecoveryEmailResending: (data: { email: string | null }) => Promise<AxiosResponse>
   createNewPassword: (data: ReqNewPassword) => Promise<AxiosResponse>

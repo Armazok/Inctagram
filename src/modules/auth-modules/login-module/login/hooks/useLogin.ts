@@ -1,31 +1,32 @@
 import { useMutation } from '@tanstack/react-query'
 
+import { sendLoginRequest } from '@/modules/auth-modules/login-module/login/api/loginAPI'
 import { sendRegisterRequest } from '@/modules/auth-modules/registraion-module/registration/api/sendRegisterRequest'
 
-//export const useRegisterMutation = (setCustomError: any, setToggleModal: any, reset: any) => {
-export const useRegisterMutation = (setCustomError: any, onSuccess: any, reset: any) => {
+export const useLoginMutation = (onSuccess?: any, setCustomError?: any, reset?: any) => {
   const {
     data,
     isLoading,
     variables,
-    mutate: sendRegisteredData,
+    mutate: sendLoginData,
   } = useMutation({
-    mutationFn: sendRegisterRequest,
-    mutationKey: ['registered'],
+    mutationFn: sendLoginRequest,
+    mutationKey: ['login'],
     onSuccess: () => {
       onSuccess()
 
-      reset()
+      // reset()
     },
     onError: error => {
       // @ts-ignore
       setCustomError('email', `${error?.response?.data?.messages[0].message}`)
+      // setCustomError()
     },
   })
 
   return {
     data,
-    sendRegisteredData,
+    sendLoginData,
     variables,
     isLoading,
   }

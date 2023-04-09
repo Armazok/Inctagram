@@ -18,7 +18,7 @@ const RegistrationForm = () => {
   const { errors, register, reset, handleSubmit, setCustomError } = useGlobalForm(schema)
   const { sendRegisteredData, isLoading, variables } = useRegisterMutation(
     setCustomError,
-    setToggleModal,
+    () => setToggleModal(true),
     reset
   )
 
