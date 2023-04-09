@@ -9,6 +9,7 @@ import {
   verificationSchema,
 } from '@/modules/auth-modules/registraion-module/resend-verification-form/constants/verificationSchema'
 import { useSendVerifyEmailMutation } from '@/modules/auth-modules/registraion-module/resend-verification-form/hooks/useSendVerifyEmailMutation'
+import { PATH_ROUTE } from '@/common/constants/PATH_ROUTE'
 
 export const ResendVerificationEmail = () => {
   const { push } = useRouter()
@@ -16,7 +17,11 @@ export const ResendVerificationEmail = () => {
   const { handleSubmit, register, reset, setCustomError, errors } =
     useGlobalForm(verificationSchema)
 
-  const { isLoading, resendVerification } = useSendVerifyEmailMutation(setCustomError, reset, push)
+  const { isLoading, resendVerification } = useSendVerifyEmailMutation(
+    setCustomError,
+    () => reset(),
+    () => push(PATH_ROUTE.LOGIN)
+  )
 
   const submitData = (data: FormDataVerification) => {
     resendVerification(data)

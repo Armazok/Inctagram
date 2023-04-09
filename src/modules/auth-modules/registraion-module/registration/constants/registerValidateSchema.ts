@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-export type FormData = yup.InferType<typeof schema>
+export type FormDataRegistered = yup.InferType<typeof schema>
 
 export const schema = yup.object({
   email: yup.string().required('Email is required filed'),

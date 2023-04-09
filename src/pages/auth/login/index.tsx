@@ -1,15 +1,16 @@
 import React, { FC, memo } from 'react'
 
 import Head from 'next/head'
-
-import { LoginPage } from '@/modules/auth-modules/login-module/login/LoginPage'
+import { LoginPage } from '@/modules'
 
 interface ILogin {}
 
 const PageLogin: FC<ILogin> = memo(({}) => {
   return (
     <div>
-      <Head>Login</Head>
+      <Head>
+        <title>Login</title>
+      </Head>
       <LoginPage />
     </div>
   )
