@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import { PageLogin } from '@/pages/auth/login'
+import PageLogin from '@/pages/auth/login'
 
 export default function Home() {
   return (
