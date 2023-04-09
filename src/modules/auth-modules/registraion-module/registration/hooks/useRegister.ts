@@ -2,8 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 
 import { sendRegisterRequest } from '@/modules/auth-modules/registraion-module/registration/api/sendRegisterRequest'
 
-//export const useRegisterMutation = (setCustomError: any, setToggleModal: any, reset: any) => {
-export const useRegisterMutation = (setCustomError: any, onSuccess: any, reset: any) => {
+export const useRegisterMutation = (onSuccess, reset, setError) => {
   const {
     data,
     isLoading,
@@ -14,12 +13,10 @@ export const useRegisterMutation = (setCustomError: any, onSuccess: any, reset: 
     mutationKey: ['registered'],
     onSuccess: () => {
       onSuccess()
-
       reset()
     },
     onError: error => {
-      // @ts-ignore
-      setCustomError('email', `${error?.response?.data?.messages[0].message}`)
+      setError('email', error?.response?.data.messages[0].message)
     },
   })
 
