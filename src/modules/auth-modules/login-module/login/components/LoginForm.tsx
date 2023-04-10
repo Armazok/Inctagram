@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -13,24 +13,31 @@ import GlobalInput from '@/ui/Inputs/Input/Input'
 import InputWithEye from '@/ui/Inputs/InputWithEye/InputWithEye'
 
 export const LoginForm = () => {
-  const router = useRouter()
+  const { push } = useRouter()
 
-  const { setCustomError, handleSubmit, register, errors } = useGlobalForm(schemaLogin)
+  const { setCustomError, handleSubmit, register, errors, reset } = useGlobalForm(schemaLogin)
 
-  const { sendLoginData, isLoading } = useLoginMutation(
-    () => router.push('future/future'),
-    () => setCustomError
+  const { sendLoginData, isLoading, data } = useLoginMutation(
+    () => push('future/future'),
+    () =>
+      setCustomError(
+        'password',
+        'The password or the email or Username are incorrect. Try again, please'
+      ),
+    () => reset()
   )
 
-  const handleFormSubmit = async ({ email, password }: FieldValues) => {
-    try {
-      await sendLoginData({
-        email,
-        password,
-      })
-    } catch (e) {
-      router.push('/')
+  useEffect(() => {
+    if (!isLoading && data) {
+      window.localStorage.setItem('accessToken', JSON.stringify(data.data.accessToken))
     }
+  }, [isLoading, data])
+
+  const handleFormSubmit = async ({ email, password }: FieldValues) => {
+    await sendLoginData({
+      email,
+      password,
+    })
   }
 
   return (
@@ -55,7 +62,10 @@ export const LoginForm = () => {
           error={errors?.password?.message}
           {...register('password')}
         />
-        <Link href={'/auth/forgot-password'} className={'flex justify-end text-light-900 text-xs'}>
+        <Link
+          href={'/auth/forgot-password'}
+          className={'flex justify-end text-light-900 text-xs mt-2'}
+        >
           Forgot password?
         </Link>
         <GlobalButton variant="default" type="submit">
