@@ -15,7 +15,7 @@ export const useGlobalForm = (schema: any) => {
   })
 
   const setCustomError = (name: string, message: string) => {
-    return setError(name, {
+    setError(name, {
       type: 'custom',
       message: message,
     })

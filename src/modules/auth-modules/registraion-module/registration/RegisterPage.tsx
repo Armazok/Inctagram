@@ -26,7 +26,10 @@ export const RegisterPage = () => {
       <span className="pt-[18px] pb-[12px] text-[16px] leading-[24px] text-light-100 font-normal">
         Do you have an account?
       </span>
-      <Link href={'/'} className="font-semibold text-[16px] leading-[24px] text-accent-500">
+      <Link
+        href={PATH_ROUTE.MAIN}
+        className="font-semibold text-[16px] leading-[24px] text-accent-500"
+      >
         Sing In
       </Link>
     </FormLayout>
