@@ -4,6 +4,6 @@ import { authInstance } from '@/services/api/auth/instanse'
 export const sendRegisterRequest = ({
   email,
   password,
-}: Omit<FormDataRegistered, 'confirmPassword'>) => {
+}: Pick<FormDataRegistered, 'email' | 'password'>) => {
   return authInstance.post('auth/registration', { email, password })
 }
