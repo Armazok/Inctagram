@@ -18,8 +18,6 @@ const GlobalInput: FC<InputType> = forwardRef(
     { type, label = '', placeholder, id, error, classNameContainer = '', ...restProps },
     ref: ForwardedRef<any>
   ) => {
-    console.log(error, 'input')
-
     return (
       <div className={`${style.container} ${classNameContainer}`}>
         <label htmlFor={id} className={`${style.label}`}>
