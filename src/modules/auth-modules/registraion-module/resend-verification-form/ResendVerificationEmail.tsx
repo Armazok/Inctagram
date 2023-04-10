@@ -3,13 +3,13 @@ import React from 'react'
 import { useRouter } from 'next/router'
 
 import { useGlobalForm } from '@/common'
+import { PATH_ROUTE } from '@/common/constants/PATH_ROUTE'
 import ResendVerificationForm from '@/components/AuthComponents/resend-verification-form/ResendVerificationForm'
+import { useSendVerifyEmailMutation } from '@/modules/auth-modules/registraion-module/resend-verification-form/hooks/useSendVerifyEmailMutation'
 import {
   FormDataVerification,
   verificationSchema,
 } from '@/modules/auth-modules/registraion-module/resend-verification-form/constants/verificationSchema'
-import { useSendVerifyEmailMutation } from '@/modules/auth-modules/registraion-module/resend-verification-form/hooks/useSendVerifyEmailMutation'
-import { PATH_ROUTE } from '@/common/constants/PATH_ROUTE'
 
 export const ResendVerificationEmail = () => {
   const { push } = useRouter()
