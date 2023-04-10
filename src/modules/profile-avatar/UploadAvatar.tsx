@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+
 import { Avatar } from '@/ui/avatar/Avatar'
 import GlobalButton from '@/ui/buttons/GlobalButton'
 

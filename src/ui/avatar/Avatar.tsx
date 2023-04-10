@@ -1,5 +1,7 @@
 import React from 'react'
+
 import Image from 'next/image'
+
 import placeholder from '@/assets/images/img-placeholder.png'
 
 type PropsType = {
