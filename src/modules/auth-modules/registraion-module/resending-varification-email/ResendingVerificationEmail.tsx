@@ -5,9 +5,7 @@ import EmailSuccessMessage from '@/components/AuthComponents/email-success-messa
 import ResendingVerificationLink from '@/components/AuthComponents/resending-verification-link/ResendingVerificationLink'
 import { useConfirmationQuery } from '@/modules/auth-modules/registraion-module/resending-varification-email/api/confirmationRequest'
 
-type PropsType = {
-  code: string | string[] | undefined
-}
+type PropsType = { code: string | string[] | undefined }
 
 export const ResendingVerificationEmail: FC<PropsType> = ({ code }) => {
   const { isLoading, isError } = useConfirmationQuery(code as string)
