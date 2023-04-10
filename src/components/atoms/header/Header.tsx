@@ -1,8 +1,9 @@
 import React from 'react'
 
+import { useRouter } from 'next/router'
+
 import Logout from '@/components/header/Logout/Logout'
 import { useUserStore } from '@/store'
-import { useRouter } from 'next/router'
 
 export const Header = () => {
   const { push } = useRouter()

@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+
 import { PATH_ROUTE } from '@/common/constants/PATH_ROUTE'
 import Preloader from '@/components/atoms/preloader/Preloader'
 import EmailSuccessMessage from '@/components/AuthComponents/email-success-message/EmailSuccesMessage'
