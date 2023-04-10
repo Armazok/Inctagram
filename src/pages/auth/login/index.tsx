@@ -1,6 +1,7 @@
 import React, { FC, memo } from 'react'
 
 import Head from 'next/head'
+
 import { LoginPage } from '@/modules'
 
 interface ILogin {}
