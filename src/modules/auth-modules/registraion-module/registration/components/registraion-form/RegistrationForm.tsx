@@ -25,19 +25,18 @@ const RegistrationForm = () => {
     setCustomError
   )
 
-  const formSubmit = (data: FormDataRegistered) => {
-    const { email, password } = data
-
-    sendRegisteredData({ email, password })
+  const registeredDataSubmit = (data: FormDataRegistered | any) => {
+    sendRegisteredData(data)
   }
 
   const modalToggle = () => setToggleModal(!toggleModal)
+
   return (
     <>
       {isLoading && <Preloader />}
       <form
         className="flex flex-col grow gap-[10px] pt-[22px]  pb-[18px] w-full gap-[24px]"
-        onSubmit={handleSubmit(formSubmit)}
+        onSubmit={handleSubmit(registeredDataSubmit)}
       >
         <GlobalInput
           type="email"
