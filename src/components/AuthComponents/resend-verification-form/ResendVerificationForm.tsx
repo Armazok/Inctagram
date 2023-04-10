@@ -33,13 +33,7 @@ const ResendVerificationForm: FC<PropsType> = ({
           className="flex flex-col grow gap-[40px] pt-[22px] w-full  "
           onSubmit={handleSubmit(submitData)}
         >
-          <GlobalInput
-            type="email"
-            label="Email"
-            error={error}
-            placeholder="Restore verification"
-            {...register('email')}
-          />
+          <GlobalInput type="email" label="Email" error={error} {...register('email')} />
           <GlobalButton type="submit" variant="default">
             Send
           </GlobalButton>

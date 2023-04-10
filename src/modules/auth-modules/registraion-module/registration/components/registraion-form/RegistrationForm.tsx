@@ -3,7 +3,10 @@ import React, { useState } from 'react'
 import { useGlobalForm } from '@/common'
 import Preloader from '@/components/atoms/preloader/Preloader'
 import { Confirm } from '@/components/modals/confirm/Confirm'
-import { schema } from '@/modules/auth-modules/registraion-module/registration/constants/registerValidateSchema'
+import {
+  FormDataRegistered,
+  schema,
+} from '@/modules/auth-modules/registraion-module/registration/constants/registerValidateSchema'
 import { useRegisterMutation } from '@/modules/auth-modules/registraion-module/registration/hooks/useRegister'
 import GlobalButton from '@/ui/buttons/GlobalButton'
 import GlobalInput from '@/ui/Inputs/Input/Input'
@@ -17,19 +20,18 @@ const RegistrationForm = () => {
 
   const { errors, register, reset, handleSubmit, setCustomError } = useGlobalForm(schema)
   const { sendRegisteredData, isLoading, variables } = useRegisterMutation(
-    setCustomError,
     () => setToggleModal(true),
-    reset
+    () => reset(),
+    setCustomError
   )
 
-  const formSubmit = (data: any) => {
+  const formSubmit = (data: FormDataRegistered) => {
     const { email, password } = data
 
     sendRegisteredData({ email, password })
   }
 
   const modalToggle = () => setToggleModal(!toggleModal)
-
   return (
     <>
       {isLoading && <Preloader />}
@@ -40,7 +42,6 @@ const RegistrationForm = () => {
         <GlobalInput
           type="email"
           id="email"
-          placeholder="Epam@epam.com"
           label="Email"
           error={errors?.email?.message}
           {...register('email')}
@@ -48,13 +49,11 @@ const RegistrationForm = () => {
         <InputWithEye
           label="Password"
           id="password"
-          placeholder="******************"
           error={errors?.password?.message}
           {...register('password')}
         />
         <InputWithEye
-          placeholder="******************"
-          label="Password"
+          label="Password Confirmation"
           id="confirmPassword"
           error={errors?.confirmPassword?.message}
           {...register('confirmPassword')}
@@ -68,7 +67,7 @@ const RegistrationForm = () => {
           onClose={modalToggle}
           title={titleForModal}
           text={`${messageModal} ${variables?.email || ''}`}
-          confirmButtonText={'OK'}
+          confirmButtonText="OK"
         />
       </form>
     </>
