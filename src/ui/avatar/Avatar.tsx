@@ -7,13 +7,14 @@ type PropsType = {
   alt: string
   height?: number
   width?: number
+  className?: string
 }
-export const Avatar = ({ src, alt, height = 192, width = 192 }: PropsType) => {
+export const Avatar = ({ src, alt, height = 192, width = 192, className }: PropsType) => {
   return (
     <Image
       src={src ? src : placeholder}
       alt={alt}
-      className={`rounded-full`}
+      className={`rounded-full ${className}`}
       width={width}
       height={height}
     />
