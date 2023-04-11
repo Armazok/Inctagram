@@ -1,0 +1,35 @@
+//месяц и кнопки позиционирование
+//Стили для месяца только для блока месяца внутри headre
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 15px;
+  @apply text-light-100 not-italic font-bold text-[16px] leading-6;
+}
+
+.buttonBox {
+  display: flex;
+  //кнопки переключения месяца
+}
+
+.button {
+  all: unset;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+  color: #333333;
+
+  background: #4c4c4c;
+  border-radius: 24px;
+
+  &:hover {
+    background-color: var(--color-bg-focus);
+  }
+}
