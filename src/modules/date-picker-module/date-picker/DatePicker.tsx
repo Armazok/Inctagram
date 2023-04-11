@@ -107,7 +107,6 @@ type CustomInputProps = {
   error?: boolean
 }
 
-// eslint-disable-next-line react/display-name
 const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
   ({ label, disabled, error, ...rest }, ref) => {
     const classNames = {
