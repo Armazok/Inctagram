@@ -70,7 +70,7 @@
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
     "babel-loader": "^8.3.0",
-    "eslint": "^8.32.0",
+    "eslint": "8.22.0",
     "eslint-config-it-incubator": "^1.0.10",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-node": "^0.3.6",
