@@ -1,11 +1,10 @@
 import { ComponentProps, FC, forwardRef, useState } from 'react'
 
-import ReactDatePicker, { ReactDatePickerCustomHeaderProps } from 'react-datepicker'
-
 import 'react-datepicker/dist/react-datepicker.css'
 
 import clsx from 'clsx'
 import { format } from 'date-fns'
+import ReactDatePicker, { ReactDatePickerCustomHeaderProps } from 'react-datepicker'
 
 import s from './datePicker.module.scss'
 
@@ -58,6 +57,7 @@ const DateCalendar: FC<DatePickerProps> = ({
   const isRange = endDate !== undefined
 
   const DatePickerHandler = (dates: [Date | null, Date | null] | Date | null) => {
+    console.log(dates)
     if (Array.isArray(dates)) {
       const [start, end] = dates
 

@@ -1,4 +1,3 @@
-
 .calendar {
   background-color: #171717;
   padding: 16px 24px;
@@ -12,15 +11,12 @@
   font-size: 16px;
   line-height: 24px;
 
-
   :global(.react-datepicker) {
     //background-color: yellow;
-
   }
   :global(.react-datepicker__week) {
-    width:100%;
-    color: #4C4C4C;
-
+    width: 100%;
+    color: #4c4c4c;
   }
 
   :global(.react-datepicker__header) {
@@ -30,8 +26,7 @@
 
     font-weight: 700;
 
-
-    color: #FFFFFF;
+    color: #ffffff;
   }
 
   :global(.react-datepicker__day-name) {
@@ -42,21 +37,18 @@
     height: 24px;
     padding-bottom: 12px;
     margin: 0;
-    color: #4C4C4C;
+    color: #4c4c4c;
 
     .react-datepicker-popper {
       z-index: 1;
     }
   }
-
-
 }
 //задавать ширину контейнеру с отображением даты
 .customInput {
   position: relative;
   z-index: 1;
   width: 300px;
-
 }
 
 //Дата контейнер с svg
@@ -75,11 +67,11 @@
 
   /* Light/100 */
 
-  color: #FFFFFF;
+  color: #ffffff;
 
   &:focus-visible {
     cursor: pointer !important;
-    border: 2px solid #2F68CC;
+    border: 2px solid #2f68cc;
     outline: 0 !important;
   }
 
@@ -107,11 +99,10 @@
 
 //внутрення обертка календаря
 .popper {
-  &:global(.react-datepicker-popper[data-placement^=bottom]) {
+  &:global(.react-datepicker-popper[data-placement^='bottom']) {
     padding-top: 0;
     padding-bottom: 0;
   }
-
 }
 
 //месяц и кнопки позиционирование
@@ -121,7 +112,6 @@
   justify-content: space-between;
   padding-left: 15px;
 }
-
 
 //кнопки переключения месяца
 .buttonBox {
@@ -141,9 +131,8 @@
   height: 36px;
   color: #333333;
 
-  background: #4C4C4C;
+  background: #4c4c4c;
   border-radius: 24px;
-
 
   &:hover {
     background-color: var(--color-bg-focus);
@@ -159,16 +148,15 @@
 }
 
 .errorText {
-  color: #CC1439;
+  color: #cc1439;
 }
 
 .errorBlockContainer {
   color: red;
   //Danger/500
   border-radius: 2px;
-  border: 1px solid  #CC1439;
+  border: 1px solid #cc1439;
 }
-
 
 //контейнер с днями недель
 .day {
@@ -182,7 +170,7 @@
     width: 36px;
     height: 36px;
 
-    color: #FFFFFF;
+    color: #ffffff;
 
     //при наведении на дату
 
@@ -190,40 +178,37 @@
       background-color: transparent;
       /* Primary/300 */
 
-      border: 2px solid #4C8DFF;
+      border: 2px solid #4c8dff;
       border-radius: 50%;
-
     }
 
     &:hover {
       /* Primary/900 */
-      background: #234E99;
+      background: #234e99;
       border-radius: 18px;
       transition: 200ms;
     }
 
     &:active {
       /* Primary/900 */
-      background: #234E99;
+      background: #234e99;
       border-radius: 18px;
     }
 
-
     &:global(.react-datepicker__day--today) {
-      color: #397DF6;
+      color: #397df6;
       &:focus-visible {
         background-color: transparent;
         /* Primary/500 */
-        color: #397DF6;
-        border: 2px solid #4C8DFF;
+        color: #397df6;
+        border: 2px solid #4c8dff;
         border-radius: 50%;
-
       }
 
       &:hover {
         /* Primary/100 */
 
-        color: #73A5FF;
+        color: #73a5ff;
         border-radius: 18px;
         transition: 200ms;
       }
@@ -231,19 +216,17 @@
       &:active {
         /* Light/100 */
 
-        color: #FFFFFF;
+        color: #ffffff;
         border-radius: 18px;
       }
-
-
     }
 
     &:global(.react-datepicker__day--selected) {
       //background-color: transparent;
-      color: #FFFFFF;
+      color: #ffffff;
       font-weight: 400;
-      border: 2px solid #234E99;
-      background: #397DF6;
+      border: 2px solid #234e99;
+      background: #397df6;
       border-radius: 50%;
       transition: 200ms;
 
@@ -254,29 +237,27 @@
     //стили для выходных
     &:global(.react-datepicker__week) {
       //Light 900
-      color: #BDC1C7;
+      color: #bdc1c7;
       &:focus-visible {
         background-color: transparent;
         /* Primary/300 */
         color: #333333;
-        border: 2px solid #4C8DFF;
+        border: 2px solid #4c8dff;
         border-radius: 50%;
-
       }
 
       &:hover {
         /* Primary/900 */
-        background: #234E99;
+        background: #234e99;
         border-radius: 18px;
         transition: 200ms;
       }
 
       &:active {
         /* Primary/900 */
-        background: #234E99;
+        background: #234e99;
         border-radius: 18px;
       }
-    ;
     }
 
     //стили для предыдущего или следующего месяца в текущем
@@ -290,45 +271,41 @@
         background-color: transparent;
         /* Primary/300 */
         color: #333333;
-        border: 2px solid #4C8DFF;
+        border: 2px solid #4c8dff;
         border-radius: 50%;
-
       }
 
       &:hover {
         /* Primary/900 */
-        background: #234E99;
+        background: #234e99;
         border-radius: 18px;
         transition: 200ms;
       }
 
       &:active {
         /* Primary/900 */
-        background: #234E99;
+        background: #234e99;
         border-radius: 18px;
       }
-
     }
-
   }
-
 
   &:global(.react-datepicker__day--in-selecting-range) {
     //Primary/900
-    background: #234E99;
-    border: 2px solid #234E99;
+    background: #234e99;
+    border: 2px solid #234e99;
     border-radius: 0;
     /* Light/900 */
 
-    color: #BDC1C7;
+    color: #bdc1c7;
   }
 
   &:global(.react-datepicker__day--selecting-range-end) {
     //background-color: #397DF6;
-    border: 2px solid #234E99;
+    border: 2px solid #234e99;
     //border-radius: 0 50% 50% 0 !important;
 
-    background: #234E99 !important;
+    background: #234e99 !important;
     border-radius: 0 18px 18px 0 !important;
 
     position: relative;
@@ -341,23 +318,21 @@
 
       /* Primary/500 */
 
-      background: #397DF6;
+      background: #397df6;
       border-radius: 14px;
       position: absolute;
-
 
       z-index: -1;
     }
   }
 
-
   &:global(.react-datepicker__day--selecting-range-start) {
     //background-color: #397DF6 !important;
-    border: 2px solid #234E99 !important;
+    border: 2px solid #234e99 !important;
     //border-radius: 50% 0 0 50% !important;
 
-    background: #234E99  !important;
-    border-radius: 18px 0 0 18px  !important;
+    background: #234e99 !important;
+    border-radius: 18px 0 0 18px !important;
 
     &:before {
       content: '';
@@ -366,41 +341,32 @@
 
       /* Primary/500 */
 
-      background: #397DF6;
+      background: #397df6;
       border-radius: 14px;
       position: absolute;
-
 
       z-index: -1;
     }
   }
 
-
-
   //выбранный после выбранного периода
   &:global(.react-datepicker__day--in-range) {
-    background: #234E99;
-    border: 2px solid #234E99;
+    background: #234e99;
+    border: 2px solid #234e99;
     /* Light/900 */
-    color: #BDC1C7;
+    color: #bdc1c7;
     border-radius: 0;
   }
 
-
   &:global(.react-datepicker__day--range-start) {
-    background-color: #397DF6 !important;
-    border: 2px solid #234E99 !important;
+    background-color: #397df6 !important;
+    border: 2px solid #234e99 !important;
     border-radius: 50% 0 0 50% !important;
   }
 
   &:global(.react-datepicker__day--range-end) {
-    background-color: #397DF6;
-    border: 2px solid #234E99;
+    background-color: #397df6;
+    border: 2px solid #234e99;
     border-radius: 0 50% 50% 0;
   }
 }
-
-
-
-
-
