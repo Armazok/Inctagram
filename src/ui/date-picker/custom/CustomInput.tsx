@@ -24,7 +24,7 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
     return (
       <Label label={label} className={classNames.label}>
         <div className={classNames.inputContainer}>
-          <input ref={ref} disabled={disabled} {...rest} />
+          <input ref={ref} disabled={true} {...rest} />
           <div className={classNames.iconContainer}>
             <Calendar error={error} />
           </div>
