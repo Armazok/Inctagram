@@ -2,9 +2,9 @@ import React from 'react'
 
 import Head from 'next/head'
 
-import { ProfilePage } from '@/modules'
+import ProfilePage from '@/modules/profile-modules/profile-module/profile/ProfilePage'
 
-const PageProfile = () => {
+const index = () => {
   return (
     <div>
       <Head>
@@ -15,4 +15,4 @@ const PageProfile = () => {
   )
 }
 
-export default PageProfile
+export default index
