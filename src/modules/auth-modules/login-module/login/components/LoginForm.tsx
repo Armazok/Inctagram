@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -18,7 +18,7 @@ export const LoginForm = () => {
   const { setCustomError, handleSubmit, register, errors, reset } = useGlobalForm(schemaLogin)
 
   const { sendLoginData, isLoading, data } = useLoginMutation(
-    () => push('auth/login/create-account'),
+    () => push('/auth/login/create-account'),
     () =>
       setCustomError(
         'password',
