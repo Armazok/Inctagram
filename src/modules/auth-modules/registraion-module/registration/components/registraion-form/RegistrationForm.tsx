@@ -35,9 +35,16 @@ const RegistrationForm = () => {
     <>
       {isLoading && <Preloader />}
       <form
-        className="flex flex-col grow gap-[10px] pt-[22px]  pb-[18px] w-full gap-[24px]"
+        className="flex flex-col grow gap-[22px] pt-[22px]  pb-[18px] w-full gap-[24px]"
         onSubmit={handleSubmit(registeredDataSubmit)}
       >
+        <GlobalInput
+          type="text"
+          id="Username"
+          label="Username"
+          error={errors?.userName?.message}
+          {...register('userName')}
+        />
         <GlobalInput
           type="email"
           id="email"
