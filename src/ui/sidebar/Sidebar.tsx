@@ -21,7 +21,7 @@ export const Sidebar: FC = () => {
   const { pathname } = useRouter()
 
   return (
-    <aside className="h-screen sticky top-0 w-1/4 border-r-[1px] border-r-bgLogBorder">
+    <aside className="h-screen sticky top-0 max-w-[320px] w-full border-r-[1px] border-r-bgLogBorder">
       <div className="text-light-100 font-medium flex flex-col items-center justify-between py-[72px] h-full">
         <ul className="list-none flex gap-6 flex-col">
           <li className="flex gap-[15px] items-center">
