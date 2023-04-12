@@ -16,3 +16,13 @@ export type ResRegConfirmation = {
 export type ResCheckRecoveryCode = {
   email: string
 }
+
+export type ResCreateProfile = {
+  id: number
+  userName: string
+  firstName: string
+  lastName: string
+  city: string
+  dateOfBirth: string
+  aboutMe: string
+}

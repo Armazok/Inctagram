@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
+import { tabs } from '@/common/constants'
 import TabsTitle from '@/components/account/tabs-title/TabsTitle'
-import { tabs } from '@/modules/account-modules/edit-account-module/constants/tabs-data'
 
-const SettingsAccount = () => {
+export const SettingsProfile = () => {
   const [activeTab, setActiveTab] = useState(tabs && tabs[0].label)
 
   const tabsLayout = tabs.map(tab => {
@@ -11,11 +11,9 @@ const SettingsAccount = () => {
   })
 
   return (
-    <div className="w-full ml-[200px] relative">
+    <div className="relative w-full">
       <TabsTitle variant="edit" tabs={tabs} setActiveTab={setActiveTab} activeTab={activeTab} />
       {tabsLayout}
     </div>
   )
 }
-
-export default SettingsAccount

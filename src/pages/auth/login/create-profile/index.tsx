@@ -3,19 +3,21 @@ import React from 'react'
 import Head from 'next/head'
 
 import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
-import { RecoveryPage } from '@/modules'
+import { CreateProfile } from '@/modules'
 import { NextPageWithLayout } from '@/pages/_app'
 
-const PageRecovery: NextPageWithLayout = () => {
+interface IIndex {}
+
+const index: NextPageWithLayout<IIndex> = ({}) => {
   return (
     <div>
       <Head>
-        <title>Password recovery</title>
+        <title>Create Profile</title>
       </Head>
-      <RecoveryPage />
+      <CreateProfile />
     </div>
   )
 }
 
-PageRecovery.getLayout = getLayoutWithHeader
-export default PageRecovery
+index.getLayout = getLayoutWithHeader
+export default index

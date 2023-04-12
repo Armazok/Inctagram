@@ -2,9 +2,11 @@ import React from 'react'
 
 import Head from 'next/head'
 
+import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
 import { RegisterPage } from '@/modules'
+import { NextPageWithLayout } from '@/pages/_app'
 
-const PageRegistration = () => {
+const PageRegistration: NextPageWithLayout = () => {
   return (
     <div>
       <Head>
@@ -15,4 +17,5 @@ const PageRegistration = () => {
   )
 }
 
+PageRegistration.getLayout = getLayoutWithHeader
 export default PageRegistration
