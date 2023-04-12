@@ -2,7 +2,7 @@ import React from 'react'
 
 import Head from 'next/head'
 
-import ProfilePage from '@/modules/profile-modules/profile-module/profile/ProfilePage'
+import { ProfilePage } from '@/modules'
 
 const index = () => {
   return (

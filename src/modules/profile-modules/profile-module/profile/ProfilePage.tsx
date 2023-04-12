@@ -3,7 +3,7 @@ import React from 'react'
 import GlobalButton from '@/ui/buttons/GlobalButton'
 import { Sidebar } from '@/ui/sidebar/Sidebar'
 
-const ProfilePage = () => {
+export const ProfilePage = () => {
   return (
     <div className="flex">
       <Sidebar />
@@ -55,5 +55,3 @@ const ProfilePage = () => {
     </div>
   )
 }
-
-export default ProfilePage
