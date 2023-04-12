@@ -13,7 +13,7 @@ export const RegisterPage = () => {
     <FormLayout className="mt-[60px]">
       <NameTitle
         nameTitle="Sing Up"
-        className="font-bold text-light-100 text-[20px] leading-[36px]"
+        className="font-bold text-light-100 text-[20px] leading-[36px] mb-[12px]"
       />
       <GoogleFacebook />
       <RegistrationForm />
