@@ -2,9 +2,11 @@ import React from 'react'
 
 import Head from 'next/head'
 
+import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
 import { ForgotPasswordPage } from '@/modules'
+import { NextPageWithLayout } from '@/pages/_app'
 
-const PageForgotPassword = () => {
+const PageForgotPassword: NextPageWithLayout = () => {
   return (
     <div>
       <Head>
@@ -15,4 +17,5 @@ const PageForgotPassword = () => {
   )
 }
 
+PageForgotPassword.getLayout = getLayoutWithHeader
 export default PageForgotPassword

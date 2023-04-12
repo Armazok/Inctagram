@@ -1,24 +1,33 @@
-import { useState } from 'react'
+import { ReactElement, ReactNode, useState } from 'react'
 
 import { ApolloProvider } from '@apollo/client'
-import { QueryClientProvider, Hydrate, QueryClient } from '@tanstack/react-query'
+import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import '@/styles/globals.scss'
 import 'react-toastify/dist/ReactToastify.css'
 import '@/components/atoms/buttons/button.module.scss'
+import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify'
 
 import client from '@/apolloClient'
-import { Header } from '@/components/atoms/header/Header'
 
-export default function App({ Component, pageProps }: AppProps) {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const [queryClient] = useState(() => new QueryClient())
 
-  return (
+  const getLayout = Component.getLayout ?? (page => page)
+
+  return getLayout(
     <ApolloProvider client={client}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <Header />
           <Component {...pageProps} />
           <ToastContainer
             position="bottom-left"
