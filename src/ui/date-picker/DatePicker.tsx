@@ -1,13 +1,14 @@
+import 'react-datepicker/dist/react-datepicker.css'
+
 import { ComponentProps, FC } from 'react'
 
 import clsx from 'clsx'
-import { ReactDatePicker } from 'react-datepicker'
+import ReactDatePicker from 'react-datepicker'
 
-import 'react-datepicker/dist/react-datepicker.css'
 import s from '../date-picker/datePicker.module.scss'
 
-import { CustomHeader } from '@/ui/date-picker/custom/CustomHeader'
-import { CustomInput } from '@/ui/date-picker/custom/CustomInput'
+import CustomHeader from '@/ui/date-picker/custom/CustomHeader'
+import CustomInput from '@/ui/date-picker/custom/CustomInput'
 
 type CommonProps = {
   placeholder?: string
@@ -51,7 +52,7 @@ const DateCalendar: FC<DatePickerProps> = ({
     day: () => s.day,
   }
 
-  const isRange = endDate !== undefined
+  const isRange = !!endDate
 
   const DatePickerHandler = (dates: [Date | null, Date | null] | Date | null) => {
     if (Array.isArray(dates)) {
@@ -82,7 +83,9 @@ const DateCalendar: FC<DatePickerProps> = ({
           />
         )}
         onChange={(dates: [Date | null, Date | null] | Date | null) => DatePickerHandler(dates)}
-        customInput={<CustomInput isRange={isRange} label={label} error={true} disabled={true} />}
+        customInput={
+          <CustomInput isRange={isRange} label={label} error={error} disabled={disabled} />
+        }
         dayClassName={classNames.day}
         calendarClassName={classNames.calendar}
         className={classNames.input}

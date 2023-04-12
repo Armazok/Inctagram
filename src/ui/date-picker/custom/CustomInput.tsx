@@ -13,8 +13,8 @@ type CustomInputProps = {
   isRange?: boolean
 }
 
-export const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
-  ({ label, disabled, error, isRange, ...rest }, ref) => {
+const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
+  ({ label, disabled, error = false, isRange, ...rest }, ref) => {
     const classNames = {
       inputContainer: clsx(s.customInput, isRange && s.customInputForRange),
       iconContainer: s.iconContainer,
@@ -33,3 +33,5 @@ export const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
     )
   }
 )
+
+export default CustomInput

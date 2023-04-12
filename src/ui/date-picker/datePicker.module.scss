@@ -208,6 +208,41 @@
     }
   }
 
+  &:global(.react-datepicker__day--keyboard-selected) {
+    color: #ffffff;
+    font-weight: 400;
+    border: 2px solid #234e99;
+    background: #397df6;
+    border-radius: 50%;
+    transition: 200ms;
+
+    position: relative;
+    z-index: 10;
+
+    &:focus-visible {
+      background-color: transparent;
+      /* Primary/500 */
+      color: #397df6;
+      border: 2px solid #4c8dff;
+      border-radius: 50%;
+    }
+
+    &:hover {
+      /* Primary/100 */
+
+      color: #73a5ff;
+      border-radius: 18px;
+      transition: 200ms;
+    }
+
+    &:active {
+      /* Light/100 */
+
+      color: #ffffff;
+      border-radius: 18px;
+    }
+  }
+
   &:global(.react-datepicker__day--in-selecting-range) {
     //Primary/900
     background: #234e99;
