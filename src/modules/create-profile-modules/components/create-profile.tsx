@@ -22,7 +22,6 @@ const CreateProfile = ({}) => {
     userName,
     dateOfBirth,
   }: SettingsSchemaType) => {
-    console.log(data, `${data}`)
     await sendCreateProfile({
       city,
       aboutMe,
