@@ -1,8 +1,10 @@
 import Head from 'next/head'
 
+import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
+import { NextPageWithLayout } from '@/pages/_app'
 import PageLogin from '@/pages/auth/login'
 
-export default function Home() {
+const Home: NextPageWithLayout = () => {
   return (
     <>
       <Head>
@@ -15,3 +17,6 @@ export default function Home() {
     </>
   )
 }
+
+Home.getLayout = getLayoutWithHeader
+export default Home

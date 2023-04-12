@@ -2,9 +2,11 @@ import React from 'react'
 
 import Head from 'next/head'
 
+import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
 import { RecoveryPage } from '@/modules'
+import { NextPageWithLayout } from '@/pages/_app'
 
-const PageRecovery = () => {
+const PageRecovery: NextPageWithLayout = () => {
   return (
     <div>
       <Head>
@@ -15,4 +17,5 @@ const PageRecovery = () => {
   )
 }
 
+PageRecovery.getLayout = getLayoutWithHeader
 export default PageRecovery

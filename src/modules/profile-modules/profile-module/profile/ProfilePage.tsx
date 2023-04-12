@@ -1,12 +1,10 @@
 import React from 'react'
 
 import GlobalButton from '@/ui/buttons/GlobalButton'
-import { Sidebar } from '@/ui/sidebar/Sidebar'
 
 export const ProfilePage = () => {
   return (
     <div className="flex">
-      <Sidebar />
       <main className="pl-6 py-9 pr-16">
         <div className="flex text-light-100 gap-9">
           <img
