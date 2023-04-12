@@ -13,8 +13,8 @@ type CustomInputProps = {
   isRange?: boolean
 }
 
-export const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
-  ({ label, disabled, error, isRange, ...rest }, ref) => {
+const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
+  ({ label, disabled, error = false, isRange, ...rest }, ref) => {
     const classNames = {
       inputContainer: clsx(s.customInput, isRange && s.customInputForRange),
       iconContainer: s.iconContainer,
@@ -24,7 +24,7 @@ export const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
     return (
       <Label label={label} className={classNames.label}>
         <div className={classNames.inputContainer}>
-          <input ref={ref} disabled={disabled} {...rest} />
+          <input ref={ref} disabled={true} {...rest} />
           <div className={classNames.iconContainer}>
             <Calendar error={error} />
           </div>
@@ -33,3 +33,5 @@ export const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
     )
   }
 )
+
+export default CustomInput

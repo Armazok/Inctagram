@@ -7,7 +7,7 @@ import { capitalizeFirstLetter } from '@/common/capitalize-first-letter/capitali
 import { KeyboardArrowLeft } from '@/ui/date-picker/custom/icon-components/KeyboardArrowLeft'
 import { KeyboardArrowRight } from '@/ui/date-picker/custom/icon-components/KeyboardArrowRight'
 
-export const CustomHeader = ({
+const CustomHeader = ({
   date,
   decreaseMonth,
   increaseMonth,
@@ -36,3 +36,5 @@ export const CustomHeader = ({
     </div>
   )
 }
+
+export default CustomHeader
