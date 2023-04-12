@@ -4,7 +4,7 @@ import Head from 'next/head'
 
 import { ProfilePage } from '@/modules'
 
-const PageProfile = () => {
+const index = () => {
   return (
     <div>
       <Head>
@@ -15,4 +15,4 @@ const PageProfile = () => {
   )
 }
 
-export default PageProfile
+export default index
