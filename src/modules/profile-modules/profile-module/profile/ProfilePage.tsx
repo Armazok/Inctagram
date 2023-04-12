@@ -17,7 +17,9 @@ export const ProfilePage = () => {
           <div className="flex flex-col gap-5">
             <div className="flex justify-between">
               <div className="font-bold">ORANGE ORANGE</div>
-              <GlobalButton type={"button"} variant={'white'}>Profile Settings</GlobalButton>
+              <GlobalButton type={'button'} variant={'white'}>
+                Profile Settings
+              </GlobalButton>
             </div>
             <div className="flex gap-[72px]">
               <div className="text-sm">
