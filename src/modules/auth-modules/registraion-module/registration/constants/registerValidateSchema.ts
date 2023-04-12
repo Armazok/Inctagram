@@ -3,7 +3,8 @@ import * as yup from 'yup'
 export type FormDataRegistered = yup.InferType<typeof schema>
 
 export const schema = yup.object({
-  email: yup.string().required('Email is required filed').trim(),
+  userName: yup.string().required('User name is required filed').min(6).max(30).trim(),
+  email: yup.string().required('Email is required filed').email().trim(),
   password: yup.string().required().min(6).max(20).trim(),
   confirmPassword: yup
     .string()
