@@ -2,6 +2,7 @@ import { authInstance } from '@/services/api/auth/instanse'
 
 export const sendAvatar = (formData: File) => {
   debugger
+
   return authInstance.post<ResAvatarType>('users/profile/avatar', formData, {
     headers: {
       // 'Content-Type': 'application/octet-stream',

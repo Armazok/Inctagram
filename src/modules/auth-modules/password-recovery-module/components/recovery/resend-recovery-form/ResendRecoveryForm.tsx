@@ -20,6 +20,7 @@ export const ResendRecoveryForm = () => {
 
   const submitData = (data: FormData) => {
     const { email } = data
+
     sendLinkPasswordRecovery({ email })
   }
 

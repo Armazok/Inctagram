@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
+
 import AvatarEditor from 'react-avatar-editor'
+
 import GlobalButton from '@/ui/buttons/GlobalButton'
 
 type PropsType = {
@@ -13,6 +15,7 @@ export const ProfileAvatarEditor = ({ image, onSaveClick }: PropsType) => {
 
   const onScaleChange = (event: any) => {
     const scale = parseFloat(event.target.value)
+
     setScale(scale)
   }
 
@@ -28,6 +31,7 @@ export const ProfileAvatarEditor = ({ image, onSaveClick }: PropsType) => {
 
       canvas.toBlob((blob: string | Blob) => {
         const formData = new FormData()
+
         formData.append('file', blob)
         console.log(formData)
         onSaveClick(formData)

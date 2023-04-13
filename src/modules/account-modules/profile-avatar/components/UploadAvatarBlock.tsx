@@ -1,13 +1,15 @@
 import React, { useState, useRef } from 'react'
+
+import { useMutation } from '@tanstack/react-query'
 import ImagePlaceholder from 'next/image'
+
+import placeholder from '@/assets/images/img-placeholder.png'
+import Preloader from '@/components/atoms/preloader/Preloader'
+import { ModalWithContent } from '@/components/modals/modalWithContent/ModalWithContent'
+import { sendAvatar } from '@/modules/account-modules/profile-avatar/api/avatar-api'
+import { ProfileAvatarEditor } from '@/modules/account-modules/profile-avatar/components/ProfileAvatarEditor'
 import { Avatar } from '@/ui/avatar/Avatar'
 import GlobalButton from '@/ui/buttons/GlobalButton'
-import { ModalWithContent } from '@/components/modals/modalWithContent/ModalWithContent'
-import { ProfileAvatarEditor } from '@/modules/account-modules/profile-avatar/components/ProfileAvatarEditor'
-import { useMutation } from '@tanstack/react-query'
-import { sendAvatar } from '@/modules/account-modules/profile-avatar/api/avatar-api'
-import Preloader from '@/components/atoms/preloader/Preloader'
-import placeholder from '@/assets/images/img-placeholder.png'
 
 export const UploadAvatarBlock = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
