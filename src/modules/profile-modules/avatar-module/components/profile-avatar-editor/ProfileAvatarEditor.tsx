@@ -24,16 +24,10 @@ export const ProfileAvatarEditor = ({ image, onSaveClick }: PropsType) => {
       //@ts-ignore
       const canvas = editor.getImage()
 
-      //for binary data
-      // const blob = await new Promise(resolve => canvas.toBlob((blob: Blob) => resolve(blob)))
-      // const arrayBuffer = await new Response(blob).arrayBuffer()
-      // onSaveClick(arrayBuffer)
-
       canvas.toBlob((blob: string | Blob) => {
         const formData = new FormData()
 
         formData.append('file', blob)
-        console.log(formData)
         onSaveClick(formData)
       })
     }
@@ -42,25 +36,37 @@ export const ProfileAvatarEditor = ({ image, onSaveClick }: PropsType) => {
   return (
     <div>
       {image && (
-        <AvatarEditor
-          style={{ width: '332px', height: '340px' }}
-          ref={ref => {
-            //@ts-ignore
-            setEditor(ref)
-          }}
-          image={image}
-          width={192}
-          height={192}
-          border={50}
-          borderRadius={100}
-          scale={scale}
-          rotate={0}
-        />
+        <div className={`flex flex-col items-center`}>
+          <AvatarEditor
+            style={{ width: '332px', height: '340px' }}
+            ref={ref => {
+              //@ts-ignore
+              setEditor(ref)
+            }}
+            image={image}
+            width={192}
+            height={192}
+            border={50}
+            borderRadius={100}
+            scale={scale}
+            rotate={0}
+          />
+        </div>
       )}
-      <input type="range" min="1" max="2" step="0.01" value={scale} onChange={onScaleChange} />
-      <GlobalButton type="button" callback={onSaveClickHandler}>
-        Save
-      </GlobalButton>
+      <div className={`flex flex-col items-end`}>
+        <input
+          type="range"
+          min="1"
+          max="2"
+          step="0.01"
+          value={scale}
+          onChange={onScaleChange}
+          className={`mt-[20px] bg-gray-700`}
+        />
+        <GlobalButton type="button" callback={onSaveClickHandler} className={`mt-[20px]`}>
+          Save
+        </GlobalButton>
+      </div>
     </div>
   )
 }
