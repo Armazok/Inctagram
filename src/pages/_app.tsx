@@ -10,6 +10,8 @@ import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify'
 
 import client from '@/apolloClient'
+import { Private } from '@/components/privateRoute/privatRoute'
+import { useUserStore } from '@/store'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode

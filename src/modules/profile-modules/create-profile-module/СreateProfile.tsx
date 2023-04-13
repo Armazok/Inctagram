@@ -16,6 +16,16 @@ export const CreateProfile = ({}) => {
   const { setCustomError, handleSubmit, reset } = useGlobalForm(settingsSchema)
 
   const { sendCreateProfile, isLoading, data } = useCreateProfileMutation(() => push('/profile'))
+
+  // const firstName = data && data.data
+  //
+  // useEffect(() => {
+  //   if (firstName) {
+  //     push('/profile')
+  //   } else {
+  //     push('/auth/login/create-account')
+  //   }
+  // }, [firstName])
   const handleFormSubmit = async ({
     city,
     aboutMe,
