@@ -8,16 +8,16 @@ import { NextPageWithLayout } from '@/pages/_app'
 
 interface ILogin {}
 
-const PageLogin: NextPageWithLayout<ILogin> = memo(({}) => {
+const index: NextPageWithLayout<ILogin> = memo(({}) => {
   return (
     <div>
       <Head>
         <title>Login</title>
+        <LoginPage />
       </Head>
-      <LoginPage />
     </div>
   )
 })
 
-PageLogin.getLayout = getLayoutWithHeader
-export default PageLogin
+index.getLayout = getLayoutWithHeader
+export default index
