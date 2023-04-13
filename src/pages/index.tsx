@@ -1,10 +1,25 @@
+import { useEffect } from 'react'
+
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
+import { LoginPage, ProfilePage } from '@/modules'
+import { useMeQuery } from '@/modules/auth-modules/login-module/login/hooks/useLogin'
 import { NextPageWithLayout } from '@/pages/_app'
-import PageLogin from '@/pages/auth/login'
 
 const Home: NextPageWithLayout = () => {
+  const { push } = useRouter()
+
+  const { data } = useMeQuery()
+  const { userName } = data?.data || {}
+
+  // useEffect(() => {
+  //   if (!userName) {
+  //     push('/profile')
+  //   }
+  // }, [userName])
+
   return (
     <>
       <Head>
@@ -13,7 +28,8 @@ const Home: NextPageWithLayout = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PageLogin />
+      <LoginPage />
+      {/*<Private accessToken={accessToken}>{accessToken ? <ProfilePage /> : }</Private>*/}
     </>
   )
 }
