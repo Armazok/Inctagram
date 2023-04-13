@@ -8,9 +8,9 @@ export const useCreateNewPasswordMutation = () => {
   })
 }
 
-export const useRecoveryEmailResending = (setCustomError: any, reset: any, push: any) => {
-  const { isLoading, mutate: resendRecoverCode } = useMutation({
-    mutationFn: passwordRecoveryAPI.passwordRecoveryEmailResending,
+export const useForgotPassword = (setCustomError: any, reset: any, push: any) => {
+  const { isLoading, mutate: sendLinkPasswordRecovery } = useMutation({
+    mutationFn: passwordRecoveryAPI.passwordRecovery,
     onSuccess: () => {
       reset()
       push('/')
@@ -21,8 +21,24 @@ export const useRecoveryEmailResending = (setCustomError: any, reset: any, push:
     },
   })
 
-  return {
-    isLoading,
-    resendRecoverCode,
-  }
+  return { isLoading, sendLinkPasswordRecovery }
 }
+
+// export const useRecoveryEmailResending = (setCustomError: any, reset: any, push: any) => {
+//   const { isLoading, mutate: resendRecoverCode } = useMutation({
+//     mutationFn: passwordRecoveryAPI.passwordRecoveryEmailResending,
+//     onSuccess: () => {
+//       reset()
+//       push('/')
+//     },
+//     onError: error => {
+//       // @ts-ignore
+//       setCustomError('email', error.response.data.messages[0].message)
+//     },
+//   })
+//
+//   return {
+//     isLoading,
+//     resendRecoverCode,
+//   }
+// }
