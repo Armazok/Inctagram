@@ -2,10 +2,10 @@ import React from 'react'
 
 import { nanoid } from 'nanoid'
 
-import EditSetting from '@/modules/account-modules/edit-account-module/components/EditSettingAccount'
+import EditSettingProfile from '@/modules/profile-modules/settings-edit-profile-module/components/EditSettingsProfile'
 
 export const tabs = [
-  { id: nanoid(), label: 'General information', content: <EditSetting /> },
+  { id: nanoid(), label: 'General information', content: <EditSettingProfile /> },
   {
     id: nanoid(),
     label: 'Devices',

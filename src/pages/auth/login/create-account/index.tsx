@@ -1,12 +1,14 @@
-import React, { FC } from 'react'
+import React from 'react'
 
 import Head from 'next/head'
 
-import CreateAccount from '@/modules/create-account-modules/components/create-account'
+import CreateAccount from '@/components/account/create-account/create-account'
+import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
+import { NextPageWithLayout } from '@/pages/_app'
 
 interface IIndex {}
 
-const index: FC<IIndex> = ({}) => {
+const index: NextPageWithLayout<IIndex> = ({}) => {
   return (
     <div className="container flex flex-col items-center w-full max-w-md text-center mt-[245px]">
       <Head>
@@ -17,4 +19,5 @@ const index: FC<IIndex> = ({}) => {
   )
 }
 
+index.getLayout = getLayoutWithHeader
 export default index

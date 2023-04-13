@@ -1,12 +1,14 @@
-import React, { FC } from 'react'
+import React from 'react'
 
 import Head from 'next/head'
 
-import CreateProfile from '@/modules/create-profile-modules/components/create-profile'
+import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
+import { CreateProfile } from '@/modules'
+import { NextPageWithLayout } from '@/pages/_app'
 
 interface IIndex {}
 
-const index: FC<IIndex> = ({}) => {
+const index: NextPageWithLayout<IIndex> = ({}) => {
   return (
     <div>
       <Head>
@@ -17,4 +19,5 @@ const index: FC<IIndex> = ({}) => {
   )
 }
 
+index.getLayout = getLayoutWithHeader
 export default index

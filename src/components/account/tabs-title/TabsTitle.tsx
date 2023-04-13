@@ -1,5 +1,7 @@
 import React, { FC } from 'react'
 
+import GlobalTabs from '@/ui/tabs/GlobalTabs'
+
 interface TabsType {
   id: string
   label: string
@@ -18,19 +20,14 @@ const TabsTitle: FC<PropsTabType> = ({ variant, tabs, setActiveTab, activeTab })
     <>
       {variant === 'edit' && (
         <>
-          <div className="flex border-b border-gray-200 w-[50%]">
+          <div className="flex border-b border-gray-200  w-[313px] border-none h-[96]">
             {tabs?.map(tab => (
-              <div
+              <GlobalTabs
                 key={tab.id}
-                className={`-mb-px flex-1 text-center py-4 px-4 border-b-2 font-medium text-sm cursor-pointer ${
-                  activeTab === tab.label
-                    ? 'border-indigo-500 text-indigo-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-                onClick={() => setActiveTab?.(tab.label)}
-              >
-                {tab.label}
-              </div>
+                label={tab.label}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+              />
             ))}
           </div>
           <div className="divide-y-[100%] bg-bgLogBorder h-[1px]"></div>

@@ -8,7 +8,7 @@ type CalendarType = {
 
 export const Calendar = (error: CalendarType) => {
   const classNames = {
-    svgStyle: clsx(error ? 'text-danger-500' : 'text-light-100'),
+    svgStyle: clsx(!error ? 'fill-light-100' : 'fill-danger-500'),
   }
 
   return (
@@ -28,7 +28,7 @@ export const Calendar = (error: CalendarType) => {
             />
             <path
               d="M8 17C8.55228 17 9 16.5523 9 16C9 15.4477 8.55228 15 8 15C7.44772 15 7 15.4477 7 16C7 16.5523 7.44772 17 8 17Z"
-              fill="black"
+              fill={classNames.svgStyle}
             />
             <path
               d="M16 15H12C11.7348 15 11.4804 15.1054 11.2929 15.2929C11.1054 15.4804 11 15.7348 11 16C11 16.2652 11.1054 16.5196 11.2929 16.7071C11.4804 16.8946 11.7348 17 12 17H16C16.2652 17 16.5196 16.8946 16.7071 16.7071C16.8946 16.5196 17 16.2652 17 16C17 15.7348 16.8946 15.4804 16.7071 15.2929C16.5196 15.1054 16.2652 15 16 15Z"

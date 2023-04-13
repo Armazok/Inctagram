@@ -1,12 +1,16 @@
 import React from 'react'
 
+import { useRouter } from 'next/router'
+
 import GlobalButton from '@/ui/buttons/GlobalButton'
-import { Sidebar } from '@/ui/sidebar/Sidebar'
 
 export const ProfilePage = () => {
+  const { push } = useRouter()
+
+  const onRedirectToSetting = () => push('/profile/settings/edit')
+
   return (
     <div className="flex">
-      <Sidebar />
       <main className="pl-6 py-9 pr-16">
         <div className="flex text-light-100 gap-9">
           <img
@@ -17,7 +21,7 @@ export const ProfilePage = () => {
           <div className="flex flex-col gap-5">
             <div className="flex justify-between">
               <div className="font-bold">ORANGE ORANGE</div>
-              <GlobalButton type={'button'} variant={'white'}>
+              <GlobalButton type={'button'} variant={'white'} callback={onRedirectToSetting}>
                 Profile Settings
               </GlobalButton>
             </div>

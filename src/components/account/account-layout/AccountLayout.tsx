@@ -1,7 +1,14 @@
 import React, { FC, ReactNode } from 'react'
 
-const AccountLayout: FC<{ children: ReactNode }> = ({ children }) => {
-  return <div className="max-w-[750px] w-full pt-[24px] pl-[24px] pb-[24px]">{children}</div>
+const AccountLayout: FC<{ children: ReactNode; className?: string }> = ({
+  children,
+  className,
+}) => {
+  return (
+    <div className={`max-w-[750px] w-full pt-[24px] pl-[24px] pb-[24px] ${className}`}>
+      {children}
+    </div>
+  )
 }
 
 export default AccountLayout
