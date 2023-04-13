@@ -57,3 +57,12 @@ body {
 .black {
   @apply text-accent-500 outline-none hover:text-accent-100  disabled:text-accent-900 outline-none;
 }
+
+//tabs
+.tabsSelected {
+  @apply border-b-2 border-accent-500 text-accent-500 leading-6 text-sm font-semibold hover:border-b-2 hover:border-accent-500 hover:bg-accent-900 hover:text-accent-500 hover:leading-6 hover:text-sm hover:font-semibold active:bg-accent-100 active:border-b-2 active:border-accent-500 active:text-accent-500 active:leading-6 active:text-sm active:font-semibold focus:bg-accent-700  focus:border-b-2 focus:border-accent-500 focus:text-accent-500 focus:leading-6 focus:text-sm focus:font-semibold disabled:border-b-2 disabled:border-accent-500 disabled:text-accent-500 disabled:leading-6 disabled:text-sm disabled:font-semibold;
+}
+
+.tabsUnselected {
+  @apply border-b-2 border-dark-100 text-dark-100 leading-6 text-sm font-semibold hover:border-b-2 hover:border-dark-100 hover:bg-accent-900 hover:text-dark-100 hover:leading-6 hover:text-sm hover:font-semibold active:bg-accent-100 active:border-b-2 active:border-dark-100 active:text-dark-100 active:leading-6 active:text-sm active:font-semibold focus:bg-accent-700  focus:border-b-2 focus:border-accent-500 focus:text-accent-500 focus:leading-6 focus:text-sm focus:font-semibold disabled:border-b-2 disabled:border-accent-500 disabled:text-accent-500 disabled:leading-6 disabled:text-sm disabled:font-semibold;
+}

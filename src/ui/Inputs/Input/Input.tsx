@@ -11,11 +11,21 @@ type InputType = {
   placeholder?: string
   error?: string | FieldValues | any
   classNameContainer?: CSSProperties
+  defaultValue?: string | any
 }
 
 const GlobalInput: FC<InputType> = forwardRef(
   (
-    { type, label = '', placeholder, id, error, classNameContainer = '', ...restProps },
+    {
+      type,
+      label = '',
+      placeholder,
+      id,
+      error,
+      classNameContainer = '',
+      defaultValue,
+      ...restProps
+    },
     ref: ForwardedRef<any>
   ) => {
     return (
@@ -28,9 +38,10 @@ const GlobalInput: FC<InputType> = forwardRef(
             id={id}
             className={error ? style.inputBottomError : ''}
             type={type}
+            defaultValue={defaultValue}
             placeholder={placeholder}
-            {...restProps}
             ref={ref}
+            {...restProps}
           />
           {error && <span className={style.error}>{error}</span>}
         </div>

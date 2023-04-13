@@ -1,0 +1,21 @@
+.customInput {
+  position: relative;
+  z-index: 1;
+  width: 158px;
+}
+
+// svg календаря
+.iconContainer {
+  position: absolute;
+  z-index: 3;
+  top: 16%;
+  right: 10px;
+}
+
+.customInputForRange {
+  width: 268px;
+}
+
+.error {
+  color: red;
+}

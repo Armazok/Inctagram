@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -18,7 +18,7 @@ export const LoginForm = () => {
   const { setCustomError, handleSubmit, register, errors, reset } = useGlobalForm(schemaLogin)
 
   const { sendLoginData, isLoading, data } = useLoginMutation(
-    () => push('future/future'),
+    () => push('/auth/login/create-account'),
     () =>
       setCustomError(
         'password',
@@ -26,12 +26,6 @@ export const LoginForm = () => {
       ),
     () => reset()
   )
-
-  useEffect(() => {
-    if (!isLoading && data) {
-      window.localStorage.setItem('accessToken', JSON.stringify(data.data.accessToken))
-    }
-  }, [isLoading, data])
 
   const handleFormSubmit = async ({ email, password }: FieldValues) => {
     await sendLoginData({

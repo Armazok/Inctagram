@@ -1,17 +1,32 @@
-import React, { FC, ForwardedRef, forwardRef, TextareaHTMLAttributes } from 'react'
+import React, { ChangeEvent, FC, ForwardedRef, forwardRef } from 'react'
 
 import { FieldValues } from 'react-hook-form'
 
-interface ITextarea extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label?: string
-  textAreaClassName?: string
-  error?: string | FieldValues | any
-  ref?: ForwardedRef<any>
+type TextareaType = {
+  value: string
+  label: string
+  textAreaClassName: string
+  error: string | FieldValues | any
+  ref: ForwardedRef<any>
+  defaultValue: string | undefined
+  rows: number
+  cols: number
+  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
 }
 
-export const Textarea: FC<ITextarea> = forwardRef(
+export const Textarea: FC<Partial<TextareaType>> = forwardRef(
   (
-    { value, label, onChange, error, rows = 3, cols = 30, textAreaClassName, ...restProps },
+    {
+      value,
+      label,
+      onChange,
+      error,
+      rows = 3,
+      cols = 30,
+      textAreaClassName,
+      defaultValue,
+      ...restProps
+    },
     ref: ForwardedRef<any>
   ) => {
     return (
@@ -28,6 +43,7 @@ export const Textarea: FC<ITextarea> = forwardRef(
           value={value}
           rows={rows}
           cols={cols}
+          defaultValue={defaultValue}
           {...restProps}
           ref={ref}
         />
