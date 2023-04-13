@@ -7,7 +7,7 @@ import { settingsSchema, SettingsSchemaType } from '@/common/constants'
 import AccountLayout from '@/components/account/account-layout/AccountLayout'
 import SettingsAccountLayout from '@/components/account/account-layout/SettingsAccountLayout'
 import TabsTitle from '@/components/account/tabs-title/TabsTitle'
-import { UploadAvatar } from '@/modules/profile-avatar/UploadAvatar'
+// import { UploadAvatar } from '@/modules/profile-avatar/UploadAvatar'
 import { useCreateProfileMutation } from '@/modules/profile-modules/create-profile-module/hooks/useCreateProfile'
 import AccountSettingForm from '@/modules/profile-modules/settings-edit-profile-module/components/AccountSettingForm'
 
@@ -39,9 +39,7 @@ export const CreateProfile = ({}) => {
       <div className="relative w-full ">
         <TabsTitle variant="create" />
         <SettingsAccountLayout>
-          <div>
-            <UploadAvatar />
-          </div>
+          <div>{/*<UploadAvatar />*/}</div>
           <AccountSettingForm callbackSubmit={handleFormSubmit} create={true} />
         </SettingsAccountLayout>
       </div>

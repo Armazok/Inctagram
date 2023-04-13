@@ -4,17 +4,16 @@ import { useRouter } from 'next/router'
 
 import styles from '@/components/atoms/header/Header.module.scss'
 import { Confirm } from '@/components/modals/confirm/Confirm'
+import { useLogoutMutation } from '@/modules/auth-modules/login-module/logout/hooks/useLogout'
 import { useUserStore } from '@/store'
 
-const Logout: FC = () => {
+export const LogoutButton: FC = () => {
   const router = useRouter()
   const { logout, email } = useUserStore()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const onConfirm = () => {
-    logout()
-
-    router.push('/auth/login')
+    sendLogout()
   }
 
   const onDecline = () => {
@@ -24,6 +23,16 @@ const Logout: FC = () => {
   const onClose = () => {
     setIsModalOpen(false)
   }
+
+  const handleLogout = () => {
+    logout()
+    window.localStorage.removeItem('accessToken')
+    setIsModalOpen(false)
+
+    router.push('/auth/login')
+  }
+
+  const { sendLogout } = useLogoutMutation(handleLogout)
 
   return (
     <div className={styles.logout}>
@@ -40,5 +49,3 @@ const Logout: FC = () => {
     </div>
   )
 }
-
-export default Logout

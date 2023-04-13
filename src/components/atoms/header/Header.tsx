@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useRouter } from 'next/router'
 
-import Logout from '@/components/header/Logout/Logout'
+import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
 import { useUserStore } from '@/store'
 
 export const Header = () => {
@@ -15,7 +15,7 @@ export const Header = () => {
         <span className="cursor-pointer" onClick={() => push('/')}>
           Inctagram
         </span>
-        <div>{isLoggedIn && <Logout />}</div>
+        <div>{isLoggedIn && <LogoutButton />}</div>
       </div>
     </header>
   )
