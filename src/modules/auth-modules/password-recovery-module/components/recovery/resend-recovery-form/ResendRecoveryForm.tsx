@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 import { useGlobalForm } from '@/common'
 import ResendVerificationForm from '@/components/AuthComponents/resend-verification-form/ResendVerificationForm'
-import { useRecoveryEmailResending } from '@/modules/auth-modules/password-recovery-module/api/hook'
+import { useForgotPassword } from '@/modules/auth-modules/password-recovery-module/api/hook'
 import {
   FormData,
   schema,
@@ -15,12 +15,12 @@ export const ResendRecoveryForm = () => {
 
   const { handleSubmit, register, reset, errors, setCustomError } = useGlobalForm(schema)
 
-  const { resendRecoverCode, isLoading } = useRecoveryEmailResending(setCustomError, reset, push)
+  // const { resendRecoverCode, isLoading } = useRecoveryEmailResending(setCustomError, reset, push)
+  const { sendLinkPasswordRecovery, isLoading } = useForgotPassword(setCustomError, reset, push)
 
   const submitData = (data: FormData) => {
     const { email } = data
-
-    resendRecoverCode({ email })
+    sendLinkPasswordRecovery({ email })
   }
 
   return (
