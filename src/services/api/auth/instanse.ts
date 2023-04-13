@@ -1,10 +1,7 @@
 import axios from 'axios'
 
 export const authInstance = axios.create({
-  // eslint-disable-next-line no-constant-condition
-  baseURL: 'https://inctagram-gauv.onrender.com/'
-    ? 'https://lionfish-app-3jdhn.ondigitalocean.app/'
-    : '',
+  baseURL: 'https://lionfish-app-3jdhn.ondigitalocean.app/',
   withCredentials: true,
 })
 
