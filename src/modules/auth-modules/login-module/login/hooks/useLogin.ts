@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
+import { noRefetch } from '@/helpers/no-refetch'
 import {
   meSendRequest,
   sendLoginRequest,
@@ -46,10 +47,11 @@ export const useLoginMutation = (
   }
 }
 
-const useMeQuery = () => {
+export const useMeQuery = () => {
   return useQuery({
     queryFn: meSendRequest,
     queryKey: ['me'],
     retry: false,
+    ...noRefetch,
   })
 }
