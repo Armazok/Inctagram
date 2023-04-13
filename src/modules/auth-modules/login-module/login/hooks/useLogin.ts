@@ -6,11 +6,7 @@ import {
   sendLoginRequest,
 } from '@/modules/auth-modules/login-module/login/api/loginAPI'
 
-export const useLoginMutation = (
-  onSuccess: () => void,
-  setCustomError: () => void,
-  reset: () => void
-) => {
+export const useLoginMutation = (onSuccess: any, setCustomError: () => void, reset: () => void) => {
   const client = useQueryClient()
   const {
     data,
@@ -35,18 +31,16 @@ export const useLoginMutation = (
       toast.error('Error')
     },
   })
-  const meQuery = useMeQuery()
 
   return {
     data,
     sendLoginData,
     variables,
     isLoading,
-    meData: meQuery.data?.data,
   }
 }
 
-const useMeQuery = () => {
+export const useMeQuery = () => {
   return useQuery({
     queryFn: meSendRequest,
     queryKey: ['me'],
