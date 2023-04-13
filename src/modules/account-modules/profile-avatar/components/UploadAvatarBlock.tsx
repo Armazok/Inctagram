@@ -89,7 +89,12 @@ export const UploadAvatarBlock = () => {
 
   return (
     <div className={'flex flex-col flex-nowrap items-center w-52 font-medium p-[5px]'}>
-      <Avatar alt={'profile photo'} src={avatar ? avatar : ''} className={`mb-[30px] mt-[48px]`} />
+      <Avatar
+        alt={'profile photo'}
+        // src={avatar ? avatar : ''}
+        src={''}
+        className={`mb-[30px] mt-[48px]`}
+      />
       <GlobalButton
         type={'button'}
         variant={'transparent'}
@@ -102,11 +107,7 @@ export const UploadAvatarBlock = () => {
       <ModalWithContent isOpen={isModalOpen} onClose={onCloseClick} title={'Add a Profile Photo'}>
         <>
           {selectedPhoto ? (
-            <ProfileAvatarEditor
-              image={selectedPhoto}
-              setImage={setSelectedPhoto}
-              onSaveClick={onSaveClick}
-            />
+            <ProfileAvatarEditor image={selectedPhoto} onSaveClick={onSaveClick} />
           ) : (
             <div>
               <ImagePlaceholder src={placeholder} alt={'placeholder'} width={320} height={340} />

@@ -4,11 +4,10 @@ import GlobalButton from '@/ui/buttons/GlobalButton'
 
 type PropsType = {
   image: string | File | null
-  setImage: (image: File | string) => void
   onSaveClick: (formData: any) => void
 }
 
-export const ProfileAvatarEditor = ({ image, setImage, onSaveClick }: PropsType) => {
+export const ProfileAvatarEditor = ({ image, onSaveClick }: PropsType) => {
   const [editor, setEditor] = useState(null)
   const [scale, setScale] = useState(1)
 
