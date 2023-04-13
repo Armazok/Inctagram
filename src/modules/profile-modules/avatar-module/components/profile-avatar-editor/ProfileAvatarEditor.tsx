@@ -15,6 +15,7 @@ export const ProfileAvatarEditor = ({ image, onSaveClick }: PropsType) => {
 
   const onScaleChange = (event: any) => {
     const scale = parseFloat(event.target.value)
+
     setScale(scale)
   }
 

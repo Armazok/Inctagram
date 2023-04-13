@@ -1,7 +1,9 @@
 import React, { useRef } from 'react'
-import GlobalButton from '@/ui/buttons/GlobalButton'
+
 import ImagePlaceholder from 'next/image'
+
 import placeholder from '@/assets/images/img-placeholder.png'
+import GlobalButton from '@/ui/buttons/GlobalButton'
 
 type PropsType = {
   setSelectedPhoto: (file: File) => void
@@ -13,6 +15,7 @@ export const PhotoSelector = ({ setSelectedPhoto }: PropsType) => {
   const onFileSelectChange = (event: any) => {
     if (event.target.files && event.target.files.length) {
       const file = event.target.files[0]
+
       setSelectedPhoto(file)
     }
   }
