@@ -17,6 +17,7 @@ const EditSettingProfile = () => {
   const { data } = useMeQuery()
   const userId = data?.data?.userId
   const { data: ProfileData } = useGetProfileData(userId)
+  const profileData = ProfileData as SettingsSchemaType
 
   const { isLoading, mutate: editeProfile } = useMutation({
     mutationKey: ['edit-profile'],
@@ -41,12 +42,12 @@ const EditSettingProfile = () => {
       </div>
       <AccountSettingForm
         callbackSubmit={editProfileData}
-        aboutMe={ProfileData?.aboutMe}
-        username={ProfileData?.userName}
-        firstName={ProfileData?.firstName}
-        lastName={ProfileData?.lastName}
-        date={ProfileData?.dateOfBirth}
-        city={ProfileData?.city}
+        aboutMe={profileData?.aboutMe || ''}
+        username={profileData?.userName || ''}
+        firstName={profileData?.firstName || ''}
+        lastName={profileData?.lastName || ''}
+        date={(profileData?.dateOfBirth as string | Date) || ('' as string)}
+        city={profileData?.city || ''}
       />
     </SettingsAccountLayout>
   )

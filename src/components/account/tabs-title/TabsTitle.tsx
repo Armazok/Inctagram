@@ -12,7 +12,7 @@ interface PropsTabType {
   variant: 'create' | 'edit'
   tabs?: TabsType[]
   activeTab?: string
-  setActiveTab?: (activeTab: string) => void
+  setActiveTab?: (activeTab: string | undefined) => void
 }
 
 const TabsTitle: FC<PropsTabType> = ({ variant, tabs, setActiveTab, activeTab }) => {
@@ -26,7 +26,7 @@ const TabsTitle: FC<PropsTabType> = ({ variant, tabs, setActiveTab, activeTab })
                 key={tab.id}
                 label={tab.label}
                 activeTab={activeTab}
-                setActiveTab={setActiveTab ?? null}
+                setActiveTab={setActiveTab!}
               />
             ))}
           </div>

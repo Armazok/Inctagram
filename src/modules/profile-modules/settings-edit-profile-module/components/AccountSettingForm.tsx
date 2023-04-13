@@ -3,7 +3,6 @@ import React, { FC } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
-import { formatDate } from '@/common'
 import { settingsSchema, SettingsSchemaType } from '@/common/constants'
 import GlobalButton from '@/ui/buttons/GlobalButton'
 import GlobalInput from '@/ui/Inputs/Input/Input'
@@ -13,7 +12,7 @@ type PropsType = {
   username: string
   firstName: string
   lastName: string
-  date: string
+  date: string | Date
   city: string
   aboutMe: string
   callbackSubmit: (data: SettingsSchemaType) => void
@@ -30,6 +29,13 @@ const AccountSettingForm: FC<Partial<PropsType>> = ({
   callbackSubmit,
   create,
 }) => {
+  // const [username, setUsername] = useState(initialUsername)
+  // const [firstName, setFirstName] = useState(initialFirstName)
+  // const [lastName, setLastName] = useState(initialLastName)
+  // const [dateOfBirth, setDateOfBirth] = useState(initialDate ? formatDate(initialDate) : null)
+  // const [city, setCity] = useState(initialCity)
+  // const [aboutMe, setAboutMe] = useState(initialAboutMe)
+
   const {
     register,
     handleSubmit,
@@ -39,7 +45,7 @@ const AccountSettingForm: FC<Partial<PropsType>> = ({
       userName: initialUsername,
       firstName: initialFirstName,
       lastName: initialLastName,
-      dateOfBirth: initialDate ? formatDate(initialDate) : null,
+      dateOfBirth: initialDate ? initialDate : null,
       city: initialCity,
       aboutMe: initialAboutMe,
     },
@@ -80,6 +86,7 @@ const AccountSettingForm: FC<Partial<PropsType>> = ({
         {...register('dateOfBirth')}
         error={errors?.dateOfBirth?.message}
       />
+
       <GlobalInput
         type="text"
         label="City"
