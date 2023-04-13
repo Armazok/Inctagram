@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { useRouter } from 'next/router'
 
@@ -7,7 +7,7 @@ import { settingsSchema, SettingsSchemaType } from '@/common/constants'
 import AccountLayout from '@/components/account/account-layout/AccountLayout'
 import SettingsAccountLayout from '@/components/account/account-layout/SettingsAccountLayout'
 import TabsTitle from '@/components/account/tabs-title/TabsTitle'
-import { UploadAvatar } from '@/modules/profile-avatar/UploadAvatar'
+import { UploadAvatarBlock } from '@/modules/profile-modules/avatar-module/UploadAvatarBlock'
 import { useCreateProfileMutation } from '@/modules/profile-modules/create-profile-module/hooks/useCreateProfile'
 import AccountSettingForm from '@/modules/profile-modules/settings-edit-profile-module/components/AccountSettingForm'
 
@@ -50,7 +50,7 @@ export const CreateProfile = ({}) => {
         <TabsTitle variant="create" />
         <SettingsAccountLayout>
           <div>
-            <UploadAvatar />
+            <UploadAvatarBlock />
           </div>
           <AccountSettingForm callbackSubmit={handleFormSubmit} create={true} />
         </SettingsAccountLayout>

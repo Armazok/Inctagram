@@ -6,7 +6,7 @@ import { useGlobalForm } from '@/common'
 import { settingsSchema, SettingsSchemaType } from '@/common/constants'
 import FormLayout from '@/components/FormLayout/FormLayout'
 import { useCreateProfileMutation } from '@/modules/create-profile-modules/hooks/useCreateProfile'
-import { UploadAvatar } from '@/modules/profile-avatar/UploadAvatar'
+import { UploadAvatarBlock } from '@/modules/profile-modules/avatar-module/UploadAvatarBlock'
 import AccountSettingForm from '@/modules/profile-modules/settings-edit-profile-module/components/AccountSettingForm'
 
 const CreateProfile = ({}) => {
@@ -35,7 +35,7 @@ const CreateProfile = ({}) => {
   return (
     <FormLayout>
       <div>
-        <UploadAvatar />
+        <UploadAvatarBlock />
       </div>
       <AccountSettingForm
         callbackSubmit={handleFormSubmit}

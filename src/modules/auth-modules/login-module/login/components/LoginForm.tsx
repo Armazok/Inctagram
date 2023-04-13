@@ -8,14 +8,13 @@ import { useGlobalForm } from '@/common'
 import Preloader from '@/components/atoms/preloader/Preloader'
 import { schemaLogin } from '@/modules/auth-modules/login-module/login/constants/loginValidationSchema'
 import { useLoginMutation } from '@/modules/auth-modules/login-module/login/hooks/useLogin'
-import { useUserStore } from '@/store'
 import GlobalButton from '@/ui/buttons/GlobalButton'
 import GlobalInput from '@/ui/Inputs/Input/Input'
 import InputWithEye from '@/ui/Inputs/InputWithEye/InputWithEye'
 
 export const LoginForm = () => {
   const { setCustomError, handleSubmit, register, errors, reset } = useGlobalForm(schemaLogin)
-  const { userName } = useUserStore()
+
   const { push } = useRouter()
 
   const { sendLoginData, isLoading, data } = useLoginMutation(

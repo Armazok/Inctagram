@@ -13,8 +13,8 @@ const index: NextPageWithLayout<ILogin> = memo(({}) => {
     <div>
       <Head>
         <title>Login</title>
-        <LoginPage />
       </Head>
+      <LoginPage />
     </div>
   )
 })

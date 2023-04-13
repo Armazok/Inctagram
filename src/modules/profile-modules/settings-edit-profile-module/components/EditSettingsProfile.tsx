@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 
 import { SettingsSchemaType } from '@/common/constants'
 import SettingsAccountLayout from '@/components/account/account-layout/SettingsAccountLayout'
-import { UploadAvatar } from '@/modules/profile-avatar/UploadAvatar'
+import { UploadAvatarBlock } from '@/modules/profile-modules/avatar-module/UploadAvatarBlock'
 import { editAccountData } from '@/modules/profile-modules/settings-edit-profile-module/api/editAccountData'
 import AccountSettingForm from '@/modules/profile-modules/settings-edit-profile-module/components/AccountSettingForm'
 
@@ -23,7 +23,7 @@ const EditSettingProfile = () => {
   return (
     <SettingsAccountLayout>
       <div>
-        <UploadAvatar />
+        <UploadAvatarBlock />
       </div>
       <AccountSettingForm
         callbackSubmit={editProfileData}
