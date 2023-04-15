@@ -10,7 +10,7 @@ export const SettingsProfile = () => {
     return <div key={tab.id}>{activeTab === tab.label && tab.content}</div>
   })
 
-  const onChangeTab = (tabLabel: string) => setActiveTab(tabLabel)
+  const onChangeTab = (tabLabel: string | undefined) => setActiveTab(tabLabel ? tabLabel : '')
 
   return (
     <div className="relative w-full">

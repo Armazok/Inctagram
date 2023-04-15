@@ -42,7 +42,7 @@ export const CreateProfile = ({}) => {
           <div>
             <UploadAvatarBlock />
           </div>
-          <AccountSettingForm onSubmit={handleFormSubmit} create={true} />
+          <AccountSettingForm onSubmit={handleFormSubmit} />
         </SettingsAccountLayout>
       </div>
     </AccountLayout>
