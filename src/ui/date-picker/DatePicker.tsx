@@ -93,17 +93,16 @@ export const DateCalendar: FC<DatePickerProps> = ({
   }
 
   /**
-   * @param - dateForm - формат даты, меняющий порядок месяц/день/год в поле input
-   * @oaram - selected показывает выбранную дату в календаре, когда нажимаем на инпут.
-   * @param - startDate дата, которая будет отображаться в поле input
-   * @param - preventOpenOnFocus если стоит true, то при нажати на странице кнопки tab, выделится только поле inpyt, но календарь не откроется.
+   * @param - {string} dateForm - формат даты, меняющий порядок месяц/день/год в поле input
+   * @oaram - {Date} selected показывает выбранную дату в календаре, когда нажимаем на инпут.
+   * @param - {function} startDate дата, которая будет отображаться в поле input
+   * @param - {boolean} preventOpenOnFocus если стоит true, то при нажати на странице кнопки tab, выделится только поле inpyt, но календарь не откроется.
    * поставь false, и при нажатии tab, выделиться input и откроется окно календарь
-   * @param - renderCustomHeader функция для отрисовки заголовка календаря (месяца, дней недели и кнопок переключения между месяцами)
-   * @param - customInput отвечает за поле input, где показываются даты и отображение svgCalendar
-   * @param - showPopperArrow - отключает маленький треугольник в календаре {@link https://reactdatepicker.com/#example-custom-input}
-   * перейди по ссылеке и открой любой календарь, там ты увидишь маленький треугольник над формой.
-   * @param {number} calendarStartDay - отвечает за отображение стартового дня недели в календаре (0 - воскресенье, 1 - понедельник и т.д.)
-   * @param - disabled блокирует форму. в customInput disabled не передает, реальзуем в DatePicker
+   * @param - {function} renderCustomHeader функция для отрисовки заголовка календаря (месяца, дней недели и кнопок переключения между месяцами)
+   * @param - {function} customInput - компонент для отображения поля input c svg каледаря.
+   * @param - {boolean} showPopperArrow - если стоит true, в календаре отображается маленький треугольник, указывающий на поле input. Если стоит false, треугольник скрыт..
+   * @param - {number} calendarStartDay - отвечает за отображение стартового дня недели в календаре (0 - воскресенье, 1 - понедельник и т.д.)
+   * @param - {boolean} disabled блокирует форму. в customInput disabled не передает, реальзуем в DatePicker
    * @param {object} - popperModifiers - объект, содержащий модификаторы для Popper.js, отвечающие за расположение календаря (изменение значений может повлиять на положение календаря)
    */
   return (
