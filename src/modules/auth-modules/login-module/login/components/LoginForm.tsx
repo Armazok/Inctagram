@@ -13,12 +13,14 @@ import GlobalInput from '@/ui/Inputs/Input/Input'
 import InputWithEye from '@/ui/Inputs/InputWithEye/InputWithEye'
 
 export const LoginForm = () => {
-  const { push } = useRouter()
-
   const { setCustomError, handleSubmit, register, errors, reset } = useGlobalForm(schemaLogin)
 
+  const { push } = useRouter()
+
   const { sendLoginData, isLoading, data } = useLoginMutation(
-    () => push('/auth/login/create-account'),
+    () => {
+      push('/auth/login/create-account')
+    },
     () =>
       setCustomError(
         'password',

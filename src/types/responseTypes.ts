@@ -2,6 +2,12 @@ export type ResLogin = {
   accessToken: string
 }
 
+export type ResMe = {
+  userId: number
+  userName: string
+  email: string
+}
+
 export type ResRegConfirmation = {
   statusCode: number
   messages: [

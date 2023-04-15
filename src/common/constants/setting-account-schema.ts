@@ -1,7 +1,11 @@
 import * as yup from 'yup'
 
 export const settingsSchema = yup.object({
-  userName: yup.string().required('Username is required').min(6).max(30).trim(),
+  userName: yup.lazy(value =>
+    !value
+      ? yup.string().required('Username is required').min(6).max(30).trim()
+      : yup.string().min(6).max(30).trim()
+  ),
   firstName: yup.string().trim(),
   lastName: yup.string().trim(),
   dateOfBirth: yup

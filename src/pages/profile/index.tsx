@@ -5,8 +5,9 @@ import Head from 'next/head'
 import { getGlobalLayout } from '@/components/layout/GlobalLayout/GlobalLayout'
 import { ProfilePage } from '@/modules'
 import { NextPageWithLayout } from '@/pages/_app'
+import { useUserStore } from '@/store'
 
-const PageProfile: NextPageWithLayout = () => {
+const index: NextPageWithLayout = () => {
   return (
     <div>
       <Head>
@@ -17,5 +18,5 @@ const PageProfile: NextPageWithLayout = () => {
   )
 }
 
-PageProfile.getLayout = getGlobalLayout
-export default PageProfile
+index.getLayout = getGlobalLayout
+export default index
