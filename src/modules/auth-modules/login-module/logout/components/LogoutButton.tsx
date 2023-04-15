@@ -3,7 +3,6 @@ import { FC, useState } from 'react'
 import { useRouter } from 'next/router'
 import { FaSignOutAlt } from 'react-icons/fa'
 
-import styles from '@/components/atoms/header/Header.module.scss'
 import { Confirm } from '@/components/modals/confirm/Confirm'
 import { useMeQuery } from '@/modules/auth-modules/login-module/login/hooks/useLogin'
 import { useLogoutMutation } from '@/modules/auth-modules/login-module/logout/hooks/useLogout'
@@ -37,7 +36,7 @@ export const LogoutButton: FC = () => {
   if (isLoading || isError || !data) return null
 
   return (
-    <div className={styles.logout}>
+    <div>
       <button onClick={() => setIsModalOpen(true)} className="flex items-center">
         <FaSignOutAlt className="mr-4" />
         Logout

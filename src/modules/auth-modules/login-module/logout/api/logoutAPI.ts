@@ -1,4 +1,4 @@
-import { authInstance } from '@/services/api/auth/instanse'
+import { authInstance } from '@/services'
 
 export const sendLogoutRequest = () => {
   return authInstance.post('auth/logout')
