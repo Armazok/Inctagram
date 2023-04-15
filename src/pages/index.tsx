@@ -11,7 +11,7 @@ import { useUserStore } from '@/store'
 const Home: NextPageWithLayout = () => {
   const { push } = useRouter()
 
-  const { data } = useMeQuery()
+  const {} = useMeQuery()
   const { accessToken } = useUserStore()
   // const { userName } = data?.data || {}
 
