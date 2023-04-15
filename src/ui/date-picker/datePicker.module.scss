@@ -75,6 +75,11 @@
   @apply text-danger-500;
 }
 
+.disabledText {
+  @apply text-light-900;
+
+}
+
 .errorBlockContainer {
   @apply text-danger-500 border-danger-500 border-2;
   border-radius: 2px;
