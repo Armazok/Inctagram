@@ -6,6 +6,14 @@ import s from './customHeader.module.scss'
 import { capitalizeFirstLetter } from '@/common'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@/ui'
 
+/**
+ * CustomHeader - компонент, используемый для отображения заголовка календаря
+ * @param {Date} date - нужен для capitalizeFirstLetter, чтобы месяц был с большой буквы. Также можно передать option с локализацией языка
+ * @param {function} decreaseMonth - функция, вызываемая при переключении на предыдущий месяц
+ * @param {function} increaseMonth - функция, вызываемая при переключении на следующий месяц
+ * @param {...any} rest - дополнительные параметры, принимаемые компонентом
+ * @constructor
+ */
 export const CustomHeader = ({
   date,
   decreaseMonth,
