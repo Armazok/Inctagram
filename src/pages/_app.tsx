@@ -10,8 +10,6 @@ import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify'
 
 import client from '@/apolloClient'
-import { Private } from '@/components/privateRoute/privatRoute'
-import { useUserStore } from '@/store'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -26,11 +24,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   const getLayout = Component.getLayout ?? (page => page)
 
-  return getLayout(
+  return (
     <ApolloProvider client={client}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <Component {...pageProps} />
+          {getLayout(<Component {...pageProps} />)}
           <ToastContainer
             position="bottom-left"
             autoClose={5000}
