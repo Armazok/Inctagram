@@ -6,21 +6,16 @@ import { FieldValues } from 'react-hook-form'
 
 import { useGlobalForm } from '@/common'
 import { schemaLogin, useLoginMutation } from '@/modules/auth-modules/login-module'
-import { useUserStore } from '@/store'
 import { GlobalButton, GlobalInput, InputWithEye, Preloader } from '@/ui'
 
 export const LoginForm = () => {
   const { setCustomError, handleSubmit, register, errors, reset } = useGlobalForm(schemaLogin)
 
   const { push } = useRouter()
-  const { accessToken } = useUserStore()
 
   const { sendLoginData, isLoading, data } = useLoginMutation(
     () => {
-      if (accessToken) push('/profile')
-      else {
-        push('/auth/login/create-profile')
-      }
+      push('/profile')
     },
     () =>
       setCustomError(

@@ -20,7 +20,7 @@ type PropsType = {
   initialProfileData: ProfileType
 }
 
-const AccountSettingForm: FC<Partial<PropsType>> = ({ initialProfileData, onSubmit }) => {
+export const AccountSettingForm: FC<Partial<PropsType>> = ({ initialProfileData, onSubmit }) => {
   const {
     register,
     handleSubmit,

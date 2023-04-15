@@ -12,7 +12,7 @@ type CustomInputProps = {
   disabledLabelText?: boolean
 }
 
-const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
+export const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
   ({ label, error, disabledLabelText, isRange, ...rest }, ref) => {
     const classNames = {
       inputContainer: clsx(s.customInput, isRange && s.customInputForRange),

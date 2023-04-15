@@ -5,12 +5,11 @@ import { toast } from 'react-toastify'
 
 import { SettingsSchemaType } from '@/common'
 import { SettingsAccountLayout } from '@/components/account'
-import { useMeQuery } from '@/modules/auth-modules/login-module'
 import { UploadAvatarBlock } from '@/modules/profile-modules/avatar-module'
 import {
   AccountSettingForm,
   editAccountData,
-  useGetProfileData,
+  useProfile,
 } from '@/modules/profile-modules/settings-edit-profile-module'
 
 export const EditSettingProfile = () => {
