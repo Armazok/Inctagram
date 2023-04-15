@@ -10,13 +10,11 @@ export const SettingsProfile = () => {
     return <div key={tab.id}>{activeTab === tab.label && tab.content}</div>
   })
 
-  const onChange = (value: string | undefined) => {
-    setActiveTab(value!)
-  }
+  const onChangeTab = (tabLabel: string | undefined) => setActiveTab(tabLabel ? tabLabel : '')
 
   return (
     <div className="relative w-full">
-      <TabsTitle variant="edit" tabs={tabs} setActiveTab={onChange} activeTab={activeTab} />
+      <TabsTitle variant="edit" tabs={tabs} setActiveTab={onChangeTab} activeTab={activeTab} />
       {tabsLayout}
     </div>
   )

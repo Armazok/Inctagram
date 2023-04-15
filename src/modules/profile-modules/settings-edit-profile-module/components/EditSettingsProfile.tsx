@@ -16,12 +16,9 @@ import {
 export const EditSettingProfile = () => {
   const client = useQueryClient()
 
-  const { data } = useMeQuery()
-  const userId = data?.data?.userId
-  const { data: ProfileData } = useGetProfileData(userId)
-  const profileData = ProfileData as SettingsSchemaType
+  const { profileData, isLoading: isProfileLoading } = useProfile()
 
-  const { isLoading, mutate: editeProfile } = useMutation({
+  const { mutate: editeProfile } = useMutation({
     mutationKey: ['edit-profile'],
     mutationFn: editAccountData,
     onSuccess: () => {
@@ -34,23 +31,27 @@ export const EditSettingProfile = () => {
   })
 
   const editProfileData = (data: SettingsSchemaType) => {
-    editeProfile(data)
+    editeProfile?.(data)
   }
+
+  const initialProfileData = {
+    userName: profileData?.userName || '',
+    firstName: profileData?.firstName || '',
+    lastName: profileData?.lastName || '',
+    city: profileData?.city || '',
+    dateOfBirth: profileData?.dateOfBirth || null,
+    aboutMe: profileData?.aboutMe || '',
+  }
+
+  //todo : Loader add
+  if (isProfileLoading) return null
 
   return (
     <SettingsAccountLayout>
       <div>
         <UploadAvatarBlock />
       </div>
-      <AccountSettingForm
-        callbackSubmit={editProfileData}
-        aboutMe={profileData?.aboutMe || ''}
-        username={profileData?.userName || ''}
-        firstName={profileData?.firstName || ''}
-        lastName={profileData?.lastName || ''}
-        date={(profileData?.dateOfBirth as string | Date) || ('' as string)}
-        city={profileData?.city || ''}
-      />
+      <AccountSettingForm onSubmit={editProfileData} initialProfileData={initialProfileData} />
     </SettingsAccountLayout>
   )
 }

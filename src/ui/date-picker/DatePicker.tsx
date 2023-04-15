@@ -17,6 +17,7 @@ type CommonProps = {
   error?: boolean
   errorMessage?: string
   disabled?: boolean
+  maxDate?: Date | null
 } & ComponentProps<'div'>
 
 type ConditionalProps =
@@ -41,10 +42,11 @@ export const DateCalendar: FC<DatePickerProps> = ({
   endDate,
   setEndDate,
   disabled,
+  maxDate,
   ...rest
 }) => {
   const classNames = {
-    input: clsx(s.blockContainer, error && s.errorBlockContainer),
+    input: clsx(s.blockContainer, error && s.errorBlockContainer, disabled && s.disabledText),
     calendar: s.calendar,
     popper: s.popper,
     errorText: clsx(error && s.errorText),
@@ -64,9 +66,12 @@ export const DateCalendar: FC<DatePickerProps> = ({
     }
   }
 
+  console.log(disabled)
+
   return (
     <div {...rest}>
       <ReactDatePicker
+        maxDate={maxDate}
         dateFormat="dd-MM-yyyy"
         startDate={startDate}
         endDate={endDate}
@@ -83,7 +88,7 @@ export const DateCalendar: FC<DatePickerProps> = ({
         )}
         onChange={(dates: [Date | null, Date | null] | Date | null) => DatePickerHandler(dates)}
         customInput={
-          <CustomInput isRange={isRange} label={label} error={error} disabled={disabled} />
+          <CustomInput isRange={isRange} disabledLabelText={disabled} label={label} error={error} />
         }
         dayClassName={classNames.day}
         calendarClassName={classNames.calendar}
@@ -91,6 +96,7 @@ export const DateCalendar: FC<DatePickerProps> = ({
         popperClassName={classNames.popper}
         showPopperArrow={false}
         calendarStartDay={1}
+        disabled={disabled}
         popperModifiers={[
           {
             name: 'offset',
