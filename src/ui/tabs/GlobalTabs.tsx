@@ -3,12 +3,12 @@ import { FC } from 'react'
 import clsx from 'clsx'
 
 interface ITabComponentType {
-  label: string
-  activeTab?: string
-  setActiveTab?: (label: string) => void
+  label: string | undefined
+  activeTab?: string | undefined
+  setActiveTab?: (activeTab: string | undefined) => void
 }
 
-const TabComponent: FC<ITabComponentType> = ({ label, activeTab, setActiveTab }) => {
+export const TabComponent: FC<ITabComponentType> = ({ label, activeTab, setActiveTab }) => {
   return (
     <div className="flex justify-center align-middle  ">
       <div
@@ -25,5 +25,3 @@ const TabComponent: FC<ITabComponentType> = ({ label, activeTab, setActiveTab })
     </div>
   )
 }
-
-export default TabComponent

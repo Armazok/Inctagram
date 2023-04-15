@@ -3,11 +3,10 @@ import { ReactDatePickerCustomHeaderProps } from 'react-datepicker'
 
 import s from './customHeader.module.scss'
 
-import { capitalizeFirstLetter } from '@/common/capitalize-first-letter/capitalizeFirstLetter'
-import { KeyboardArrowLeft } from '@/ui/date-picker/custom/icon-components/KeyboardArrowLeft'
-import { KeyboardArrowRight } from '@/ui/date-picker/custom/icon-components/KeyboardArrowRight'
+import { capitalizeFirstLetter } from '@/common'
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@/ui'
 
-const CustomHeader = ({
+export const CustomHeader = ({
   date,
   decreaseMonth,
   increaseMonth,
@@ -36,5 +35,3 @@ const CustomHeader = ({
     </div>
   )
 }
-
-export default CustomHeader

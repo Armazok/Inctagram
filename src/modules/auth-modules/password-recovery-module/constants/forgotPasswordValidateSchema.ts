@@ -1,8 +1,7 @@
 import * as yup from 'yup'
 
-export type FormData = yup.InferType<typeof schema>
+// export type FormData = yup.InferType<typeof forgotPassSchema>
 
-//@ts-ignore
-export const schema = yup.object({
+export const forgotPassSchema = yup.object({
   email: yup.string().trim().required('Email is required field').email('Email is invalid'),
 })

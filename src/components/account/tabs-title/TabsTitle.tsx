@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-import GlobalTabs from '@/ui/tabs/GlobalTabs'
+import { TabComponent } from '@/ui'
 
 interface TabsType {
   id: string
@@ -15,14 +15,14 @@ interface PropsTabType {
   setActiveTab?: (activeTab: string | undefined) => void
 }
 
-const TabsTitle: FC<PropsTabType> = ({ variant, tabs, setActiveTab, activeTab }) => {
+export const TabsTitle: FC<PropsTabType> = ({ variant, tabs, setActiveTab, activeTab }) => {
   return (
     <>
       {variant === 'edit' && (
         <>
           <div className="flex border-b border-gray-200  w-[313px] border-none h-[96] gap-[2px]">
             {tabs?.map(tab => (
-              <GlobalTabs
+              <TabComponent
                 key={tab.id}
                 label={tab.label}
                 activeTab={activeTab}
@@ -42,5 +42,3 @@ const TabsTitle: FC<PropsTabType> = ({ variant, tabs, setActiveTab, activeTab })
     </>
   )
 }
-
-export default TabsTitle

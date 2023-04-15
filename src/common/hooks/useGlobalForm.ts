@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
@@ -30,24 +28,28 @@ export const useGlobalForm = (schema: any) => {
   }
 }
 
-export function useLocalStorage(key: string, initialValue: string) {
-  // State to store our value
-  // Pass initial state function to useState so logic is only executed once
-  const [storedValue, setStoredValue] = useState(() => {
-    if (typeof window === 'undefined') {
-      return initialValue
-    }
-    try {
-      // Get from local storage by key
-      const item = window.localStorage.getItem(key)
-
-      // Parse stored json or if none return initialValue
-      return item ? JSON.parse(item) : initialValue
-    } catch (error) {
-      // If error also return initialValue
-      console.log(error)
-
-      return initialValue
-    }
-  })
-}
+// interface Props {
+//   accessToken: string | null
+//   redirectIfFound?: boolean
+//   redirectIfNotFound?: boolean
+// }
+//
+// const usePrivateRoute = ({
+//   accessToken,
+//   redirectIfFound = false,
+//   redirectIfNotFound = true,
+// }: Props) => {
+//   const router = useRouter()
+//
+//   useEffect(() => {
+//     if (accessToken) {
+//       if (redirectIfFound) {
+//         router.push('/profile')
+//       }
+//     } else if (redirectIfNotFound) {
+//       router.push('/auth/login')
+//     }
+//   }, [accessToken, redirectIfFound, redirectIfNotFound, router])
+// }
+//
+// export default usePrivateRoute

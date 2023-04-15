@@ -4,11 +4,13 @@ import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 
 import { PATH_ROUTE } from '@/common/constants/PATH_ROUTE'
-import Preloader from '@/components/atoms/preloader/Preloader'
-import ResendingVerificationLink from '@/components/AuthComponents/resending-verification-link/ResendingVerificationLink'
-import { noRefetch } from '@/helpers/no-refetch'
-import { passwordRecoveryAPI } from '@/modules/auth-modules/password-recovery-module/api/passwordRecovary'
-import { CreateNewPasswordPage } from '@/modules/auth-modules/password-recovery-module/components/recovery/create-new-password/CreateNewPasswordPage'
+import { noRefetch } from '@/common/helpers/no-refetch'
+import { ResendingVerificationLink } from '@/components/AuthComponents'
+import {
+  CreateNewPasswordPage,
+  passwordRecoveryAPI,
+} from '@/modules/auth-modules/password-recovery-module'
+import { Preloader } from '@/ui'
 
 export const RecoveryPage = () => {
   const router = useRouter()

@@ -1,4 +1,4 @@
-import { authInstance } from '@/services/api/auth/instanse'
+import { authInstance } from '@/services'
 
 export const sendAvatar = (formData: File) => {
   return authInstance.post<ResAvatarType>('users/profile/avatar', formData, {

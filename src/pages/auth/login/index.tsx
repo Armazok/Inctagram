@@ -3,12 +3,12 @@ import React, { memo } from 'react'
 import Head from 'next/head'
 
 import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
-import { LoginPage } from '@/modules'
+import { LoginPage } from '@/modules/auth-modules/login-module'
 import { NextPageWithLayout } from '@/pages/_app'
 
 interface ILogin {}
 
-const PageLogin: NextPageWithLayout<ILogin> = memo(({}) => {
+const index: NextPageWithLayout<ILogin> = memo(({}) => {
   return (
     <div>
       <Head>
@@ -19,5 +19,5 @@ const PageLogin: NextPageWithLayout<ILogin> = memo(({}) => {
   )
 })
 
-PageLogin.getLayout = getLayoutWithHeader
-export default PageLogin
+index.getLayout = getLayoutWithHeader
+export default index

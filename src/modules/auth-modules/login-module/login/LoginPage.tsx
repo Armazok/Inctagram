@@ -2,10 +2,9 @@ import React from 'react'
 
 import Link from 'next/link'
 
-import { NameTitle } from '@/components/atoms/title/nameTitle'
-import FormLayout from '@/components/FormLayout/FormLayout'
+import { FormLayout } from '@/components/FormLayout'
 import { LoginForm } from '@/modules/auth-modules/login-module/login/components/LoginForm'
-import GoogleFacebook from '@/ui/GoogleFacebook/GoogleFacebook'
+import { GoogleFacebook, NameTitle } from '@/ui'
 
 export const LoginPage = ({}) => {
   return (

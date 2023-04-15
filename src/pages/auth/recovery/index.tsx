@@ -2,8 +2,8 @@ import React from 'react'
 
 import Head from 'next/head'
 
-import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
-import { RecoveryPage } from '@/modules'
+import { getLayoutWithHeader } from '@/components/layout'
+import { RecoveryPage } from '@/modules/auth-modules/password-recovery-module'
 import { NextPageWithLayout } from '@/pages/_app'
 
 const PageRecovery: NextPageWithLayout = () => {
