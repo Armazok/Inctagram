@@ -1,3 +1,1 @@
-import { useUserStore } from '@/store/userStore'
-
-export { useUserStore }
+export * from '@/store/userStore'
