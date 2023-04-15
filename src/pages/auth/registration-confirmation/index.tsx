@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 
-import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
-import { ResendingVerificationEmail } from '@/modules'
+import { getLayoutWithHeader } from '@/components/layout'
+import { ResendingVerificationEmail } from '@/modules/auth-modules/registraion-module'
 import { NextPageWithLayout } from '@/pages/_app'
 
 const RegistrationConfirmation: NextPageWithLayout = () => {

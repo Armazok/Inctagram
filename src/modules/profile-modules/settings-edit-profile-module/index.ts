@@ -1,1 +1,6 @@
-export { SettingsProfile } from './SettingsProfile'
+export * from './api/editAccountData'
+export * from './api/getAccountData'
+export * from './hooks/useGetProfileData'
+export * from './SettingsProfile'
+export * from './components/AccountSettingForm'
+export * from './components/EditSettingsProfile'

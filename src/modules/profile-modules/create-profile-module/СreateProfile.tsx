@@ -2,14 +2,11 @@ import React from 'react'
 
 import { useRouter } from 'next/router'
 
-import { useGlobalForm } from '@/common'
-import { settingsSchema, SettingsSchemaType } from '@/common/constants'
-import AccountLayout from '@/components/account/account-layout/AccountLayout'
-import SettingsAccountLayout from '@/components/account/account-layout/SettingsAccountLayout'
-import TabsTitle from '@/components/account/tabs-title/TabsTitle'
-import { UploadAvatarBlock } from '@/modules/profile-modules/avatar-module/UploadAvatarBlock'
-import { useCreateProfileMutation } from '@/modules/profile-modules/create-profile-module/hooks/useCreateProfile'
-import AccountSettingForm from '@/modules/profile-modules/settings-edit-profile-module/components/AccountSettingForm'
+import { settingsSchema, SettingsSchemaType, useGlobalForm } from '@/common'
+import { AccountLayout, SettingsAccountLayout, TabsTitle } from '@/components/account'
+import { useCreateProfileMutation } from '@/modules/create-profile-modules'
+import { UploadAvatarBlock } from '@/modules/profile-modules/avatar-module'
+import { AccountSettingForm } from '@/modules/profile-modules/settings-edit-profile-module'
 
 export const CreateProfile = ({}) => {
   const { push } = useRouter()
@@ -17,15 +14,6 @@ export const CreateProfile = ({}) => {
 
   const { sendCreateProfile, isLoading, data } = useCreateProfileMutation(() => push('/profile'))
 
-  // const firstName = data && data.data
-  //
-  // useEffect(() => {
-  //   if (firstName) {
-  //     push('/profile')
-  //   } else {
-  //     push('/auth/login/create-account')
-  //   }
-  // }, [firstName])
   const handleFormSubmit = async ({
     city,
     aboutMe,

@@ -3,16 +3,15 @@ import React from 'react'
 import { FieldValues, SubmitHandler } from 'react-hook-form'
 
 import { useGlobalForm } from '@/common'
-import { schema } from '@/modules/auth-modules/password-recovery-module/constants/forgotPasswordValidateSchema'
-import GlobalButton from '@/ui/buttons/GlobalButton'
-import GlobalInput from '@/ui/Inputs/Input/Input'
+import { forgotPassSchema } from '@/modules/auth-modules/password-recovery-module'
+import { GlobalButton, GlobalInput } from '@/ui'
 
 type PropsType = {
   onSubmitHandler: (email: string) => void
 }
 
-const ForgotPasswordForm = ({ onSubmitHandler }: PropsType) => {
-  const { errors, register, reset, handleSubmit } = useGlobalForm(schema)
+export const ForgotPasswordForm = ({ onSubmitHandler }: PropsType) => {
+  const { errors, register, reset, handleSubmit } = useGlobalForm(forgotPassSchema)
 
   const onSubmit: SubmitHandler<FieldValues> = async data => {
     const { email } = data
@@ -32,7 +31,6 @@ const ForgotPasswordForm = ({ onSubmitHandler }: PropsType) => {
           id="email"
           placeholder=""
           label="Email"
-          //@ts-ignore
           error={errors?.email?.message}
           {...register('email')}
         />
@@ -50,5 +48,3 @@ const ForgotPasswordForm = ({ onSubmitHandler }: PropsType) => {
     </div>
   )
 }
-
-export default ForgotPasswordForm

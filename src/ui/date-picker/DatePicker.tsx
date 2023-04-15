@@ -3,13 +3,11 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { ComponentProps, FC } from 'react'
 
 import clsx from 'clsx'
-// eslint-disable-next-line import/no-named-as-default
-import ReactDatePicker from 'react-datepicker'
+import { ReactDatePicker } from 'react-datepicker'
 
 import s from '../date-picker/datePicker.module.scss'
 
-import CustomHeader from '@/ui/date-picker/custom/CustomHeader'
-import CustomInput from '@/ui/date-picker/custom/CustomInput'
+import { CustomHeader, CustomInput } from '@/ui'
 
 type CommonProps = {
   placeholder?: string
@@ -33,7 +31,7 @@ type ConditionalProps =
 
 export type DatePickerProps = CommonProps & ConditionalProps
 
-const DateCalendar: FC<DatePickerProps> = ({
+export const DateCalendar: FC<DatePickerProps> = ({
   startDate,
   setStartDate,
   placeholder,
@@ -106,5 +104,3 @@ const DateCalendar: FC<DatePickerProps> = ({
     </div>
   )
 }
-
-export default DateCalendar

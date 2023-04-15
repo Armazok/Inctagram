@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from 'react'
 
-const AccountLayout: FC<{ children: ReactNode; className?: string }> = ({
+export const AccountLayout: FC<{ children: ReactNode; className?: string }> = ({
   children,
   className,
 }) => {
@@ -10,5 +10,3 @@ const AccountLayout: FC<{ children: ReactNode; className?: string }> = ({
     </div>
   )
 }
-
-export default AccountLayout

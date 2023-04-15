@@ -4,14 +4,11 @@ import { ApolloProvider } from '@apollo/client'
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import '@/styles/globals.scss'
 import 'react-toastify/dist/ReactToastify.css'
-import '@/components/atoms/buttons/button.module.scss'
 import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify'
 
 import client from '@/apolloClient'
-import { Private } from '@/components/privateRoute/privatRoute'
-import { useUserStore } from '@/store'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode

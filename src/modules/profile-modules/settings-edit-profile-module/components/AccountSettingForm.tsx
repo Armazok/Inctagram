@@ -3,10 +3,8 @@ import React, { FC } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
-import { settingsSchema, SettingsSchemaType } from '@/common/constants'
-import GlobalButton from '@/ui/buttons/GlobalButton'
-import GlobalInput from '@/ui/Inputs/Input/Input'
-import { Textarea } from '@/ui/textarea/Textarea'
+import { settingsSchema, SettingsSchemaType } from '@/common'
+import { GlobalButton, GlobalInput, Textarea } from '@/ui'
 
 type PropsType = {
   username: string
@@ -19,7 +17,7 @@ type PropsType = {
   create: boolean
 }
 
-const AccountSettingForm: FC<Partial<PropsType>> = ({
+export const AccountSettingForm: FC<Partial<PropsType>> = ({
   city: initialCity,
   aboutMe: initialAboutMe,
   username: initialUsername,
@@ -107,5 +105,3 @@ const AccountSettingForm: FC<Partial<PropsType>> = ({
     </form>
   )
 }
-
-export default AccountSettingForm

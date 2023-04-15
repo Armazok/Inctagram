@@ -2,14 +2,13 @@ import React from 'react'
 
 import { useRouter } from 'next/router'
 
-import { useGlobalForm } from '@/common'
-import { settingsSchema, SettingsSchemaType } from '@/common/constants'
-import FormLayout from '@/components/FormLayout/FormLayout'
-import { useCreateProfileMutation } from '@/modules/create-profile-modules/hooks/useCreateProfile'
-import { UploadAvatarBlock } from '@/modules/profile-modules/avatar-module/UploadAvatarBlock'
-import AccountSettingForm from '@/modules/profile-modules/settings-edit-profile-module/components/AccountSettingForm'
+import { settingsSchema, SettingsSchemaType, useGlobalForm } from '@/common'
+import { FormLayout } from '@/components/FormLayout'
+import { UploadAvatarBlock } from '@/modules/profile-modules/avatar-module'
+import { useCreateProfileMutation } from '@/modules/profile-modules/create-profile-module'
+import { AccountSettingForm } from '@/modules/profile-modules/settings-edit-profile-module'
 
-const CreateProfile = ({}) => {
+export const CreateProfile = ({}) => {
   const { push } = useRouter()
   const { setCustomError, handleSubmit, reset } = useGlobalForm(settingsSchema)
 
@@ -50,5 +49,3 @@ const CreateProfile = ({}) => {
     </FormLayout>
   )
 }
-
-export default CreateProfile

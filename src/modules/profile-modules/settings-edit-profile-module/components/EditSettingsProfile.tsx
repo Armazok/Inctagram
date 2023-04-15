@@ -3,15 +3,17 @@ import React from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
-import { SettingsSchemaType } from '@/common/constants'
-import SettingsAccountLayout from '@/components/account/account-layout/SettingsAccountLayout'
-import { useMeQuery } from '@/modules/auth-modules/login-module/login/hooks/useLogin'
-import { UploadAvatarBlock } from '@/modules/profile-modules/avatar-module/UploadAvatarBlock'
-import { editAccountData } from '@/modules/profile-modules/settings-edit-profile-module/api/editAccountData'
-import AccountSettingForm from '@/modules/profile-modules/settings-edit-profile-module/components/AccountSettingForm'
-import { useGetProfileData } from '@/modules/profile-modules/settings-edit-profile-module/hooks/useGetProfileData'
+import { SettingsSchemaType } from '@/common'
+import { SettingsAccountLayout } from '@/components/account'
+import { useMeQuery } from '@/modules/auth-modules/login-module'
+import { UploadAvatarBlock } from '@/modules/profile-modules/avatar-module'
+import {
+  AccountSettingForm,
+  editAccountData,
+  useGetProfileData,
+} from '@/modules/profile-modules/settings-edit-profile-module'
 
-const EditSettingProfile = () => {
+export const EditSettingProfile = () => {
   const client = useQueryClient()
 
   const { data } = useMeQuery()
@@ -52,5 +54,3 @@ const EditSettingProfile = () => {
     </SettingsAccountLayout>
   )
 }
-
-export default EditSettingProfile

@@ -3,10 +3,9 @@ import React from 'react'
 import Link from 'next/link'
 
 import { PATH_ROUTE } from '@/common/constants/PATH_ROUTE'
-import { NameTitle } from '@/components/atoms/title/nameTitle'
-import FormLayout from '@/components/FormLayout/FormLayout'
-import RegistrationForm from '@/modules/auth-modules/registraion-module/registration/components/registraion-form/RegistrationForm'
-import GoogleFacebook from '@/ui/GoogleFacebook/GoogleFacebook'
+import { FormLayout } from '@/components/FormLayout'
+import { RegistrationForm } from '@/modules/auth-modules/registraion-module'
+import { GoogleFacebook, NameTitle } from '@/ui'
 
 export const RegisterPage = () => {
   return (

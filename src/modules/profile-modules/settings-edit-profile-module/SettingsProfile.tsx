@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import { tabs } from '@/common/constants'
-import TabsTitle from '@/components/account/tabs-title/TabsTitle'
+import { tabs } from '@/common'
+import { TabsTitle } from '@/components/account'
 
 export const SettingsProfile = () => {
   const [activeTab, setActiveTab] = useState(tabs && tabs[0].label)

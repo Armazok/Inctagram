@@ -8,7 +8,7 @@ interface ITabComponentType {
   setActiveTab?: (label: string) => void
 }
 
-const TabComponent: FC<ITabComponentType> = ({ label, activeTab, setActiveTab }) => {
+export const TabComponent: FC<ITabComponentType> = ({ label, activeTab, setActiveTab }) => {
   return (
     <div className="flex justify-center align-middle  ">
       <div
@@ -25,5 +25,3 @@ const TabComponent: FC<ITabComponentType> = ({ label, activeTab, setActiveTab })
     </div>
   )
 }
-
-export default TabComponent

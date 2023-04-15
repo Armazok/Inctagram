@@ -2,7 +2,7 @@ import React from 'react'
 
 import { nanoid } from 'nanoid'
 
-import EditSettingProfile from '@/modules/profile-modules/settings-edit-profile-module/components/EditSettingsProfile'
+import { EditSettingProfile } from '@/modules/profile-modules/settings-edit-profile-module'
 
 export const tabs = [
   { id: nanoid(), label: 'General information', content: <EditSettingProfile /> },

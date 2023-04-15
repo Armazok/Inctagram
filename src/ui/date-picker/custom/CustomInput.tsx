@@ -2,9 +2,8 @@ import { forwardRef } from 'react'
 
 import clsx from 'clsx'
 
+import { Calendar, Label } from '@/ui'
 import s from '@/ui/date-picker/custom/customInput.module.scss'
-import { Calendar } from '@/ui/date-picker/custom/icon-components/Calendar'
-import { Label } from '@/ui/label/Label'
 
 type CustomInputProps = {
   disabled?: boolean
@@ -13,7 +12,7 @@ type CustomInputProps = {
   isRange?: boolean
 }
 
-const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
+export const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
   ({ label, disabled, error = false, isRange, ...rest }, ref) => {
     const classNames = {
       inputContainer: clsx(s.customInput, isRange && s.customInputForRange),
@@ -33,5 +32,3 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
     )
   }
 )
-
-export default CustomInput

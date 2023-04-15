@@ -3,7 +3,7 @@ import { PropsWithChildren, ReactElement } from 'react'
 import { NextPage } from 'next'
 
 import { LayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
-import { Sidebar } from '@/ui/sidebar/Sidebar'
+import { Sidebar } from '@/components/sidebar/Sidebar'
 
 export const GlobalLayout: NextPage<PropsWithChildren> = ({ children }) => {
   return (

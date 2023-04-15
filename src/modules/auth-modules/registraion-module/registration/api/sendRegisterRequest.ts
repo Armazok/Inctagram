@@ -1,5 +1,5 @@
-import { FormDataRegistered } from '@/modules/auth-modules/registraion-module/registration/constants/registerValidateSchema'
-import { authInstance } from '@/services/api/auth/instanse'
+import { FormDataRegistered } from '@/modules/auth-modules/registraion-module'
+import { authInstance } from '@/services/api/instanse'
 
 export const sendRegisterRequest = ({
   email,

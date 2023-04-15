@@ -1,24 +1,15 @@
-import { useEffect } from 'react'
-
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
-import { LoginPage, ProfilePage } from '@/modules'
-import { useMeQuery } from '@/modules/auth-modules/login-module/login/hooks/useLogin'
+import { getLayoutWithHeader } from '@/components/layout'
+import { LoginPage, useMeQuery } from '@/modules/auth-modules/login-module'
 import { NextPageWithLayout } from '@/pages/_app'
 
 const Home: NextPageWithLayout = () => {
   const { push } = useRouter()
 
   const { data } = useMeQuery()
-  const { userName } = data?.data || {}
-
-  // useEffect(() => {
-  //   if (!userName) {
-  //     push('/profile')
-  //   }
-  // }, [userName])
+  const { userId } = data?.data || {}
 
   return (
     <>

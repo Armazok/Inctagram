@@ -3,7 +3,7 @@ import React from 'react'
 import Head from 'next/head'
 
 import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
-import { CreateProfile } from '@/modules'
+import { CreateProfile } from '@/modules/create-profile-modules'
 import { NextPageWithLayout } from '@/pages/_app'
 
 interface IIndex {}

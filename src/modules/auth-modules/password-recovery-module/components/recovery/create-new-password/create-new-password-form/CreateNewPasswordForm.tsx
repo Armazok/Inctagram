@@ -3,16 +3,15 @@ import React from 'react'
 import { FieldValues, SubmitHandler } from 'react-hook-form'
 
 import { useGlobalForm } from '@/common'
-import { schema } from '@/modules/auth-modules/password-recovery-module/constants/createNewPasswordSchema'
-import GlobalButton from '@/ui/buttons/GlobalButton'
-import InputWithEye from '@/ui/Inputs/InputWithEye/InputWithEye'
+import { createNewPasswordSchema } from '@/modules/auth-modules/password-recovery-module'
+import { GlobalButton, InputWithEye } from '@/ui'
 
 type PropsType = {
   onSubmitHandler: (password: string) => void
 }
 
-const CreateNewPasswordForm = ({ onSubmitHandler }: PropsType) => {
-  const { errors, register, reset, handleSubmit } = useGlobalForm(schema)
+export const CreateNewPasswordForm = ({ onSubmitHandler }: PropsType) => {
+  const { errors, register, reset, handleSubmit } = useGlobalForm(createNewPasswordSchema)
 
   const onSubmit: SubmitHandler<FieldValues> = data => {
     const { password } = data
@@ -30,7 +29,6 @@ const CreateNewPasswordForm = ({ onSubmitHandler }: PropsType) => {
         label="Password"
         id="password"
         placeholder=""
-        //@ts-ignore
         error={errors?.password?.message}
         {...register('password')}
       />
@@ -38,7 +36,6 @@ const CreateNewPasswordForm = ({ onSubmitHandler }: PropsType) => {
         placeholder=""
         label="Password"
         id="confirmPassword"
-        //@ts-ignore
         error={errors?.confirmPassword?.message}
         {...register('confirmPassword')}
       />
@@ -48,5 +45,3 @@ const CreateNewPasswordForm = ({ onSubmitHandler }: PropsType) => {
     </form>
   )
 }
-
-export default CreateNewPasswordForm
