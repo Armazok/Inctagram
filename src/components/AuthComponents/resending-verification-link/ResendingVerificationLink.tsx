@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import EmailResendingImg from '@/assets/images/rafiki.svg'
 
-const ResendingVerificationLink: FC<{ path: string }> = ({ path }) => {
+export const ResendingVerificationLink: FC<{ path: string }> = ({ path }) => {
   return (
     <div className={'flex justify-center items-center flex-col text-light-100 h-screen'}>
       <span className={'font-bold mt-6 mb-3'}>Email verification link expired</span>
@@ -26,5 +26,3 @@ const ResendingVerificationLink: FC<{ path: string }> = ({ path }) => {
     </div>
   )
 }
-
-export default ResendingVerificationLink

@@ -1,5 +1,5 @@
-import { SettingsSchemaType } from '@/common/constants'
-import { authInstance } from '@/services/api/auth/instanse'
+import { SettingsSchemaType } from '@/common'
+import { authInstance } from '@/services'
 
 export const editAccountData = (payloadEditProfile: SettingsSchemaType) => {
   return authInstance.put<SettingsSchemaType>('users/profile', { ...payloadEditProfile })

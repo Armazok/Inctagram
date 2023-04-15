@@ -4,7 +4,7 @@ type PropsType = {
   children: React.ReactNode | any
   className: string
 }
-const FormLayout: FC<Partial<PropsType>> = ({ children, className }) => {
+export const FormLayout: FC<Partial<PropsType>> = ({ children, className }) => {
   return (
     <div
       className={`container flex flex-col items-center w-full max-w-sm bg-secondBgColor rounded-[2px] ${className}`}
@@ -15,5 +15,3 @@ const FormLayout: FC<Partial<PropsType>> = ({ children, className }) => {
     </div>
   )
 }
-
-export default FormLayout

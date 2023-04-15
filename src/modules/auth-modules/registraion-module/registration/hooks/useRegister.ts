@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { sendRegisterRequest } from '@/modules/auth-modules/registraion-module/registration/api/sendRegisterRequest'
+import { sendRegisterRequest } from '@/modules/auth-modules/registraion-module'
 
 interface RegisterType {
   onSuccess: () => void

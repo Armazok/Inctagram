@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 import Head from 'next/head'
 
 import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
-import { LoginPage } from '@/modules'
+import { LoginPage } from '@/modules/auth-modules/login-module'
 import { NextPageWithLayout } from '@/pages/_app'
 
 interface ILogin {}

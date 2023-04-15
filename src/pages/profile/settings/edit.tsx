@@ -1,11 +1,11 @@
 import React from 'react'
 
-import AccountLayout from '@/components/account/account-layout/AccountLayout'
-import { getGlobalLayout } from '@/components/layout/GlobalLayout/GlobalLayout'
-import { SettingsProfile } from '@/modules'
+import { AccountLayout } from '@/components/account'
+import { getGlobalLayout } from '@/components/layout'
+import { SettingsProfile } from '@/modules/profile-modules/settings-edit-profile-module'
 import { NextPageWithLayout } from '@/pages/_app'
 
-const EditProfileData: NextPageWithLayout = () => {
+const index: NextPageWithLayout = () => {
   return (
     <AccountLayout>
       <SettingsProfile />
@@ -13,5 +13,5 @@ const EditProfileData: NextPageWithLayout = () => {
   )
 }
 
-EditProfileData.getLayout = getGlobalLayout
-export default EditProfileData
+index.getLayout = getGlobalLayout
+export default index

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
-import { sendCreateProfileRequest } from '@/modules/profile-modules/create-profile-module/api/createProfileAPI'
+import { sendCreateProfileRequest } from '@/modules/profile-modules/create-profile-module'
 
 export const useCreateProfileMutation = (onSuccess?: any, setCustomError?: any, reset?: any) => {
   const {

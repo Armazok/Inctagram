@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { SettingsSchemaType } from '@/common/constants'
-import { authInstance } from '@/services/api/auth/instanse'
+import { SettingsSchemaType } from '@/common'
+import { authInstance } from '@/services'
 import { ResCreateProfile } from '@/types'
 
 export const sendCreateProfileRequest = ({

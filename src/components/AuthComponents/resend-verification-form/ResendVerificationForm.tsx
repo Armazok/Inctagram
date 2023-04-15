@@ -1,10 +1,7 @@
 import React, { FC } from 'react'
 
-import Preloader from '@/components/atoms/preloader/Preloader'
-import { NameTitle } from '@/components/atoms/title/nameTitle'
-import FormLayout from '@/components/FormLayout/FormLayout'
-import GlobalButton from '@/ui/buttons/GlobalButton'
-import GlobalInput from '@/ui/Inputs/Input/Input'
+import { FormLayout } from '@/components/FormLayout'
+import { GlobalButton, GlobalInput, NameTitle, Preloader } from '@/ui'
 
 interface PropsType {
   isLoading: boolean
@@ -14,7 +11,7 @@ interface PropsType {
   register: any
 }
 
-const ResendVerificationForm: FC<PropsType> = ({
+export const ResendVerificationForm: FC<PropsType> = ({
   isLoading,
   handleSubmit,
   submitData,
@@ -42,5 +39,3 @@ const ResendVerificationForm: FC<PropsType> = ({
     </FormLayout>
   )
 }
-
-export default ResendVerificationForm

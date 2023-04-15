@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { noRefetch } from '@/helpers/no-refetch'
-import { authAPI } from '@/services/api/auth/authAPI'
+import { noRefetch } from '@/common'
+import { registerAPI } from '@/modules/auth-modules/registraion-module'
 
 export const useConfirmationQuery = (confirmationCode: string) => {
   return useQuery({
     queryKey: ['regConfirmation'],
-    queryFn: () => authAPI.registrationConfirmation({ confirmationCode }),
+    queryFn: () => registerAPI.registrationConfirmation({ confirmationCode }),
     enabled: !!confirmationCode,
     retry: false,
     ...noRefetch,

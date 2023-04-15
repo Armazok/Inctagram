@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useRouter } from 'next/router'
 
-import GlobalButton from '@/ui/buttons/GlobalButton'
+import { GlobalButton } from '@/ui'
 
 export const ProfilePage = () => {
   const { push } = useRouter()
@@ -20,7 +20,7 @@ export const ProfilePage = () => {
           />
           <div className="flex flex-col gap-5">
             <div className="flex justify-between">
-              <div className="font-bold">ORANGE ORANGE</div>
+              <div className="font-bold">ORANGE ORANGES</div>
               <GlobalButton type={'button'} variant={'white'} callback={onRedirectToSetting}>
                 Profile Settings
               </GlobalButton>

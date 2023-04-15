@@ -3,7 +3,7 @@ import React from 'react'
 import Head from 'next/head'
 
 import { getLayoutWithHeader } from '@/components/layout/LayoutWithHeader/LayoutWithHeader'
-import { ForgotPasswordPage } from '@/modules'
+import { ForgotPasswordPage } from '@/modules/auth-modules/password-recovery-module'
 import { NextPageWithLayout } from '@/pages/_app'
 
 const PageForgotPassword: NextPageWithLayout = () => {
