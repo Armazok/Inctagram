@@ -1,6 +1,5 @@
-import { FormData } from '../constants/loginValidationSchema'
-
-import { authInstance } from '@/services/api/auth/instanse'
+import { FormData } from '@/modules/auth-modules/login-module'
+import { authInstance } from '@/services'
 import { ResLogin, ResMe } from '@/types'
 
 export const meSendRequest = () => {

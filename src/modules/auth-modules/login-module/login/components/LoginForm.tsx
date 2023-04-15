@@ -5,21 +5,17 @@ import { useRouter } from 'next/router'
 import { FieldValues } from 'react-hook-form'
 
 import { useGlobalForm } from '@/common'
-import Preloader from '@/components/atoms/preloader/Preloader'
-import { schemaLogin } from '@/modules/auth-modules/login-module/login/constants/loginValidationSchema'
-import { useLoginMutation } from '@/modules/auth-modules/login-module/login/hooks/useLogin'
-import GlobalButton from '@/ui/buttons/GlobalButton'
-import GlobalInput from '@/ui/Inputs/Input/Input'
-import InputWithEye from '@/ui/Inputs/InputWithEye/InputWithEye'
+import { schemaLogin, useLoginMutation } from '@/modules/auth-modules/login-module'
+import { GlobalButton, GlobalInput, InputWithEye, Preloader } from '@/ui'
 
 export const LoginForm = () => {
   const { setCustomError, handleSubmit, register, errors, reset } = useGlobalForm(schemaLogin)
 
   const { push } = useRouter()
 
-  const { sendLoginData, isLoading, data } = useLoginMutation(
+  const { sendLoginData, isLoading } = useLoginMutation(
     () => {
-      push('/auth/login/create-account')
+      push('/profile')
     },
     () =>
       setCustomError(

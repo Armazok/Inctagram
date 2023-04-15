@@ -2,11 +2,12 @@ import React from 'react'
 
 import { useRouter } from 'next/router'
 
-import Preloader from '@/components/atoms/preloader/Preloader'
-import { NameTitle } from '@/components/atoms/title/nameTitle'
-import FormLayout from '@/components/FormLayout/FormLayout'
-import { useCreateNewPasswordMutation } from '@/modules/auth-modules/password-recovery-module/api/hook'
-import CreateNewPasswordForm from '@/modules/auth-modules/password-recovery-module/components/recovery/create-new-password/create-new-password-form/CreateNewPasswordForm'
+import { FormLayout } from '@/components/FormLayout'
+import {
+  CreateNewPasswordForm,
+  useCreateNewPasswordMutation,
+} from '@/modules/auth-modules/password-recovery-module'
+import { NameTitle, Preloader } from '@/ui'
 
 type PropsType = {
   recoveryCode: string

@@ -1,24 +1,22 @@
 import React, { useState } from 'react'
 
 import { useGlobalForm } from '@/common'
-import Preloader from '@/components/atoms/preloader/Preloader'
 import { Confirm } from '@/components/modals/confirm/Confirm'
 import {
   FormDataRegistered,
-  schema,
-} from '@/modules/auth-modules/registraion-module/registration/constants/registerValidateSchema'
-import { useRegisterMutation } from '@/modules/auth-modules/registraion-module/registration/hooks/useRegister'
-import GlobalButton from '@/ui/buttons/GlobalButton'
-import GlobalInput from '@/ui/Inputs/Input/Input'
-import InputWithEye from '@/ui/Inputs/InputWithEye/InputWithEye'
+  registrationSchema,
+  useRegisterMutation,
+} from '@/modules/auth-modules/registraion-module'
+import { GlobalButton, GlobalInput, InputWithEye, Preloader } from '@/ui'
 
 const titleForModal = 'Email sent'
 const messageModal = 'We have sent a link to confirm your email to'
 
-const RegistrationForm = () => {
+export const RegistrationForm = () => {
   const [toggleModal, setToggleModal] = useState(false)
 
-  const { errors, register, reset, handleSubmit, setCustomError } = useGlobalForm(schema)
+  const { errors, register, reset, handleSubmit, setCustomError } =
+    useGlobalForm(registrationSchema)
   const { sendRegisteredData, isLoading, variables } = useRegisterMutation(
     () => setToggleModal(true),
     () => reset(),
@@ -79,5 +77,3 @@ const RegistrationForm = () => {
     </>
   )
 }
-
-export default RegistrationForm

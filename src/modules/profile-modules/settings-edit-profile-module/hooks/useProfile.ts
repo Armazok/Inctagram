@@ -1,6 +1,6 @@
-import { SettingsSchemaType } from '@/common/constants'
-import { useMeQuery } from '@/modules/auth-modules/login-module/login/hooks/useLogin'
-import { useGetProfileData } from '@/modules/profile-modules/settings-edit-profile-module/hooks/useGetProfileData'
+import { SettingsSchemaType } from '@/common'
+import { useMeQuery } from '@/modules/auth-modules/login-module'
+import { useGetProfileData } from '@/modules/profile-modules/settings-edit-profile-module'
 
 export const useProfile = () => {
   const { data, isLoading: isMeLoading } = useMeQuery()

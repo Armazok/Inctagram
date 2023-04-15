@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import AvatarEditor from 'react-avatar-editor'
 
-import GlobalButton from '@/ui/buttons/GlobalButton'
+import { GlobalButton } from '@/ui'
 
 type PropsType = {
   image: string | File | null

@@ -1,10 +1,9 @@
 import React, { FC } from 'react'
 
-import { PATH_ROUTE } from '@/common/constants/PATH_ROUTE'
-import Preloader from '@/components/atoms/preloader/Preloader'
-import EmailSuccessMessage from '@/components/AuthComponents/email-success-message/EmailSuccesMessage'
-import ResendingVerificationLink from '@/components/AuthComponents/resending-verification-link/ResendingVerificationLink'
-import { useConfirmationQuery } from '@/modules/auth-modules/registraion-module/resending-varification-email/api/confirmationRequest'
+import { PATH_ROUTE } from '@/common'
+import { EmailSuccessMessage, ResendingVerificationLink } from '@/components/AuthComponents'
+import { useConfirmationQuery } from '@/modules/auth-modules/registraion-module'
+import { Preloader } from '@/ui'
 
 type PropsType = { code: string | string[] | undefined }
 

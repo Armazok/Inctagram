@@ -2,10 +2,9 @@ import React from 'react'
 
 import Head from 'next/head'
 
-import { getGlobalLayout } from '@/components/layout/GlobalLayout/GlobalLayout'
-import { ProfilePage } from '@/modules'
+import { getGlobalLayout } from '@/components/layout'
+import { ProfilePage } from '@/modules/profile-modules/profile-module'
 import { NextPageWithLayout } from '@/pages/_app'
-import { useUserStore } from '@/store'
 
 const index: NextPageWithLayout = () => {
   return (

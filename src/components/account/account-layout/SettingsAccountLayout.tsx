@@ -3,7 +3,7 @@ type PropsType = {
   children: ReactNode
 }
 
-const SettingsAccountLayout: FC<PropsType> = ({ children }) => {
+export const SettingsAccountLayout: FC<PropsType> = ({ children }) => {
   return (
     <div className="flex gap-[40px] w-full pt-[22px]">
       {children}
@@ -11,5 +11,3 @@ const SettingsAccountLayout: FC<PropsType> = ({ children }) => {
     </div>
   )
 }
-
-export default SettingsAccountLayout

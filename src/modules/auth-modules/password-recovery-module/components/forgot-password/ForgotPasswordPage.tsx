@@ -3,12 +3,13 @@ import React, { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { NextPage } from 'next'
 
-import Link from '@/components/atoms/link/Link'
-import Preloader from '@/components/atoms/preloader/Preloader'
-import { NameTitle } from '@/components/atoms/title/nameTitle'
-import { Confirm } from '@/components/modals/confirm/Confirm'
-import { passwordRecoveryAPI } from '@/modules/auth-modules/password-recovery-module/api/passwordRecovary'
-import ForgotPasswordForm from '@/modules/auth-modules/password-recovery-module/components/forgot-password/forgot-password-form/ForgotPasswordForm'
+import { Confirm } from '@/components/modals'
+import {
+  ForgotPasswordForm,
+  passwordRecoveryAPI,
+} from '@/modules/auth-modules/password-recovery-module'
+import { NameTitle, Preloader } from '@/ui'
+import Link from '@/ui/link/Link'
 
 export const ForgotPasswordPage: NextPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)

@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
 
-import { authInstance } from '@/services/api/auth/instanse'
+import { authInstance } from '@/services'
 import {
   ReqNewPassword,
   ReqPasswordRecovery,

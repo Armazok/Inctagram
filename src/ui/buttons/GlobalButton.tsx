@@ -19,7 +19,7 @@ const variantClassName: variantClassNameType = {
   white: 'white',
 }
 
-const GlobalButton: FC<PropsType> = ({
+export const GlobalButton: FC<PropsType> = ({
   children,
   callback,
   type = 'button',
@@ -40,5 +40,3 @@ const GlobalButton: FC<PropsType> = ({
     </button>
   )
 }
-
-export default GlobalButton

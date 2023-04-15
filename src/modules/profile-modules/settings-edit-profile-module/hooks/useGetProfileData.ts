@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { noRefetch } from '@/helpers/no-refetch'
-import { getAccountData } from '@/modules/profile-modules/settings-edit-profile-module/api/getAccountData'
+import { noRefetch } from '@/common'
+import { getAccountData } from '@/modules/profile-modules/settings-edit-profile-module'
 
 export const useGetProfileData = (userId: number | undefined) => {
   return useQuery({

@@ -1,6 +1,8 @@
+import React, { FC, ReactNode } from 'react'
+
 import { IconPropsType } from '@/types'
 
-export const IconWrapper: React.FC<{ icon: React.ReactNode } & IconPropsType> = ({
+export const IconWrapper: FC<{ icon: ReactNode } & IconPropsType> = ({
   icon,
   color,
   size,

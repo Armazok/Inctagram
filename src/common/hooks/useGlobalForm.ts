@@ -1,7 +1,4 @@
-import { useEffect } from 'react'
-
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 
 export const useGlobalForm = (schema: any) => {

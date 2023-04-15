@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import EmailConfirmationImg from '@/assets/images/bro.svg'
 
-const EmailSuccessMessage = () => {
+export const EmailSuccessMessage = () => {
   return (
     <div className={'flex justify-center items-center flex-col text-light-100 h-screen'}>
       <span className={'font-bold mt-6 mb-3'}>Congratulations!</span>
@@ -24,5 +24,3 @@ const EmailSuccessMessage = () => {
     </div>
   )
 }
-
-export default EmailSuccessMessage

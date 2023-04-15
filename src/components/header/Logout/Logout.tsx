@@ -2,11 +2,11 @@ import { FC, useState } from 'react'
 
 import { useRouter } from 'next/router'
 
-import styles from '@/components/atoms/header/Header.module.scss'
 import { Confirm } from '@/components/modals/confirm/Confirm'
 import { useUserStore } from '@/store'
+import styles from '@/ui/header/Header.module.scss'
 
-const Logout: FC = () => {
+export const Logout: FC = () => {
   const router = useRouter()
   const { logout, email } = useUserStore()
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -40,5 +40,3 @@ const Logout: FC = () => {
     </div>
   )
 }
-
-export default Logout

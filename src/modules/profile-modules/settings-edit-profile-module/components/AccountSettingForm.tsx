@@ -3,10 +3,8 @@ import React, { FC } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
-import { settingsSchema, SettingsSchemaType } from '@/common/constants'
-import GlobalButton from '@/ui/buttons/GlobalButton'
-import GlobalInput from '@/ui/Inputs/Input/Input'
-import { Textarea } from '@/ui/textarea/Textarea'
+import { settingsSchema, SettingsSchemaType } from '@/common'
+import { GlobalButton, GlobalInput, Textarea } from '@/ui'
 
 type ProfileType = {
   userName: string
@@ -22,7 +20,7 @@ type PropsType = {
   initialProfileData: ProfileType
 }
 
-const AccountSettingForm: FC<Partial<PropsType>> = ({ initialProfileData, onSubmit }) => {
+export const AccountSettingForm: FC<Partial<PropsType>> = ({ initialProfileData, onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -84,5 +82,3 @@ const AccountSettingForm: FC<Partial<PropsType>> = ({ initialProfileData, onSubm
     </form>
   )
 }
-
-export default AccountSettingForm
