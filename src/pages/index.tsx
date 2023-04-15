@@ -13,7 +13,7 @@ const Home: NextPageWithLayout = () => {
 
   const { data } = useMeQuery()
   const { accessToken } = useUserStore()
-  const { userName } = data?.data || {}
+  // const { userName } = data?.data || {}
 
   useEffect(() => {
     if (accessToken) {

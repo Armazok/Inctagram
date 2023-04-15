@@ -13,7 +13,7 @@ export const LoginForm = () => {
 
   const { push } = useRouter()
 
-  const { sendLoginData, isLoading, data } = useLoginMutation(
+  const { sendLoginData, isLoading } = useLoginMutation(
     () => {
       push('/profile')
     },
