@@ -15,7 +15,7 @@ import plus from '../../assets/icons/plus-square.svg'
 import trendingOutline from '../../assets/icons/trending-up-outline.svg'
 import trending from '../../assets/icons/trending-up.svg'
 
-import { Logout } from '@/components/header'
+import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
 
 export const Sidebar: FC = () => {
   const { pathname } = useRouter()
@@ -86,7 +86,7 @@ export const Sidebar: FC = () => {
             </Link>
           </li>
         </ul>
-        <Logout />
+        <LogoutButton />
       </div>
     </aside>
   )
