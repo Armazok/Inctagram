@@ -9,6 +9,7 @@ import {
   sendAvatar,
 } from '@/modules/profile-modules/avatar-module'
 import { Avatar, GlobalButton, Preloader } from '@/ui'
+import { DeleteAvatarButton } from '@/modules/profile-modules/avatar-module/components/DeleteButton'
 
 type PropsType = {
   avatarUrl?: string
@@ -16,7 +17,10 @@ type PropsType = {
 export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [avatar, setAvatar] = useState('')
+  const [avatar, setAvatar] = useState(
+    ''
+    // 'https://i.pinimg.com/originals/25/78/61/25786134576ce0344893b33a051160b1.jpg'
+  )
 
   const { isLoading, mutate } = useMutation({
     mutationFn: sendAvatar,
@@ -26,6 +30,7 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
     },
   })
 
+  const isAvatarShown = avatar ? avatar : avatarUrl ? avatarUrl : ''
   const onCloseClick = () => {
     setSelectedPhoto('')
     setIsModalOpen(false)
@@ -41,18 +46,23 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
     setIsModalOpen(true)
   }
 
+  const onDeleteAvatarClick = () => {}
+
   if (isLoading) {
     return <Preloader />
   }
 
   return (
     <div className={'flex flex-col flex-nowrap items-center w-52 font-medium p-[5px]'}>
-      <Avatar
-        alt={'profile photo'}
-        src={avatar ? avatar : avatarUrl ? avatarUrl : ''}
-        // src={''}
-        className={`mb-[30px] mt-[48px]`}
-      />
+      <div className={'mb-[30px] mt-[48px] w-52'}>
+        <Avatar
+          alt={'profile photo'}
+          // src={avatar ? avatar : avatarUrl ? avatarUrl : ''}
+          src={isAvatarShown}
+          className={``}
+        />
+        {isAvatarShown && <DeleteAvatarButton onDeleteAvatarClick={onDeleteAvatarClick} />}
+      </div>
       <GlobalButton
         type={'button'}
         variant={'transparent'}
