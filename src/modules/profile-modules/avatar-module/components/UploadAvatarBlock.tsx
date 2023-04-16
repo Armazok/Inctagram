@@ -10,7 +10,10 @@ import {
 } from '@/modules/profile-modules/avatar-module'
 import { Avatar, GlobalButton, Preloader } from '@/ui'
 
-export const UploadAvatarBlock = () => {
+type PropsType = {
+  avatarUrl?: string
+}
+export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [avatar, setAvatar] = useState('')
@@ -46,7 +49,7 @@ export const UploadAvatarBlock = () => {
     <div className={'flex flex-col flex-nowrap items-center w-52 font-medium p-[5px]'}>
       <Avatar
         alt={'profile photo'}
-        src={avatar ? avatar : ''}
+        src={avatar ? avatar : avatarUrl ? avatarUrl : ''}
         // src={''}
         className={`mb-[30px] mt-[48px]`}
       />
