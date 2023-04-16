@@ -3,7 +3,8 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { ComponentProps, FC } from 'react'
 
 import clsx from 'clsx'
-import { ReactDatePicker } from 'react-datepicker'
+// eslint-disable-next-line import/no-named-as-default
+import ReactDatePicker from 'react-datepicker'
 
 import s from '../date-picker/datePicker.module.scss'
 
