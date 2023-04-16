@@ -5,7 +5,7 @@ export const useDeleteAvatarMutation = (setAvatar: (avatar: string) => void) => 
   const { isLoading, mutate } = useMutation({
     mutationKey: ['avatar-delete'],
     mutationFn: deleteAvatar,
-    onSuccess: data => {
+    onSuccess: () => {
       setAvatar('')
     },
   })
