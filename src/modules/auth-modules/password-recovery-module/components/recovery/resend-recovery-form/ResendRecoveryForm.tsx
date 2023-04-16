@@ -12,12 +12,10 @@ export const ResendRecoveryForm = () => {
   const { handleSubmit, register, reset, errors, setCustomError } =
     useGlobalForm(registrationSchema)
 
-  // const { resendRecoverCode, isLoading } = useRecoveryEmailResending(setCustomError, reset, push)
   const { sendLinkPasswordRecovery, isLoading } = useForgotPassword(setCustomError, reset, push)
 
   const submitData = (data: FormDataRegistered) => {
     const { email } = data
-
     sendLinkPasswordRecovery({ email })
   }
 
