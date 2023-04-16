@@ -95,59 +95,50 @@
     outline: none;
     width: 36px;
     height: 36px;
-
     &:focus-visible {
+      @apply border-accent-300 border-2;
       background-color: transparent;
-      border: 2px solid #4c8dff;
       border-radius: 50%;
     }
 
     &:hover {
-      /* Primary/900 */
-      background: #234e99;
+      @apply bg-accent-900;
       border-radius: 18px;
       transition: 200ms;
     }
 
     &:active {
-      /* Primary/900 */
-      background: #234e99;
+      @apply bg-accent-900;
       border-radius: 18px;
     }
 
     &:global(.react-datepicker__day--today) {
-      color: #397df6;
+      @apply text-accent-500;
 
       &:focus-visible {
         background-color: transparent;
         /* Primary/500 */
-        color: #397df6;
+        @apply text-accent-500;
         border: 2px solid #4c8dff;
         border-radius: 50%;
       }
 
       &:hover {
-        /* Primary/100 */
-
-        color: #73a5ff;
+        @apply text-accent-100;
         border-radius: 18px;
         transition: 200ms;
       }
 
       &:active {
-        /* Light/100 */
-
-        color: #ffffff;
+        @apply text-light-100;
         border-radius: 18px;
       }
     }
 
     &:global(.react-datepicker__day--selected) {
-      //background-color: transparent;
-      color: #ffffff;
+      @apply text-light-100;
+      @apply border-accent-900 border-2 bg-accent-500;
       font-weight: 400;
-      border: 2px solid #234e99;
-      background: #397df6;
       border-radius: 50%;
       transition: 200ms;
 
@@ -155,68 +146,58 @@
       z-index: 10;
     }
 
-    //стили для выходных
     &:global(.react-datepicker__week) {
-      //Light 900
-      color: #bdc1c7;
+      @apply text-light-900;
 
       &:focus-visible {
+        @apply text-accent-300 border-2 border-accent-300;
         background-color: transparent;
-        /* Primary/300 */
-        color: #333333;
-        border: 2px solid #4c8dff;
         border-radius: 50%;
       }
 
       &:hover {
-        /* Primary/900 */
-        background: #234e99;
+        @apply bg-accent-900;
         border-radius: 18px;
         transition: 200ms;
       }
 
       &:active {
-        /* Primary/900 */
-        background: #234e99;
+        @apply bg-accent-900;
         border-radius: 18px;
       }
     }
 
+    &:global(.react-datepicker__month-text) {
+      background-color: red;
+    }
     //стили для предыдущего или следующего месяца в текущем
     &:global(.react-datepicker__day--outside-month) {
       width: 36px;
       height: 36px;
-      /* Dark/300 */
-      color: #333333;
-
+      @apply text-dark-300;
       &:focus-visible {
         background-color: transparent;
-        /* Primary/300 */
-        color: #333333;
-        border: 2px solid #4c8dff;
+        @apply text-dark-300;
+        @apply border-2 border-accent-300;
         border-radius: 50%;
       }
 
       &:hover {
-        /* Primary/900 */
-        background: #234e99;
+        @apply bg-accent-900;
         border-radius: 18px;
         transition: 200ms;
       }
 
       &:active {
-        /* Primary/900 */
-        background: #234e99;
+        @apply bg-accent-900;
         border-radius: 18px;
       }
     }
   }
 
   &:global(.react-datepicker__day--keyboard-selected) {
-    color: #ffffff;
+    @apply text-light-100 border-2 border-accent-900 bg-accent-500;
     font-weight: 400;
-    border: 2px solid #234e99;
-    background: #397df6;
     border-radius: 50%;
     transition: 200ms;
 
@@ -225,43 +206,30 @@
 
     &:focus-visible {
       background-color: transparent;
-      /* Primary/500 */
-      color: #397df6;
+      @apply text-accent-500;
       border: 2px solid #4c8dff;
       border-radius: 50%;
     }
 
     &:hover {
-      /* Primary/100 */
-
-      color: #73a5ff;
+      @apply text-accent-100;
       border-radius: 18px;
       transition: 200ms;
     }
 
     &:active {
-      /* Light/100 */
-
-      color: #ffffff;
+      @apply text-light-100;
       border-radius: 18px;
     }
   }
 
   &:global(.react-datepicker__day--in-selecting-range) {
-    //Primary/900
-    background: #234e99;
-    border: 2px solid #234e99;
+    @apply bg-accent-900 border-2 border-accent-900 text-light-900;
     border-radius: 0;
-    /* Light/900 */
-
-    color: #bdc1c7;
   }
 
   &:global(.react-datepicker__day--selecting-range-end) {
-    //background-color: #397DF6;
-    border: 2px solid #234e99;
-    //border-radius: 0 50% 50% 0 !important;
-
+    @apply border-2 border-accent-900;
     background: #234e99 !important;
     border-radius: 0 18px 18px 0 !important;
 
@@ -273,9 +241,7 @@
       width: 28px;
       height: 28px;
 
-      /* Primary/500 */
-
-      background: #397df6;
+      @apply bg-accent-500;
       border-radius: 14px;
       position: absolute;
 
@@ -284,10 +250,7 @@
   }
 
   &:global(.react-datepicker__day--selecting-range-start) {
-    //background-color: #397DF6 !important;
     border: 2px solid #234e99 !important;
-    //border-radius: 50% 0 0 50% !important;
-
     background: #234e99 !important;
     border-radius: 18px 0 0 18px !important;
 
@@ -296,9 +259,7 @@
       width: 28px;
       height: 28px;
 
-      /* Primary/500 */
-
-      background: #397df6;
+      @apply bg-accent-500;
       border-radius: 14px;
       position: absolute;
 
@@ -308,10 +269,8 @@
 
   //выбранный после выбранного периода
   &:global(.react-datepicker__day--in-range) {
-    background: #234e99;
+    @apply text-light-900 bg-accent-900;
     border: 2px solid #234e99;
-    /* Light/900 */
-    color: #bdc1c7;
     border-radius: 0;
   }
 
@@ -322,8 +281,7 @@
   }
 
   &:global(.react-datepicker__day--range-end) {
-    background-color: #397df6;
-    border: 2px solid #234e99;
+    @apply bg-accent-500 border-2 border-accent-900;
     border-radius: 0 50% 50% 0;
   }
 }
