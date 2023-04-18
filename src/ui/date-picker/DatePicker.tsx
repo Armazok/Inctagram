@@ -2,6 +2,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 import { ComponentProps, FC } from 'react'
 
+// eslint-disable-next-line import/no-named-as-default
 import clsx from 'clsx'
 // eslint-disable-next-line import/no-named-as-default
 import ReactDatePicker from 'react-datepicker'
