@@ -6,14 +6,15 @@ const Test = () => {
   const [state, setState] = useState<Date | null>(new Date())
 
   return (
-    <div>
-      <DateCalendar
-        startDate={state}
-        setStartDate={setState}
-        endDate={null}
-        setEndDate={() => null}
-      />
-    </div>
+    <></>
+    // <div>
+    //   <DateCalendar
+    //     startDate={state}
+    //     setStartDate={setState}
+    //     endDate={null}
+    //     setEndDate={() => null}
+    //   />
+    // </div>
   )
 }
 

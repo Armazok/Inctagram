@@ -9,48 +9,44 @@ import { UploadAvatarBlock } from '@/modules/profile-modules/avatar-module'
 import {
   AccountSettingForm,
   editAccountData,
-  useProfile,
+  ResponseError,
+  useGetProfile,
 } from '@/modules/profile-modules/settings-edit-profile-module'
+import { Preloader } from '@/ui'
 
 export const EditSettingProfile = () => {
   const client = useQueryClient()
 
-  const { profileData, isLoading: isProfileLoading } = useProfile()
+  const { profileData, isProfileLoading, profileAvatar, refetch } = useGetProfile()
 
-  const { mutate: editeProfile } = useMutation({
+  const { mutate: editeProfile, isLoading: isEditProfileLoading } = useMutation({
     mutationKey: ['edit-profile'],
     mutationFn: editAccountData,
     onSuccess: () => {
       client.invalidateQueries(['get-profile'])
       toast.success('Profile was updated')
+
+      return refetch()
     },
-    onError: () => {
-      toast.error('Something went wrong')
+    onError: (error: ResponseError) => {
+      error?.response?.data?.messages?.forEach(el => {
+        toast.error(`${el.message}`)
+      })
+
+      client.invalidateQueries(['get-profile'])
     },
   })
 
-  const editProfileData = (data: SettingsSchemaType) => {
-    editeProfile?.(data)
-  }
+  const editProfileData = (data: SettingsSchemaType) => editeProfile?.(data)
 
-  const initialProfileData = {
-    userName: profileData?.userName || '',
-    firstName: profileData?.firstName || '',
-    lastName: profileData?.lastName || '',
-    city: profileData?.city || '',
-    dateOfBirth: profileData?.dateOfBirth || null,
-    aboutMe: profileData?.aboutMe || '',
-  }
-
-  //todo : Loader add
-  if (isProfileLoading) return null
+  if (isProfileLoading || isEditProfileLoading) return <Preloader />
 
   return (
     <SettingsAccountLayout>
       <div>
-        <UploadAvatarBlock />
+        <UploadAvatarBlock avatarUrl={profileAvatar} />
       </div>
-      <AccountSettingForm onSubmit={editProfileData} initialProfileData={initialProfileData} />
+      <AccountSettingForm onSubmit={editProfileData} initialProfileData={profileData} />
     </SettingsAccountLayout>
   )
 }
