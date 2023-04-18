@@ -1,21 +1,20 @@
 import { useQuery } from '@tanstack/react-query'
+import { toast } from 'react-toastify'
 
 import { noRefetch } from '@/common'
 import { getAccountData } from '@/modules/profile-modules/settings-edit-profile-module'
 
-export const useGetProfileData = (userId: number | undefined) => {
+export const useGetProfileData = () => {
   return useQuery({
-    queryKey: ['get-profile', userId],
-    queryFn: () => getAccountData(userId),
-    onSuccess: data => {
-      console.log(data, 'data')
-    },
+    queryKey: ['get-profile'],
+    queryFn: getAccountData,
+    onSuccess: data => {},
     onError: err => {
-      console.log(err, 'err')
+      toast.error('Ooops Error')
     },
-    enabled: !!userId,
     retry: false,
     ...noRefetch,
-    select: data => data?.data,
+    staleTime: 0,
+    select: (data: any) => data?.data,
   })
 }

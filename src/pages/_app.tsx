@@ -4,6 +4,7 @@ import { ApolloProvider } from '@apollo/client'
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import '@/styles/globals.scss'
 import 'react-toastify/dist/ReactToastify.css'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify'
@@ -46,6 +47,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             theme="dark"
           />
         </Hydrate>
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </ApolloProvider>
   )
