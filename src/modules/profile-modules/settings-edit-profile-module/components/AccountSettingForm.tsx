@@ -1,26 +1,19 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
 import { settingsSchema, SettingsSchemaType } from '@/common'
+import { RootProfile } from '@/modules/profile-modules/settings-edit-profile-module'
 import { GlobalButton, GlobalInput, Textarea } from '@/ui'
-
-type ProfileType = {
-  userName: string
-  firstName: string
-  lastName: string
-  dateOfBirth: Date | null
-  city: string
-  aboutMe: string
-}
 
 type PropsType = {
   onSubmit: (data: SettingsSchemaType) => void
-  initialProfileData: ProfileType
+  initialProfileData: Omit<RootProfile, 'avatars' | 'id'>
 }
 
 export const AccountSettingForm: FC<Partial<PropsType>> = ({ initialProfileData, onSubmit }) => {
+  const [date, setDate] = useState(initialProfileData?.dateOfBirth)
   const {
     register,
     handleSubmit,
@@ -42,6 +35,7 @@ export const AccountSettingForm: FC<Partial<PropsType>> = ({ initialProfileData,
     onSubmit?.(data)
   }
 
+  // todo : решить вопрос по тс в дейт пикере и добавить в прод
   return (
     <form className="flex flex-col w-full gap-[22px]" onSubmit={handleSubmit(settingFormSubmit)}>
       <GlobalInput
@@ -63,11 +57,23 @@ export const AccountSettingForm: FC<Partial<PropsType>> = ({ initialProfileData,
         error={errors?.lastName?.message}
       />
       <GlobalInput
-        type="date"
-        label="Date of Birthday"
+        type="text"
+        label="birthday"
         {...register('dateOfBirth')}
         error={errors?.dateOfBirth?.message}
       />
+
+      {/*<DateCalendar*/}
+      {/*  label="Date of Birthday"*/}
+      {/*  error={false}*/}
+      {/*  errorMessage={errors?.dateOfBirth?.message}*/}
+      {/*  startDate={date as Date}*/}
+      {/*  {...register('dateOfBirth')}*/}
+      {/*  setStartDate={(data: any) => {*/}
+      {/*    setValue('dateOfBirth', data)*/}
+      {/*    setDate(data)*/}
+      {/*  }}*/}
+      {/*/>*/}
 
       <GlobalInput type="text" label="City" {...register('city')} error={errors?.city?.message} />
       <Textarea
