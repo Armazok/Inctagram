@@ -16,6 +16,7 @@ export const ResendRecoveryForm = () => {
 
   const submitData = (data: FormDataRegistered) => {
     const { email } = data
+
     sendLinkPasswordRecovery({ email })
   }
 
