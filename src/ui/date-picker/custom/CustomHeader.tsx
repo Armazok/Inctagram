@@ -32,11 +32,11 @@ export const CustomHeader = ({
     <div className={classNames.header} {...rest}>
       <div>{headerText}</div>
       <div className={classNames.buttonBox}>
-        <button className={classNames.button} onClick={decreaseMonth}>
+        <button type="button" className={classNames.button} onClick={decreaseMonth}>
           <KeyboardArrowLeft />
         </button>
 
-        <button className={classNames.button} onClick={increaseMonth}>
+        <button type="button" className={classNames.button} onClick={increaseMonth}>
           <KeyboardArrowRight />
         </button>
       </div>
