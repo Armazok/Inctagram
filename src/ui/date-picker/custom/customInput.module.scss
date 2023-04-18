@@ -17,5 +17,5 @@
 }
 
 .error {
-  color: red;
+  @apply text-danger-500;
 }

@@ -47,7 +47,7 @@ export const Confirm: FC<Props> = ({
           }
           onClick={() => onClose()}
         >
-          <FaTimes size={'5px]'} />
+          <FaTimes size={'24px'} />
         </button>
       </div>
 
@@ -65,9 +65,9 @@ export const Confirm: FC<Props> = ({
         {onDecline ? (
           <button
             className={
-              'w-max-[96px] h-[36px] flex justify-center align-middle border-[1px] bg-dark-300 border-accent-500 text-accent-500 leading-6 font-normal text-[16px] active:text-light-100 active:bg-accent-500'
+              'py-[6px] px-[34px] w-max-[96px] h-[36px] flex justify-center align-middle border-[1px] bg-dark-300 border-accent-500 text-accent-500 leading-6 font-normal text-[16px] active:text-light-100 active:bg-accent-500'
             }
-            onClick={() => onDecline()}
+            onClick={() => onDecline?.()}
           >
             {declineButtonText ?? 'No'}
           </button>

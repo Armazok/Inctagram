@@ -1,27 +1,29 @@
 import React, { useState } from 'react'
 
-import { useMutation } from '@tanstack/react-query'
-
 import { ModalWithContent } from '@/components/modals'
-import {
-  PhotoSelector,
-  ProfileAvatarEditor,
-  sendAvatar,
-} from '@/modules/profile-modules/avatar-module'
+import { PhotoSelector, ProfileAvatarEditor } from '@/modules/profile-modules/avatar-module'
+import { DeleteAvatarButton } from '@/modules/profile-modules/avatar-module/components/DeleteButton'
+import { useDeleteAvatarMutation } from '@/modules/profile-modules/avatar-module/hooks/useDeleteAvatarMutation'
+import { useUploadAvatarMutation } from '@/modules/profile-modules/avatar-module/hooks/useUploadAvatarMutation'
 import { Avatar, GlobalButton, Preloader } from '@/ui'
 
-export const UploadAvatarBlock = () => {
+type PropsType = {
+  avatarUrl?: string
+}
+export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [avatar, setAvatar] = useState('')
+  const [avatar, setAvatar] = useState(avatarUrl)
 
-  const { isLoading, mutate } = useMutation({
-    mutationFn: sendAvatar,
-    onSuccess: data => {
-      setIsModalOpen(false)
-      setAvatar(data.data.avatar[0].url)
-    },
-  })
+  const { isLoading: isLoadingDeleteAvatar, mutate: deleteAvatar } =
+    useDeleteAvatarMutation(setAvatar)
+
+  const { isLoading: isLoadingUploadAvatar, mutate: uploadAvatar } = useUploadAvatarMutation(
+    setAvatar,
+    setIsModalOpen
+  )
+
+  const isAvatarShown = avatar ? avatar : ''
 
   const onCloseClick = () => {
     setSelectedPhoto('')
@@ -29,7 +31,7 @@ export const UploadAvatarBlock = () => {
   }
 
   const onSaveClick = (formData: File) => {
-    mutate(formData)
+    uploadAvatar(formData)
     setIsModalOpen(false)
     setSelectedPhoto('')
   }
@@ -38,18 +40,20 @@ export const UploadAvatarBlock = () => {
     setIsModalOpen(true)
   }
 
-  if (isLoading) {
+  const onDeleteAvatarClick = () => {
+    deleteAvatar()
+  }
+
+  if (isLoadingUploadAvatar || isLoadingDeleteAvatar) {
     return <Preloader />
   }
 
   return (
     <div className={'flex flex-col flex-nowrap items-center w-52 font-medium p-[5px]'}>
-      <Avatar
-        alt={'profile photo'}
-        src={avatar ? avatar : ''}
-        // src={''}
-        className={`mb-[30px] mt-[48px]`}
-      />
+      <div className={'mb-[30px] mt-[48px] w-52'}>
+        <Avatar alt={'profile photo'} src={isAvatarShown} className={``} />
+        {isAvatarShown && <DeleteAvatarButton onDeleteAvatarClick={onDeleteAvatarClick} />}
+      </div>
       <GlobalButton
         type={'button'}
         variant={'transparent'}

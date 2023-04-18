@@ -14,12 +14,6 @@ export const passwordRecoveryAPI: IAuthAPI = {
 
     return authInstance.post('auth/password-recovery', { email })
   },
-  passwordRecoveryEmailResending: data => {
-    debugger
-    const { email } = data
-
-    return authInstance.post('auth/password-recovery-email-resending', { email })
-  },
   createNewPassword: data => {
     const { newPassword, recoveryCode } = data
 
@@ -39,7 +33,6 @@ export const passwordRecoveryAPI: IAuthAPI = {
 
 interface IAuthAPI {
   passwordRecovery: (data: ReqPasswordRecovery) => Promise<AxiosResponse>
-  passwordRecoveryEmailResending: (data: { email: string | null }) => Promise<AxiosResponse>
   createNewPassword: (data: ReqNewPassword) => Promise<AxiosResponse>
   checkRecoveryCode: (
     data: Omit<ReqNewPassword, 'newPassword'>
