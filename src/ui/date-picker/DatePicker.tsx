@@ -71,18 +71,8 @@ export const DateCalendar: FC<DatePickerProps> = ({
     day: () => s.day,
   }
 
-  /**
-   * @param {isRange} - здесь проверка на enDate (конечую дату), если через пропсы передать endDate, то мы сможешь выбрать период даты с какую по какую,
-   * иначе будет возможность выбрать только одну дату.
-   */
   const isRange = !!endDate
 
-  /**
-   * Функция которая принмает dates, если мы передаем в DateCalendar только startDate, без endDate, то сюда придет строка,
-   * если мы в DateСalendar передадим endDate, то в Dates будет лежать массив Array. Дальше идет проверка
-   * @param dates
-   * @constructor
-   */
   const DatePickerHandler = (dates: [Date | null, Date | null] | Date | null) => {
     if (Array.isArray(dates)) {
       const [start, end] = dates
@@ -94,19 +84,6 @@ export const DateCalendar: FC<DatePickerProps> = ({
     }
   }
 
-  /**
-   * @param - {string} dateForm - формат даты, меняющий порядок месяц/день/год в поле input
-   * @oaram - {Date} selected показывает выбранную дату в календаре, когда нажимаем на инпут.
-   * @param - {function} startDate дата, которая будет отображаться в поле input
-   * @param - {boolean} preventOpenOnFocus если стоит true, то при нажати на странице кнопки tab, выделится только поле inpyt, но календарь не откроется.
-   * поставь false, и при нажатии tab, выделиться input и откроется окно календарь
-   * @param - {function} renderCustomHeader функция для отрисовки заголовка календаря (месяца, дней недели и кнопок переключения между месяцами)
-   * @param - {function} customInput - компонент для отображения поля input c svg каледаря.
-   * @param - {boolean} showPopperArrow - если стоит true, в календаре отображается маленький треугольник, указывающий на поле input. Если стоит false, треугольник скрыт..
-   * @param - {number} calendarStartDay - отвечает за отображение стартового дня недели в календаре (0 - воскресенье, 1 - понедельник и т.д.)
-   * @param - {boolean} disabled блокирует форму. в customInput disabled не передает, реальзуем в DatePicker
-   * @param {object} - popperModifiers - объект, содержащий модификаторы для Popper.js, отвечающие за расположение календаря (изменение значений может повлиять на положение календаря)
-   */
   return (
     <div {...rest}>
       <ReactDatePicker
