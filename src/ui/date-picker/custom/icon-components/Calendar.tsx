@@ -4,12 +4,12 @@ import clsx from 'clsx'
 import { IconWrapper } from '@/components/icon-wrapper/IconWrapper'
 
 type CalendarType = {
-  error?: boolean
+  errorMessage?: string
 }
 
-export const Calendar = ({ error }: CalendarType) => {
+export const Calendar = ({ errorMessage }: CalendarType) => {
   const classNames = {
-    svgStyle: clsx(!error && 'fill-light-100', error && 'fill-danger-500'),
+    svgStyle: clsx(!errorMessage && 'fill-light-100', errorMessage && 'fill-danger-500'),
   }
 
   return (

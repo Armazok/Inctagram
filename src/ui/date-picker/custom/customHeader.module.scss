@@ -2,12 +2,30 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-left: 15px;
   @apply text-light-100 not-italic font-bold text-[16px] leading-6;
 }
 
 .buttonBox {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.selectBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.selectStyle {
+  @apply not-italic font-normal text-[14px] leading-6 text-light-100  border-2 border-dark-300 bg-dark-500;
+  width: 100%;
+  border-radius: 2px;
+  transition: 200ms;
+  padding: 2px 0 2px 2px;
 }
 
 .button {
@@ -19,8 +37,8 @@
   align-items: center;
   justify-content: center;
 
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   @apply text-light-100;
 
   @apply bg-dark-100;

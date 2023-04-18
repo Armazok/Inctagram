@@ -2,8 +2,9 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 import { ComponentProps, FC } from 'react'
 
-// eslint-disable-next-line import/no-named-as-default
-import clsx from 'clsx'
+import { clsx } from 'clsx'
+import { getYear } from 'date-fns'
+import { range } from 'lodash'
 // eslint-disable-next-line import/no-named-as-default
 import ReactDatePicker from 'react-datepicker'
 
@@ -55,7 +56,6 @@ export const DateCalendar: FC<DatePickerProps> = ({
   setStartDate,
   placeholder,
   label,
-  error,
   errorMessage,
   endDate,
   setEndDate,
@@ -64,12 +64,32 @@ export const DateCalendar: FC<DatePickerProps> = ({
   ...rest
 }) => {
   const classNames = {
-    input: clsx(s.blockContainer, error && s.errorBlockContainer, disabled && s.disabledText),
+    input: clsx(
+      s.blockContainer,
+      errorMessage && s.errorBlockContainer,
+      disabled && s.disabledText
+    ),
     calendar: s.calendar,
     popper: s.popper,
-    errorText: clsx(error && s.errorText),
+    errorText: clsx(errorMessage && s.errorText),
     day: () => s.day,
   }
+
+  const years = range(1900, getYear(new Date()) + 1, 1)
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
 
   const isRange = !!endDate
 
@@ -94,17 +114,33 @@ export const DateCalendar: FC<DatePickerProps> = ({
         selected={startDate}
         preventOpenOnFocus={true}
         selectsRange={isRange}
-        renderCustomHeader={({ date, decreaseMonth, increaseMonth, ...rest }) => (
+        renderCustomHeader={({
+          date,
+          changeYear,
+          changeMonth,
+          decreaseMonth,
+          increaseMonth,
+          ...rest
+        }) => (
           <CustomHeader
             date={date}
             decreaseMonth={decreaseMonth}
             increaseMonth={increaseMonth}
+            changeYear={changeYear}
+            years={years}
+            months={months}
+            changeMonth={changeMonth}
             {...rest}
           />
         )}
         onChange={(dates: [Date | null, Date | null] | Date | null) => DatePickerHandler(dates)}
         customInput={
-          <CustomInput isRange={isRange} disabledLabelText={disabled} label={label} error={error} />
+          <CustomInput
+            isRange={isRange}
+            disabledLabelText={disabled}
+            label={label}
+            errorMessage={errorMessage}
+          />
         }
         dayClassName={classNames.day}
         calendarClassName={classNames.calendar}
@@ -122,7 +158,7 @@ export const DateCalendar: FC<DatePickerProps> = ({
           },
         ]}
       />
-      {error && <span className={classNames.errorText}>{errorMessage}</span>}
+      {errorMessage && <span className={classNames.errorText}>{errorMessage}</span>}
     </div>
   )
 }
