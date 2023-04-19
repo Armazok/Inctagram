@@ -6,20 +6,18 @@ import { useRouter } from 'next/router'
 import { getLayoutWithHeader } from '@/components/layout'
 import { LoginPage, useMeQuery } from '@/modules/auth-modules/login-module'
 import { NextPageWithLayout } from '@/pages/_app'
-import { useUserStore } from '@/store'
 
 const Home: NextPageWithLayout = () => {
   const { push } = useRouter()
 
-  const {} = useMeQuery()
-  const { accessToken } = useUserStore()
-  // const { userName } = data?.data || {}
+  const { data } = useMeQuery()
+  const userName = data && data.data
 
   useEffect(() => {
-    if (accessToken) {
+    if (userName) {
       push('/profile')
     }
-  }, [accessToken])
+  }, [userName])
 
   return (
     <>
