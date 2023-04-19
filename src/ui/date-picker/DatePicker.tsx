@@ -2,8 +2,9 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 import { ComponentProps, FC } from 'react'
 
-// eslint-disable-next-line import/no-named-as-default
-import clsx from 'clsx'
+import { clsx } from 'clsx'
+import { getYear } from 'date-fns'
+import { range } from 'lodash'
 // eslint-disable-next-line import/no-named-as-default
 import ReactDatePicker from 'react-datepicker'
 
@@ -55,7 +56,6 @@ export const DateCalendar: FC<DatePickerProps> = ({
   setStartDate,
   placeholder,
   label,
-  error,
   errorMessage,
   endDate,
   setEndDate,
@@ -64,25 +64,35 @@ export const DateCalendar: FC<DatePickerProps> = ({
   ...rest
 }) => {
   const classNames = {
-    input: clsx(s.blockContainer, error && s.errorBlockContainer, disabled && s.disabledText),
+    input: clsx(
+      s.blockContainer,
+      errorMessage && s.errorBlockContainer,
+      disabled && s.disabledText
+    ),
     calendar: s.calendar,
     popper: s.popper,
-    errorText: clsx(error && s.errorText),
+    errorText: clsx(errorMessage && s.errorText),
     day: () => s.day,
   }
 
-  /**
-   * @param {isRange} - здесь проверка на enDate (конечую дату), если через пропсы передать endDate, то мы сможешь выбрать период даты с какую по какую,
-   * иначе будет возможность выбрать только одну дату.
-   */
+  const years = range(1900, getYear(new Date()) + 1, 1)
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
+
   const isRange = !!endDate
 
-  /**
-   * Функция которая принмает dates, если мы передаем в DateCalendar только startDate, без endDate, то сюда придет строка,
-   * если мы в DateСalendar передадим endDate, то в Dates будет лежать массив Array. Дальше идет проверка
-   * @param dates
-   * @constructor
-   */
   const DatePickerHandler = (dates: [Date | null, Date | null] | Date | null) => {
     if (Array.isArray(dates)) {
       const [start, end] = dates
@@ -94,19 +104,6 @@ export const DateCalendar: FC<DatePickerProps> = ({
     }
   }
 
-  /**
-   * @param - {string} dateForm - формат даты, меняющий порядок месяц/день/год в поле input
-   * @oaram - {Date} selected показывает выбранную дату в календаре, когда нажимаем на инпут.
-   * @param - {function} startDate дата, которая будет отображаться в поле input
-   * @param - {boolean} preventOpenOnFocus если стоит true, то при нажати на странице кнопки tab, выделится только поле inpyt, но календарь не откроется.
-   * поставь false, и при нажатии tab, выделиться input и откроется окно календарь
-   * @param - {function} renderCustomHeader функция для отрисовки заголовка календаря (месяца, дней недели и кнопок переключения между месяцами)
-   * @param - {function} customInput - компонент для отображения поля input c svg каледаря.
-   * @param - {boolean} showPopperArrow - если стоит true, в календаре отображается маленький треугольник, указывающий на поле input. Если стоит false, треугольник скрыт..
-   * @param - {number} calendarStartDay - отвечает за отображение стартового дня недели в календаре (0 - воскресенье, 1 - понедельник и т.д.)
-   * @param - {boolean} disabled блокирует форму. в customInput disabled не передает, реальзуем в DatePicker
-   * @param {object} - popperModifiers - объект, содержащий модификаторы для Popper.js, отвечающие за расположение календаря (изменение значений может повлиять на положение календаря)
-   */
   return (
     <div {...rest}>
       <ReactDatePicker
@@ -117,17 +114,33 @@ export const DateCalendar: FC<DatePickerProps> = ({
         selected={startDate}
         preventOpenOnFocus={true}
         selectsRange={isRange}
-        renderCustomHeader={({ date, decreaseMonth, increaseMonth, ...rest }) => (
+        renderCustomHeader={({
+          date,
+          changeYear,
+          changeMonth,
+          decreaseMonth,
+          increaseMonth,
+          ...rest
+        }) => (
           <CustomHeader
             date={date}
             decreaseMonth={decreaseMonth}
             increaseMonth={increaseMonth}
+            changeYear={changeYear}
+            years={years}
+            months={months}
+            changeMonth={changeMonth}
             {...rest}
           />
         )}
         onChange={(dates: [Date | null, Date | null] | Date | null) => DatePickerHandler(dates)}
         customInput={
-          <CustomInput isRange={isRange} disabledLabelText={disabled} label={label} error={error} />
+          <CustomInput
+            isRange={isRange}
+            disabledLabelText={disabled}
+            label={label}
+            errorMessage={errorMessage}
+          />
         }
         dayClassName={classNames.day}
         calendarClassName={classNames.calendar}
@@ -145,7 +158,7 @@ export const DateCalendar: FC<DatePickerProps> = ({
           },
         ]}
       />
-      {error && <span className={classNames.errorText}>{errorMessage}</span>}
+      {errorMessage && <span className={classNames.errorText}>{errorMessage}</span>}
     </div>
   )
 }
