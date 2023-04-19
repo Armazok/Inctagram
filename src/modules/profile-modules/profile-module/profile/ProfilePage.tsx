@@ -2,25 +2,26 @@ import React from 'react'
 
 import { useRouter } from 'next/router'
 
+import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
 import { GlobalButton } from '@/ui'
 
 export const ProfilePage = () => {
   const { push } = useRouter()
-
+  const { profileData, profileAvatar } = useGetProfile()
+  const userName = profileData && profileData.userName
+  const aboutMe = profileData && profileData.aboutMe
+  const avatar = profileAvatar && profileAvatar
   const onRedirectToSetting = () => push('/profile/settings/edit')
 
+  // 'https://m.dom-eda.com/uploads/images/catalog/item/dfc9a3e974/3cbf3bd41c_1000.jpg'
   return (
     <div className="flex">
       <main className="pl-6 py-9 pr-16">
         <div className="flex text-light-100 gap-9">
-          <img
-            src={'https://m.dom-eda.com/uploads/images/catalog/item/dfc9a3e974/3cbf3bd41c_1000.jpg'}
-            className={'rounded-full w-72'}
-            alt={'photo'}
-          />
+          <img src={avatar} className={'rounded-full w-72'} alt={'photo'} />
           <div className="flex flex-col gap-5">
             <div className="flex justify-between">
-              <div className="font-bold">ORANGE ORANGES</div>
+              <div className="font-bold">{userName}</div>
               <GlobalButton type={'button'} variant={'white'} callback={onRedirectToSetting}>
                 Profile Settings
               </GlobalButton>
@@ -40,11 +41,7 @@ export const ProfilePage = () => {
               </div>
             </div>
             <div>
-              <p className="text-base">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum eius explicabo
-                recusandae repellat reprehenderit similique suscipit, voluptates! Excepturi iste
-                libero magnam quae totam voluptas. Dolorem quos repellendus rerum sapiente vitae.
-              </p>
+              <p className="text-base">{aboutMe}</p>
             </div>
           </div>
         </div>
