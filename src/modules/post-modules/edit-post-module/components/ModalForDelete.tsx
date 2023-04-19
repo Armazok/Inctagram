@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+
 import { Confirm } from '@/components/modals'
 import { useDeletePostMutation } from '@/modules/post-modules/edit-post-module/hooks/useDeletePost'
 import { Preloader } from '@/ui'

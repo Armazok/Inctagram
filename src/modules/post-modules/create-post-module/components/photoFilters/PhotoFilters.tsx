@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { PhotoFilter } from '@/modules/post-modules/create-post-module/components/photoFilters/photoFilter/PhotoFilter'
 
 type FilterType = {
