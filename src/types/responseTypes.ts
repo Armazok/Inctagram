@@ -4,7 +4,7 @@ export type ResLogin = {
 
 export type ResMe = {
   userId: number
-  userName: string
+  userName: string | null
   email: string
 }
 
