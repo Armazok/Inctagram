@@ -1,8 +1,14 @@
 import React from 'react'
 
-import { PhotoFilter } from '@/modules/profile-modules/avatar-module/components/photoFilters/photoFilter/PhotoFilter'
+import { PhotoFilter } from '@/modules/post-modules/create-post-module/components/photoFilters/photoFilter/PhotoFilter'
 
-const filters = [
+type FilterType = {
+  id: number
+  filter: string
+  filterName: string
+}
+
+const filters: FilterType[] = [
   {
     id: 0,
     filter: 'none',
@@ -48,23 +54,6 @@ const filters = [
     filter: 'sepia(90%)',
     filterName: 'Sepia',
   },
-  // {
-  //   id: 6,
-  //   // filter: 'contrast(108%) brightness(108%) sepia(8%)',
-  //   filter:
-  //     'contrast(108%) brightness(108%) saturate(100%) sepia(8%) hue-rotate(0deg) grayscale(0%) invert(0%) blur(0px)',
-  //   filterName: 'Valencia',
-  // },
-  // {
-  //   id: 1,
-  //   filter: 'grayscale(85%)',
-  //   filterName: 'Grayscale',
-  // },
-  // {
-  //   id: 30,
-  //   filter: 'contrast(90%) brightness(110%)',
-  //   filterName: 'Brooklyn',
-  // },
 ]
 
 export const PhotoFilters = ({
