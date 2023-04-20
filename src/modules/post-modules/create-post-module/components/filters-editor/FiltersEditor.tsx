@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+// eslint-disable-next-line
 import { Area } from 'react-easy-crop/types'
 
 import { PhotoFilters } from '@/modules/post-modules/create-post-module/components/photoFilters/PhotoFilters'

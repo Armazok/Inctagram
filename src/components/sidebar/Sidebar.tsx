@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+// eslint-disable-next-line
 import { Area } from 'react-easy-crop/types'
 
 import bookmarkOutline from '../../assets/icons/bookmark-outline.svg'
