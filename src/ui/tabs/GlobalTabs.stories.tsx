@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { Meta, Story } from '@storybook/react'
 
-import { tabs } from '@/common'
 import { TabComponent } from '@/ui'
 
 // eslint-disable-next-line storybook/story-exports
