@@ -66,7 +66,6 @@ export const AccountSettingForm: FC<Partial<PropsType>> = ({ initialProfileData,
 
       <DateCalendar
         label="Date of Birthday"
-        error={false}
         endDate={null}
         setEndDate={() => null}
         errorMessage={errors?.dateOfBirth?.message}
