@@ -2,8 +2,8 @@ import React from 'react'
 
 import { useRouter } from 'next/router'
 
-import { useMeQuery } from '@/modules/auth-modules/login-module/login/hooks/useLogin'
 import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
+import { useMeQuery } from '@/services/hookMe'
 
 export const Header = () => {
   const { push } = useRouter()
