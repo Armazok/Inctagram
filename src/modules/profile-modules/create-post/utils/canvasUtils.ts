@@ -1,4 +1,7 @@
-export const createImage = url =>
+// eslint-disable-next-line import/no-unresolved
+import { Area, Size } from 'react-easy-crop/types'
+
+const createImage = (url: string): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {
     const image = new Image()
 
@@ -8,11 +11,11 @@ export const createImage = url =>
     image.src = url
   })
 
-export function getRadianAngle(degreeValue) {
+function getRadianAngle(degreeValue: number) {
   return (degreeValue * Math.PI) / 180
 }
 
-export function rotateSize(width, height, rotation) {
+function rotateSize(width: number, height: number, rotation: number): Size {
   const rotRad = getRadianAngle(rotation)
 
   return {
@@ -21,12 +24,12 @@ export function rotateSize(width, height, rotation) {
   }
 }
 
-export async function getCroppedImg(
-  imageSrc,
-  pixelCrop,
+export default async function getCroppedImg(
+  imageSrc: string,
+  pixelCrop: Area,
   rotation = 0,
   flip = { horizontal: false, vertical: false }
-) {
+): Promise<unknown> {
   const image = await createImage(imageSrc)
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
@@ -47,7 +50,6 @@ export async function getCroppedImg(
   ctx.scale(flip.horizontal ? -1 : 1, flip.vertical ? -1 : 1)
   ctx.translate(-image.width / 2, -image.height / 2)
 
-  //@ts-ignore
   ctx.drawImage(image, 0, 0)
 
   const data = ctx.getImageData(pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height)
@@ -59,7 +61,7 @@ export async function getCroppedImg(
 
   return new Promise(resolve => {
     canvas.toBlob(file => {
-      resolve(URL.createObjectURL(file))
+      resolve(URL.createObjectURL(file as Blob))
     }, 'image/jpeg')
   })
 }
