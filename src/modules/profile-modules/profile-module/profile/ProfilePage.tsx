@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useRouter } from 'next/router'
 
+import { LatestPosts } from '@/modules/post-modules/latest-posts'
 import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
 import { GlobalButton } from '@/ui'
 
@@ -46,12 +47,8 @@ export const ProfilePage = () => {
           </div>
         </div>
         <div></div>
-        <div className="grid grid-cols-4 gap-3 mt-14">
-          <img
-            src={'https://foodcity.ru/storage/products/October2018/6XZSr6ddCl6cxfo0UchP.jpg'}
-            alt={'photo'}
-          />
-        </div>
+
+        <LatestPosts />
       </main>
     </div>
   )
