@@ -26,7 +26,7 @@ export const RegisterPage = () => {
         Do you have an account?
       </span>
       <Link
-        href={PATH_ROUTE.MAIN}
+        href={PATH_ROUTE.LOGIN}
         className="font-semibold text-[16px] leading-[24px] text-accent-500"
       >
         Sing In

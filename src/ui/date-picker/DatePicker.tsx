@@ -21,8 +21,8 @@ type CommonProps = {
   errorMessage?: string
   disabled?: boolean
   maxDate?: Date | null
-} & ComponentProps<'div'>
-
+}
+//& ComponentProps<'div'>
 type ConditionalProps =
   | {
       endDate: Date | null
