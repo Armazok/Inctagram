@@ -56,13 +56,12 @@ const filters: FilterType[] = [
   },
 ]
 
-export const PhotoFilters = ({
-  imageSrc,
-  setFilter,
-}: {
+type PropsType = {
   imageSrc: string
   setFilter: (filter: string) => void
-}) => {
+}
+
+export const PhotoFilters = ({ imageSrc, setFilter }: PropsType) => {
   const onFilterClick = (filter: string) => {
     setFilter(filter)
   }

@@ -20,6 +20,7 @@ import trending from '../../assets/icons/trending-up.svg'
 import { ModalWithContent } from '@/components/modals'
 import { CreatePostModal } from '@/components/modals/create-post-modal/CreatePostModal'
 import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
+import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/filters-editor/FiltersEditor'
 import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
 import { PhotoEditor } from '@/modules/profile-modules/create-post/PhotoEditor'
 
@@ -28,6 +29,8 @@ export const Sidebar: FC = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [openModal, setOpenModal] = useState('')
+  const [filteredImage, setFilteredImage] = useState(selectedPhoto)
+
   const onAddPhotoClick = () => {
     setIsModalOpen(true)
   }
@@ -121,9 +124,29 @@ export const Sidebar: FC = () => {
           onClose={onCloseClick}
           title={'Filter'}
           onBackClick={() => setOpenModal('cropping')}
+          onBtnClick={() => {
+            setSelectedPhoto(String(filteredImage))
+            setOpenModal('publication')
+          }}
+        >
+          <FiltersEditor
+            //@ts-ignore
+            image={selectedPhoto}
+            setFilteredImage={setFilteredImage}
+            imageUrl={String(selectedPhoto)}
+            setSelectedPhoto={setSelectedPhoto}
+          />
+        </CreatePostModal>
+      )}
+      {openModal === 'publication' && (
+        <CreatePostModal
+          isOpen={isModalOpen}
+          onClose={onCloseClick}
+          title={'publication'}
+          onBackClick={() => setOpenModal('filters')}
           onBtnClick={() => setOpenModal('publication')}
         >
-          <img src={String(selectedPhoto)} alt="photo" />
+          <img src={String(filteredImage)} alt="photo" />
         </CreatePostModal>
       )}
     </aside>

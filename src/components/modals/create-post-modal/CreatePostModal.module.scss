@@ -3,7 +3,7 @@
 }
 
 .modal {
-  @apply absolute w-full max-w-[550px] bg-[#333] border-[#4C4C4C] border rounded-sm top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200];
+  @apply absolute w-full max-w-[972px] bg-[#333] border-[#4C4C4C] border rounded-sm top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200];
 }
 
 .modalHeader {
@@ -15,11 +15,11 @@
 }
 
 .modalBtn {
-  @apply text-accent-500 font-semibold text-base
+  @apply text-accent-500 font-semibold text-base;
 }
 
 .modalBackBtn {
-  @apply cursor-pointer
+  @apply cursor-pointer;
 }
 
 .modalBody {
