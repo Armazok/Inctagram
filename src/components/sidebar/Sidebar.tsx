@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { Area } from 'react-easy-crop/types'
 
 import bookmarkOutline from '../../assets/icons/bookmark-outline.svg'
 import bookmark from '../../assets/icons/bookmark.svg'
@@ -30,6 +31,7 @@ export const Sidebar: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [openModal, setOpenModal] = useState('')
   const [filteredImage, setFilteredImage] = useState(selectedPhoto)
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
 
   const onAddPhotoClick = () => {
     setIsModalOpen(true)
@@ -114,7 +116,12 @@ export const Sidebar: FC = () => {
           title={'Cropping'}
           onBtnClick={() => setOpenModal('filters')}
         >
-          <PhotoEditor image={selectedPhoto} setSelectedPhoto={setSelectedPhoto} />
+          <PhotoEditor
+            croppedAreaPixels={croppedAreaPixels}
+            setCroppedAreaPixels={setCroppedAreaPixels}
+            image={selectedPhoto}
+            setSelectedPhoto={setSelectedPhoto}
+          />
         </CreatePostModal>
       )}
 
@@ -132,6 +139,7 @@ export const Sidebar: FC = () => {
           <FiltersEditor
             setFilteredImage={setFilteredImage}
             imageUrl={String(selectedPhoto)}
+            croppedAreaPixels={croppedAreaPixels}
             // setSelectedPhoto={setSelectedPhoto}
           />
         </CreatePostModal>
@@ -141,7 +149,9 @@ export const Sidebar: FC = () => {
           isOpen={isModalOpen}
           onClose={onCloseClick}
           title={'publication'}
-          onBackClick={() => setOpenModal('filters')}
+          onBackClick={() => {
+            setOpenModal('filters')
+          }}
           onBtnClick={() => setOpenModal('publication')}
         >
           <img src={String(filteredImage)} alt="photo" />
