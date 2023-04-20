@@ -36,7 +36,6 @@ export const AccountSettingForm: FC<Partial<PropsType>> = ({ initialProfileData,
     onSubmit?.(data)
   }
 
-  // todo : решить вопрос по тс в дейт пикере и добавить в прод
   return (
     <form className="flex flex-col w-full gap-[22px]" onSubmit={handleSubmit(settingFormSubmit)}>
       <GlobalInput
@@ -56,12 +55,6 @@ export const AccountSettingForm: FC<Partial<PropsType>> = ({ initialProfileData,
         label="Surname"
         {...register('lastName')}
         error={errors?.lastName?.message}
-      />
-      <GlobalInput
-        type="text"
-        label="birthday"
-        {...register('dateOfBirth')}
-        error={errors?.dateOfBirth?.message}
       />
 
       <DateCalendar

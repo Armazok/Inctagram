@@ -1,24 +1,12 @@
-import { useEffect } from 'react'
+import React from 'react'
 
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 
-import { getLayoutWithHeader } from '@/components/layout'
-import { LoginPage, useMeQuery } from '@/modules/auth-modules/login-module'
+import { getGlobalLayout } from '@/components/layout'
+import { ProfilePage } from '@/modules/profile-modules/profile-module'
 import { NextPageWithLayout } from '@/pages/_app'
 
 const Home: NextPageWithLayout = () => {
-  const { push } = useRouter()
-
-  const { data } = useMeQuery()
-  const userName = data && data.data
-
-  useEffect(() => {
-    if (userName) {
-      push('/profile')
-    }
-  }, [userName])
-
   return (
     <>
       <Head>
@@ -27,10 +15,10 @@ const Home: NextPageWithLayout = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <LoginPage />
+      <ProfilePage />
     </>
   )
 }
 
-Home.getLayout = getLayoutWithHeader
+Home.getLayout = getGlobalLayout
 export default Home
