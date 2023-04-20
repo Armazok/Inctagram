@@ -31,12 +31,6 @@ export default {
   },
 } as Meta
 
-const [activeTab, setActiveTab] = useState(tabs && tabs[0].label)
-
-const tabsLayout = tabs.map(tab => {
-  return <div key={tab.id}>{activeTab === tab.label && tab.content}</div>
-})
-
 interface ITabComponentType {
   label: string | undefined
   activeTab?: string | undefined
