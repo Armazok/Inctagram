@@ -27,6 +27,7 @@ function rotateSize(width: number, height: number, rotation: number): Size {
 export default async function getCroppedImg(
   imageSrc: string,
   pixelCrop: Area,
+  filter?: string,
   rotation = 0,
   flip = { horizontal: false, vertical: false }
 ): Promise<unknown> {
@@ -50,6 +51,7 @@ export default async function getCroppedImg(
   ctx.scale(flip.horizontal ? -1 : 1, flip.vertical ? -1 : 1)
   ctx.translate(-image.width / 2, -image.height / 2)
 
+  ctx.filter = filter || 'none'
   ctx.drawImage(image, 0, 0)
 
   const data = ctx.getImageData(pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height)
