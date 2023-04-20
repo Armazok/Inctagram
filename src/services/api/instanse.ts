@@ -1,9 +1,15 @@
 import axios from 'axios'
 
+import { ResMe } from '@/types'
+
 export const authInstance = axios.create({
   baseURL: 'https://lionfish-app-3jdhn.ondigitalocean.app/',
   withCredentials: true,
 })
+
+export const meSendRequest = () => {
+  return authInstance.get<ResMe>('auth/me')
+}
 
 authInstance.interceptors.request.use(
   config => {

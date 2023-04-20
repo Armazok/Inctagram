@@ -1,6 +1,5 @@
 {
   "name": "inctagram",
-  "homepage": "https://Armazok.github.io/Inctagram",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,9 +12,7 @@
     "stylelint": "stylelint \"**/*.{css,scss}\" --fix",
     "fix": "yarn eslint && yarn prettier",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@apollo/client": "^3.7.10",
@@ -94,6 +91,7 @@
     "prettier-stylelint": "^0.4.2",
     "sass-loader": "^13.2.2",
     "storybook": "7.0.5",
+    "storybook-addon-next": "^1.8.0",
     "stylelint": "^14.10.0",
     "stylelint-config-clean-order": "^0.9.0",
     "stylelint-prettier": "^2.0.0"

@@ -14,7 +14,7 @@
 @mixin textInput($fontSize, $lineHeight, $textColor, $weight) {
   font-family: $fontFamily;
   font-size: $fontSize;
-  line-height: $lineHeight;
   font-weight: $weight;
+  line-height: $lineHeight;
   color: $textColor;
 }

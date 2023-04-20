@@ -4,8 +4,8 @@ import { useRouter } from 'next/router'
 import { FaSignOutAlt } from 'react-icons/fa'
 
 import { Confirm } from '@/components/modals/confirm/Confirm'
-import { useMeQuery } from '@/modules/auth-modules/login-module/login/hooks/useLogin'
 import { useLogoutMutation } from '@/modules/auth-modules/login-module/logout/hooks/useLogout'
+import { useMeQuery } from '@/services/hookMe'
 
 export const LogoutButton: FC = () => {
   const router = useRouter()

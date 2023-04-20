@@ -2,7 +2,7 @@ import React, { FC, PropsWithChildren, useEffect } from 'react'
 
 import { useRouter } from 'next/router'
 
-import { useMeQuery } from '@/modules/auth-modules/login-module'
+import { useMeQuery } from '@/services/hookMe'
 import { Preloader } from '@/ui'
 
 const AuthProtection: FC<PropsWithChildren> = ({ children }) => {
