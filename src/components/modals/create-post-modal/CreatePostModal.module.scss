@@ -1,0 +1,31 @@
+.modalOverlay {
+  @apply fixed w-full h-full top-0 left-0 bg-black/80 z-[100];
+}
+
+.modal {
+  @apply absolute w-full max-w-[972px] bg-[#333] border-[#4C4C4C] border rounded-sm top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200];
+}
+
+.modalHeader {
+  @apply flex justify-between items-center px-[24px] py-[12px] border-b border-[#4C4C4C];
+}
+
+.modalTitle {
+  @apply text-xl text-white font-bold;
+}
+
+.modalBtn {
+  @apply text-accent-500 font-semibold text-base;
+}
+
+.modalBackBtn {
+  @apply cursor-pointer;
+}
+
+.modalBody {
+  @apply text-base text-white;
+}
+
+.modalFooter {
+  @apply flex justify-end pb-[36px] px-[24px] gap-6;
+}

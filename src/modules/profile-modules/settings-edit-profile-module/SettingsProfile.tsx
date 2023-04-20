@@ -14,7 +14,7 @@ export const SettingsProfile = () => {
 
   return (
     <div className="relative w-full">
-      <TabsTitle variant="edit" tabs={tabs} setActiveTab={onChangeTab} activeTab={activeTab} />
+      <TabsTitle tabs={tabs} setActiveTab={onChangeTab} activeTab={activeTab} />
       {tabsLayout}
     </div>
   )

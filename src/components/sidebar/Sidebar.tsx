@@ -1,5 +1,7 @@
-import { FC } from 'react'
+import React, { FC, useState } from 'react'
 
+// eslint-disable-next-line import/no-named-as-default
+import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -15,10 +17,28 @@ import plus from '../../assets/icons/plus-square.svg'
 import trendingOutline from '../../assets/icons/trending-up-outline.svg'
 import trending from '../../assets/icons/trending-up.svg'
 
+import { ModalWithContent } from '@/components/modals'
+import { CreatePostModal } from '@/components/modals/create-post-modal/CreatePostModal'
 import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
+import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/filters-editor/FiltersEditor'
+import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
+import { PhotoEditor } from '@/modules/profile-modules/create-post/PhotoEditor'
 
 export const Sidebar: FC = () => {
   const { pathname } = useRouter()
+  const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [openModal, setOpenModal] = useState('')
+  const [filteredImage, setFilteredImage] = useState(selectedPhoto)
+
+  const onAddPhotoClick = () => {
+    setIsModalOpen(true)
+  }
+
+  const onCloseClick = () => {
+    setSelectedPhoto('')
+    setIsModalOpen(false)
+  }
 
   return (
     <aside className="h-screen sticky top-0 max-w-[320px] w-full border-r-[1px] border-r-bgLogBorder">
@@ -35,16 +55,9 @@ export const Sidebar: FC = () => {
               Home
             </Link>
           </li>
-          <li className="flex gap-[15px] items-center">
-            <Image
-              src={pathname === '/create' ? plus : plusOutline}
-              alt={'Create'}
-              height={24}
-              width={24}
-            />
-            <Link href={'/create'} className={pathname === '/create' ? 'text-accent-500' : ''}>
-              Create
-            </Link>
+          <li className="flex gap-[15px] items-center" onClick={onAddPhotoClick}>
+            <Image src={isModalOpen ? plus : plusOutline} alt={'Create'} height={24} width={24} />
+            <div className={clsx('cursor-pointer', isModalOpen && 'text-accent-500')}>Create</div>
           </li>
           <li className="flex gap-[15px] items-center">
             <Image
@@ -88,6 +101,52 @@ export const Sidebar: FC = () => {
         </ul>
         <LogoutButton />
       </div>
+
+      <ModalWithContent isOpen={isModalOpen} onClose={onCloseClick} title={'Add photo'}>
+        <PhotoSelector setSelectedPhoto={setSelectedPhoto} />
+      </ModalWithContent>
+
+      {selectedPhoto && (
+        <CreatePostModal
+          isOpen={isModalOpen}
+          onClose={onCloseClick}
+          onBackClick={() => setSelectedPhoto('')}
+          title={'Cropping'}
+          onBtnClick={() => setOpenModal('filters')}
+        >
+          <PhotoEditor image={selectedPhoto} setSelectedPhoto={setSelectedPhoto} />
+        </CreatePostModal>
+      )}
+
+      {openModal === 'filters' && (
+        <CreatePostModal
+          isOpen={isModalOpen}
+          onClose={onCloseClick}
+          title={'Filter'}
+          onBackClick={() => setOpenModal('cropping')}
+          onBtnClick={() => {
+            setSelectedPhoto(String(filteredImage))
+            setOpenModal('publication')
+          }}
+        >
+          <FiltersEditor
+            setFilteredImage={setFilteredImage}
+            imageUrl={String(selectedPhoto)}
+            // setSelectedPhoto={setSelectedPhoto}
+          />
+        </CreatePostModal>
+      )}
+      {openModal === 'publication' && (
+        <CreatePostModal
+          isOpen={isModalOpen}
+          onClose={onCloseClick}
+          title={'publication'}
+          onBackClick={() => setOpenModal('filters')}
+          onBtnClick={() => setOpenModal('publication')}
+        >
+          <img src={String(filteredImage)} alt="photo" />
+        </CreatePostModal>
+      )}
     </aside>
   )
 }
