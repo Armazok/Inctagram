@@ -1,7 +1,5 @@
 import { FC } from 'react'
 
-// eslint-disable-next-line import/no-named-as-default
-import clsx from 'clsx'
 import Image from 'next/image'
 import Modal from 'react-modal'
 
@@ -16,7 +14,6 @@ interface Props {
   children: any
   onBtnClick: () => void
   onBackClick: () => void
-  className: string
 }
 
 export const CreatePostModal: FC<Props> = ({
@@ -25,7 +22,6 @@ export const CreatePostModal: FC<Props> = ({
   onBackClick,
   onClose,
   title,
-  className,
   children,
 }) => {
   return (
@@ -52,7 +48,7 @@ export const CreatePostModal: FC<Props> = ({
         </button>
       </div>
 
-      <div className={clsx(styles.modalBody, className)}>{children}</div>
+      <div className={styles.modalBody}>{children}</div>
     </Modal>
   )
 }
