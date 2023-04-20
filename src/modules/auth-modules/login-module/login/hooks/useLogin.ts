@@ -1,13 +1,19 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
-import { noRefetch } from '@/common/helpers/no-refetch'
-import {
-  meSendRequest,
-  sendLoginRequest,
-} from '@/modules/auth-modules/login-module/login/api/loginAPI'
+import { sendLoginRequest } from '@/modules/auth-modules/login-module/login/api/loginAPI'
 
-export const useLoginMutation = (onSuccess: any, setCustomError: () => void, reset: () => void) => {
+type LoginMutation = {
+  onSuccess: () => void
+  setCustomError: () => void
+  reset: () => void
+}
+
+export const useLoginMutation = (
+  onSuccess: LoginMutation['onSuccess'],
+  setCustomError: LoginMutation['setCustomError'],
+  reset: LoginMutation['reset']
+) => {
   const client = useQueryClient()
   const {
     data,
@@ -39,13 +45,4 @@ export const useLoginMutation = (onSuccess: any, setCustomError: () => void, res
     variables,
     isLoading,
   }
-}
-
-export const useMeQuery = () => {
-  return useQuery({
-    queryFn: meSendRequest,
-    queryKey: ['me'],
-    retry: false,
-    ...noRefetch,
-  })
 }

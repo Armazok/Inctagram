@@ -2,8 +2,9 @@ import React from 'react'
 
 import { useRouter } from 'next/router'
 
+import { LatestPosts } from '@/modules/post-modules/latest-posts'
 import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
-import { GlobalButton } from '@/ui'
+import { Avatar, GlobalButton } from '@/ui'
 
 export const ProfilePage = () => {
   const { push } = useRouter()
@@ -13,12 +14,11 @@ export const ProfilePage = () => {
   const avatar = profileAvatar && profileAvatar
   const onRedirectToSetting = () => push('/profile/settings/edit')
 
-  // 'https://m.dom-eda.com/uploads/images/catalog/item/dfc9a3e974/3cbf3bd41c_1000.jpg'
   return (
     <div className="flex">
       <main className="pl-6 py-9 pr-16">
         <div className="flex text-light-100 gap-9">
-          <img src={avatar} className={'rounded-full w-72'} alt={'photo'} />
+          <Avatar src={avatar} alt={'photo'} />
           <div className="flex flex-col gap-5">
             <div className="flex justify-between">
               <div className="font-bold">{userName}</div>
@@ -46,12 +46,8 @@ export const ProfilePage = () => {
           </div>
         </div>
         <div></div>
-        <div className="grid grid-cols-4 gap-3 mt-14">
-          <img
-            src={'https://foodcity.ru/storage/products/October2018/6XZSr6ddCl6cxfo0UchP.jpg'}
-            alt={'photo'}
-          />
-        </div>
+
+        <LatestPosts />
       </main>
     </div>
   )

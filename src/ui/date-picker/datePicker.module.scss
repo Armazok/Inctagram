@@ -1,7 +1,9 @@
 .calendar {
   @apply bg-dark-500 rounded-sm border border-dark-300;
-  padding: 16px 24px;
+
   max-height: 348px;
+  padding: 16px 24px;
+
   border-radius: 2px;
 
   :global(.react-datepicker__week) {
@@ -10,19 +12,22 @@
 
   :global(.react-datepicker__header) {
     padding: 0;
+
     background-color: transparent;
     border-bottom: none;
   }
 
   :global(.react-datepicker__day-name) {
     @apply not-italic font-normal text-[16px] leading-6 text-dark-100;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     width: 36px;
     height: 36px;
-    padding: 12px 0;
     margin: 0;
+    padding: 12px 0;
 
     .react-datepicker-popper {
       z-index: 1;
@@ -32,33 +37,44 @@
 
 .blockContainer {
   @apply not-italic font-normal text-[16px] leading-6 text-light-100  border-2 border-dark-300 bg-dark-500;
-  width: 100%;
-  border-radius: 2px;
-  transition: 200ms;
-  padding: 6px 0 6px 12px;
+
   display: flex;
   align-items: center;
 
+  width: 100%;
+  padding: 6px 0 6px 12px;
+
+  border-radius: 2px;
+
+  transition: 200ms;
+
   &:focus-visible {
     @apply border-accent-700 border-2;
+
     cursor: pointer;
+
     outline: 0 !important;
   }
 
   &:hover {
     @apply border-dark-100 border-2;
+
     cursor: pointer;
+
     outline: 0 !important;
   }
 
   &:active {
     @apply border-dark-300 border-2;
+
     cursor: pointer;
+
     outline: 0 !important;
   }
 
   &:disabled {
     @apply border-dark-300 border-2 bg-dark-500;
+
     border-radius: 2px;
     outline: 0 !important;
   }
@@ -81,34 +97,43 @@
 
 .errorBlockContainer {
   @apply text-danger-500 border-danger-500 border-2;
+
   border-radius: 2px;
 }
 
 .day {
   &:global(.react-datepicker__day) {
     @apply text-light-100;
+
     position: relative;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin: 0;
-    outline: none;
+
     width: 36px;
     height: 36px;
+    margin: 0;
+
+    outline: none;
     &:focus-visible {
       @apply border-accent-300 border-2;
+
       background-color: transparent;
       border-radius: 50%;
     }
 
     &:hover {
       @apply bg-accent-900;
+
       border-radius: 18px;
+
       transition: 200ms;
     }
 
     &:active {
       @apply bg-accent-900;
+
       border-radius: 18px;
     }
 
@@ -116,34 +141,43 @@
       @apply text-accent-500;
 
       &:focus-visible {
-        background-color: transparent;
         /* Primary/500 */
+
         @apply text-accent-500;
+
+        background-color: transparent;
         border: 2px solid #4c8dff;
         border-radius: 50%;
       }
 
       &:hover {
         @apply text-accent-100;
+
         border-radius: 18px;
+
         transition: 200ms;
       }
 
       &:active {
         @apply text-light-100;
+
         border-radius: 18px;
       }
     }
 
     &:global(.react-datepicker__day--selected) {
       @apply text-light-100;
+
       @apply border-accent-900 border-2 bg-accent-500;
-      font-weight: 400;
-      border-radius: 50%;
-      transition: 200ms;
 
       position: relative;
       z-index: 10;
+
+      font-weight: 400;
+
+      border-radius: 50%;
+
+      transition: 200ms;
     }
 
     &:global(.react-datepicker__week) {
@@ -151,18 +185,22 @@
 
       &:focus-visible {
         @apply text-accent-300 border-2 border-accent-300;
+
         background-color: transparent;
         border-radius: 50%;
       }
 
       &:hover {
         @apply bg-accent-900;
+
         border-radius: 18px;
+
         transition: 200ms;
       }
 
       &:active {
         @apply bg-accent-900;
+
         border-radius: 18px;
       }
     }
@@ -172,24 +210,30 @@
     }
     //стили для предыдущего или следующего месяца в текущем
     &:global(.react-datepicker__day--outside-month) {
+      @apply text-dark-300;
+
       width: 36px;
       height: 36px;
-      @apply text-dark-300;
       &:focus-visible {
-        background-color: transparent;
         @apply text-dark-300;
+
         @apply border-2 border-accent-300;
+
+        background-color: transparent;
         border-radius: 50%;
       }
 
       &:hover {
         @apply bg-accent-900;
+
         border-radius: 18px;
+
         transition: 200ms;
       }
 
       &:active {
         @apply bg-accent-900;
+
         border-radius: 18px;
       }
     }
@@ -197,79 +241,93 @@
 
   &:global(.react-datepicker__day--keyboard-selected) {
     @apply text-light-100 border-2 border-accent-900 bg-accent-500;
-    font-weight: 400;
-    border-radius: 50%;
-    transition: 200ms;
 
     position: relative;
     z-index: 10;
 
+    font-weight: 400;
+
+    border-radius: 50%;
+
+    transition: 200ms;
+
     &:focus-visible {
-      background-color: transparent;
       @apply text-accent-500;
+
+      background-color: transparent;
       border: 2px solid #4c8dff;
       border-radius: 50%;
     }
 
     &:hover {
       @apply text-accent-100;
+
       border-radius: 18px;
+
       transition: 200ms;
     }
 
     &:active {
       @apply text-light-100;
+
       border-radius: 18px;
     }
   }
 
   &:global(.react-datepicker__day--in-selecting-range) {
     @apply bg-accent-900 border-2 border-accent-900 text-light-900;
+
     border-radius: 0;
   }
 
   &:global(.react-datepicker__day--selecting-range-end) {
     @apply border-2 border-accent-900;
-    background: #234e99 !important;
-    border-radius: 0 18px 18px 0 !important;
 
     position: relative;
     z-index: 10;
 
+    background: #234e99 !important;
+    border-radius: 0 18px 18px 0 !important;
+
     &:before {
+      @apply bg-accent-500;
+
       content: '';
+
+      position: absolute;
+      z-index: -1;
+
       width: 28px;
       height: 28px;
 
-      @apply bg-accent-500;
       border-radius: 14px;
-      position: absolute;
-
-      z-index: -1;
     }
   }
 
   &:global(.react-datepicker__day--selecting-range-start) {
-    border: 2px solid #234e99 !important;
     background: #234e99 !important;
+    border: 2px solid #234e99 !important;
     border-radius: 18px 0 0 18px !important;
 
     &:before {
+      @apply bg-accent-500;
+
       content: '';
+
+      position: absolute;
+      z-index: -1;
+
       width: 28px;
       height: 28px;
 
-      @apply bg-accent-500;
       border-radius: 14px;
-      position: absolute;
-
-      z-index: -1;
     }
   }
 
   //выбранный после выбранного периода
   &:global(.react-datepicker__day--in-range) {
     @apply text-light-900 bg-accent-900;
+
     border: 2px solid #234e99;
     border-radius: 0;
   }
@@ -282,6 +340,7 @@
 
   &:global(.react-datepicker__day--range-end) {
     @apply bg-accent-500 border-2 border-accent-900;
+
     border-radius: 0 50% 50% 0;
   }
 }
