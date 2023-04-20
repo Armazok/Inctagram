@@ -130,11 +130,9 @@ export const Sidebar: FC = () => {
           }}
         >
           <FiltersEditor
-            //@ts-ignore
-            image={selectedPhoto}
             setFilteredImage={setFilteredImage}
             imageUrl={String(selectedPhoto)}
-            setSelectedPhoto={setSelectedPhoto}
+            // setSelectedPhoto={setSelectedPhoto}
           />
         </CreatePostModal>
       )}

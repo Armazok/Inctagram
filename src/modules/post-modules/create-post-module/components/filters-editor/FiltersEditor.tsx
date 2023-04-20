@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 
 import { PhotoFilters } from '@/modules/post-modules/create-post-module/components/photoFilters/PhotoFilters'
-import { sendAvatar } from '@/modules/profile-modules/avatar-module'
 
 type PropsType = {
   imageUrl: string
-  selectedPhoto: File | string | null
-  setSelectedPhoto: (photo: string | File | null) => void
+  // setSelectedPhoto: (photo: string | File | null) => void
   setFilteredImage: (filteredPhoto: any) => void
 }
 
