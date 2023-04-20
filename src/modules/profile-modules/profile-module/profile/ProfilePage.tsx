@@ -18,7 +18,7 @@ export const ProfilePage = () => {
     <div className="flex">
       <main className="pl-6 py-9 pr-16">
         <div className="flex text-light-100 gap-9">
-          <Avatar src={avatar} alt={'photoAvatar'} />
+          <Avatar src={avatar} alt={'photo'} />
           <div className="flex flex-col gap-5">
             <div className="flex justify-between">
               <div className="font-bold">{userName}</div>
