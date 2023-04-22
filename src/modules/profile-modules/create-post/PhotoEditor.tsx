@@ -9,14 +9,15 @@ import getCroppedImg from '@/modules/profile-modules/create-post/utils/canvasUti
 type PropsType = {
   image: string | File | null
   setSelectedPhoto: (photo: string | File | null) => void
+  setCropSize: (crop: { width: number; height: number }) => void
 }
 
-export const PhotoEditor = ({ image, setSelectedPhoto }: PropsType) => {
+export const PhotoEditor = ({ image, setSelectedPhoto, setCropSize }: PropsType) => {
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [aspect, setAspect] = useState<number>(4 / 5)
   const [imageUrl, setImageUrl] = useState<string | ArrayBuffer | null>(null)
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>()
   const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels)
   }, [])
@@ -39,6 +40,9 @@ export const PhotoEditor = ({ image, setSelectedPhoto }: PropsType) => {
 
   useEffect(() => {
     saveCropImage()
+    if (croppedAreaPixels) {
+      setCropSize({ width: croppedAreaPixels.width, height: croppedAreaPixels.height })
+    }
   }, [croppedAreaPixels])
 
   useEffect(() => {
