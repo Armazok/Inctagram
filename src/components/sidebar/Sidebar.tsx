@@ -31,6 +31,13 @@ export const Sidebar: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [openModal, setOpenModal] = useState('')
   const [filteredImage, setFilteredImage] = useState(selectedPhoto)
+  const [cropSize, setCropSize] = useState<{
+    width: number
+    height: number
+  }>({
+    width: 100,
+    height: 100,
+  })
 
   const onAddPhotoClick = () => {
     setIsModalOpen(true)
@@ -115,7 +122,11 @@ export const Sidebar: FC = () => {
           title={'Cropping'}
           onBtnClick={() => setOpenModal('filters')}
         >
-          <PhotoEditor image={selectedPhoto} setSelectedPhoto={setSelectedPhoto} />
+          <PhotoEditor
+            image={selectedPhoto}
+            setSelectedPhoto={setSelectedPhoto}
+            setCropSize={setCropSize}
+          />
         </CreatePostModal>
       )}
 
@@ -132,8 +143,8 @@ export const Sidebar: FC = () => {
           <FiltersEditor
             setFilteredImage={setFilteredImage}
             imageUrl={String(selectedPhoto)}
-            canvasWidth={500}
-            canvasHeight={500}
+            canvasWidth={cropSize.width}
+            canvasHeight={cropSize.height}
           />
         </CreatePostModal>
       )}
