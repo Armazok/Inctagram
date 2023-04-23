@@ -1,6 +1,6 @@
 import 'react-datepicker/dist/react-datepicker.css'
 
-import { ComponentProps, FC } from 'react'
+import { FC } from 'react'
 
 import { clsx } from 'clsx'
 import { getYear } from 'date-fns'
@@ -20,6 +20,7 @@ type CommonProps = {
   error?: boolean
   errorMessage?: string
   disabled?: boolean
+  isRange?: boolean
   maxDate?: Date | null
 }
 //& ComponentProps<'div'>
@@ -59,6 +60,7 @@ export const DateCalendar: FC<DatePickerProps> = ({
   errorMessage,
   endDate,
   setEndDate,
+  isRange,
   disabled,
   maxDate,
   ...rest
@@ -90,9 +92,6 @@ export const DateCalendar: FC<DatePickerProps> = ({
     'November',
     'December',
   ]
-
-  const isRange = !!endDate
-
   const DatePickerHandler = (dates: [Date | null, Date | null] | Date | null) => {
     if (Array.isArray(dates)) {
       const [start, end] = dates

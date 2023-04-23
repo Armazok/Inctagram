@@ -3,7 +3,7 @@ import { CSSProperties, FC, ForwardedRef, forwardRef, HTMLInputTypeAttribute } f
 import { FieldValues } from 'react-hook-form'
 
 import style from './Input.module.scss'
-type InputType = {
+export type InputType = {
   type: HTMLInputTypeAttribute
   ref?: ForwardedRef<any>
   id?: string
