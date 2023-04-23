@@ -6,7 +6,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 // eslint-disable-next-line
-import { Area } from 'react-easy-crop/types'
 
 import bookmarkOutline from '../../assets/icons/bookmark-outline.svg'
 import bookmark from '../../assets/icons/bookmark.svg'
@@ -32,7 +31,13 @@ export const Sidebar: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [openModal, setOpenModal] = useState('')
   const [filteredImage, setFilteredImage] = useState(selectedPhoto)
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
+  const [cropSize, setCropSize] = useState<{
+    width: number
+    height: number
+  }>({
+    width: 100,
+    height: 100,
+  })
 
   const onAddPhotoClick = () => {
     setIsModalOpen(true)
@@ -118,10 +123,9 @@ export const Sidebar: FC = () => {
           onBtnClick={() => setOpenModal('filters')}
         >
           <PhotoEditor
-            croppedAreaPixels={croppedAreaPixels}
-            setCroppedAreaPixels={setCroppedAreaPixels}
             image={selectedPhoto}
             setSelectedPhoto={setSelectedPhoto}
+            setCropSize={setCropSize}
           />
         </CreatePostModal>
       )}
@@ -133,15 +137,14 @@ export const Sidebar: FC = () => {
           title={'Filter'}
           onBackClick={() => setOpenModal('cropping')}
           onBtnClick={() => {
-            setSelectedPhoto(String(filteredImage))
             setOpenModal('publication')
           }}
         >
           <FiltersEditor
             setFilteredImage={setFilteredImage}
             imageUrl={String(selectedPhoto)}
-            croppedAreaPixels={croppedAreaPixels}
-            // setSelectedPhoto={setSelectedPhoto}
+            canvasWidth={cropSize.width}
+            canvasHeight={cropSize.height}
           />
         </CreatePostModal>
       )}
@@ -155,7 +158,7 @@ export const Sidebar: FC = () => {
           }}
           onBtnClick={() => setOpenModal('publication')}
         >
-          <img src={String(filteredImage)} alt="photo" />
+          <img src={String(filteredImage)} alt="photo" style={{ width: '434px' }} />
         </CreatePostModal>
       )}
     </aside>
