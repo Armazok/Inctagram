@@ -4,18 +4,16 @@ import { useMutation } from '@tanstack/react-query'
 import { NextPage } from 'next'
 
 import { Confirm } from '@/components/modals'
-import {
-  ForgotPasswordForm,
-  passwordRecoveryAPI,
-} from '@/modules/auth-modules/password-recovery-module'
+import { passwordRecoveryAPI } from '@/modules/auth-modules/password-recovery-module'
 import { NameTitle, Preloader } from '@/ui'
 import Link from '@/ui/link/Link'
+import { ReCaptchaFormV3 } from '@/modules/auth-modules/password-recovery-module/components/forgot-password/forgot-password-form/reCaptcha/ForgotPasswordFormWithRecaptchaV3'
 
 export const ForgotPasswordPage: NextPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const { mutate, isLoading, variables } = useMutation({
-    mutationFn: passwordRecoveryAPI.passwordRecovery,
+    mutationFn: passwordRecoveryAPI.passwordRecoveryWithRecaptcha,
     onSuccess: () => {
       setIsModalOpen(true)
     },
@@ -25,8 +23,8 @@ export const ForgotPasswordPage: NextPage = () => {
     setIsModalOpen(false)
   }
 
-  const onSubmitHandler = async (email: string) => {
-    await mutate({ email })
+  const onSubmitHandler = async (email: string, recaptcha: string) => {
+    await mutate({ email, recaptcha })
   }
 
   const onClose = () => {
@@ -43,7 +41,7 @@ export const ForgotPasswordPage: NextPage = () => {
     >
       <NameTitle nameTitle={'Forgot Password'} className={'text-light-100 mt-6'} />
 
-      <ForgotPasswordForm onSubmitHandler={onSubmitHandler} />
+      <ReCaptchaFormV3 onSubmitHandler={onSubmitHandler} />
 
       <Confirm
         isOpen={isModalOpen}
