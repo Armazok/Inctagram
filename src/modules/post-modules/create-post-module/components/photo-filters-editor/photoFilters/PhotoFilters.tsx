@@ -1,6 +1,5 @@
 import React from 'react'
-
-import { PhotoFilter } from '@/modules/post-modules/create-post-module/components/photoFilters/photoFilter/PhotoFilter'
+import { PhotoFilterItem } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/photoFilters/photoFilter/PhotoFilterItem'
 
 type FilterType = {
   id: number
@@ -68,7 +67,7 @@ export const PhotoFilters = ({ imageSrc, setFilter }: PropsType) => {
 
   const filtersList = filters.map(({ id, filter, filterName }) => {
     return (
-      <PhotoFilter
+      <PhotoFilterItem
         key={id}
         imageSrc={imageSrc}
         filterName={filterName}
