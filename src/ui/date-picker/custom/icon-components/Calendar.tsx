@@ -9,7 +9,7 @@ type CalendarType = {
 
 export const Calendar = ({ errorMessage }: CalendarType) => {
   const classNames = {
-    svgStyle: clsx(!errorMessage && 'fill-light-100', errorMessage && 'fill-danger-500'),
+    svgStyle: clsx(!errorMessage && '#FFFFFF', errorMessage && '#CC1439'),
   }
 
   return (
@@ -19,7 +19,7 @@ export const Calendar = ({ errorMessage }: CalendarType) => {
           width="24"
           height="24"
           viewBox="0 0 24 24"
-          className={classNames.svgStyle}
+          fill={classNames.svgStyle}
           xmlns="http://www.w3.org/2000/svg"
         >
           <g clipPath="url(#clip0_301_3622)">
