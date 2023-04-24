@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+
 import { CreatePostModal } from '@/components/modals/create-post-modal/CreatePostModal'
 import { PhotoFilters } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/photoFilters/PhotoFilters'
 
@@ -55,6 +56,7 @@ export const FiltersEditor = ({
     canvas.toBlob(blob => {
       //@ts-ignore
       const filteredImageUrl = URL.createObjectURL(blob)
+
       setFilteredImage(String(filteredImageUrl))
     })
 

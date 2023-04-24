@@ -4,9 +4,9 @@ import { FieldValues, SubmitHandler } from 'react-hook-form'
 
 import { useGlobalForm } from '@/common'
 import { forgotPassSchema } from '@/modules/auth-modules/password-recovery-module'
-import { GlobalButton, GlobalInput } from '@/ui'
 import { CaptchaScript } from '@/modules/auth-modules/password-recovery-module/components/forgot-password/forgot-password-form/reCaptcha/CaptchaScript'
 import { getCaptcha } from '@/modules/auth-modules/password-recovery-module/utils/get-captcha'
+import { GlobalButton, GlobalInput } from '@/ui'
 
 type PropsType = {
   onSubmitHandler: (email: string, recaptcha: string) => void

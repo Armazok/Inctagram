@@ -5,9 +5,9 @@ import { NextPage } from 'next'
 
 import { Confirm } from '@/components/modals'
 import { passwordRecoveryAPI } from '@/modules/auth-modules/password-recovery-module'
+import { ReCaptchaFormV3 } from '@/modules/auth-modules/password-recovery-module/components/forgot-password/forgot-password-form/reCaptcha/ForgotPasswordFormWithRecaptchaV3'
 import { NameTitle, Preloader } from '@/ui'
 import Link from '@/ui/link/Link'
-import { ReCaptchaFormV3 } from '@/modules/auth-modules/password-recovery-module/components/forgot-password/forgot-password-form/reCaptcha/ForgotPasswordFormWithRecaptchaV3'
 
 export const ForgotPasswordPage: NextPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
