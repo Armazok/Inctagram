@@ -21,7 +21,7 @@ import trending from '../../assets/icons/trending-up.svg'
 import { ModalWithContent } from '@/components/modals'
 import { CreatePostModal } from '@/components/modals/create-post-modal/CreatePostModal'
 import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
-import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/filters-editor/FiltersEditor'
+import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/FiltersEditor'
 import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
 import { PhotoEditor } from '@/modules/profile-modules/create-post/PhotoEditor'
 
@@ -131,22 +131,13 @@ export const Sidebar: FC = () => {
       )}
 
       {openModal === 'filters' && (
-        <CreatePostModal
-          isOpen={isModalOpen}
-          onClose={onCloseClick}
-          title={'Filter'}
-          onBackClick={() => setOpenModal('cropping')}
-          onBtnClick={() => {
-            setOpenModal('publication')
-          }}
-        >
-          <FiltersEditor
-            setFilteredImage={setFilteredImage}
-            imageUrl={String(selectedPhoto)}
-            canvasWidth={cropSize.width}
-            canvasHeight={cropSize.height}
-          />
-        </CreatePostModal>
+        <FiltersEditor
+          cropSize={cropSize}
+          imageUrl={String(selectedPhoto)}
+          setFilteredImage={setFilteredImage}
+          isModalOpen={isModalOpen}
+          setOpenModal={setOpenModal}
+        />
       )}
       {openModal === 'publication' && (
         <CreatePostModal
