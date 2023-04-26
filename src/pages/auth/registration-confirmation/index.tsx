@@ -9,7 +9,7 @@ const RegistrationConfirmation: NextPageWithLayout = () => {
     query: { code },
   } = useRouter()
 
-  return <ResendingVerificationEmail code={code} />
+  return <ResendingVerificationEmail code={code as string} />
 }
 
 RegistrationConfirmation.getLayout = getLayoutWithHeader
