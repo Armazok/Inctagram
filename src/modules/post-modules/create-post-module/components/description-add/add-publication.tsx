@@ -8,7 +8,7 @@ type AddPublicationType = {
   setText: (newText: string) => void
 }
 
-export const AddPublication: FC<AddPublicationType> = ({ imageUrl = '', text = '', setText }) => {
+export const AddPublication: FC<AddPublicationType> = ({ imageUrl, text, setText }) => {
   return (
     <div className={'flex flex-wrap'}>
       <div className={'w-[436px]'}>

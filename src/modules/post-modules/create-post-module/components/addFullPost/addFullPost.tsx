@@ -1,31 +1,29 @@
-import React, { ChangeEvent, FC, useState } from 'react'
-
-import { useRouter } from 'next/router'
+import React, { Dispatch, FC, SetStateAction, useState } from 'react'
 
 import { CreatePostModal } from '@/components/modals/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
 import { useAddAllPostMutation } from '@/modules/post-modules/create-post-module/components/hooks/useAddAllPost'
+import { useUserStore } from '@/store'
 
 interface IAddFullPost {
-  openModal: string
   isModalOpen: boolean
   onCloseClick: () => void
-  url: string
-  filteredImage: string | File | null
-  uploadId: string
-  description: string
+  imageUrl: string
+  setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
 export const AddFullPost: FC<IAddFullPost> = ({
-  openModal,
   isModalOpen,
   onCloseClick,
-  url = '',
-  uploadId,
-  description = '',
+  imageUrl,
+  setOpenModal,
 }) => {
-  const { mutate: addAllPostMutate } = useAddAllPostMutation()
-  const [text, setText] = useState<string>(description)
+  const { uploadId } = useUserStore()
+
+  const [text, setText] = useState<string>('')
+
+  const { mutate: addAllPostMutate } = useAddAllPostMutation(() => setOpenModal(false))
+
   const addAllPost = () => {
     if (uploadId && text) {
       addAllPostMutate({
@@ -39,17 +37,15 @@ export const AddFullPost: FC<IAddFullPost> = ({
 
   return (
     <>
-      {openModal === 'publication' && (
-        <CreatePostModal
-          isOpen={isModalOpen}
-          onClose={onCloseClick}
-          title={'Publication'}
-          onBtnClick={addAllPost}
-          variant={false}
-        >
-          <AddPublication imageUrl={url} text={text} setText={setText} />
-        </CreatePostModal>
-      )}
+      <CreatePostModal
+        isOpen={isModalOpen}
+        onClose={onCloseClick}
+        title={'Publication'}
+        onBtnClick={addAllPost}
+        variant={false}
+      >
+        <AddPublication imageUrl={imageUrl} text={text} setText={setText} />
+      </CreatePostModal>
     </>
   )
 }

@@ -20,7 +20,10 @@ export const useUploadAvatarMutation = (
     onSuccess: data => {
       onSuccess(data.data.images)
     },
+    onError: () => {
+      console.log('useAddPostMutation ERROR')
+    },
   })
 
-  return { isLoading, mutate, data, isSuccess }
+  return { mutate, data, onSuccess }
 }

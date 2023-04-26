@@ -21,9 +21,7 @@ import { ModalWithContent } from '@/components/modals'
 import { CreatePostModal } from '@/components/modals/create-post-modal/CreatePostModal'
 import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
 import { AddFullPost } from '@/modules/post-modules/create-post-module/components/addFullPost/addFullPost'
-import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/filters-editor/FiltersEditor'
-import { useAddAllPostMutation } from '@/modules/post-modules/create-post-module/components/hooks/useAddAllPost'
-import { useUploadAvatarMutation } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
+import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/FiltersEditor'
 import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
 import { PhotoEditor } from '@/modules/profile-modules/create-post/PhotoEditor'
 
@@ -32,7 +30,6 @@ export const Sidebar: FC = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [openModal, setOpenModal] = useState('')
-  const [filteredImage, setFilteredImage] = useState(selectedPhoto)
   const [cropSize, setCropSize] = useState<{
     width: number
     height: number
@@ -40,9 +37,6 @@ export const Sidebar: FC = () => {
     width: 100,
     height: 100,
   })
-  const { mutate: addImgPost, data: imgData } = useUploadAvatarMutation(() => '')
-  const url = (imgData && imgData.data.images[0].url) || ''
-  const uploadId = (imgData && imgData.data.images[0].uploadId) || ''
 
   const onAddPhotoClick = () => {
     setIsModalOpen(true)
@@ -52,14 +46,6 @@ export const Sidebar: FC = () => {
     setSelectedPhoto('')
     setIsModalOpen(false)
   }
-
-  const addImgPub = () => {
-    addImgPost(filteredImage as File)
-    setOpenModal('publication')
-  }
-
-  const { data: allDataPost } = useAddAllPostMutation(() => push('/profile'))
-  const description = (allDataPost && allDataPost.data.description) || ''
 
   return (
     <aside className="h-screen sticky top-0 max-w-[320px] w-full border-r-[1px] border-r-bgLogBorder">
@@ -144,23 +130,22 @@ export const Sidebar: FC = () => {
 
       {openModal === 'filters' && (
         <FiltersEditor
+          selectedPhoto={selectedPhoto}
           cropSize={cropSize}
           imageUrl={String(selectedPhoto)}
-          setFilteredImage={setFilteredImage}
           isModalOpen={isModalOpen}
           setOpenModal={setOpenModal}
         />
       )}
 
-      <AddFullPost
-        description={description}
-        url={url}
-        uploadId={uploadId}
-        filteredImage={filteredImage}
-        isModalOpen={isModalOpen}
-        openModal={openModal}
-        onCloseClick={onCloseClick}
-      />
+      {openModal === 'publication' && (
+        <AddFullPost
+          imageUrl={String(selectedPhoto)}
+          onCloseClick={onCloseClick}
+          isModalOpen={isModalOpen}
+          setOpenModal={setIsModalOpen}
+        />
+      )}
     </aside>
   )
 }
