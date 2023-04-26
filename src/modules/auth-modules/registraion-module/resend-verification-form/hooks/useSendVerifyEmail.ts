@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
+import { PATH_ROUTE, ResponseError } from '@/common'
 import { sendVerificationLink } from '@/modules/auth-modules/registraion-module'
 
 interface VerifyType {
@@ -8,7 +9,7 @@ interface VerifyType {
   setError: (name: string, message: string) => void
 }
 
-export const useSendVerifyEmailMutation = (
+export const useSendVerifyEmail = (
   setError: VerifyType['setError'],
   reset: VerifyType['reset'],
   push: VerifyType['push']
@@ -17,12 +18,14 @@ export const useSendVerifyEmailMutation = (
     mutationFn: sendVerificationLink,
     onSuccess: () => {
       reset()
-      push('/')
+      push(PATH_ROUTE.LOGIN)
     },
-    onError: () => {
-      const message = `Email isn't valid or already confirmed`
+    onError: (error: ResponseError) => {
+      const message = error?.response?.data?.messages
 
-      setError('email', message)
+      message?.forEach(({ message, field }) => {
+        setError(field, message)
+      })
     },
   })
 

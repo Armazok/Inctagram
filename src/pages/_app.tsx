@@ -15,7 +15,7 @@ import { ToastContainer } from 'react-toastify'
 import client from '@/apolloClient'
 import '../../src/styles/nprogress.css'
 import { useLoader } from '@/common/hooks/useLoader/useLoader'
-import AuthProtection from '@/components/AuthComponents/auth-protection/AuthProtection'
+import AuthProtection from '@/components/auth-components/auth-protection/AuthProtection'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode

@@ -3,7 +3,7 @@ import React from 'react'
 import { useRouter } from 'next/router'
 
 import { useGlobalForm } from '@/common'
-import { ResendVerificationForm } from '@/components/AuthComponents'
+import { ResendVerificationForm } from '@/components/auth-components'
 import { useForgotPassword } from '@/modules/auth-modules/password-recovery-module'
 import { CaptchaScript } from '@/modules/auth-modules/password-recovery-module/components/forgot-password/forgot-password-form/reCaptcha/CaptchaScript'
 import { getCaptcha } from '@/modules/auth-modules/password-recovery-module/utils/get-captcha'
