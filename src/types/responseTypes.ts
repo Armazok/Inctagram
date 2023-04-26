@@ -1,6 +1,22 @@
 export type ResLogin = {
   accessToken: string
 }
+export type ResPublication = {
+  id: number
+  description: string
+  location: string
+  images: [
+    {
+      uploadId: string
+      url: string
+      width: number
+      height: number
+      fileSize: number
+    }
+  ]
+  createdAt: string
+  updatedAt: string
+}
 
 export type ResMe = {
   userId: number

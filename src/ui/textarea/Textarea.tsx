@@ -14,6 +14,7 @@ type TextareaType = {
   rows: number
   cols: number
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
+  maxLength?: number
   disabled?: boolean
 }
 
@@ -28,6 +29,7 @@ export const Textarea: FC<Partial<TextareaType>> = forwardRef(
       cols = 30,
       textAreaClassName,
       defaultValue,
+      maxLength,
       disabled = false,
       ...restProps
     },
@@ -50,6 +52,7 @@ export const Textarea: FC<Partial<TextareaType>> = forwardRef(
           disabled={disabled}
           {...restProps}
           ref={ref}
+          maxLength={maxLength}
         />
 
         <div className={'h-6'}>

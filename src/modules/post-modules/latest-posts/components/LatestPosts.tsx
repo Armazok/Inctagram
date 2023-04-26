@@ -3,13 +3,12 @@ import React, { FC, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
 
-import { PostModal } from '@/modules/post-modules/latest-posts/components/PostModal'
 import { useGetInfiniteLatestPosts } from '@/modules/post-modules/latest-posts/hooks/useGetInfiniteLatestPosts'
 import { useMeQuery } from '@/services/hookMe'
 
 export const LatestPosts: FC = () => {
   const { data: me } = useMeQuery()
-  const userId = me?.data?.userId || NaN
+  const userId = me?.data?.userId
   const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = useGetInfiniteLatestPosts(userId)
   const [isOpenPostModal, setIsOpenPostModal] = useState(false)
 
@@ -56,7 +55,7 @@ export const LatestPosts: FC = () => {
           : 'Nothing more to load'}
       </button>
 
-      <PostModal isOpen={isOpenPostModal} onClose={onClose} />
+      {/*<PostModal isOpen={isOpenPostModal} onClose={onClose} />*/}
     </div>
   )
 }

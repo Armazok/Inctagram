@@ -7,6 +7,10 @@ interface UserStore {
   userName: string | null
   logout: () => void
   accessToken: string | null
+  uploadId: string
+  setUploadId: (uploadId: string) => void
+  idMe: number | undefined
+  setIdMe: (idMe: number) => void
 }
 
 export const useUserStore = create<UserStore>()(
@@ -15,6 +19,14 @@ export const useUserStore = create<UserStore>()(
     isLoggedIn: true,
     userName: '',
     accessToken: '',
+    uploadId: '',
+    setUploadId(uploadId) {
+      set({ uploadId: uploadId })
+    },
+    idMe: undefined,
+    setIdMe(idMe) {
+      set({ idMe: idMe })
+    },
     logout() {
       set({ email: null, isLoggedIn: false })
     },

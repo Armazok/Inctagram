@@ -3,6 +3,15 @@ export type ReqLogin = {
   password: string
 }
 
+export type ReqPublication = {
+  description: string
+  childrenMetadata: [
+    {
+      uploadId: string
+    }
+  ]
+}
+
 export type ReqPasswordRecovery = {
   email: string
 }
