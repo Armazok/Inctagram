@@ -141,22 +141,15 @@ export const Sidebar: FC = () => {
           />
         </CreatePostModal>
       )}
+
       {openModal === 'filters' && (
-        <CreatePostModal
-          isOpen={isModalOpen}
-          onClose={onCloseClick}
-          title={'Filter'}
-          onBackClick={() => setOpenModal('cropping')}
-          onBtnClick={addImgPub}
-          variant={true}
-        >
-          <FiltersEditor
-            setFilteredImage={setFilteredImage}
-            imageUrl={String(selectedPhoto)}
-            canvasWidth={cropSize.width}
-            canvasHeight={cropSize.height}
-          />
-        </CreatePostModal>
+        <FiltersEditor
+          cropSize={cropSize}
+          imageUrl={String(selectedPhoto)}
+          setFilteredImage={setFilteredImage}
+          isModalOpen={isModalOpen}
+          setOpenModal={setOpenModal}
+        />
       )}
 
       <AddFullPost

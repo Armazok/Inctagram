@@ -27,7 +27,7 @@ export const passwordRecoveryAPI: IAuthAPI = {
   passwordRecoveryWithRecaptcha: data => {
     const { email, recaptcha } = data
 
-    return authInstance.post('auth/password-recovery', { email, recaptcha })
+    return authInstance.post('auth/password-recovery-test', { email, recaptcha })
   },
 }
 

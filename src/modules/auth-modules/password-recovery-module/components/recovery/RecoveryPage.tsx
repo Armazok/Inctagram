@@ -29,7 +29,6 @@ export const RecoveryPage = () => {
     ...noRefetch,
   })
 
-  debugger
   if (status === 'loading') return <Preloader />
   if (isError) return <ResendingVerificationLink path={PATH_ROUTE.RECOVERY_RESEND_FORM} />
   if (isSuccess) return <CreateNewPasswordPage recoveryCode={recoveryCode} />
