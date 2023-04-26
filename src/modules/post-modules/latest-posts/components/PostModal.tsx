@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 
 import Image from 'next/image'
 import { FaTimes, FaEllipsisH } from 'react-icons/fa'
@@ -6,17 +6,21 @@ import Modal from 'react-modal'
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import { useGetPost } from '@/modules/post-modules/latest-posts/hooks/useGetPost'
-import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
+import { useGetPostById } from '@/modules/post-modules/latest-posts/hooks/useGetInfiniteLatestPosts'
+import { useGetProfile /**/ } from '@/modules/profile-modules/settings-edit-profile-module'
 
 interface Props {
   isOpen: boolean
   onClose: () => void
+  photoId: number | null
 }
 
-export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
-  const { data } = useGetPost()
+export const PostModal: FC<Props> = ({ isOpen, onClose, photoId }) => {
   const { profileAvatar, profileData } = useGetProfile()
+
+  // const { data } = useGetPostById(photoId)
+
+  const [isOpenPostModal, setIsOpenPostModal] = useState(false)
 
   return (
     <Modal
@@ -35,23 +39,21 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
 
       <div className="grid grid-cols-2 h-full">
         <div>
-          <Swiper
-            className="h-full"
-            modules={[Navigation, Pagination]}
-            navigation
-            pagination={{ clickable: true }}
-          >
-            {data?.response?.results?.map(photo => (
-              <SwiperSlide key={photo.id}>
-                <Image
-                  src={photo.urls.regular}
-                  fill
-                  alt={photo.alt_description || ''}
-                  className="object-cover"
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          {/*<Swiper*/}
+          {/*  className="h-full"*/}
+          {/*  modules={[Navigation, Pagination]}*/}
+          {/*  navigation*/}
+          {/*  pagination={{ clickable: true }}*/}
+          {/*>*/}
+          {/*  {data &&*/}
+          {/*    data.images.map(photo => {*/}
+          {/*      return (*/}
+          {/*        <SwiperSlide key={photo.uploadId}>*/}
+          {/*          <Image src={photo.url[1]} fill alt={'gg'} className="object-cover" />*/}
+          {/*        </SwiperSlide>*/}
+          {/*      )*/}
+          {/*    })}*/}
+          {/*</Swiper>*/}
         </div>
 
         <div>

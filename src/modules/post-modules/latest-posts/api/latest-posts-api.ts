@@ -29,7 +29,7 @@ interface GetPostsParams {
 }
 
 export const getPosts = async ({ userId, page }: GetPostsParams) => {
-  const res = await authInstance.get<GetPostsResponse>(`/posts/${userId}`, {
+  const res = await authInstance.get<GetPostsResponse>(`posts/${userId}`, {
     params: {
       pageNumber: page,
       pageSize: 100,
@@ -37,4 +37,31 @@ export const getPosts = async ({ userId, page }: GetPostsParams) => {
   })
 
   return res.data
+}
+
+export const getPostsById = async ({ postId }: GetPostsByIdParams) => {
+  const res = await authInstance.get<GetPostsByIdResponse>(`posts/p/${postId}`)
+
+  return res.data
+}
+
+interface GetPostsByIdParams {
+  postId: number | null
+}
+
+export interface GetPostsByIdResponse {
+  id: number
+  description: string
+  location: string
+  images: [
+    {
+      uploadId: string
+      url: string
+      width: number
+      height: number
+      fileSize: number
+    }
+  ]
+  createdAt: string
+  updatedAt: string
 }
