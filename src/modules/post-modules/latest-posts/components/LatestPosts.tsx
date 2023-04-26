@@ -1,37 +1,30 @@
 import React, { FC, useState } from 'react'
 
-import { useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
 
 import { PostModal } from '@/modules/post-modules/latest-posts/components/PostModal'
-import { useGetInfiniteLatestPosts } from '@/modules/post-modules/latest-posts/hooks/useGetInfiniteLatestPosts'
+import { useGetLatestPosts } from '@/modules/post-modules/latest-posts/hooks/useGetLatestPosts'
 import { useMeQuery } from '@/services/hookMe'
+import { useUserStore } from '@/store'
 
 export const LatestPosts: FC = () => {
   const { data: me } = useMeQuery()
-  const [idPost, setIdPost] = useState<number | null>(null)
-
+  const { setPostId } = useUserStore()
   const userId = me?.data?.userId
-  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = useGetInfiniteLatestPosts(userId)
+  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = useGetLatestPosts(userId)
   const [isOpenPostModal, setIsOpenPostModal] = useState(false)
 
   const onClose = () => {
     setIsOpenPostModal(false)
   }
 
-  const onPostClick = (idPost: number) => {
-    setIdPost(idPost)
+  const onPostClick = (id: number) => {
+    setPostId(id)
     setIsOpenPostModal(true)
   }
 
-  const client = useQueryClient()
-
   return (
     <div className="mt-14">
-      <button className="text-white" onClick={() => client.invalidateQueries(['posts'])}>
-        reset
-      </button>
-
       <div className="grid grid-cols-4 gap-3 mt-14">
         {data?.pages.map((page, idx) => (
           <React.Fragment key={idx}>
@@ -64,7 +57,7 @@ export const LatestPosts: FC = () => {
           : 'Nothing more to load'}
       </button>
 
-      <PostModal isOpen={isOpenPostModal} onClose={onClose} photoId={idPost} />
+      <PostModal isOpen={isOpenPostModal} onClose={onClose} />
     </div>
   )
 }

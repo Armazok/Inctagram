@@ -39,29 +39,13 @@ export const getPosts = async ({ userId, page }: GetPostsParams) => {
   return res.data
 }
 
-export const getPostsById = async ({ postId }: GetPostsByIdParams) => {
-  const res = await authInstance.get<GetPostsByIdResponse>(`posts/p/${postId}`)
-
-  return res.data
-}
-
-interface GetPostsByIdParams {
-  postId: number | null
-}
-
-export interface GetPostsByIdResponse {
-  id: number
-  description: string
-  location: string
-  images: [
-    {
-      uploadId: string
-      url: string
-      width: number
-      height: number
-      fileSize: number
-    }
-  ]
+interface GetPostResponse extends Post {
   createdAt: string
   updatedAt: string
+}
+
+export const getPost = async (postId: number | null) => {
+  const res = await authInstance.get<GetPostResponse>(`posts/p/${postId}`)
+
+  return res.data
 }
