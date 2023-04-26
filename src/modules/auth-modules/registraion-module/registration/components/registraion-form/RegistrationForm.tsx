@@ -5,7 +5,7 @@ import { Confirm } from '@/components/modals/confirm/Confirm'
 import {
   FormDataRegistered,
   registrationSchema,
-  useRegisterMutation,
+  useRegister,
 } from '@/modules/auth-modules/registraion-module'
 import { GlobalButton, GlobalInput, InputWithEye, Preloader } from '@/ui'
 
@@ -17,7 +17,7 @@ export const RegistrationForm = () => {
 
   const { errors, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(registrationSchema)
-  const { sendRegisteredData, isLoading, variables } = useRegisterMutation(
+  const { sendRegisteredData, isLoading, variables } = useRegister(
     () => setToggleModal(true),
     () => reset(),
     setCustomError
