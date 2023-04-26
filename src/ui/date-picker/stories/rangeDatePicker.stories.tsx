@@ -4,12 +4,14 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { DateCalendar } from '@/ui'
 
-// @ts-ignore
-// @ts-ignore
 const meta: Meta<typeof DateCalendar> = {
   title: 'DatePicker/RangeDate',
   component: DateCalendar,
   parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/M7753HAzy0tm9rQWyRBrnI/Inctagram?node-id=348-7008&t=HHfCtWgkLGffVNsb-4.',
+    },
     docs: {
       description: {
         component: ' rangeDatePicker - это компонент, предназначенный для выбора диапазона дат. ',
