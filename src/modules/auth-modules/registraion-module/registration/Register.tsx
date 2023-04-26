@@ -7,7 +7,7 @@ import { FormLayout } from '@/components/FormLayout'
 import { RegistrationForm } from '@/modules/auth-modules/registraion-module'
 import { GoogleFacebook, NameTitle } from '@/ui'
 
-export const RegisterPage = () => {
+export const Register = () => {
   return (
     <FormLayout className="mt-[60px]">
       <NameTitle

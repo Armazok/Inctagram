@@ -4,10 +4,10 @@ import { useRouter } from 'next/router'
 
 import { useGlobalForm } from '@/common'
 import { PATH_ROUTE } from '@/common/constants/PATH_ROUTE'
-import { ResendVerificationForm } from '@/components/AuthComponents'
+import { ResendVerificationForm } from '@/components/auth-components'
 import {
   FormDataVerification,
-  useSendVerifyEmailMutation,
+  useSendVerifyEmail,
   verificationSchema,
 } from '@/modules/auth-modules/registraion-module'
 
@@ -17,7 +17,7 @@ export const ResendVerificationEmail = () => {
   const { handleSubmit, register, reset, setCustomError, errors } =
     useGlobalForm(verificationSchema)
 
-  const { isLoading, resendVerification } = useSendVerifyEmailMutation(
+  const { isLoading, resendVerification } = useSendVerifyEmail(
     setCustomError,
     () => reset(),
     () => push(PATH_ROUTE.LOGIN)

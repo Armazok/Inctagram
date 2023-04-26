@@ -13,7 +13,8 @@ interface Props {
   title: string
   children: any
   onBtnClick: () => void
-  onBackClick: () => void
+  onBackClick?: () => void
+  variant: boolean
 }
 
 export const CreatePostModal: FC<Props> = ({
@@ -23,6 +24,7 @@ export const CreatePostModal: FC<Props> = ({
   onClose,
   title,
   children,
+  variant,
 }) => {
   return (
     <Modal
@@ -43,8 +45,8 @@ export const CreatePostModal: FC<Props> = ({
         />
         <div className={styles.modalTitle}>{title}</div>
 
-        <button className={styles.modalBtn} onClick={() => onBtnClick()}>
-          Next
+        <button className={styles.modalBtn} type={'submit'} onClick={() => onBtnClick()}>
+          {variant ? 'Next' : 'Publish'}
         </button>
       </div>
 

@@ -16,7 +16,7 @@ export const Avatar = ({ src, alt, height = 192, width = 192, className }: Props
     <Image
       src={src ? src : placeholder}
       alt={alt}
-      className={`rounded-full ${className}`}
+      className={`rounded-[50%] ${className}`}
       width={width}
       height={height}
     />

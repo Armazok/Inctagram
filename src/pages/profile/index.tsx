@@ -6,7 +6,7 @@ import { getGlobalLayout } from '@/components/layout'
 import { ProfilePage } from '@/modules/profile-modules/profile-module'
 import { NextPageWithLayout } from '@/pages/_app'
 
-const index: NextPageWithLayout = () => {
+const MainPageProfile: NextPageWithLayout = () => {
   return (
     <div>
       <Head>
@@ -17,5 +17,5 @@ const index: NextPageWithLayout = () => {
   )
 }
 
-index.getLayout = getGlobalLayout
-export default index
+MainPageProfile.getLayout = getGlobalLayout
+export default MainPageProfile

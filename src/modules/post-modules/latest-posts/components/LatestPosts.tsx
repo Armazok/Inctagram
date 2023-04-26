@@ -1,12 +1,15 @@
-import { FC, useState } from 'react'
+import React, { FC, useState } from 'react'
 
+import { useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
 
-import { PostModal } from '@/modules/post-modules/latest-posts/components/PostModal'
-import { useGetLatestPosts } from '@/modules/post-modules/latest-posts/hooks/useGetLatestPosts'
+import { useGetInfiniteLatestPosts } from '@/modules/post-modules/latest-posts/hooks/useGetInfiniteLatestPosts'
+import { useMeQuery } from '@/services/hookMe'
 
 export const LatestPosts: FC = () => {
-  const { data: posts } = useGetLatestPosts()
+  const { data: me } = useMeQuery()
+  const userId = me?.data?.userId
+  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = useGetInfiniteLatestPosts(userId)
   const [isOpenPostModal, setIsOpenPostModal] = useState(false)
 
   const onClose = () => {
@@ -17,24 +20,42 @@ export const LatestPosts: FC = () => {
     setIsOpenPostModal(true)
   }
 
+  const client = useQueryClient()
+
   return (
     <div className="mt-14">
+      <button className="text-white" onClick={() => client.invalidateQueries(['posts'])}>
+        reset
+      </button>
+
       <div className="grid grid-cols-4 gap-3 mt-14">
-        {posts?.response?.results.map(photo => (
-          <div key={photo.id} className="aspect-square">
-            <Image
-              src={photo.urls.regular}
-              alt={photo.description ?? ''}
-              width={photo.width}
-              height={photo.height}
-              className="w-full h-full object-cover bg-slate-200 cursor-pointer"
-              onClick={onPostClick}
-            />
-          </div>
+        {data?.pages.map((page, idx) => (
+          <React.Fragment key={idx}>
+            {page.items.map(photo => (
+              <div className="aspect-square relative" key={photo.id}>
+                <Image
+                  src={photo.images[0]?.url}
+                  width={photo.images[0]?.width}
+                  height={photo.images[0]?.height}
+                  alt=""
+                  className="w-full h-full object-cover cursor-pointer"
+                />
+              </div>
+            ))}
+          </React.Fragment>
         ))}
       </div>
 
-      <PostModal isOpen={isOpenPostModal} onClose={onClose} />
+      <button className="text-white" onClick={() => fetchNextPage()}>
+        {/* eslint-disable-next-line no-nested-ternary */}
+        {isFetchingNextPage
+          ? 'Loading more...'
+          : hasNextPage
+          ? 'Load Newer'
+          : 'Nothing more to load'}
+      </button>
+
+      {/*<PostModal isOpen={isOpenPostModal} onClose={onClose} />*/}
     </div>
   )
 }
