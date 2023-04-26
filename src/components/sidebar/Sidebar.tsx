@@ -5,7 +5,6 @@ import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-// eslint-disable-next-line
 
 import bookmarkOutline from '../../assets/icons/bookmark-outline.svg'
 import bookmark from '../../assets/icons/bookmark.svg'
@@ -21,12 +20,15 @@ import trending from '../../assets/icons/trending-up.svg'
 import { ModalWithContent } from '@/components/modals'
 import { CreatePostModal } from '@/components/modals/create-post-modal/CreatePostModal'
 import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
+import { AddFullPost } from '@/modules/post-modules/create-post-module/components/addFullPost/addFullPost'
 import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/filters-editor/FiltersEditor'
+import { useAddAllPostMutation } from '@/modules/post-modules/create-post-module/components/hooks/useAddAllPost'
+import { useUploadAvatarMutation } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
 import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
 import { PhotoEditor } from '@/modules/profile-modules/create-post/PhotoEditor'
 
 export const Sidebar: FC = () => {
-  const { pathname } = useRouter()
+  const { pathname, push } = useRouter()
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [openModal, setOpenModal] = useState('')
@@ -38,6 +40,9 @@ export const Sidebar: FC = () => {
     width: 100,
     height: 100,
   })
+  const { mutate: addImgPost, data: imgData } = useUploadAvatarMutation(() => '')
+  const url = (imgData && imgData.data.images[0].url) || ''
+  const uploadId = (imgData && imgData.data.images[0].uploadId) || ''
 
   const onAddPhotoClick = () => {
     setIsModalOpen(true)
@@ -47,6 +52,14 @@ export const Sidebar: FC = () => {
     setSelectedPhoto('')
     setIsModalOpen(false)
   }
+
+  const addImgPub = () => {
+    addImgPost(filteredImage as File)
+    setOpenModal('publication')
+  }
+
+  const { data: allDataPost } = useAddAllPostMutation(() => push('/profile'))
+  const description = (allDataPost && allDataPost.data.description) || ''
 
   return (
     <aside className="h-screen sticky top-0 max-w-[320px] w-full border-r-[1px] border-r-bgLogBorder">
@@ -109,11 +122,9 @@ export const Sidebar: FC = () => {
         </ul>
         <LogoutButton />
       </div>
-
       <ModalWithContent isOpen={isModalOpen} onClose={onCloseClick} title={'Add photo'}>
         <PhotoSelector setSelectedPhoto={setSelectedPhoto} />
       </ModalWithContent>
-
       {selectedPhoto && (
         <CreatePostModal
           isOpen={isModalOpen}
@@ -121,6 +132,7 @@ export const Sidebar: FC = () => {
           onBackClick={() => setSelectedPhoto('')}
           title={'Cropping'}
           onBtnClick={() => setOpenModal('filters')}
+          variant={true}
         >
           <PhotoEditor
             image={selectedPhoto}
@@ -129,16 +141,14 @@ export const Sidebar: FC = () => {
           />
         </CreatePostModal>
       )}
-
       {openModal === 'filters' && (
         <CreatePostModal
           isOpen={isModalOpen}
           onClose={onCloseClick}
           title={'Filter'}
           onBackClick={() => setOpenModal('cropping')}
-          onBtnClick={() => {
-            setOpenModal('publication')
-          }}
+          onBtnClick={addImgPub}
+          variant={true}
         >
           <FiltersEditor
             setFilteredImage={setFilteredImage}
@@ -148,19 +158,16 @@ export const Sidebar: FC = () => {
           />
         </CreatePostModal>
       )}
-      {openModal === 'publication' && (
-        <CreatePostModal
-          isOpen={isModalOpen}
-          onClose={onCloseClick}
-          title={'publication'}
-          onBackClick={() => {
-            setOpenModal('filters')
-          }}
-          onBtnClick={() => setOpenModal('publication')}
-        >
-          <img src={String(filteredImage)} alt="photo" style={{ width: '434px' }} />
-        </CreatePostModal>
-      )}
+
+      <AddFullPost
+        description={description}
+        url={url}
+        uploadId={uploadId}
+        filteredImage={filteredImage}
+        isModalOpen={isModalOpen}
+        openModal={openModal}
+        onCloseClick={onCloseClick}
+      />
     </aside>
   )
 }

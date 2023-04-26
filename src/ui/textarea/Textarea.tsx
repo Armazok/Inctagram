@@ -12,6 +12,7 @@ type TextareaType = {
   rows: number
   cols: number
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
+  maxLength?: number
 }
 
 export const Textarea: FC<Partial<TextareaType>> = forwardRef(
@@ -25,6 +26,7 @@ export const Textarea: FC<Partial<TextareaType>> = forwardRef(
       cols = 30,
       textAreaClassName,
       defaultValue,
+      maxLength,
       ...restProps
     },
     ref: ForwardedRef<any>
@@ -46,6 +48,7 @@ export const Textarea: FC<Partial<TextareaType>> = forwardRef(
           defaultValue={defaultValue}
           {...restProps}
           ref={ref}
+          maxLength={maxLength}
         />
 
         <div className={'h-6'}>

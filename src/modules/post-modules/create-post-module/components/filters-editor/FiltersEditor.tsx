@@ -34,18 +34,19 @@ export const FiltersEditor = ({
     //@ts-ignore
     ctx.drawImage(image, 0, 0)
 
-    // canvas.toBlob((blob: string | Blob) => {
-    //   const formData = new FormData()
-    //   formData.append('file', blob)
-    //   //sendPost(formData)
-    // })
+    canvas.toBlob((blob: string | Blob | null) => {
+      const formData = new FormData()
 
-    canvas.toBlob(blob => {
-      //@ts-ignore
-      const filteredImageUrl = URL.createObjectURL(blob)
-
-      setFilteredImage(String(filteredImageUrl))
+      formData.append('file', blob as Blob)
+      setFilteredImage(formData)
     })
+
+    // canvas.toBlob(blob => {
+    //   //@ts-ignore
+    //   const filteredImageUrl = URL.createObjectURL(blob)
+    //
+    //   setFilteredImage(String(filteredImageUrl))
+    // })
   }
 
   return (
