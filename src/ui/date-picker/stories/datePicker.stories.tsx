@@ -1,14 +1,12 @@
 import { useState } from 'react'
 
 import type { Meta, StoryObj } from '@storybook/react'
-import { withDesign } from 'storybook-addon-designs'
 
 import { DateCalendar } from '@/ui'
 
 const meta: Meta<typeof DateCalendar> = {
   title: 'DatePicker/SelectedDate',
   component: DateCalendar,
-  decorators: [withDesign],
   parameters: {
     design: {
       type: 'figma',
@@ -27,8 +25,8 @@ const meta: Meta<typeof DateCalendar> = {
       description: 'вывести сообщение об ошибки и показать красным цветом',
     },
     label: {
-      options: ['Date', null],
-      control: { type: 'radio' },
+      // options: ['Date', null],
+      control: { type: 'text' },
       description: 'Добавить имя над компонентой',
     },
     disabled: {

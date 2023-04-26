@@ -1,5 +1,5 @@
 .header {
-  @apply text-light-100 not-italic font-bold text-[16px] leading-6;
+  @apply text-light-100 not-italic font-bold text-base leading-6;
 
   display: flex;
   align-items: center;
@@ -22,7 +22,7 @@
 }
 
 .selectStyle {
-  @apply not-italic font-normal text-[14px] leading-6 text-light-100  border-2 border-dark-300 bg-dark-500;
+  @apply not-italic font-normal text-sm leading-6 text-light-100  border-2 border-dark-300 bg-dark-500;
 
   width: 100%;
   padding: 2px 0 2px 2px;
