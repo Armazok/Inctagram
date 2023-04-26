@@ -3,13 +3,12 @@ import React from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
-import { SettingsSchemaType } from '@/common'
+import { ResponseError, SettingsSchemaType } from '@/common'
 import { SettingsAccountLayout } from '@/components/account'
 import { UploadAvatarBlock } from '@/modules/profile-modules/avatar-module'
 import {
   AccountSettingForm,
   editAccountData,
-  ResponseError,
   useGetProfile,
 } from '@/modules/profile-modules/settings-edit-profile-module'
 import { Preloader } from '@/ui'
@@ -17,21 +16,26 @@ import { Preloader } from '@/ui'
 export const EditSettingProfile = () => {
   const client = useQueryClient()
 
-  const { profileData, isProfileLoading, profileAvatar, refetch } = useGetProfile()
+  const { profileData, isProfileLoading, profileAvatar, refetch: refreshProfile } = useGetProfile()
 
   const { mutate: editeProfile, isLoading: isEditProfileLoading } = useMutation({
-    mutationKey: ['edit-profile'],
     mutationFn: editAccountData,
     onSuccess: () => {
       client.invalidateQueries(['get-profile'])
       toast.success('Profile was updated')
 
-      return refetch()
+      return refreshProfile()
     },
     onError: (error: ResponseError) => {
-      error?.response?.data?.messages?.forEach(el => {
-        toast.error(`${el.message}`)
-      })
+      const messages = error?.response?.data?.messages
+
+      if (!messages) {
+        toast.error('An error occurred while updating your profile')
+      } else {
+        messages.forEach(({ message }) => {
+          toast.error(message)
+        })
+      }
 
       client.invalidateQueries(['get-profile'])
     },

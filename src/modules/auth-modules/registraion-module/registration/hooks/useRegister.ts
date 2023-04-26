@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
+import { ResponseError } from '@/common'
 import { sendRegisterRequest } from '@/modules/auth-modules/registraion-module'
 
 interface RegisterType {
@@ -8,7 +9,7 @@ interface RegisterType {
   setError: (name: string, message: string) => void
 }
 
-export const useRegisterMutation = (
+export const useRegister = (
   onSuccess: RegisterType['onSuccess'],
   reset: RegisterType['reset'],
   setError: RegisterType['setError']
@@ -20,15 +21,16 @@ export const useRegisterMutation = (
     mutate: sendRegisteredData,
   } = useMutation({
     mutationFn: sendRegisterRequest,
-    mutationKey: ['registered'],
     onSuccess: () => {
       onSuccess()
       reset()
     },
-    onError: () => {
-      const message = `User with this email is already registered`
+    onError: (error: ResponseError) => {
+      const message = error?.response?.data?.messages
 
-      setError('email', message)
+      message?.forEach(({ message, field }) => {
+        setError(field, message)
+      })
     },
   })
 

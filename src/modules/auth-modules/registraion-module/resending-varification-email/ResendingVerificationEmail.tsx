@@ -1,14 +1,17 @@
 import React, { FC } from 'react'
 
 import { PATH_ROUTE } from '@/common'
-import { EmailSuccessMessage, ResendingVerificationLink } from '@/components/AuthComponents'
-import { useConfirmationQuery } from '@/modules/auth-modules/registraion-module'
+import { ResendingVerificationLink } from '@/components/auth-components'
+import {
+  EmailSuccessMessage,
+  useSendConfirmationCode,
+} from '@/modules/auth-modules/registraion-module'
 import { Preloader } from '@/ui'
 
-type PropsType = { code: string | string[] | undefined }
+type PropsType = { code: string }
 
 export const ResendingVerificationEmail: FC<PropsType> = ({ code }) => {
-  const { isLoading, isError } = useConfirmationQuery(code as string)
+  const { isLoading, isError } = useSendConfirmationCode(code)
 
   if (isLoading) return <Preloader />
 
