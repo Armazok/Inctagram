@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-import { useMutation } from '@tanstack/react-query'
 import { NextPage } from 'next'
 
 import { Confirm } from '@/components/modals'

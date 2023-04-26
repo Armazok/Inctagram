@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 // @ts-ignore
 import ReCAPTCHA from 'react-google-recaptcha-enterprise'

@@ -14,7 +14,7 @@ type PropsType = {
 }
 
 export const ForgotPasswordWithCaptcha = ({ onSubmitHandler }: PropsType) => {
-  const { errors, register, reset, handleSubmit, setCustomError } = useGlobalForm(forgotPassSchema)
+  const { errors, register, reset, handleSubmit } = useGlobalForm(forgotPassSchema)
   const [captcha, setCaptcha] = useState('')
   const onRecaptchaChange = (token: string) => {
     setCaptcha(token)

@@ -1,12 +1,7 @@
 import { AxiosResponse } from 'axios'
 
 import { authInstance } from '@/services'
-import {
-  ReqNewPassword,
-  ReqPasswordRecovery,
-  ReqPasswordRecoveryWithRecaptcha,
-  ResCheckRecoveryCode,
-} from '@/types/'
+import { ReqNewPassword, ReqPasswordRecoveryWithRecaptcha, ResCheckRecoveryCode } from '@/types/'
 
 export const passwordRecoveryAPI: IAuthAPI = {
   createNewPassword: data => {
