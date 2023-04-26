@@ -12,7 +12,7 @@ const meta: Meta<typeof Textarea> = {
     },
     docs: {
       description: {
-        component: 'It is a reusable textarea component',
+        component: 'It is a reusable textarea component with optional label and error message',
       },
     },
   },
@@ -27,11 +27,6 @@ const meta: Meta<typeof Textarea> = {
       options: ['Add description', null],
       control: { type: 'radio' },
       description: 'show textarea with label',
-    },
-    defaultValue: {
-      options: ['Hello!', null],
-      control: { type: 'radio' },
-      description: 'show textarea with default value',
     },
     rows: {
       options: [3, 10],

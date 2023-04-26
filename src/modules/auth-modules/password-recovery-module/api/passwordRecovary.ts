@@ -1,19 +1,9 @@
 import { AxiosResponse } from 'axios'
 
 import { authInstance } from '@/services'
-import {
-  ReqNewPassword,
-  ReqPasswordRecovery,
-  ReqPasswordRecoveryWithRecaptcha,
-  ResCheckRecoveryCode,
-} from '@/types/'
+import { ReqNewPassword, ReqPasswordRecoveryWithRecaptcha, ResCheckRecoveryCode } from '@/types/'
 
 export const passwordRecoveryAPI: IAuthAPI = {
-  passwordRecovery: data => {
-    const { email } = data
-
-    return authInstance.post('auth/password-recovery', { email })
-  },
   createNewPassword: data => {
     const { newPassword, recoveryCode } = data
 
@@ -27,12 +17,11 @@ export const passwordRecoveryAPI: IAuthAPI = {
   passwordRecoveryWithRecaptcha: data => {
     const { email, recaptcha } = data
 
-    return authInstance.post('auth/password-recovery-test', { email, recaptcha })
+    return authInstance.post('auth/password-recovery', { email, recaptcha })
   },
 }
 
 interface IAuthAPI {
-  passwordRecovery: (data: ReqPasswordRecovery) => Promise<AxiosResponse>
   createNewPassword: (data: ReqNewPassword) => Promise<AxiosResponse>
   checkRecoveryCode: (
     data: Omit<ReqNewPassword, 'newPassword'>
