@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-unresolved
-import { Area, Size } from 'react-easy-crop/types'
+import { Area, Size } from 'react-easy-crop'
 
 const createImage = (url: string): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {

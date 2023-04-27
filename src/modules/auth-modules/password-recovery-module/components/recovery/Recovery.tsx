@@ -12,7 +12,7 @@ import {
 } from '@/modules/auth-modules/password-recovery-module'
 import { Preloader } from '@/ui'
 
-export const RecoveryPage = () => {
+export const Recovery = () => {
   const router = useRouter()
 
   const recoveryCode = router.query && (router.query.code as string)

@@ -8,7 +8,7 @@ import { ForgotPasswordWithCaptcha } from '@/modules/auth-modules/password-recov
 import { NameTitle, Preloader } from '@/ui'
 import Link from '@/ui/link/Link'
 
-export const ForgotPasswordPage: NextPage = () => {
+export const ForgotPassword: NextPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const onSuccess = () => {
