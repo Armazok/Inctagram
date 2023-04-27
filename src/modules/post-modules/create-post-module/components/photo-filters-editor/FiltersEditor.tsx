@@ -67,7 +67,8 @@ export const FiltersEditor = ({ imageUrl, cropSize, setOpenModal, isModalOpen }:
 
   return (
     <CreatePostModal
-      variant={true}
+      showBackArrow={true}
+      variant={'Next'}
       isOpen={isModalOpen}
       onClose={onCloseClick}
       title={'Filter'}
