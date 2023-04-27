@@ -3,7 +3,7 @@ import React from 'react'
 import Head from 'next/head'
 
 import { getLayoutWithHeader } from '@/components/layout'
-import { RecoveryPage } from '@/modules/auth-modules/password-recovery-module'
+import { Recovery } from '@/modules/auth-modules/password-recovery-module'
 import { NextPageWithLayout } from '@/pages/_app'
 
 const PageRecovery: NextPageWithLayout = () => {
@@ -12,7 +12,7 @@ const PageRecovery: NextPageWithLayout = () => {
       <Head>
         <title>Password recovery</title>
       </Head>
-      <RecoveryPage />
+      <Recovery />
     </div>
   )
 }

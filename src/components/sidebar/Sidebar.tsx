@@ -5,8 +5,6 @@ import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-// eslint-disable-next-line
-import { Area } from 'react-easy-crop/types'
 
 import bookmarkOutline from '../../assets/icons/bookmark-outline.svg'
 import bookmark from '../../assets/icons/bookmark.svg'
@@ -20,19 +18,23 @@ import trendingOutline from '../../assets/icons/trending-up-outline.svg'
 import trending from '../../assets/icons/trending-up.svg'
 
 import { ModalWithContent } from '@/components/modals'
-import { CreatePostModal } from '@/components/modals/create-post-modal/CreatePostModal'
 import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
-import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/filters-editor/FiltersEditor'
+import { AddFullPost } from '@/modules/post-modules/create-post-module/components/addFullPost/addFullPost'
+import { CropEditor } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/CropEditor'
+import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/FiltersEditor'
 import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
-import { PhotoEditor } from '@/modules/profile-modules/create-post/PhotoEditor'
 
 export const Sidebar: FC = () => {
-  const { pathname } = useRouter()
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [openModal, setOpenModal] = useState('')
-  const [filteredImage, setFilteredImage] = useState(selectedPhoto)
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
+  const [cropSize, setCropSize] = useState<{
+    width: number
+    height: number
+  }>({
+    width: 100,
+    height: 100,
+  })
 
   const onAddPhotoClick = () => {
     setIsModalOpen(true)
@@ -42,6 +44,7 @@ export const Sidebar: FC = () => {
     setSelectedPhoto('')
     setIsModalOpen(false)
   }
+  const { pathname } = useRouter()
 
   return (
     <aside className="h-screen sticky top-0 max-w-[320px] w-full border-r-[1px] border-r-bgLogBorder">
@@ -104,59 +107,36 @@ export const Sidebar: FC = () => {
         </ul>
         <LogoutButton />
       </div>
-
       <ModalWithContent isOpen={isModalOpen} onClose={onCloseClick} title={'Add photo'}>
         <PhotoSelector setSelectedPhoto={setSelectedPhoto} />
       </ModalWithContent>
-
       {selectedPhoto && (
-        <CreatePostModal
-          isOpen={isModalOpen}
-          onClose={onCloseClick}
-          onBackClick={() => setSelectedPhoto('')}
-          title={'Cropping'}
-          onBtnClick={() => setOpenModal('filters')}
-        >
-          <PhotoEditor
-            croppedAreaPixels={croppedAreaPixels}
-            setCroppedAreaPixels={setCroppedAreaPixels}
-            image={selectedPhoto}
-            setSelectedPhoto={setSelectedPhoto}
-          />
-        </CreatePostModal>
+        <CropEditor
+          isModalOpen={isModalOpen}
+          image={selectedPhoto}
+          setOpenModal={setOpenModal}
+          setSelectedPhoto={setSelectedPhoto}
+          setCropSize={setCropSize}
+        />
       )}
 
       {openModal === 'filters' && (
-        <CreatePostModal
-          isOpen={isModalOpen}
-          onClose={onCloseClick}
-          title={'Filter'}
-          onBackClick={() => setOpenModal('cropping')}
-          onBtnClick={() => {
-            setSelectedPhoto(String(filteredImage))
-            setOpenModal('publication')
-          }}
-        >
-          <FiltersEditor
-            setFilteredImage={setFilteredImage}
-            imageUrl={String(selectedPhoto)}
-            croppedAreaPixels={croppedAreaPixels}
-            // setSelectedPhoto={setSelectedPhoto}
-          />
-        </CreatePostModal>
+        <FiltersEditor
+          selectedPhoto={selectedPhoto}
+          cropSize={cropSize}
+          imageUrl={String(selectedPhoto)}
+          isModalOpen={isModalOpen}
+          setOpenModal={setOpenModal}
+        />
       )}
+
       {openModal === 'publication' && (
-        <CreatePostModal
-          isOpen={isModalOpen}
-          onClose={onCloseClick}
-          title={'publication'}
-          onBackClick={() => {
-            setOpenModal('filters')
-          }}
-          onBtnClick={() => setOpenModal('publication')}
-        >
-          <img src={String(filteredImage)} alt="photo" />
-        </CreatePostModal>
+        <AddFullPost
+          imageUrl={String(selectedPhoto)}
+          onCloseClick={onCloseClick}
+          isModalOpen={isModalOpen}
+          setOpenModal={setIsModalOpen}
+        />
       )}
     </aside>
   )

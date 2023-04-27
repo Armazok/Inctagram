@@ -2,6 +2,8 @@ import React, { ChangeEvent, FC, ForwardedRef, forwardRef } from 'react'
 
 import { FieldValues } from 'react-hook-form'
 
+import styles from './Textarea.module.css'
+
 type TextareaType = {
   value: string
   label: string
@@ -12,6 +14,8 @@ type TextareaType = {
   rows: number
   cols: number
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
+  maxLength?: number
+  disabled?: boolean
 }
 
 export const Textarea: FC<Partial<TextareaType>> = forwardRef(
@@ -25,33 +29,34 @@ export const Textarea: FC<Partial<TextareaType>> = forwardRef(
       cols = 30,
       textAreaClassName,
       defaultValue,
+      maxLength,
+      disabled = false,
       ...restProps
     },
     ref: ForwardedRef<any>
   ) => {
+    const textareaStyles = `${styles.textarea} ${textAreaClassName} 
+    ${error ? styles.textareaError : ''} ${disabled ? styles.textareaDisabled : ''}`
+
     return (
       <div>
-        {label && (
-          <label className={'block pb-[5px] text-light-900 text-[14px] text-weight-400'}>
-            {label}
-          </label>
-        )}
+        {label && <label className={styles.label}>{label}</label>}
 
         <textarea
-          className={`py-[6px] px-[12px] border-light-900 border-[1px] bg-bgLogBorder rounded-[2px] text-light-900 text-[16px] text-weight-400 ${textAreaClassName}`}
+          className={textareaStyles}
           onChange={onChange}
           value={value}
           rows={rows}
           cols={cols}
           defaultValue={defaultValue}
+          disabled={disabled}
           {...restProps}
           ref={ref}
+          maxLength={maxLength}
         />
 
         <div className={'h-6'}>
-          <span className={'text-danger-500 text-[14px] text-weight-400'}>
-            {error ? error : ''}
-          </span>
+          <span className={styles.error}>{error ? error : ''}</span>
         </div>
       </div>
     )

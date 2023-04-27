@@ -10,6 +10,7 @@ interface Props {
   onClose: () => void
   title: string
   text: string
+  disabled?: boolean
   confirmButtonText?: string
   declineButtonText?: string
 }
@@ -21,6 +22,7 @@ export const Confirm: FC<Props> = ({
   onClose,
   title,
   text,
+  disabled = false,
   confirmButtonText,
   declineButtonText,
 }) => {
@@ -46,6 +48,7 @@ export const Confirm: FC<Props> = ({
             'text-[16px] font-semibold leading-6  w-[24px] h-[24px] flex items-center justify-center text-white'
           }
           onClick={() => onClose()}
+          disabled={disabled}
         >
           <FaTimes size={'24px'} />
         </button>
@@ -59,6 +62,7 @@ export const Confirm: FC<Props> = ({
             'py-[6px] px-[34px] w-[96px] h-[36px] flex justify-center align-middle border-[1px] bg-dark-300 border-accent-500 text-accent-500 leading-6 font-normal text-[16px] active:text-light-100 active:bg-accent-500'
           }
           onClick={() => onConfirm()}
+          disabled={disabled}
         >
           {confirmButtonText ?? 'Yes'}
         </button>
@@ -68,6 +72,7 @@ export const Confirm: FC<Props> = ({
               'py-[6px] px-[34px] w-max-[96px] h-[36px] flex justify-center align-middle border-[1px] bg-dark-300 border-accent-500 text-accent-500 leading-6 font-normal text-[16px] active:text-light-100 active:bg-accent-500'
             }
             onClick={() => onDecline?.()}
+            disabled={disabled}
           >
             {declineButtonText ?? 'No'}
           </button>
