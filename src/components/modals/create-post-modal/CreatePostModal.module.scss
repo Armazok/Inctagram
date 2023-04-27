@@ -18,6 +18,10 @@
   @apply text-accent-500 font-semibold text-base;
 }
 
+.modalCloseBtn {
+  @apply text-white cursor-pointer;
+}
+
 .modalBackBtn {
   @apply cursor-pointer;
 }
