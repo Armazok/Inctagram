@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { CreatePostModal } from '@/components/modals/create-post-modal/CreatePostModal'
+import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { useUploadAvatarMutation } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
 import { PhotoFilters } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/photoFilters/PhotoFilters'
 import { useUserStore } from '@/store'

@@ -1,20 +1,27 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
-import Cropper, { Area } from 'react-easy-crop'
-// eslint-disable-next-line import/no-unresolved
-import { Point } from 'react-easy-crop/types'
+import Cropper, { Area, Point } from 'react-easy-crop'
 
-import { CropPopup } from '@/modules/profile-modules/create-post/components/crop-popup'
-import { ZoomPopup } from '@/modules/profile-modules/create-post/components/zoom-popup'
-import getCroppedImg from '@/modules/profile-modules/create-post/utils/canvasUtils'
+import { CreatePostModal } from './../create-post-modal/CreatePostModal'
+import { CropPopup } from './crop-popup'
+import getCroppedImg from './utils/canvasUtils'
+import { ZoomPopup } from './zoom-popup'
 
 type PropsType = {
   image: string | File | null
+  isModalOpen: boolean
   setSelectedPhoto: (photo: string | File | null) => void
   setCropSize: (crop: { width: number; height: number }) => void
+  setOpenModal: (modal: string) => void
 }
 
-export const PhotoEditor = ({ image, setSelectedPhoto, setCropSize }: PropsType) => {
+export const CropEditor = ({
+  image,
+  setSelectedPhoto,
+  setCropSize,
+  isModalOpen,
+  setOpenModal,
+}: PropsType) => {
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [aspect, setAspect] = useState<number>(4 / 5)
@@ -28,6 +35,14 @@ export const PhotoEditor = ({ image, setSelectedPhoto, setCropSize }: PropsType)
   const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels)
   }, [])
+
+  const onCloseClick = () => {
+    setSelectedPhoto('')
+  }
+
+  const onNextClick = () => {
+    setOpenModal('filters')
+  }
 
   useEffect(() => {
     if (croppedAreaPixels) {
@@ -45,7 +60,14 @@ export const PhotoEditor = ({ image, setSelectedPhoto, setCropSize }: PropsType)
   }, [])
 
   return (
-    <>
+    <CreatePostModal
+      variant={true}
+      isOpen={isModalOpen}
+      title={'Cropping'}
+      onClose={onCloseClick}
+      onBackClick={onCloseClick}
+      onBtnClick={onNextClick}
+    >
       <div className={'relative h-[500px]'}>
         <Cropper
           image={imageUrl}
@@ -62,6 +84,6 @@ export const PhotoEditor = ({ image, setSelectedPhoto, setCropSize }: PropsType)
           <ZoomPopup zoom={zoom} setZoom={setZoom} />
         </div>
       </div>
-    </>
+    </CreatePostModal>
   )
 }
