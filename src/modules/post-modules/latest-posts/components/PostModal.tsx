@@ -6,14 +6,13 @@ import Modal from 'react-modal'
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import { RightDescription } from '@/modules/post-modules/create-post-module/components/description-add/rightDescription'
+import { AllEditPost } from '@/modules/post-modules/create-post-module/components/description-edit/AllEditPost'
 import { DeletePost } from '@/modules/post-modules/edit-post-module/components/DeletePost'
 import { useGetPost } from '@/modules/post-modules/latest-posts/hooks/useGetPost'
 import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
 import { useUserStore } from '@/store'
 import { Avatar } from '@/ui'
 import { Dropdown } from '@/ui/dropdown/Dropdown'
-import { AllEditPost } from '@/modules/post-modules/create-post-module/components/description-edit/AllEditPost';
 
 interface Props {
   isOpen: boolean
@@ -24,13 +23,11 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
   const { postId } = useUserStore()
   const { profileAvatar, profileData } = useGetProfile()
 
-
   const { post, isLoading } = useGetPost(postId)
 
   const [isOpenDropdown, setIsOpenDropdown] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isDeletePostShown, setIsDeletePostShown] = useState(false)
-
 
   const onDelete = () => {
     setIsOpenDropdown(false)
@@ -81,8 +78,8 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
               <SwiperSlide key={post?.id}>
                 <Image src={post?.images[0].url!} fill alt={'gg'} className="object-cover" />
               </SwiperSlide>
-            ))}
-          </Swiper>
+            </Swiper>
+          )}
         </div>
 
         <div>
@@ -109,25 +106,26 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
                 <FaTrash className="mr-2" /> Delete Post
               </div>
             </Dropdown>
-            <DeletePost
-              isDeleteModalOpen={isDeletePostShown}
-              setIsDeleteModalOpen={setIsDeletePostShown}
-              postId={postId}
-              onPostModalClose={onClose}
-            />
-  <div className="px-6 py-3 flex items-center justify-between">
-    <div className="flex items-center">
-      <Avatar
-        src={profileAvatar && profileAvatar}
-        width={43}
-        height={43}
-        alt={profileData.userName}
-        className={'mb-[5rem]'}
-      />
-      <div className="text-white font-normal text-[14px] ml-3.5">
-        <span className="font-bold">{profileData.userName}</span> {post && post.description}
-      </div>
-    </div>
+          </div>
+          <DeletePost
+            isDeleteModalOpen={isDeletePostShown}
+            setIsDeleteModalOpen={setIsDeletePostShown}
+            postId={postId}
+            onPostModalClose={onClose}
+          />
+          <div className="px-6 py-3 flex items-center justify-between">
+            <div className="flex items-center">
+              <Avatar
+                src={profileAvatar && profileAvatar}
+                width={43}
+                height={43}
+                alt={profileData.userName}
+                className={'mb-[5rem]'}
+              />
+              <div className="text-white font-normal text-[14px] ml-3.5">
+                <span className="font-bold">{profileData.userName}</span> {post && post.description}
+              </div>
+            </div>
           </div>
         </div>
       </div>

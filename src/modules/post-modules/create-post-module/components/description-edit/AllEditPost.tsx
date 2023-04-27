@@ -1,8 +1,6 @@
 import React, { Dispatch, FC, SetStateAction, useState } from 'react'
 
-import { de } from 'date-fns/locale'
-
-import { CreatePostModal } from '@/components/modals/create-post-modal/CreatePostModal'
+import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { EditDescription } from '@/modules/post-modules/create-post-module/components/description-edit/EditDescription'
 import { useEditPostMutation } from '@/modules/post-modules/create-post-module/components/hooks/useEditPost'
 import { useUserStore } from '@/store'

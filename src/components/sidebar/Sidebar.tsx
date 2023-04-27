@@ -25,7 +25,6 @@ import { FiltersEditor } from '@/modules/post-modules/create-post-module/compone
 import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
 
 export const Sidebar: FC = () => {
-  const { pathname } = useRouter()
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [openModal, setOpenModal] = useState('')
@@ -45,6 +44,7 @@ export const Sidebar: FC = () => {
     setSelectedPhoto('')
     setIsModalOpen(false)
   }
+  const { pathname } = useRouter()
 
   return (
     <aside className="h-screen sticky top-0 max-w-[320px] w-full border-r-[1px] border-r-bgLogBorder">
