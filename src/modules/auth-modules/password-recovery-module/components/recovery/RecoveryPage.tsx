@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 
 import { PATH_ROUTE } from '@/common/constants/PATH_ROUTE'
 import { noRefetch } from '@/common/helpers/no-refetch'
-import { ResendingVerificationLink } from '@/components/AuthComponents'
+import { ResendingVerificationLink } from '@/components/auth-components'
 import {
   CreateNewPasswordPage,
   passwordRecoveryAPI,
@@ -29,7 +29,6 @@ export const RecoveryPage = () => {
     ...noRefetch,
   })
 
-  debugger
   if (status === 'loading') return <Preloader />
   if (isError) return <ResendingVerificationLink path={PATH_ROUTE.RECOVERY_RESEND_FORM} />
   if (isSuccess) return <CreateNewPasswordPage recoveryCode={recoveryCode} />

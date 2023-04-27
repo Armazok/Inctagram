@@ -1,32 +1,27 @@
 import React, { useState } from 'react'
 
-import { useMutation } from '@tanstack/react-query'
 import { NextPage } from 'next'
 
 import { Confirm } from '@/components/modals'
-import {
-  ForgotPasswordForm,
-  passwordRecoveryAPI,
-} from '@/modules/auth-modules/password-recovery-module'
+import { useForgotPassword } from '@/modules/auth-modules/password-recovery-module'
+import { ForgotPasswordWithCaptcha } from '@/modules/auth-modules/password-recovery-module/components/forgot-password/forgot-password-form/ForgotPasswordWithCaptcha'
 import { NameTitle, Preloader } from '@/ui'
 import Link from '@/ui/link/Link'
 
 export const ForgotPasswordPage: NextPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const { mutate, isLoading, variables } = useMutation({
-    mutationFn: passwordRecoveryAPI.passwordRecovery,
-    onSuccess: () => {
-      setIsModalOpen(true)
-    },
-  })
+  const onSuccess = () => {
+    setIsModalOpen(true)
+  }
+  const { sendLinkPasswordRecovery, isLoading, variables } = useForgotPassword(onSuccess)
 
   const onConfirm = () => {
     setIsModalOpen(false)
   }
 
-  const onSubmitHandler = async (email: string) => {
-    await mutate({ email })
+  const onSubmitHandler = async (email: string, recaptcha: string) => {
+    await sendLinkPasswordRecovery({ email, recaptcha })
   }
 
   const onClose = () => {
@@ -43,14 +38,14 @@ export const ForgotPasswordPage: NextPage = () => {
     >
       <NameTitle nameTitle={'Forgot Password'} className={'text-light-100 mt-6'} />
 
-      <ForgotPasswordForm onSubmitHandler={onSubmitHandler} />
+      <ForgotPasswordWithCaptcha onSubmitHandler={onSubmitHandler} />
 
       <Confirm
         isOpen={isModalOpen}
         onConfirm={onConfirm}
         onClose={onClose}
         title={'Email sent'}
-        text={`We have sent a link to confirm your email to ${variables?.email}`}
+        text={`The link has been sent to your email ${variables?.email}. If you don’t receive an email send link again.`}
         confirmButtonText={'Ok'}
       />
 

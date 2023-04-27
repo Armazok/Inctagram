@@ -9,7 +9,7 @@ type PropsType = {
   onFilterClick: (filter: string) => void
 }
 
-export const PhotoFilter = ({
+export const PhotoFilterItem = ({
   imageSrc = '',
   filter = '',
   filterName,

@@ -1,29 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { FieldValues, SubmitHandler } from 'react-hook-form'
 
 import { useGlobalForm } from '@/common'
 import { forgotPassSchema } from '@/modules/auth-modules/password-recovery-module'
+import { Captcha } from '@/modules/auth-modules/password-recovery-module/components/forgot-password/forgot-password-form/captcha/Captcha'
 import { GlobalButton, GlobalInput } from '@/ui'
 
 type PropsType = {
-  onSubmitHandler: (email: string) => void
+  onSubmitHandler: (email: string, recaptcha: string) => void
 }
 
-export const ForgotPasswordForm = ({ onSubmitHandler }: PropsType) => {
+export const ForgotPasswordWithCaptcha = ({ onSubmitHandler }: PropsType) => {
   const { errors, register, reset, handleSubmit } = useGlobalForm(forgotPassSchema)
+  const [captcha, setCaptcha] = useState('')
+  const onRecaptchaChange = (token: string) => {
+    setCaptcha(token)
+  }
 
   const onSubmit: SubmitHandler<FieldValues> = async data => {
     const { email } = data
 
-    onSubmitHandler(email)
+    onSubmitHandler(email, captcha)
     reset()
   }
 
   return (
     <div className={'relative flex flex-col place-content-center w-4/5'}>
       <form
-        className="flex flex-col grow gap-[10px] pt-[22px]  pb-[18px] w-full gap-[24px]"
+        className="flex flex-col grow gap-[10px] pt-[22px]  pb-[18px] w-full"
         onSubmit={handleSubmit(onSubmit)}
       >
         <GlobalInput
@@ -31,6 +36,7 @@ export const ForgotPasswordForm = ({ onSubmitHandler }: PropsType) => {
           id="email"
           placeholder=""
           label="Email"
+          //@ts-ignore
           error={errors?.email?.message}
           {...register('email')}
         />
@@ -40,10 +46,10 @@ export const ForgotPasswordForm = ({ onSubmitHandler }: PropsType) => {
         >
           Enter your email address and we will send you further instructions
         </div>
-
-        <GlobalButton variant="default" type="submit">
+        <GlobalButton variant="default" type="submit" disabled={!captcha}>
           Send instructions
         </GlobalButton>
+        <Captcha onRecaptchaChangeHandler={onRecaptchaChange} />
       </form>
     </div>
   )

@@ -1,17 +1,24 @@
 import React from 'react'
 
+import Head from 'next/head'
+
 import { AccountLayout } from '@/components/account'
 import { getGlobalLayout } from '@/components/layout'
 import { SettingsProfile } from '@/modules/profile-modules/settings-edit-profile-module'
 import { NextPageWithLayout } from '@/pages/_app'
 
-const index: NextPageWithLayout = () => {
+const editProfilePage: NextPageWithLayout = () => {
   return (
-    <AccountLayout>
-      <SettingsProfile />
-    </AccountLayout>
+    <>
+      <Head>
+        <title>Profile Settings</title>
+      </Head>
+      <AccountLayout>
+        <SettingsProfile />
+      </AccountLayout>
+    </>
   )
 }
 
-index.getLayout = getGlobalLayout
-export default index
+editProfilePage.getLayout = getGlobalLayout
+export default editProfilePage
