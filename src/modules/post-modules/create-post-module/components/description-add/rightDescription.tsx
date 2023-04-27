@@ -6,7 +6,7 @@ import { Avatar, Textarea } from '@/ui'
 const MAX_CHARACTERS = 500
 
 type RightDescriptionType = {
-  text: string
+  text?: string
   setText: (newText: string) => void
 }
 

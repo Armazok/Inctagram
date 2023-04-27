@@ -6,9 +6,11 @@ import Modal from 'react-modal'
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
+import { RightDescription } from '@/modules/post-modules/create-post-module/components/description-add/rightDescription'
 import { useGetPost } from '@/modules/post-modules/latest-posts/hooks/useGetPost'
 import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
 import { useUserStore } from '@/store'
+import { Avatar } from '@/ui'
 import { Dropdown } from '@/ui/dropdown/Dropdown'
 
 interface Props {
@@ -24,9 +26,11 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
   const { post, isLoading } = useGetPost(postId)
 
   const [isOpenDropdown, setIsOpenDropdown] = useState(false)
+  const [showDescription, setShowDescription] = useState(false)
 
   const onEdit = () => {
     setIsOpenDropdown(false)
+    setShowDescription(true)
   }
 
   const onDelete = () => {
@@ -74,6 +78,7 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
               </div>
 
               <div className="text-white font-medium">{profileData.userName}</div>
+              {/*<RightDescription text={post && post.description} setText={() => ''} />*/}
             </div>
 
             <Dropdown isOpen={isOpenDropdown} setIsOpen={setIsOpenDropdown}>
@@ -90,6 +95,14 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
                 <FaTrash className="mr-2" /> Delete Post
               </div>
             </Dropdown>
+          </div>
+          <div className="px-6 py-3 flex items-center justify-between">
+            <div className="flex items-center">
+              <Avatar src={profileAvatar} width={43} height={43} alt={profileData.userName} />
+              <div className="text-white font-normal text-[14px]">
+                {`${profileData.userName} ${post && post.description}`}
+              </div>
+            </div>
           </div>
         </div>
       </div>

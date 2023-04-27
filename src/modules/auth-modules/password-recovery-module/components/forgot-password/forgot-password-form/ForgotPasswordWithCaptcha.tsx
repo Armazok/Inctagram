@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 
-// @ts-ignore
-import ReCAPTCHA from 'react-google-recaptcha-enterprise'
 import { FieldValues, SubmitHandler } from 'react-hook-form'
 
 import { useGlobalForm } from '@/common'
