@@ -61,7 +61,8 @@ export const CropEditor = ({
 
   return (
     <CreatePostModal
-      variant={true}
+      showBackArrow={true}
+      variant={'Next'}
       isOpen={isModalOpen}
       title={'Cropping'}
       onClose={onCloseClick}

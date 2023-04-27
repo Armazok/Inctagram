@@ -10,9 +10,15 @@ interface IAddFullPost {
   onCloseClick: () => void
   imageUrl: string
   setOpenModal: Dispatch<SetStateAction<boolean>>
+  callback?: () => void
 }
 
-export const AddFullPost: FC<IAddFullPost> = ({ isModalOpen, onCloseClick, imageUrl }) => {
+export const AddFullPost: FC<IAddFullPost> = ({
+  isModalOpen,
+  onCloseClick,
+  imageUrl,
+  callback,
+}) => {
   const { uploadId } = useUserStore()
 
   const [text, setText] = useState<string>('')
@@ -37,9 +43,16 @@ export const AddFullPost: FC<IAddFullPost> = ({ isModalOpen, onCloseClick, image
         onClose={onCloseClick}
         title={'Publication'}
         onBtnClick={addAllPost}
-        variant={false}
+        showBackArrow={true}
+        variant={'Publish'}
       >
-        <AddPublication imageUrl={imageUrl} text={text} setText={setText} />
+        <AddPublication
+          location={true}
+          imageUrl={imageUrl}
+          text={text}
+          setText={setText}
+          callback={callback}
+        />
       </CreatePostModal>
     </>
   )
