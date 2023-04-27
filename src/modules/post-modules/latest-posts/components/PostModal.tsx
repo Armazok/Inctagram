@@ -7,6 +7,7 @@ import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { RightDescription } from '@/modules/post-modules/create-post-module/components/description-add/rightDescription'
+import { DeletePost } from '@/modules/post-modules/edit-post-module/components/DeletePost'
 import { useGetPost } from '@/modules/post-modules/latest-posts/hooks/useGetPost'
 import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
 import { useUserStore } from '@/store'
@@ -27,6 +28,7 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
 
   const [isOpenDropdown, setIsOpenDropdown] = useState(false)
   const [showDescription, setShowDescription] = useState(false)
+  const [isDeletePostShown, setIsDeletePostShown] = useState(false)
 
   const onEdit = () => {
     setIsOpenDropdown(false)
@@ -35,6 +37,7 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
 
   const onDelete = () => {
     setIsOpenDropdown(false)
+    setIsDeletePostShown(true)
   }
 
   return (
@@ -95,6 +98,12 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
                 <FaTrash className="mr-2" /> Delete Post
               </div>
             </Dropdown>
+            <DeletePost
+              isDeleteModalOpen={isDeletePostShown}
+              setIsDeleteModalOpen={setIsDeletePostShown}
+              postId={postId}
+              onPostModalClose={onClose}
+            />
           </div>
           <div className="px-6 py-3 flex items-center justify-between">
             <div className="flex items-center">
