@@ -1,12 +1,12 @@
 import { FC, useState } from 'react'
 
 import Image from 'next/image'
-import { FaEllipsisH, FaTimes, FaPen, FaTrash } from 'react-icons/fa'
+import { FaTimes, FaPen, FaTrash } from 'react-icons/fa'
 import Modal from 'react-modal'
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import { RightDescription } from '@/modules/post-modules/create-post-module/components/description-add/rightDescription'
+import { AllEditPost } from '@/modules/post-modules/create-post-module/components/description-edit/AllEditPost'
 import { useGetPost } from '@/modules/post-modules/latest-posts/hooks/useGetPost'
 import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
 import { useUserStore } from '@/store'
@@ -26,11 +26,11 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
   const { post, isLoading } = useGetPost(postId)
 
   const [isOpenDropdown, setIsOpenDropdown] = useState(false)
-  const [showDescription, setShowDescription] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
-  const onEdit = () => {
+  const handleEditClick = () => {
     setIsOpenDropdown(false)
-    setShowDescription(true)
+    setIsEditModalOpen(true)
   }
 
   const onDelete = () => {
@@ -45,6 +45,16 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
       overlayClassName="fixed w-full h-full top-0 left-0 bg-dark-900 z-[100]"
       className="absolute w-full h-full max-h-[564px] max-w-[972px] bg-dark-300 border-dark-100 border rounded-sm top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200] focus:outline-none"
     >
+      {isEditModalOpen && (
+        <AllEditPost
+          location={false}
+          description={post!.description}
+          imageUrl={post!.images[0].url!}
+          setOpenModal={setIsEditModalOpen}
+          isModalOpen={isEditModalOpen}
+          onCloseClick={() => setIsEditModalOpen(false)}
+        />
+      )}
       <button
         className="absolute -top-8 -right-8 text-base w-6 h-6 flex items-center justify-center text-white"
         onClick={() => onClose()}
@@ -78,13 +88,12 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
               </div>
 
               <div className="text-white font-medium">{profileData.userName}</div>
-              {/*<RightDescription text={post && post.description} setText={() => ''} />*/}
             </div>
 
             <Dropdown isOpen={isOpenDropdown} setIsOpen={setIsOpenDropdown}>
               <div
                 className="py-1.5 px-3 text-white text-sm cursor-pointer flex items-center whitespace-nowrap"
-                onClick={onEdit}
+                onClick={handleEditClick}
               >
                 <FaPen className="mr-2" /> Edit Post
               </div>
@@ -98,9 +107,15 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
           </div>
           <div className="px-6 py-3 flex items-center justify-between">
             <div className="flex items-center">
-              <Avatar src={profileAvatar} width={43} height={43} alt={profileData.userName} />
-              <div className="text-white font-normal text-[14px]">
-                {`${profileData.userName} ${post && post.description}`}
+              <Avatar
+                src={profileAvatar && profileAvatar}
+                width={43}
+                height={43}
+                alt={profileData.userName}
+                className={'mb-[5rem]'}
+              />
+              <div className="text-white font-normal text-[14px] ml-3.5">
+                <span className="font-bold">{profileData.userName}</span> {post && post.description}
               </div>
             </div>
           </div>
