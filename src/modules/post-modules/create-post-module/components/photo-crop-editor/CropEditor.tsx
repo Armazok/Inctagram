@@ -46,8 +46,8 @@ export const CropEditor = ({
 
   useEffect(() => {
     if (croppedAreaPixels) {
-      getCroppedImg(imageUrl, croppedAreaPixels).then((croppedImage: string) =>
-        setSelectedPhoto(croppedImage)
+      getCroppedImg(imageUrl, croppedAreaPixels).then(croppedImage =>
+        setSelectedPhoto(String(croppedImage))
       )
       setCropSize({ width: croppedAreaPixels.width, height: croppedAreaPixels.height })
     }

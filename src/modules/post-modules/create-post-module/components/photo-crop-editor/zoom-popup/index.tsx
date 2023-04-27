@@ -11,7 +11,7 @@ type PropsType = {
 
 export const ZoomPopup: FC<PropsType> = ({ zoom, setZoom }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const zoomRef = useRef(null) as MutableRefObject<HTMLDivElement>
+  const zoomRef = useRef() as MutableRefObject<HTMLDivElement>
 
   const onZoomChange = (event: ChangeEvent<HTMLInputElement>) => {
     const scale = parseFloat(event.target.value)

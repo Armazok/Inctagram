@@ -13,7 +13,7 @@ type PropsType = {
 
 export const CropPopup: FC<PropsType> = ({ setAspect }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const cropRef = useRef(null) as MutableRefObject<HTMLDivElement>
+  const cropRef = useRef() as MutableRefObject<HTMLDivElement>
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
