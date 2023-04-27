@@ -1,12 +1,12 @@
 import { useMutation } from '@tanstack/react-query'
 
 import { sendPublicationPost } from '@/modules/post-modules/create-post-module/components/api/publicationAPI'
-export const useAddAllPostMutation = (onSuccess: () => void) => {
+export const useAddAllPostMutation = (onSuccess?: any) => {
   const { isLoading, mutate, data, isSuccess } = useMutation({
     mutationKey: ['postAll-add'],
     mutationFn: sendPublicationPost,
     onSuccess: data => {
-      onSuccess()
+      onSuccess(data.data)
     },
     onError: () => {
       console.log('Error Mutation')

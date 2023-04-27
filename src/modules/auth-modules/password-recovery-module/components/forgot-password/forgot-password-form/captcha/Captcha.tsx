@@ -1,6 +1,7 @@
 import React from 'react'
 
 // @ts-ignore
+// eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha-enterprise'
 
 const RECAPTCHA_SITE_KEY = '6LcQ0LIlAAAAAIrqzrSIRNmk9Fnexi2g4bNPtZpX'

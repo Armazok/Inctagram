@@ -12,17 +12,12 @@ interface IAddFullPost {
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-export const AddFullPost: FC<IAddFullPost> = ({
-  isModalOpen,
-  onCloseClick,
-  imageUrl,
-  setOpenModal,
-}) => {
+export const AddFullPost: FC<IAddFullPost> = ({ isModalOpen, onCloseClick, imageUrl }) => {
   const { uploadId } = useUserStore()
 
   const [text, setText] = useState<string>('')
 
-  const { mutate: addAllPostMutate } = useAddAllPostMutation(() => setOpenModal(false))
+  const { mutate: addAllPostMutate } = useAddAllPostMutation()
 
   const addAllPost = () => {
     if (uploadId && text) {

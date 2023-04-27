@@ -29,12 +29,23 @@ interface GetPostsParams {
 }
 
 export const getPosts = async ({ userId, page }: GetPostsParams) => {
-  const res = await authInstance.get<GetPostsResponse>(`/posts/${userId}`, {
+  const res = await authInstance.get<GetPostsResponse>(`posts/${userId}`, {
     params: {
       pageNumber: page,
       pageSize: 100,
     },
   })
+
+  return res.data
+}
+
+interface GetPostResponse extends Post {
+  createdAt: string
+  updatedAt: string
+}
+
+export const getPost = async (postId: number | null) => {
+  const res = await authInstance.get<GetPostResponse>(`posts/p/${postId}`)
 
   return res.data
 }
