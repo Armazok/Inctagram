@@ -118,7 +118,8 @@ export const Sidebar: FC = () => {
           onBackClick={() => setSelectedPhoto('')}
           title={'Cropping'}
           onBtnClick={() => setOpenModal('filters')}
-          variant={true}
+          variant={'Next'}
+          showBackArrow={true}
         >
           <PhotoEditor
             image={selectedPhoto}
