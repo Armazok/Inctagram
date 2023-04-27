@@ -4,6 +4,8 @@ import Cropper, { Area } from 'react-easy-crop'
 // eslint-disable-next-line import/no-unresolved
 import { Point } from 'react-easy-crop/types'
 
+import { CropPopup } from '@/modules/profile-modules/create-post/components/crop-popup'
+import { ZoomPopup } from '@/modules/profile-modules/create-post/components/zoom-popup'
 import getCroppedImg from '@/modules/profile-modules/create-post/utils/canvasUtils'
 
 type PropsType = {
@@ -16,31 +18,22 @@ export const PhotoEditor = ({ image, setSelectedPhoto, setCropSize }: PropsType)
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [aspect, setAspect] = useState<number>(4 / 5)
-  const [imageUrl, setImageUrl] = useState<string | ArrayBuffer | null>(null)
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>()
+  const [imageUrl, setImageUrl] = useState<string>('')
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>({
+    width: 0,
+    height: 0,
+    x: 0,
+    y: 0,
+  })
   const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels)
   }, [])
 
-  const onZoomChange = (event: any) => {
-    const scale = parseFloat(event.target.value)
-
-    setZoom(scale)
-  }
-
-  const saveCropImage = async () => {
-    try {
-      const croppedImage = await getCroppedImg(String(imageUrl), croppedAreaPixels as Area)
-
-      setSelectedPhoto(String(croppedImage))
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
   useEffect(() => {
-    saveCropImage()
     if (croppedAreaPixels) {
+      getCroppedImg(imageUrl, croppedAreaPixels).then((croppedImage: string) =>
+        setSelectedPhoto(croppedImage)
+      )
       setCropSize({ width: croppedAreaPixels.width, height: croppedAreaPixels.height })
     }
   }, [croppedAreaPixels])
@@ -55,7 +48,7 @@ export const PhotoEditor = ({ image, setSelectedPhoto, setCropSize }: PropsType)
     <>
       <div className={'relative h-[500px]'}>
         <Cropper
-          image={String(imageUrl)}
+          image={imageUrl}
           crop={crop}
           zoom={zoom}
           aspect={aspect}
@@ -64,20 +57,10 @@ export const PhotoEditor = ({ image, setSelectedPhoto, setCropSize }: PropsType)
           onZoomChange={setZoom}
           zoomWithScroll={false}
         />
-        <div className={'flex gap-3 absolute bottom-3 left-3 cursor-pointer'}>
-          <div onClick={() => setAspect(1)}>1:1</div>
-          <div onClick={() => setAspect(4 / 5)}>4:5</div>
-          <div onClick={() => setAspect(16 / 9)}>16:9</div>
+        <div className={'flex gap-3 absolute bottom-3 left-3'}>
+          <CropPopup setAspect={setAspect} />
+          <ZoomPopup zoom={zoom} setZoom={setZoom} />
         </div>
-        <input
-          type="range"
-          min="1"
-          max="2"
-          step="0.01"
-          value={zoom}
-          onChange={onZoomChange}
-          className={'absolute right-3 bottom-3'}
-        />
       </div>
     </>
   )
