@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import Image from 'next/image'
+import { FaTimes } from 'react-icons/fa'
 import Modal from 'react-modal'
 
 import styles from './CreatePostModal.module.scss'
@@ -14,7 +15,8 @@ interface Props {
   children: any
   onBtnClick: () => void
   onBackClick?: () => void
-  variant: boolean
+  variant?: 'Next' | 'Publish'
+  showBackArrow: boolean
 }
 
 export const CreatePostModal: FC<Props> = ({
@@ -25,6 +27,7 @@ export const CreatePostModal: FC<Props> = ({
   title,
   children,
   variant,
+  showBackArrow,
 }) => {
   return (
     <Modal
@@ -35,19 +38,25 @@ export const CreatePostModal: FC<Props> = ({
       className={styles.modal}
     >
       <div className={styles.modalHeader}>
-        <Image
-          onClick={onBackClick}
-          className={styles.modalBackBtn}
-          src={ArrowBackIcon}
-          alt={'back'}
-          height={24}
-          width={24}
-        />
+        {showBackArrow && (
+          <Image
+            onClick={onBackClick}
+            className={styles.modalBackBtn}
+            src={ArrowBackIcon}
+            alt={'back'}
+            height={24}
+            width={24}
+          />
+        )}
         <div className={styles.modalTitle}>{title}</div>
 
-        <button className={styles.modalBtn} type={'submit'} onClick={() => onBtnClick()}>
-          {variant ? 'Next' : 'Publish'}
-        </button>
+        {variant ? (
+          <button className={styles.modalBtn} type={'submit'} onClick={() => onBtnClick()}>
+            {variant}
+          </button>
+        ) : (
+          <FaTimes className={styles.modalCloseBtn} onClick={onClose} size={'24px'} />
+        )}
       </div>
 
       <div className={styles.modalBody}>{children}</div>
