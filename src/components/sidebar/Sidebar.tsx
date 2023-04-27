@@ -18,15 +18,14 @@ import trendingOutline from '../../assets/icons/trending-up-outline.svg'
 import trending from '../../assets/icons/trending-up.svg'
 
 import { ModalWithContent } from '@/components/modals'
-import { CreatePostModal } from '@/components/modals/create-post-modal/CreatePostModal'
 import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
 import { AddFullPost } from '@/modules/post-modules/create-post-module/components/addFullPost/addFullPost'
+import { CropEditor } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/CropEditor'
 import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/FiltersEditor'
 import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
-import { PhotoEditor } from '@/modules/profile-modules/create-post/PhotoEditor'
 
 export const Sidebar: FC = () => {
-  const { pathname, push } = useRouter()
+  const { pathname } = useRouter()
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [openModal, setOpenModal] = useState('')
@@ -112,20 +111,13 @@ export const Sidebar: FC = () => {
         <PhotoSelector setSelectedPhoto={setSelectedPhoto} />
       </ModalWithContent>
       {selectedPhoto && (
-        <CreatePostModal
-          isOpen={isModalOpen}
-          onClose={onCloseClick}
-          onBackClick={() => setSelectedPhoto('')}
-          title={'Cropping'}
-          onBtnClick={() => setOpenModal('filters')}
-          variant={true}
-        >
-          <PhotoEditor
-            image={selectedPhoto}
-            setSelectedPhoto={setSelectedPhoto}
-            setCropSize={setCropSize}
-          />
-        </CreatePostModal>
+        <CropEditor
+          isModalOpen={isModalOpen}
+          image={selectedPhoto}
+          setOpenModal={setOpenModal}
+          setSelectedPhoto={setSelectedPhoto}
+          setCropSize={setCropSize}
+        />
       )}
 
       {openModal === 'filters' && (
