@@ -15,12 +15,20 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [avatar, setAvatar] = useState(avatarUrl)
 
-  const { isLoading: isLoadingDeleteAvatar, mutate: deleteAvatar } = useDeleteAvatar(setAvatar)
+  const onDeleteSuccess = () => {
+    setAvatar('')
+  }
 
-  const { isLoading: isLoadingUploadAvatar, mutate: uploadAvatar } = useUploadAvatar(
-    setAvatar,
-    setIsModalOpen
-  )
+  const onUploadSuccess = (avatar: string) => {
+    setAvatar(avatar)
+    setIsModalOpen(false)
+  }
+
+  const { isLoading: isLoadingDeleteAvatar, mutate: deleteAvatar } =
+    useDeleteAvatar(onDeleteSuccess)
+
+  const { isLoading: isLoadingUploadAvatar, mutate: uploadAvatar } =
+    useUploadAvatar(onUploadSuccess)
 
   const isAvatarShown = avatar ? avatar : ''
 
