@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 
 import { sendAvatar } from '@/modules/profile-modules/avatar-module'
 
-export const useUploadAvatarMutation = (
+export const useUploadAvatar = (
   setAvatar: (avatar: string) => void,
   setIsModalOpen: (isOpen: boolean) => void
 ) => {

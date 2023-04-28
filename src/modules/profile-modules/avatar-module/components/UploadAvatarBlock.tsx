@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 
 import { ModalWithContent } from '@/components/modals'
 import { PhotoSelector, ProfileAvatarEditor } from '@/modules/profile-modules/avatar-module'
-import { DeleteAvatarButton } from '@/modules/profile-modules/avatar-module/components/DeleteButton'
-import { useDeleteAvatarMutation } from '@/modules/profile-modules/avatar-module/hooks/useDeleteAvatarMutation'
-import { useUploadAvatarMutation } from '@/modules/profile-modules/avatar-module/hooks/useUploadAvatarMutation'
+import { useDeleteAvatar } from '@/modules/profile-modules/avatar-module/hooks/useDeleteAvatar'
+import { useUploadAvatar } from '@/modules/profile-modules/avatar-module/hooks/useUploadAvatar'
 import { Avatar, GlobalButton, Preloader } from '@/ui'
+import { DeleteAvatarButton } from '@/modules/profile-modules/avatar-module/components/avatar-delete-button/DeleteButton'
 
 type PropsType = {
   avatarUrl?: string
@@ -15,10 +15,9 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [avatar, setAvatar] = useState(avatarUrl)
 
-  const { isLoading: isLoadingDeleteAvatar, mutate: deleteAvatar } =
-    useDeleteAvatarMutation(setAvatar)
+  const { isLoading: isLoadingDeleteAvatar, mutate: deleteAvatar } = useDeleteAvatar(setAvatar)
 
-  const { isLoading: isLoadingUploadAvatar, mutate: uploadAvatar } = useUploadAvatarMutation(
+  const { isLoading: isLoadingUploadAvatar, mutate: uploadAvatar } = useUploadAvatar(
     setAvatar,
     setIsModalOpen
   )
