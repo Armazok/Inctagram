@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import { NextPage } from 'next'
 
 import { Confirm } from '@/components/modals'
-import { useForgotPassword } from '@/modules/auth-modules/password-recovery-module'
 import { ForgotPasswordWithCaptcha } from '@/modules/auth-modules/password-recovery-module/components/forgot-password/forgot-password-form/ForgotPasswordWithCaptcha'
+import { useForgotPassword } from '@/modules/auth-modules/password-recovery-module/hooks/useForgotPassword'
 import { NameTitle, Preloader } from '@/ui'
 import Link from '@/ui/link/Link'
 

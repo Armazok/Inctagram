@@ -1,5 +1,3 @@
-export * from './api/hook'
-export * from './api/passwordRecovary'
 export * from './components/forgot-password/ForgotPassword'
 export * from './components/recovery/Recovery'
 export * from './components/recovery/resend-recovery-form/ResendRecoveryForm'

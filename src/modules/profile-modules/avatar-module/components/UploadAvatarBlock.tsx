@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 
 import { ModalWithContent } from '@/components/modals'
 import { PhotoSelector, ProfileAvatarEditor } from '@/modules/profile-modules/avatar-module'
+import { DeleteAvatarButton } from '@/modules/profile-modules/avatar-module/components/avatar-delete-button/DeleteButton'
 import { useDeleteAvatar } from '@/modules/profile-modules/avatar-module/hooks/useDeleteAvatar'
 import { useUploadAvatar } from '@/modules/profile-modules/avatar-module/hooks/useUploadAvatar'
 import { Avatar, GlobalButton, Preloader } from '@/ui'
-import { DeleteAvatarButton } from '@/modules/profile-modules/avatar-module/components/avatar-delete-button/DeleteButton'
 
 type PropsType = {
   avatarUrl?: string
@@ -30,6 +30,7 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
   const { isLoading: isLoadingUploadAvatar, mutate: uploadAvatar } =
     useUploadAvatar(onUploadSuccess)
 
+  const isDisabled = isLoadingUploadAvatar || isLoadingDeleteAvatar
   const isAvatarShown = avatar ? avatar : ''
 
   const onCloseClick = () => {
@@ -59,13 +60,16 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
     <div className={'flex flex-col flex-nowrap items-center w-52 font-medium p-[5px]'}>
       <div className={'mb-[30px] mt-[48px] w-52'}>
         <Avatar alt={'profile photo'} src={isAvatarShown} className={``} />
-        {isAvatarShown && <DeleteAvatarButton onDeleteAvatarClick={onDeleteAvatarClick} />}
+        {isAvatarShown && (
+          <DeleteAvatarButton onDeleteAvatarClick={onDeleteAvatarClick} disabled={isDisabled} />
+        )}
       </div>
       <GlobalButton
         type={'button'}
         variant={'transparent'}
         className={`text-[16px]`}
         callback={onAddPhotoClick}
+        disabled={isDisabled}
       >
         Add a Profile Photo
       </GlobalButton>
@@ -73,7 +77,11 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
       <ModalWithContent isOpen={isModalOpen} onClose={onCloseClick} title={'Add a Profile Photo'}>
         <>
           {selectedPhoto ? (
-            <ProfileAvatarEditor image={selectedPhoto} onSaveClick={onSaveClick} />
+            <ProfileAvatarEditor
+              image={selectedPhoto}
+              onSaveClick={onSaveClick}
+              disabled={isLoadingUploadAvatar}
+            />
           ) : (
             <PhotoSelector setSelectedPhoto={setSelectedPhoto} />
           )}

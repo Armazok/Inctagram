@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 
 import { useRouter } from 'next/router'
 
-import { useGlobalForm } from '@/common'
+import { PATH_ROUTE, useGlobalForm } from '@/common'
 import { ResendVerificationForm } from '@/components/auth-components'
-import { useForgotPassword } from '@/modules/auth-modules/password-recovery-module'
+import { useForgotPassword } from '@/modules/auth-modules/password-recovery-module/hooks/useForgotPassword'
 import { FormDataRegistered, verificationSchema } from '@/modules/auth-modules/registraion-module'
 
 export const ResendRecoveryForm = () => {
@@ -15,7 +15,7 @@ export const ResendRecoveryForm = () => {
     useGlobalForm(verificationSchema)
 
   const onSuccess = () => {
-    push('/auth/login')
+    push(PATH_ROUTE.LOGIN)
     reset()
   }
   const { sendLinkPasswordRecovery, isLoading } = useForgotPassword(onSuccess, setCustomError)
