@@ -7,9 +7,10 @@ import { GlobalButton } from '@/ui'
 type PropsType = {
   image: string | File | null
   onSaveClick: (formData: any) => void
+  disabled?: boolean
 }
 
-export const ProfileAvatarEditor = ({ image, onSaveClick }: PropsType) => {
+export const ProfileAvatarEditor = ({ image, onSaveClick, disabled }: PropsType) => {
   const [editor, setEditor] = useState(null)
   const [scale, setScale] = useState(1)
 
@@ -62,8 +63,14 @@ export const ProfileAvatarEditor = ({ image, onSaveClick }: PropsType) => {
           value={scale}
           onChange={onScaleChange}
           className={`mt-[20px] bg-gray-700`}
+          disabled={disabled}
         />
-        <GlobalButton type="button" callback={onSaveClickHandler} className={`mt-[20px]`}>
+        <GlobalButton
+          type="button"
+          callback={onSaveClickHandler}
+          className={`mt-[20px]`}
+          disabled={disabled}
+        >
           Save
         </GlobalButton>
       </div>

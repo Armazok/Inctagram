@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 
 import { ModalWithContent } from '@/components/modals'
 import { PhotoSelector, ProfileAvatarEditor } from '@/modules/profile-modules/avatar-module'
-import { DeleteAvatarButton } from '@/modules/profile-modules/avatar-module/components/DeleteButton'
-import { useDeleteAvatarMutation } from '@/modules/profile-modules/avatar-module/hooks/useDeleteAvatarMutation'
-import { useUploadAvatarMutation } from '@/modules/profile-modules/avatar-module/hooks/useUploadAvatarMutation'
+import { DeleteAvatarButton } from '@/modules/profile-modules/avatar-module/components/avatar-delete-button/DeleteButton'
+import { useDeleteAvatar } from '@/modules/profile-modules/avatar-module/hooks/useDeleteAvatar'
+import { useUploadAvatar } from '@/modules/profile-modules/avatar-module/hooks/useUploadAvatar'
 import { Avatar, GlobalButton, Preloader } from '@/ui'
 
 type PropsType = {
@@ -15,14 +15,22 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [avatar, setAvatar] = useState(avatarUrl)
 
+  const onDeleteSuccess = () => {
+    setAvatar('')
+  }
+
+  const onUploadSuccess = (avatar: string) => {
+    setAvatar(avatar)
+    setIsModalOpen(false)
+  }
+
   const { isLoading: isLoadingDeleteAvatar, mutate: deleteAvatar } =
-    useDeleteAvatarMutation(setAvatar)
+    useDeleteAvatar(onDeleteSuccess)
 
-  const { isLoading: isLoadingUploadAvatar, mutate: uploadAvatar } = useUploadAvatarMutation(
-    setAvatar,
-    setIsModalOpen
-  )
+  const { isLoading: isLoadingUploadAvatar, mutate: uploadAvatar } =
+    useUploadAvatar(onUploadSuccess)
 
+  const isDisabled = isLoadingUploadAvatar || isLoadingDeleteAvatar
   const isAvatarShown = avatar ? avatar : ''
 
   const onCloseClick = () => {
@@ -52,13 +60,16 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
     <div className={'flex flex-col flex-nowrap items-center w-52 font-medium p-[5px]'}>
       <div className={'mb-[30px] mt-[48px] w-52'}>
         <Avatar alt={'profile photo'} src={isAvatarShown} className={``} />
-        {isAvatarShown && <DeleteAvatarButton onDeleteAvatarClick={onDeleteAvatarClick} />}
+        {isAvatarShown && (
+          <DeleteAvatarButton onDeleteAvatarClick={onDeleteAvatarClick} disabled={isDisabled} />
+        )}
       </div>
       <GlobalButton
         type={'button'}
         variant={'transparent'}
         className={`text-[16px]`}
         callback={onAddPhotoClick}
+        disabled={isDisabled}
       >
         Add a Profile Photo
       </GlobalButton>
@@ -66,7 +77,11 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
       <ModalWithContent isOpen={isModalOpen} onClose={onCloseClick} title={'Add a Profile Photo'}>
         <>
           {selectedPhoto ? (
-            <ProfileAvatarEditor image={selectedPhoto} onSaveClick={onSaveClick} />
+            <ProfileAvatarEditor
+              image={selectedPhoto}
+              onSaveClick={onSaveClick}
+              disabled={isLoadingUploadAvatar}
+            />
           ) : (
             <PhotoSelector setSelectedPhoto={setSelectedPhoto} />
           )}
