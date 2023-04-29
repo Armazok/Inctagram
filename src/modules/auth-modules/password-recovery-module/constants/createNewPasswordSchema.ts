@@ -1,7 +1,5 @@
 import * as yup from 'yup'
 
-// export type FormData = yup.InferType<typeof createNewPasswordSchema>
-
 export const createNewPasswordSchema = yup.object({
   password: yup.string().trim().required().min(6).max(20),
   confirmPassword: yup

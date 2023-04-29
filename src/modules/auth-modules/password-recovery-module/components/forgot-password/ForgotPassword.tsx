@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { NextPage } from 'next'
 
+import { FormLayout } from '@/components/FormLayout'
 import { Confirm } from '@/components/modals'
 import { ForgotPasswordWithCaptcha } from '@/modules/auth-modules/password-recovery-module/components/forgot-password/forgot-password-form/ForgotPasswordWithCaptcha'
 import { useForgotPassword } from '@/modules/auth-modules/password-recovery-module/hooks/useForgotPassword'
@@ -31,11 +32,7 @@ export const ForgotPassword: NextPage = () => {
   if (isLoading) return <Preloader />
 
   return (
-    <div
-      className={
-        'flex flex-col items-center content-center max-w-full border border-bgLogBorder w-4/12 bg-bgLog mt-24 mr-auto ml-auto mb-36'
-      }
-    >
+    <FormLayout className="mt-[60px]">
       <NameTitle nameTitle={'Forgot Password'} className={'text-light-100 mt-6'} />
 
       <ForgotPasswordWithCaptcha onSubmitHandler={onSubmitHandler} />
@@ -54,6 +51,6 @@ export const ForgotPassword: NextPage = () => {
         title={'Back to Sign In'}
         className={'font-semibold text-[16px] leading-[24px] text-accent-500 mt-2 mb-4'}
       />
-    </div>
+    </FormLayout>
   )
 }
