@@ -8,6 +8,7 @@ export const useMeQuery = () => {
     queryFn: meSendRequest,
     queryKey: ['me'],
     retry: false,
+    staleTime: 300000,
     ...noRefetch,
   })
 }
