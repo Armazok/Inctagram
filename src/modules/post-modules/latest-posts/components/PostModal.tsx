@@ -24,9 +24,11 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
   const { profileAvatar, profileData } = useGetProfile()
 
   const { post, isLoading } = useGetPost(postId)
-
+  //артем
   const [isOpenDropdown, setIsOpenDropdown] = useState(false)
+
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  //Аня
   const [isDeletePostShown, setIsDeletePostShown] = useState(false)
 
   const onDelete = () => {
