@@ -16,7 +16,6 @@ interface IAddFullPost {
 export const AddFullPost: FC<IAddFullPost> = ({
   isModalOpen,
   imageUrl,
-  callback,
   useStoreAddFullPostModule,
   filterEditorModule,
 }) => {
