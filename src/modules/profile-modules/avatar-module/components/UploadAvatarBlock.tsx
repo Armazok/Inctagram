@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import { ModalWithContent } from '@/components/modals'
+import { useStoreAvatarBlockModule } from '@/components/modals/store'
 import { PhotoSelector, ProfileAvatarEditor } from '@/modules/profile-modules/avatar-module'
 import { DeleteAvatarButton } from '@/modules/profile-modules/avatar-module/components/avatar-delete-button/DeleteButton'
 import { useDeleteAvatar } from '@/modules/profile-modules/avatar-module/hooks/useDeleteAvatar'
@@ -12,8 +13,9 @@ type PropsType = {
 }
 export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
-  const [isModalOpen, setIsModalOpen] = useState(false)
   const [avatar, setAvatar] = useState(avatarUrl)
+
+  const UploadAvatarBlockModule = useStoreAvatarBlockModule()
 
   const onDeleteSuccess = () => {
     setAvatar('')
@@ -21,7 +23,7 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
 
   const onUploadSuccess = (avatar: string) => {
     setAvatar(avatar)
-    setIsModalOpen(false)
+    UploadAvatarBlockModule.setIsModalOpen(false)
   }
 
   const { isLoading: isLoadingDeleteAvatar, mutate: deleteAvatar } =
@@ -35,17 +37,17 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
 
   const onCloseClick = () => {
     setSelectedPhoto('')
-    setIsModalOpen(false)
+    UploadAvatarBlockModule.setIsModalOpen(false)
   }
 
   const onSaveClick = (formData: File) => {
     uploadAvatar(formData)
-    setIsModalOpen(false)
+    UploadAvatarBlockModule.setIsModalOpen(false)
     setSelectedPhoto('')
   }
 
   const onAddPhotoClick = () => {
-    setIsModalOpen(true)
+    UploadAvatarBlockModule.setIsModalOpen(true)
   }
 
   const onDeleteAvatarClick = () => {
@@ -74,7 +76,11 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
         Add a Profile Photo
       </GlobalButton>
 
-      <ModalWithContent isOpen={isModalOpen} onClose={onCloseClick} title={'Add a Profile Photo'}>
+      <ModalWithContent
+        isOpen={UploadAvatarBlockModule.isModalOpen}
+        onClose={onCloseClick}
+        title={'Add a Profile Photo'}
+      >
         <>
           {selectedPhoto ? (
             <ProfileAvatarEditor

@@ -7,9 +7,15 @@ import { GlobalButton } from '@/ui'
 
 type PropsType = {
   setSelectedPhoto: (file: File) => void
+  cropEditorModule?: (isModalOpen: boolean) => void
+  modalWithContent?: (isModalOpen: boolean) => void
 }
 
-export const PhotoSelector = ({ setSelectedPhoto }: PropsType) => {
+export const PhotoSelector = ({
+  setSelectedPhoto,
+  cropEditorModule,
+  modalWithContent,
+}: PropsType) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const onFileSelectChange = (event: any) => {
@@ -17,6 +23,10 @@ export const PhotoSelector = ({ setSelectedPhoto }: PropsType) => {
       const file = event.target.files[0]
 
       setSelectedPhoto(file)
+      if (cropEditorModule && modalWithContent) {
+        cropEditorModule(true)
+        modalWithContent(false)
+      }
     }
   }
   const onSelectClick = () => {

@@ -1,14 +1,18 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-interface BearState {
+interface StoreType {
   isModalOpen: boolean
-  setOpenModal: (isModalOpen: any) => void
+  setIsModalOpen: (isModalOpen: boolean) => void
 }
 
-export const useModalStore = create<BearState>()(
-  devtools(set => ({
-    isModalOpen: false,
-    setOpenModal: isModalOpen => set({ isModalOpen: isModalOpen }),
-  }))
-)
+const storeModule = (set: any): StoreType => ({
+  isModalOpen: false,
+  setIsModalOpen: isModalOpen => set({ isModalOpen: isModalOpen }, false, 'setIsModalOpen'),
+})
+
+export const useStoreWithContentModal = create(devtools(storeModule))
+export const useStoreCropEditorModule = create(devtools(storeModule))
+export const useStoreFilterEditorModule = create(devtools(storeModule))
+export const useStoreAddPostModule = create(devtools(storeModule))
+export const useStoreAvatarBlockModule = create(devtools(storeModule))

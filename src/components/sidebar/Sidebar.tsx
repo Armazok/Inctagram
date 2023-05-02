@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
 // eslint-disable-next-line import/no-named-as-default
 import clsx from 'clsx'
@@ -18,6 +18,12 @@ import trendingOutline from '../../assets/icons/trending-up-outline.svg'
 import trending from '../../assets/icons/trending-up.svg'
 
 import { ModalWithContent } from '@/components/modals'
+import {
+  useStoreAddPostModule,
+  useStoreCropEditorModule,
+  useStoreFilterEditorModule,
+  useStoreWithContentModal,
+} from '@/components/modals/store'
 import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
 import { AddFullPost } from '@/modules/post-modules/create-post-module/components/addFullPost/addFullPost'
 import { CropEditor } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/CropEditor'
@@ -26,8 +32,7 @@ import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
 
 export const Sidebar: FC = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [openModal, setOpenModal] = useState('')
+  const [sidebarModule, setSidebarModule] = useState<boolean>(false)
   const [cropSize, setCropSize] = useState<{
     width: number
     height: number
@@ -35,15 +40,36 @@ export const Sidebar: FC = () => {
     width: 100,
     height: 100,
   })
-
+  const modalWithContent = useStoreWithContentModal()
+  const cropEditorModule = useStoreCropEditorModule()
+  const filterEditorModule = useStoreFilterEditorModule()
+  const useStoreAddFullPostModule = useStoreAddPostModule()
   const onAddPhotoClick = () => {
-    setIsModalOpen(true)
+    setSidebarModule(true)
+    modalWithContent.setIsModalOpen(true)
   }
 
   const onCloseClick = () => {
     setSelectedPhoto('')
-    setIsModalOpen(false)
+    modalWithContent.setIsModalOpen(false)
   }
+
+  useEffect(() => {
+    if (
+      !modalWithContent.isModalOpen &&
+      !cropEditorModule.isModalOpen &&
+      !filterEditorModule.isModalOpen &&
+      !useStoreAddFullPostModule.isModalOpen
+    ) {
+      setSidebarModule(false)
+    }
+  }, [
+    modalWithContent.isModalOpen,
+    cropEditorModule.isModalOpen,
+    filterEditorModule.isModalOpen,
+    useStoreAddFullPostModule.isModalOpen,
+  ])
+
   const { pathname } = useRouter()
 
   return (
@@ -62,8 +88,8 @@ export const Sidebar: FC = () => {
             </Link>
           </li>
           <li className="flex gap-[15px] items-center" onClick={onAddPhotoClick}>
-            <Image src={isModalOpen ? plus : plusOutline} alt={'Create'} height={24} width={24} />
-            <div className={clsx('cursor-pointer', isModalOpen && 'text-accent-500')}>Create</div>
+            <Image src={sidebarModule ? plus : plusOutline} alt={'Create'} height={24} width={24} />
+            <div className={clsx('cursor-pointer', sidebarModule && 'text-accent-500')}>Create</div>
           </li>
           <li className="flex gap-[15px] items-center">
             <Image
@@ -107,35 +133,44 @@ export const Sidebar: FC = () => {
         </ul>
         <LogoutButton />
       </div>
-      <ModalWithContent isOpen={isModalOpen} onClose={onCloseClick} title={'Add photo'}>
-        <PhotoSelector setSelectedPhoto={setSelectedPhoto} />
+      <ModalWithContent
+        isOpen={modalWithContent.isModalOpen}
+        onClose={onCloseClick}
+        title={'Add photo'}
+      >
+        <PhotoSelector
+          cropEditorModule={cropEditorModule.setIsModalOpen}
+          modalWithContent={modalWithContent.setIsModalOpen}
+          setSelectedPhoto={setSelectedPhoto}
+        />
       </ModalWithContent>
       {selectedPhoto && (
         <CropEditor
-          isModalOpen={isModalOpen}
+          isModalOpen={cropEditorModule.isModalOpen}
+          filterEditorModule={filterEditorModule.setIsModalOpen}
+          cropEditorModule={cropEditorModule.setIsModalOpen}
           image={selectedPhoto}
-          setOpenModal={setOpenModal}
           setSelectedPhoto={setSelectedPhoto}
           setCropSize={setCropSize}
         />
       )}
-
-      {openModal === 'filters' && (
+      {filterEditorModule.isModalOpen && (
         <FiltersEditor
-          selectedPhoto={selectedPhoto}
+          setSelectedPhoto={setSelectedPhoto}
           cropSize={cropSize}
           imageUrl={String(selectedPhoto)}
-          isModalOpen={isModalOpen}
-          setOpenModal={setOpenModal}
+          isModalOpen={filterEditorModule.isModalOpen}
+          cropEditorModule={cropEditorModule.setIsModalOpen}
+          filterEditorModule={filterEditorModule.setIsModalOpen}
+          useStoreAddFullPostModule={useStoreAddFullPostModule.setIsModalOpen}
         />
       )}
-
-      {openModal === 'publication' && (
+      {useStoreAddFullPostModule.isModalOpen && (
         <AddFullPost
           imageUrl={String(selectedPhoto)}
-          onCloseClick={onCloseClick}
-          isModalOpen={isModalOpen}
-          setOpenModal={setIsModalOpen}
+          isModalOpen={useStoreAddFullPostModule.isModalOpen}
+          useStoreAddFullPostModule={useStoreAddFullPostModule.setIsModalOpen}
+          filterEditorModule={filterEditorModule.setIsModalOpen}
         />
       )}
     </aside>
