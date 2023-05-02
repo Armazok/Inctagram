@@ -38,13 +38,13 @@ export const CropEditor = ({
     setCroppedAreaPixels(croppedAreaPixels)
   }, [])
 
-  const onCloseClick = () => {
-    setSelectedPhoto('')
-  }
-
   const onNextClick = () => {
     cropEditorModule(false)
     filterEditorModule(true)
+  }
+
+  const onCloseClick = () => {
+    setSelectedPhoto('')
   }
 
   useEffect(() => {
