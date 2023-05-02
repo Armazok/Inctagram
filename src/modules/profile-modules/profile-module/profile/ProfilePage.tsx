@@ -16,7 +16,7 @@ export const ProfilePage = () => {
 
   return (
     <div className="flex">
-      <main className="pl-6 py-9 pr-16">
+      <main className="pl-6 py-9 pr-16 grow">
         <div className="flex text-light-100 gap-9">
           <Avatar src={avatar} alt={'photo'} />
           <div className="flex flex-col gap-5">
@@ -45,7 +45,6 @@ export const ProfilePage = () => {
             </div>
           </div>
         </div>
-        <div></div>
 
         <LatestPosts />
       </main>

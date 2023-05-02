@@ -1,3 +1,4 @@
+import { POSTS_PER_PAGE } from '@/modules/post-modules/latest-posts/contastants/latest-posts-constants'
 import { authInstance } from '@/services'
 
 interface PostImage {
@@ -8,7 +9,7 @@ interface PostImage {
   uploadId: string
 }
 
-interface Post {
+export interface Post {
   id: number
   description: string
   location: null | string
@@ -32,7 +33,7 @@ export const getPosts = async ({ userId, page }: GetPostsParams) => {
   const res = await authInstance.get<GetPostsResponse>(`posts/${userId}`, {
     params: {
       pageNumber: page,
-      pageSize: 100,
+      pageSize: POSTS_PER_PAGE,
     },
   })
 

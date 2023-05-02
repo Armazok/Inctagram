@@ -8,7 +8,7 @@ import { NextPageWithLayout } from '@/pages/_app'
 
 const MainPageProfile: NextPageWithLayout = () => {
   return (
-    <div>
+    <div className="grow">
       <Head>
         <title>Profile</title>
       </Head>

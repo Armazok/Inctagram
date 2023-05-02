@@ -80,7 +80,12 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
               pagination={{ clickable: true }}
             >
               <SwiperSlide key={post?.id}>
-                <Image src={post?.images[0].url!} fill alt={'gg'} className="object-cover" />
+                <Image
+                  src={post?.images[0]?.url || ''}
+                  fill
+                  alt={post?.description || ''}
+                  className="object-cover"
+                />
               </SwiperSlide>
             </Swiper>
           )}
