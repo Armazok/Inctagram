@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 
 import Image from 'next/image'
-import { FaEllipsisH, FaTimes, FaPen, FaTrash } from 'react-icons/fa'
+import { FaTimes, FaPen, FaTrash } from 'react-icons/fa'
 import Modal from 'react-modal'
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -10,7 +10,7 @@ import { AllEditPost } from '@/modules/post-modules/create-post-module/component
 import { DeletePost } from '@/modules/post-modules/edit-post-module/components/DeletePost'
 import { useGetPost } from '@/modules/post-modules/latest-posts/hooks/useGetPost'
 import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
-import { useUserStore } from '@/store'
+import { useSaveDescription, useUserStore } from '@/store'
 import { Avatar } from '@/ui'
 import { Dropdown } from '@/ui/dropdown/Dropdown'
 
@@ -20,15 +20,17 @@ interface Props {
 }
 
 export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
-  const { postId } = useUserStore()
+  const { postId, setDescriptionLocal } = useUserStore()
+  const { setDescription } = useSaveDescription()
   const { profileAvatar, profileData } = useGetProfile()
 
-  const { post, isLoading } = useGetPost(postId)
-  //артем
-  const [isOpenDropdown, setIsOpenDropdown] = useState(false)
+  const { post, isLoading } = useGetPost(postId, description => {
+    setDescription(description)
+    setDescriptionLocal(description)
+  })
 
+  const [isOpenDropdown, setIsOpenDropdown] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
-  //Аня
   const [isDeletePostShown, setIsDeletePostShown] = useState(false)
 
   const onDelete = () => {
@@ -78,7 +80,12 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
               pagination={{ clickable: true }}
             >
               <SwiperSlide key={post?.id}>
-                <Image src={post?.images[0].url!} fill alt={'gg'} className="object-cover" />
+                <Image
+                  src={post?.images[0]?.url || ''}
+                  fill
+                  alt={post?.description || ''}
+                  className="object-cover"
+                />
               </SwiperSlide>
             </Swiper>
           )}

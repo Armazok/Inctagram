@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction, useState } from 'react'
+import React, { Dispatch, FC, SetStateAction } from 'react'
 
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
@@ -20,9 +20,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
   useStoreAddFullPostModule,
   filterEditorModule,
 }) => {
-  const { uploadId } = useUserStore()
-
-  const [text, setText] = useState<string>('')
+  const { uploadId, descriptionLocal } = useUserStore()
 
   const { mutate: addAllPostMutate } = useAddAllPostMutation()
   const onCloseClick = () => {
@@ -35,9 +33,9 @@ export const AddFullPost: FC<IAddFullPost> = ({
   }
 
   const addAllPost = () => {
-    if (uploadId && text) {
+    if (uploadId && descriptionLocal) {
       addAllPostMutate({
-        description: text,
+        description: descriptionLocal,
         childrenMetadata: [{ uploadId }],
       })
     } else {
@@ -57,13 +55,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
         showBackArrow={true}
         variant={'Publish'}
       >
-        <AddPublication
-          location={true}
-          imageUrl={imageUrl}
-          text={text}
-          setText={setText}
-          callback={callback}
-        />
+        <AddPublication location={true} imageUrl={imageUrl} />
       </CreatePostModal>
     </>
   )
