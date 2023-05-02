@@ -66,7 +66,6 @@ export const CropEditor = ({
       isOpen={isModalOpen}
       title={'Cropping'}
       onClose={onCloseClick}
-      onBackClick={onCloseClick}
       onBtnClick={onNextClick}
     >
       <div className={'relative h-[500px]'}>
