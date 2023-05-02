@@ -3,6 +3,7 @@ import React, { FC, memo, PropsWithChildren, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { useMeQuery } from '@/services/hookMe'
+import { useUserStore } from '@/store'
 import { Preloader } from '@/ui'
 
 const unProtectedPaths = [
@@ -16,8 +17,11 @@ const unProtectedPaths = [
 ]
 const AuthProtection: FC<PropsWithChildren> = memo(({ children }) => {
   const { pathname, replace } = useRouter()
+  const { setUserId } = useUserStore()
 
-  const { isSuccess, isError, fetchStatus } = useMeQuery()
+  const { isSuccess, isError, fetchStatus } = useMeQuery(userId => {
+    setUserId(userId)
+  })
 
   useEffect(() => {
     if (isSuccess && unProtectedPaths.includes(pathname)) {
