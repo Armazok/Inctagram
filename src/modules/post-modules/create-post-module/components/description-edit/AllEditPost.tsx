@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction, useState } from 'react'
+import React, { Dispatch, FC, SetStateAction } from 'react'
 
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { EditDescription } from '@/modules/post-modules/create-post-module/components/description-edit/EditDescription'
@@ -18,24 +18,21 @@ export const AllEditPost: FC<IEditPost> = ({
   isModalOpen,
   onCloseClick,
   imageUrl,
-  description,
   location,
+  description,
 }) => {
-  const { postId } = useUserStore()
+  const { postId, descriptionLocal } = useUserStore()
 
-  const [text, setText] = useState<string>(description)
-  const { mutate: editFunc } = useEditPostMutation(() => '')
+  const { mutate: editFunc } = useEditPostMutation()
 
   const editPost = () => {
-    if (postId && text) {
-      editFunc({ postId: postId, description: text })
+    debugger
+    if (postId && descriptionLocal) {
+      editFunc({ postId: postId, description: descriptionLocal })
     } else {
       console.log('editPost BAD BAD')
     }
   }
-
-  console.log(description)
-  console.log(postId)
 
   return (
     <div className={'flex flex-wrap'}>
@@ -46,13 +43,7 @@ export const AllEditPost: FC<IEditPost> = ({
         onBtnClick={() => ''}
         showBackArrow={false}
       >
-        <EditDescription
-          text={text}
-          imageUrl={imageUrl}
-          location={location}
-          setText={setText}
-          callback={editPost}
-        />
+        <EditDescription imageUrl={imageUrl} location={location} callback={editPost} />
       </CreatePostModal>
     </div>
   )
