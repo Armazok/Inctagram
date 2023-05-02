@@ -7,21 +7,30 @@ import { useUserStore } from '@/store'
 
 interface IAddFullPost {
   isModalOpen: boolean
-  onCloseClick: () => void
   imageUrl: string
-  setOpenModal: Dispatch<SetStateAction<boolean>>
+  useStoreAddFullPostModule: (isModalOpen: any) => void
   callback?: () => void
+  filterEditorModule: (isModalOpen: boolean) => void
 }
 
 export const AddFullPost: FC<IAddFullPost> = ({
   isModalOpen,
-  onCloseClick,
   imageUrl,
   callback,
+  useStoreAddFullPostModule,
+  filterEditorModule,
 }) => {
   const { uploadId, descriptionLocal } = useUserStore()
 
   const { mutate: addAllPostMutate } = useAddAllPostMutation()
+  const onCloseClick = () => {
+    useStoreAddFullPostModule(false)
+  }
+
+  const onBackClick = () => {
+    filterEditorModule(true)
+    useStoreAddFullPostModule(false)
+  }
 
   const addAllPost = () => {
     if (uploadId && descriptionLocal) {
@@ -31,6 +40,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
       })
     } else {
       console.log('Bad Function Bad')
+      useStoreAddFullPostModule(false)
     }
   }
 
@@ -38,6 +48,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
     <>
       <CreatePostModal
         isOpen={isModalOpen}
+        onBackClick={onBackClick}
         onClose={onCloseClick}
         title={'Publication'}
         onBtnClick={addAllPost}

@@ -9,11 +9,20 @@ type PropsType = {
   cropSize: any
   imageUrl: string
   isModalOpen: boolean
-  setOpenModal: (isModalOpen: any) => void
-  selectedPhoto: string | File | null
+  filterEditorModule: (isModalOpen: boolean) => void
+  useStoreAddFullPostModule: (isModalOpen: boolean) => void
+  cropEditorModule: (isModalOpen: boolean) => void
+  setSelectedPhoto: (photo: string | File | null) => void
 }
 
-export const FiltersEditor = ({ imageUrl, cropSize, setOpenModal, isModalOpen }: PropsType) => {
+export const FiltersEditor = ({
+  imageUrl,
+  cropSize,
+  isModalOpen,
+  cropEditorModule,
+  filterEditorModule,
+  useStoreAddFullPostModule,
+}: PropsType) => {
   const { setUploadId } = useUserStore()
   const [filter, setFilter] = useState('none')
 
@@ -25,9 +34,13 @@ export const FiltersEditor = ({ imageUrl, cropSize, setOpenModal, isModalOpen }:
     setFilter(filter)
   }
 
+  const onBackClick = () => {
+    cropEditorModule(true)
+    filterEditorModule(false)
+  }
+
   const onCloseClick = () => {
-    setFilter('none')
-    setOpenModal('cropping')
+    filterEditorModule(false)
   }
 
   const onNextClick = () => {
@@ -61,18 +74,18 @@ export const FiltersEditor = ({ imageUrl, cropSize, setOpenModal, isModalOpen }:
     //
     //   setFilteredImage(String(filteredImageUrl))
     // })
-
-    setOpenModal('publication')
+    useStoreAddFullPostModule(true)
+    filterEditorModule(false)
   }
 
   return (
     <CreatePostModal
       showBackArrow={true}
+      onBackClick={onBackClick}
       variant={'Next'}
       isOpen={isModalOpen}
       onClose={onCloseClick}
       title={'Filter'}
-      onBackClick={onCloseClick}
       onBtnClick={onNextClick}
     >
       <div className={'flex flex-wrap justify-between'}>

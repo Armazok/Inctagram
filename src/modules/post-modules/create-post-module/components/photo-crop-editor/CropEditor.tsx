@@ -12,7 +12,8 @@ type PropsType = {
   isModalOpen: boolean
   setSelectedPhoto: (photo: string | File | null) => void
   setCropSize: (crop: { width: number; height: number }) => void
-  setOpenModal: (modal: string) => void
+  filterEditorModule: (isModalOpen: boolean) => void
+  cropEditorModule: (isModalOpen: boolean) => void
 }
 
 export const CropEditor = ({
@@ -20,7 +21,8 @@ export const CropEditor = ({
   setSelectedPhoto,
   setCropSize,
   isModalOpen,
-  setOpenModal,
+  filterEditorModule,
+  cropEditorModule,
 }: PropsType) => {
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
@@ -41,7 +43,8 @@ export const CropEditor = ({
   }
 
   const onNextClick = () => {
-    setOpenModal('filters')
+    cropEditorModule(false)
+    filterEditorModule(true)
   }
 
   useEffect(() => {
