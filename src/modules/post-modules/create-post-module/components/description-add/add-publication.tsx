@@ -10,7 +10,7 @@ type AddPublicationType = {
 
 export const AddPublication: FC<AddPublicationType> = ({ imageUrl, location, callback }) => {
   return (
-    <div className={'flex flex-wrap'}>
+    <div className={'flex flex-wrap w-[972px] justify-between'}>
       <div className={'w-[436px]'}>
         <img
           src={imageUrl}
