@@ -38,7 +38,7 @@ export const CreatePostModal: FC<Props> = ({
       className={styles.modal}
     >
       <div className={styles.modalHeader}>
-        {showBackArrow && (
+        {showBackArrow && onBackClick ? (
           <Image
             onClick={onBackClick}
             className={styles.modalBackBtn}
@@ -47,6 +47,8 @@ export const CreatePostModal: FC<Props> = ({
             height={24}
             width={24}
           />
+        ) : (
+          <div></div>
         )}
         <div className={styles.modalTitle}>{title}</div>
 
