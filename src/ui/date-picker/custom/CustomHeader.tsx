@@ -43,8 +43,6 @@ export const CustomHeader = ({
 
   const headerText = capitalizeFirstLetter(format(date, 'LLLL Y'))
 
-  console.log(months[getMonth(date)])
-
   return (
     <div className={classNames.header} {...rest}>
       <div>{headerText}</div>
