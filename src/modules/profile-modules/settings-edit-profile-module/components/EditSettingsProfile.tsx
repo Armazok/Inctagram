@@ -16,17 +16,15 @@ import { Preloader } from '@/ui'
 export const EditSettingProfile = () => {
   const client = useQueryClient()
 
-  const { profileData, isProfileLoading, profileAvatar, refetch: refreshProfile } = useGetProfile()
+  const { profileData, isProfileLoading, profileAvatar } = useGetProfile()
 
   const { mutate: editeProfile, isLoading: isEditProfileLoading } = useMutation({
     mutationFn: editAccountData,
-    onSuccess: () => {
-      client.invalidateQueries(['get-profile'])
+    onSuccess: async () => {
       toast.success('Profile was updated')
-
-      return refreshProfile()
+      await client.invalidateQueries(['get-profile'])
     },
-    onError: (error: ResponseError) => {
+    onError: async (error: ResponseError) => {
       const messages = error?.response?.data?.messages
 
       if (!messages) {
@@ -37,7 +35,7 @@ export const EditSettingProfile = () => {
         })
       }
 
-      client.invalidateQueries(['get-profile'])
+      await client.invalidateQueries(['get-profile'])
     },
   })
 
