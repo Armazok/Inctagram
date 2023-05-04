@@ -17,7 +17,6 @@ import plus from '../../assets/icons/plus-square.svg'
 import trendingOutline from '../../assets/icons/trending-up-outline.svg'
 import trending from '../../assets/icons/trending-up.svg'
 
-import { ModalWithContent } from '@/components/modals'
 import {
   useStoreAddPostModule,
   useStoreCropEditorModule,
@@ -28,11 +27,14 @@ import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
 import { AddFullPost } from '@/modules/post-modules/create-post-module/components/addFullPost/addFullPost'
 import { CropEditor } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/CropEditor'
 import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/FiltersEditor'
-import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
+import { PhotoUploader } from '@/modules/post-modules/create-post-module/components/photo-uploader/PhotoUploader'
+import { SaveDraftPost } from '@/modules/post-modules/create-post-module/components/save-draft-post/SaveDraftPost'
+import { usePostStore } from '@/store'
 
 export const Sidebar: FC = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
   const [sidebarModule, setSidebarModule] = useState<boolean>(false)
+  const [isDraftModalOpen, setIsDraftModalOpen] = useState(false)
   const [cropSize, setCropSize] = useState<{
     width: number
     height: number
@@ -44,6 +46,7 @@ export const Sidebar: FC = () => {
   const cropEditorModule = useStoreCropEditorModule()
   const filterEditorModule = useStoreFilterEditorModule()
   const useStoreAddFullPostModule = useStoreAddPostModule()
+  const { setSelectedPhoto: setSelectedPhotoToStore } = usePostStore()
   const onAddPhotoClick = () => {
     setSidebarModule(true)
     modalWithContent.setIsModalOpen(true)
@@ -51,6 +54,7 @@ export const Sidebar: FC = () => {
 
   const onCloseClick = () => {
     setSelectedPhoto('')
+    setIsDraftModalOpen(true)
     modalWithContent.setIsModalOpen(false)
   }
 
@@ -133,44 +137,40 @@ export const Sidebar: FC = () => {
         </ul>
         <LogoutButton />
       </div>
-      <ModalWithContent
-        isOpen={modalWithContent.isModalOpen}
-        onClose={onCloseClick}
-        title={'Add photo'}
-      >
-        <PhotoSelector
-          cropEditorModule={cropEditorModule.setIsModalOpen}
-          modalWithContent={modalWithContent.setIsModalOpen}
-          setSelectedPhoto={setSelectedPhoto}
-        />
-      </ModalWithContent>
+      <PhotoUploader setSelectedPhoto={setSelectedPhoto} />
       {selectedPhoto && (
         <CropEditor
+          setSelectedPhoto={setSelectedPhoto}
           isModalOpen={cropEditorModule.isModalOpen}
           filterEditorModule={filterEditorModule.setIsModalOpen}
           cropEditorModule={cropEditorModule.setIsModalOpen}
           image={selectedPhoto}
-          setSelectedPhoto={setSelectedPhoto}
           setCropSize={setCropSize}
+          onClose={onCloseClick}
         />
       )}
       {filterEditorModule.isModalOpen && (
         <FiltersEditor
-          setSelectedPhoto={setSelectedPhoto}
           cropSize={cropSize}
-          imageUrl={String(selectedPhoto)}
           isModalOpen={filterEditorModule.isModalOpen}
           cropEditorModule={cropEditorModule.setIsModalOpen}
           filterEditorModule={filterEditorModule.setIsModalOpen}
           useStoreAddFullPostModule={useStoreAddFullPostModule.setIsModalOpen}
+          onClose={onCloseClick}
         />
       )}
       {useStoreAddFullPostModule.isModalOpen && (
         <AddFullPost
-          imageUrl={String(selectedPhoto)}
           isModalOpen={useStoreAddFullPostModule.isModalOpen}
           useStoreAddFullPostModule={useStoreAddFullPostModule.setIsModalOpen}
           filterEditorModule={filterEditorModule.setIsModalOpen}
+          onClose={onCloseClick}
+        />
+      )}
+      {isDraftModalOpen && (
+        <SaveDraftPost
+          isDraftModalOpen={isDraftModalOpen}
+          setIsDraftModalOpen={setIsDraftModalOpen}
         />
       )}
     </aside>
