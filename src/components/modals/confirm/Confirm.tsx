@@ -31,7 +31,7 @@ export const Confirm: FC<Props> = ({
       isOpen={isOpen}
       onRequestClose={onClose}
       ariaHideApp={false}
-      overlayClassName={'fixed w-full h-full top-0 left-0 bg-dark-900 z-[100]'}
+      overlayClassName={'fixed w-full h-full top-0 left-0 bg-dark-900/60 z-[100]'}
       className={
         'absolute w-full min-h-[240px] max-w-[438px] bg-dark-300 border-dark-100 border rounded-sm top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200]'
       }
