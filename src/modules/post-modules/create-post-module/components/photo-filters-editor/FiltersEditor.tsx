@@ -1,34 +1,35 @@
 import React, { useState } from 'react'
 
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
-import { useUploadAvatarMutation } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
 import { PhotoFilters } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/photoFilters/PhotoFilters'
-import { useUserStore } from '@/store'
+import { usePostStore } from '@/store'
 
 type PropsType = {
   cropSize: any
-  imageUrl: string
   isModalOpen: boolean
   filterEditorModule: (isModalOpen: boolean) => void
   useStoreAddFullPostModule: (isModalOpen: boolean) => void
   cropEditorModule: (isModalOpen: boolean) => void
-  setSelectedPhoto: (photo: string | File | null) => void
+  onClose: () => void
 }
 
 export const FiltersEditor = ({
-  imageUrl,
+  // imageUrl,
   cropSize,
   isModalOpen,
   cropEditorModule,
   filterEditorModule,
   useStoreAddFullPostModule,
+  onClose,
 }: PropsType) => {
-  const { setUploadId } = useUserStore()
-  const [filter, setFilter] = useState('none')
+  const { postPhotos } = usePostStore()
 
-  const { mutate: addPhotoToThePost } = useUploadAvatarMutation(val => {
-    setUploadId(val && val[0].uploadId)
-  })
+  console.log(postPhotos)
+  const imageId = 0
+  const imageUrl = postPhotos[imageId].croppedPhoto || postPhotos[imageId].selectedPhoto
+
+  const { setFilteredPhoto } = usePostStore()
+  const [filter, setFilter] = useState('none')
 
   const onFilterClick = async (filter: string) => {
     setFilter(filter)
@@ -40,6 +41,8 @@ export const FiltersEditor = ({
   }
 
   const onCloseClick = () => {
+    onClose()
+    // setFilter('none')
     filterEditorModule(false)
   }
 
@@ -59,21 +62,13 @@ export const FiltersEditor = ({
     //@ts-ignore
     ctx.drawImage(image, 0, 0)
 
-    // @ts-ignore
-    canvas.toBlob((blob: string | Blob) => {
-      const formData = new FormData()
+    canvas.toBlob(blob => {
+      //@ts-ignore
+      const filteredImageUrl = URL.createObjectURL(blob)
 
-      formData.append('file', blob)
-
-      addPhotoToThePost(formData)
+      setFilteredPhoto(imageId, String(filteredImageUrl))
     })
 
-    // canvas.toBlob(blob => {
-    //   //@ts-ignore
-    //   const filteredImageUrl = URL.createObjectURL(blob)
-    //
-    //   setFilteredImage(String(filteredImageUrl))
-    // })
     useStoreAddFullPostModule(true)
     filterEditorModule(false)
   }
