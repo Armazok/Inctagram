@@ -28,6 +28,7 @@
     "gh-pages": "^5.0.0",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
+    "immer": "^10.0.1",
     "jsdoc": "^4.0.2",
     "lodash": "^4.17.21",
     "next": "13.2.4",
@@ -52,6 +53,7 @@
     "tailwindcss": "^3.3.1",
     "typescript": "5.0.3",
     "unsplash-js": "^7.0.15",
+    "uuid": "^9.0.0",
     "yup": "^1.0.2",
     "zustand": "^4.3.7"
   },
