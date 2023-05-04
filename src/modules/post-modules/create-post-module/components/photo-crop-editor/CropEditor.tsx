@@ -7,6 +7,8 @@ import { CropPopup } from './crop-popup'
 import getCroppedImg from './utils/canvasUtils'
 import { ZoomPopup } from './zoom-popup'
 
+import { usePostStore } from '@/store'
+
 type PropsType = {
   image: string | File | null
   isModalOpen: boolean
@@ -14,6 +16,7 @@ type PropsType = {
   setCropSize: (crop: { width: number; height: number }) => void
   filterEditorModule: (isModalOpen: boolean) => void
   cropEditorModule: (isModalOpen: boolean) => void
+  onClose: () => void
 }
 
 export const CropEditor = ({
@@ -23,35 +26,38 @@ export const CropEditor = ({
   isModalOpen,
   filterEditorModule,
   cropEditorModule,
+  onClose,
 }: PropsType) => {
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [aspect, setAspect] = useState<number>(4 / 5)
   const [imageUrl, setImageUrl] = useState<string>('')
+
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>({
     width: 0,
     height: 0,
     x: 0,
     y: 0,
   })
+
+  const [croppedImage, setCropImg] = useState<string>('')
   const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels)
   }, [])
-
-  const onCloseClick = () => {
-    setSelectedPhoto('')
-  }
+  const { setSelectedPhoto: setSelectedPhotoToStore, setCroppedPhoto } = usePostStore()
 
   const onNextClick = () => {
+    setSelectedPhotoToStore(croppedImage)
     cropEditorModule(false)
     filterEditorModule(true)
   }
 
   useEffect(() => {
     if (croppedAreaPixels) {
-      getCroppedImg(imageUrl, croppedAreaPixels).then(croppedImage =>
+      getCroppedImg(imageUrl, croppedAreaPixels).then(croppedImage => {
         setSelectedPhoto(String(croppedImage))
-      )
+        setCropImg(String(croppedImage))
+      })
       setCropSize({ width: croppedAreaPixels.width, height: croppedAreaPixels.height })
     }
   }, [croppedAreaPixels])
@@ -68,7 +74,8 @@ export const CropEditor = ({
       variant={'Next'}
       isOpen={isModalOpen}
       title={'Cropping'}
-      onClose={onCloseClick}
+      onClose={onClose}
+      onBackClick={onClose}
       onBtnClick={onNextClick}
     >
       <div className={'relative h-[500px]'}>
