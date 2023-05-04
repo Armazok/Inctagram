@@ -1,3 +1,5 @@
+//eslint-disable-next-line
+//@ts-ignore
 import { v1 } from 'uuid'
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
@@ -11,7 +13,7 @@ type PostType = {
   // description?: string
 }
 
-type PhotosType = { [uploadId: string]: PostType }
+// type PhotosType = { [uploadId: string]: PostType }
 
 interface PostStore {
   postPhotos: PostType[]

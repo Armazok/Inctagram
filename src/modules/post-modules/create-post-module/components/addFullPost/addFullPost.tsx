@@ -2,7 +2,6 @@ import React, { FC } from 'react'
 
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
-import { useAddAllPostMutation } from '@/modules/post-modules/create-post-module/components/hooks/useAddAllPost'
 import { useUploadPost } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
 import { clearDatabase } from '@/modules/post-modules/create-post-module/utils/clearDatabase'
 import { usePostStore } from '@/store'
@@ -43,7 +42,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
 
   const { mutate: addPhotoToThePost } = useUploadPost(onSuccessPostSent)
 
-  const { mutate: addAllPostMutate } = useAddAllPostMutation()
+  // const { mutate: addAllPostMutate } = useAddAllPostMutation()
   const onCloseClick = () => {
     onClose()
     useStoreAddFullPostModule(false)

@@ -27,9 +27,9 @@ import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
 import { AddFullPost } from '@/modules/post-modules/create-post-module/components/addFullPost/addFullPost'
 import { CropEditor } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/CropEditor'
 import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/FiltersEditor'
+// @ts-ignore
 import { PhotoUploader } from '@/modules/post-modules/create-post-module/components/photo-uploader/PhotoUploader'
 import { SaveDraftPost } from '@/modules/post-modules/create-post-module/components/save-draft-post/SaveDraftPost'
-import { usePostStore } from '@/store'
 
 export const Sidebar: FC = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
@@ -46,7 +46,7 @@ export const Sidebar: FC = () => {
   const cropEditorModule = useStoreCropEditorModule()
   const filterEditorModule = useStoreFilterEditorModule()
   const useStoreAddFullPostModule = useStoreAddPostModule()
-  const { setSelectedPhoto: setSelectedPhotoToStore } = usePostStore()
+  // const { setSelectedPhoto: setSelectedPhotoToStore } = usePostStore()
   const onAddPhotoClick = () => {
     setSidebarModule(true)
     modalWithContent.setIsModalOpen(true)
