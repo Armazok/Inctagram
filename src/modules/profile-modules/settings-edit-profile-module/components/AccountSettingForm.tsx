@@ -77,7 +77,11 @@ export const AccountSettingForm: FC<Partial<PropsType>> = ({ initialProfileData,
         {...register('aboutMe')}
         error={errors?.aboutMe?.message}
       />
-      <GlobalButton type="submit" variant="default" className="ml-auto mt-[30px] text-[16px]">
+      <GlobalButton
+        type="submit"
+        variant="default"
+        className="ml-auto mt-[30px] text-[16px] sm:w-full sm:mt-0 sm:h-12 sm:items-center"
+      >
         Save Changes
       </GlobalButton>
     </form>

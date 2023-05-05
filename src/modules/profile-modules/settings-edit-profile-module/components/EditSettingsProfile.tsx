@@ -45,7 +45,7 @@ export const EditSettingProfile = () => {
 
   return (
     <SettingsAccountLayout>
-      <div>
+      <div className="sm:flex sm:justify-center">
         <UploadAvatarBlock avatarUrl={profileAvatar} />
       </div>
       <AccountSettingForm onSubmit={editProfileData} initialProfileData={profileData} />

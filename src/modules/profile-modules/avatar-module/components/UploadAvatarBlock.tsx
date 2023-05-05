@@ -60,7 +60,7 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
 
   return (
     <div className={'flex flex-col flex-nowrap items-center w-52 font-medium p-[5px]'}>
-      <div className={'mb-[30px] mt-[48px] w-52'}>
+      <div className={'mb-[30px] mt-[48px] w-52 sm:m-0'}>
         <Avatar alt={'profile photo'} src={isAvatarShown} className={``} />
         {isAvatarShown && (
           <DeleteAvatarButton onDeleteAvatarClick={onDeleteAvatarClick} disabled={isDisabled} />
@@ -69,7 +69,7 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
       <GlobalButton
         type={'button'}
         variant={'transparent'}
-        className={`text-[16px]`}
+        className={`text-[16px] sm:w-80 sm:h-12 sm:items-center`}
         callback={onAddPhotoClick}
         disabled={isDisabled}
       >
