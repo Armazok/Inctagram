@@ -5,14 +5,16 @@ interface StoreType {
   isModalOpen: boolean
   setIsModalOpen: (isModalOpen: boolean) => void
 }
-const createStore = (store: any) => create(devtools(store))
+
+//Надо узнать правильную типизацию zustand
+// const createStore = store => create(devtools(store))
 const storeModal = (set: any): StoreType => ({
   isModalOpen: false,
   setIsModalOpen: isModalOpen => set({ isModalOpen: isModalOpen }, false, 'setIsModalOpen'),
 })
 
-export const useStoreWithContentModal = createStore(storeModal)
-export const useStoreCropEditorModal = createStore(storeModal)
-export const useStoreFilterEditorModal = createStore(storeModal)
-export const useStoreAddPostModal = createStore(storeModal)
-export const useStoreAvatarBlockModal = createStore(storeModal)
+export const useStoreWithContentModal = create(devtools(storeModal))
+export const useStoreCropEditorModal = create(devtools(storeModal))
+export const useStoreFilterEditorModal = create(devtools(storeModal))
+export const useStoreAddPostModal = create(devtools(storeModal))
+export const useStoreAvatarBlockModal = create(devtools(storeModal))
