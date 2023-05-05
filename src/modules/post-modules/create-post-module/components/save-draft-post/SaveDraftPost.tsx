@@ -49,6 +49,7 @@ export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsTy
       // set draft to indexed db
     })
 
+    clearPostPhotos()
     setIsDraftModalOpen(false)
   }
 
