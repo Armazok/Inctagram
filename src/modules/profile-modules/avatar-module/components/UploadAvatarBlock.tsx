@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { ModalWithContent } from '@/components/modals'
-import { useStoreAvatarBlockModule } from '@/components/modals/store'
+import { useStoreAvatarBlockModal } from '@/components/modals/store'
 import { PhotoSelector, ProfileAvatarEditor } from '@/modules/profile-modules/avatar-module'
 import { DeleteAvatarButton } from '@/modules/profile-modules/avatar-module/components/avatar-delete-button/DeleteButton'
 import { useDeleteAvatar } from '@/modules/profile-modules/avatar-module/hooks/useDeleteAvatar'
@@ -15,7 +15,7 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
   const [avatar, setAvatar] = useState(avatarUrl)
 
-  const UploadAvatarBlockModule = useStoreAvatarBlockModule()
+  const UploadAvatarBlockModal = useStoreAvatarBlockModal()
 
   const onDeleteSuccess = () => {
     setAvatar('')
@@ -23,7 +23,7 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
 
   const onUploadSuccess = (avatar: string) => {
     setAvatar(avatar)
-    UploadAvatarBlockModule.setIsModalOpen(false)
+    UploadAvatarBlockModal.setIsModalOpen(false)
   }
 
   const { isLoading: isLoadingDeleteAvatar, mutate: deleteAvatar } =
@@ -37,17 +37,17 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
 
   const onCloseClick = () => {
     setSelectedPhoto('')
-    UploadAvatarBlockModule.setIsModalOpen(false)
+    UploadAvatarBlockModal.setIsModalOpen(false)
   }
 
   const onSaveClick = (formData: File) => {
     uploadAvatar(formData)
-    UploadAvatarBlockModule.setIsModalOpen(false)
+    UploadAvatarBlockModal.setIsModalOpen(false)
     setSelectedPhoto('')
   }
 
   const onAddPhotoClick = () => {
-    UploadAvatarBlockModule.setIsModalOpen(true)
+    UploadAvatarBlockModal.setIsModalOpen(true)
   }
 
   const onDeleteAvatarClick = () => {
