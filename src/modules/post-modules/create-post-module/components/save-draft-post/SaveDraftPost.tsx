@@ -24,16 +24,26 @@ export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsTy
   const onConfirmClick = async () => {
     clearPreviousDraft().then(() => {
       postPhotos.forEach(photo => {
-        const imageData = {
-          data: photo,
-          timestamp: Date.now(),
-        }
-        setItemToDatabase({
-          keyPath: IMAGES.KEY_PATH,
-          storeName: IMAGES.STORE_NAME,
-          dbName: IMAGES.DB_NAME,
-          itemData: imageData,
-        })
+        fetch(photo.filteredPhoto)
+          .then(response => response.blob())
+          .then(blob => {
+            const imageData = {
+              data: {
+                filteredPhoto: blob,
+                uploadId: photo.uploadId,
+              },
+              timestamp: Date.now(),
+            }
+            setItemToDatabase({
+              keyPath: IMAGES.KEY_PATH,
+              storeName: IMAGES.STORE_NAME,
+              dbName: IMAGES.DB_NAME,
+              itemData: imageData,
+            })
+          })
+          .catch(error => {
+            console.error('Error fetching Blob:', error)
+          })
       })
 
       // set draft to indexed db

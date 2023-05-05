@@ -10,7 +10,6 @@ import { Preloader } from '@/ui'
 import { useAddAllPostMutation } from '@/modules/post-modules/create-post-module/components/hooks/useAddAllPost'
 import UIkit from 'uikit'
 import upload = UIkit.upload
-import { clearImageDatabase } from '@/modules/post-modules/create-post-module/utils/clearImageDatabase'
 
 interface IAddFullPost {
   isModalOpen: boolean
@@ -97,12 +96,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
         // showBackArrow={true}
         variant={'Publish'}
       >
-        <AddPublication
-          location={true}
-          imageUrl={
-            imageUrl ? imageUrl : 'blob:http://localhost:3000/05a0cf4c-a6d4-484f-a22c-27f4155f58a0'
-          }
-        />
+        <AddPublication location={true} imageUrl={imageUrl} />
       </CreatePostModal>
     </>
   )

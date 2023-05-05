@@ -21,7 +21,7 @@ interface PostStore {
   setPostDescription: (description: string) => void
   setFilteredPhoto: (uploadId: any, filteredPhoto: string) => void
   clearPostPhotos: () => void
-  setPhotoFromDB: (photo: PostType) => void
+  setPhotoFromDB: (photo: string, id: string) => void
 }
 
 export const usePostStore = create<PostStore>()(
@@ -67,13 +67,14 @@ export const usePostStore = create<PostStore>()(
         state.postPhotos = []
       })
     },
-    setPhotoFromDB(photo: PostType) {
+    setPhotoFromDB(photo: string, id: string) {
       set((state): any => {
-        const { uploadId, filteredPhoto, croppedPhoto } = photo
-        debugger
-        console.log(photo, 'photo')
-        console.log(photo.filteredPhoto, 'filteredPhoto')
-        state.postPhotos.push({ uploadId, filteredPhoto, croppedPhoto, isLoadedFromDB: true })
+        state.postPhotos.push({
+          uploadId: id,
+          filteredPhoto: photo,
+          croppedPhoto: photo,
+          isLoadedFromDB: true,
+        })
       })
     },
   }))

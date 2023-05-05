@@ -23,7 +23,9 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
   const { setPhotoFromDB, imageDbCount, setImageDbCount, clearPostPhotos } = usePostStore()
 
   const onSuccessOpenDraft = async (data: any) => {
-    await setPhotoFromDB(data)
+    let blobUrl = URL.createObjectURL(data.filteredPhoto)
+    let id = data.uploadId
+    await setPhotoFromDB(blobUrl, id)
     useStoreAddFullPostModule.setIsModalOpen(true)
   }
   const onOpenDraftClick = async () => {
