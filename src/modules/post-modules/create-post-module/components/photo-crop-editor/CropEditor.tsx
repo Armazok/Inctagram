@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
 import Cropper, { Area, Point } from 'react-easy-crop'
-import UIkit from 'uikit'
 
 import { CreatePostModal } from './../create-post-modal/CreatePostModal'
 import { CropPopup } from './crop-popup'
@@ -9,7 +8,6 @@ import getCroppedImg from './utils/canvasUtils'
 import { ZoomPopup } from './zoom-popup'
 
 import { usePostStore } from '@/store'
-import upload = UIkit.upload
 
 type PropsType = {
   image: string | File | null
