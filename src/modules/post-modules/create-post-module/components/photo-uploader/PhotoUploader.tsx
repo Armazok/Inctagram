@@ -57,7 +57,7 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
 
   useEffect(() => {
     checkCountDB()
-  }, [])
+  }, [modalWithContent.isModalOpen])
 
   return (
     <ModalWithContent
