@@ -30,6 +30,8 @@ export const AddFullPost: FC<IAddFullPost> = ({
 
   const { postPhotos, clearPostPhotos, postDescription } = usePostStore()
   let imageUrl = postPhotos[0].filteredPhoto
+  console.log(postPhotos, 'postPhotos')
+  console.log(imageUrl, 'imageUrl')
   let isLoadedFromDB = postPhotos[0].isLoadedFromDB
 
   const onSuccessPostSent = () => {
@@ -95,7 +97,12 @@ export const AddFullPost: FC<IAddFullPost> = ({
         // showBackArrow={true}
         variant={'Publish'}
       >
-        <AddPublication location={true} imageUrl={imageUrl} />
+        <AddPublication
+          location={true}
+          imageUrl={
+            imageUrl ? imageUrl : 'blob:http://localhost:3000/05a0cf4c-a6d4-484f-a22c-27f4155f58a0'
+          }
+        />
       </CreatePostModal>
     </>
   )

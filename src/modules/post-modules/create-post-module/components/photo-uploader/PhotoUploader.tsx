@@ -22,14 +22,12 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
   const cropEditorModule = useStoreCropEditorModule()
   const { setPhotoFromDB, imageDbCount, setImageDbCount, clearPostPhotos } = usePostStore()
 
-  const onSuccessOpenDraft = (data: any) => {
-    debugger
-    setPhotoFromDB(data)
+  const onSuccessOpenDraft = async (data: any) => {
+    await setPhotoFromDB(data)
     useStoreAddFullPostModule.setIsModalOpen(true)
   }
   const onOpenDraftClick = async () => {
     clearPostPhotos()
-    debugger
     await getItemFromDatabase({
       onSuccess: onSuccessOpenDraft,
       keyPath: IMAGES.KEY_PATH,
