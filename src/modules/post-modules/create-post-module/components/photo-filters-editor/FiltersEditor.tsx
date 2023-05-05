@@ -14,7 +14,6 @@ type PropsType = {
 }
 
 export const FiltersEditor = ({
-  // imageUrl,
   cropSize,
   isModalOpen,
   cropEditorModule,
@@ -24,11 +23,11 @@ export const FiltersEditor = ({
 }: PropsType) => {
   const { postPhotos } = usePostStore()
 
-  console.log(postPhotos)
-  const imageId = 0
-  const imageUrl = postPhotos[imageId].croppedPhoto || postPhotos[imageId].selectedPhoto
+  const imageUrl = postPhotos[0].croppedPhoto
+  const uploadId = postPhotos[0].uploadId
+  const isLoadedFromDB = postPhotos[0].isLoadedFromDB
 
-  const { setFilteredPhoto } = usePostStore()
+  const { setFilteredPhoto, imageDbCount } = usePostStore()
   const [filter, setFilter] = useState('none')
 
   const onFilterClick = async (filter: string) => {
@@ -42,7 +41,6 @@ export const FiltersEditor = ({
 
   const onCloseClick = () => {
     onClose()
-    // setFilter('none')
     filterEditorModule(false)
   }
 
@@ -66,7 +64,7 @@ export const FiltersEditor = ({
       //@ts-ignore
       const filteredImageUrl = URL.createObjectURL(blob)
 
-      setFilteredPhoto(imageId, String(filteredImageUrl))
+      setFilteredPhoto(uploadId, String(filteredImageUrl))
     })
 
     useStoreAddFullPostModule(true)
@@ -75,6 +73,7 @@ export const FiltersEditor = ({
 
   return (
     <CreatePostModal
+      // showBackArrow={!isLoadedFromDB}
       showBackArrow={true}
       onBackClick={onBackClick}
       variant={'Next'}

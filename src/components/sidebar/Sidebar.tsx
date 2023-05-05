@@ -46,7 +46,7 @@ export const Sidebar: FC = () => {
   const cropEditorModule = useStoreCropEditorModule()
   const filterEditorModule = useStoreFilterEditorModule()
   const useStoreAddFullPostModule = useStoreAddPostModule()
-  // const { setSelectedPhoto: setSelectedPhotoToStore } = usePostStore()
+
   const onAddPhotoClick = () => {
     setSidebarModule(true)
     modalWithContent.setIsModalOpen(true)

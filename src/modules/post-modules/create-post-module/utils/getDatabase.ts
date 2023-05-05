@@ -1,4 +1,4 @@
-type DatabaseMetaDataType = { dbName: string; storeName: string; keyPath: string }
+export type DatabaseMetaDataType = { dbName: string; storeName: string; keyPath: string }
 
 export const getDatabase = async ({
   dbName,

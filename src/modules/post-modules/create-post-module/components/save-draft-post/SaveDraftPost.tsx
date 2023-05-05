@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Confirm } from '@/components/modals'
+import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
 import { clearDatabase } from '@/modules/post-modules/create-post-module/utils/clearDatabase'
 import { setItemToDatabase } from '@/modules/post-modules/create-post-module/utils/setItemToDatabase'
 import { usePostStore } from '@/store'
@@ -12,24 +13,42 @@ type PropsType = {
 
 export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsType) => {
   const { postPhotos, clearPostPhotos } = usePostStore()
-  const onConfirmClick = () => {
-    // set draft to indexed db
-    postPhotos.forEach(photo => {
-      const imageData = {
-        data: photo,
-        timestamp: Date.now(),
-      }
 
-      setItemToDatabase(imageData)
+  const clearPreviousDraft = async () => {
+    await clearDatabase({
+      dbName: IMAGES.DB_NAME,
+      storeName: IMAGES.STORE_NAME,
+      keyPath: IMAGES.KEY_PATH,
+    })
+  }
+  const onConfirmClick = async () => {
+    clearPreviousDraft().then(() => {
+      postPhotos.forEach(photo => {
+        const imageData = {
+          data: photo,
+          timestamp: Date.now(),
+        }
+        setItemToDatabase({
+          keyPath: IMAGES.KEY_PATH,
+          storeName: IMAGES.STORE_NAME,
+          dbName: IMAGES.DB_NAME,
+          itemData: imageData,
+        })
+      })
+
+      // set draft to indexed db
     })
 
     setIsDraftModalOpen(false)
   }
 
-  const onDiscardClick = () => {
-    clearDatabase()
+  const onDiscardClick = async () => {
+    clearPreviousDraft()
+    await postPhotos.forEach(photo => {
+      URL.revokeObjectURL(photo.croppedPhoto)
+      URL.revokeObjectURL(photo.filteredPhoto)
+    })
     clearPostPhotos()
-    //     revoke obj url
     setIsDraftModalOpen(false)
   }
 
