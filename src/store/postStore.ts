@@ -7,93 +7,74 @@ import { immer } from 'zustand/middleware/immer'
 
 type PostType = {
   uploadId: string
-  selectedPhoto: string
-  croppedPhoto?: string
-  filteredPhoto?: string
-  // description?: string
+  croppedPhoto: string
+  filteredPhoto: string
+  isLoadedFromDB: boolean
 }
-
-// type PhotosType = { [uploadId: string]: PostType }
 
 interface PostStore {
   postPhotos: PostType[]
-  setSelectedPhoto: (selectedPhoto: string) => void
-  setCroppedPhoto: (uploadId: any, croppedPhoto: string) => void
+  postDescription: string
+  imageDbCount: number
+  setImageDbCount: (imageDbCount: number) => void
+  setCroppedPhoto: (croppedPhoto: string) => void
+  setPostDescription: (description: string) => void
   setFilteredPhoto: (uploadId: any, filteredPhoto: string) => void
   clearPostPhotos: () => void
   setPhotoFromDB: (photo: PostType) => void
-  // setPostDescription: (uploadId: string, description: string) => void
 }
 
 export const usePostStore = create<PostStore>()(
   immer(set => ({
     postPhotos: [],
-    setSelectedPhoto(selectedPhoto: string) {
+    postDescription: '',
+    imageDbCount: 0,
+    setImageDbCount(imageDbCount: number) {
+      set((state): any => {
+        state.imageDbCount = imageDbCount
+      })
+    },
+    setCroppedPhoto(croppedPhoto: string) {
       set((state): any => {
         const uploadId = v1()
-
-        state.postPhotos = [
-          {
-            uploadId,
-            selectedPhoto,
-            croppedPhoto: '',
-            filteredPhoto: '',
-            // description: '',
-          },
-        ]
-      })
-      // const uploadId = v1()
-      // state.postPhotos[uploadId] = {
-      //   uploadId: uploadId,
-      //   selectedPhoto,
-      //   croppedPhoto: '',
-      //   filteredPhoto: '',
-      //   // description: '',
-      // }
-      // })
-    },
-    setCroppedPhoto(index, croppedPhoto) {
-      set((state): any => {
-        //
-        // const photo = state.postPhotos.find((photo: PostType) => {
-        //   photo.uploadId === uploadId
-        // })
-        // if (photo) {
-        //   const photoIndex = state.postPhotos.indexOf(photo)
-        //   state.postPhotos[photoIndex].croppedPhoto = croppedPhoto
-        // }
-        // })
-        state.postPhotos[index].croppedPhoto = croppedPhoto
+        state.postPhotos.push({
+          uploadId: uploadId,
+          croppedPhoto: croppedPhoto,
+          filteredPhoto: croppedPhoto,
+          isLoadedFromDB: false,
+        })
       })
     },
-    setFilteredPhoto(index, filteredPhoto) {
+    setPostDescription(description: string) {
       set((state): any => {
-        state.postPhotos[index].filteredPhoto = filteredPhoto
+        state.postDescription = description
+      })
+    },
+    setFilteredPhoto(uploadId, filteredPhoto) {
+      set((state): any => {
+        const photo = state.postPhotos.find(photo => {
+          return photo.uploadId === uploadId
+        })
 
-        // const photo = state.postPhotos.find(photo => {
-        //   photo.uploadId === uploadId
-        // })
-        // if (photo) {
-        //   const photoIndex = state.postPhotos.indexOf(photo)
-        //   state.postPhotos[photoIndex].filteredPhoto = filteredPhoto
-        // }
+        if (photo) {
+          const photoIndex = state.postPhotos.indexOf(photo)
+          state.postPhotos[photoIndex].filteredPhoto = filteredPhoto
+        }
       })
     },
     clearPostPhotos() {
       set((state): any => {
-        debugger
         state.postPhotos = []
       })
     },
     setPhotoFromDB(photo: PostType) {
       set((state): any => {
-        state.postPhotos.push(photo)
+        const { uploadId, filteredPhoto, croppedPhoto } = photo
+        debugger
+        console.log(photo, 'photo')
+        console.log(photo.filteredPhoto, 'filteredPhoto')
+        state.postPhotos.push({ uploadId, filteredPhoto, croppedPhoto, isLoadedFromDB: true })
       })
     },
-    // setPostDescription(uploadId, description) {
-    //   set((state): any => {
-    //     // state.postPhotos[uploadId].description = description
-    //   })
-    // },
   }))
 )
