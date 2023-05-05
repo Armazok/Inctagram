@@ -1,18 +1,15 @@
-import { getDatabase } from '@/modules/post-modules/create-post-module/utils/getDatabase'
 import {
-  DB_NAME,
-  KEY_PATH,
-  STORE_NAME,
-} from '@/modules/post-modules/create-post-module/utils/setItemToDatabase'
+  DatabaseMetaDataType,
+  getDatabase,
+} from '@/modules/post-modules/create-post-module/utils/getDatabase'
 
-export const clearDatabase = async () => {
-  const db = await getDatabase({ dbName: DB_NAME, keyPath: KEY_PATH, storeName: STORE_NAME })
-  const clearTx = db.transaction([STORE_NAME], 'readwrite')
-  const clearStore = clearTx.objectStore(STORE_NAME)
+export const clearDatabase = async ({ dbName, storeName, keyPath }: DatabaseMetaDataType) => {
+  const db = await getDatabase({ dbName, keyPath, storeName })
+  const clearTx = db.transaction([storeName], 'readwrite')
+  const clearStore = clearTx.objectStore(storeName)
 
   clearStore.clear()
 
   // clearTx.oncomplete = () => {
-  //   console.log('IndexedDB cleared')
   // }
 }

@@ -2,7 +2,7 @@ import React, { ChangeEvent, FC } from 'react'
 
 import { Location } from '@/modules/post-modules/create-post-module/components/location/location'
 import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
-import { useUserStore } from '@/store'
+import { usePostStore, useUserStore } from '@/store'
 import { Avatar, GlobalButton, Textarea } from '@/ui'
 import { Button } from '@/ui/buttons/stories/GlobalButton.stories'
 
@@ -18,10 +18,10 @@ export const RightDescription: FC<RightDescriptionType> = ({ location, callback 
   const avatar = profileAvatar && profileAvatar
   const userName = profileData && profileData.userName
 
-  const { setDescriptionLocal, descriptionLocal } = useUserStore()
+  const { setPostDescription, postDescription } = usePostStore()
 
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setDescriptionLocal(e.currentTarget.value)
+    setPostDescription(e.currentTarget.value)
   }
 
   return (
@@ -33,11 +33,11 @@ export const RightDescription: FC<RightDescriptionType> = ({ location, callback 
       <div className={'flex'}>
         <Textarea
           maxLength={MAX_CHARACTERS}
-          value={descriptionLocal}
+          value={postDescription}
           onChange={handleTextChange}
           label={'Add publication description'}
         />
-        <p>{descriptionLocal ? `${descriptionLocal.length} / ${MAX_CHARACTERS}` : '0 / 500'}</p>
+        <p>{postDescription ? `${postDescription.length} / ${MAX_CHARACTERS}` : '0 / 500'}</p>
       </div>
 
       {location ? (
