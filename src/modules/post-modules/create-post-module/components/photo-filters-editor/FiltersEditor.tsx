@@ -11,6 +11,7 @@ type PropsType = {
   useStoreAddFullPostModule: (isModalOpen: boolean) => void
   cropEditorModule: (isModalOpen: boolean) => void
   onClose: () => void
+  setIsDraftModalOpen: (isModalOpen: boolean) => void
 }
 
 export const FiltersEditor = ({
@@ -20,6 +21,7 @@ export const FiltersEditor = ({
   filterEditorModule,
   useStoreAddFullPostModule,
   onClose,
+  setIsDraftModalOpen,
 }: PropsType) => {
   const { postPhotos } = usePostStore()
 
@@ -27,7 +29,7 @@ export const FiltersEditor = ({
   const uploadId = postPhotos[0].uploadId
   const isLoadedFromDB = postPhotos[0].isLoadedFromDB
 
-  const { setFilteredPhoto, imageDbCount } = usePostStore()
+  const { setFilteredPhoto } = usePostStore()
   const [filter, setFilter] = useState('none')
 
   const onFilterClick = async (filter: string) => {
@@ -40,6 +42,7 @@ export const FiltersEditor = ({
   }
 
   const onCloseClick = () => {
+    setIsDraftModalOpen(true)
     onClose()
     filterEditorModule(false)
   }
@@ -73,7 +76,6 @@ export const FiltersEditor = ({
 
   return (
     <CreatePostModal
-      // showBackArrow={!isLoadedFromDB}
       showBackArrow={true}
       onBackClick={onBackClick}
       variant={'Next'}

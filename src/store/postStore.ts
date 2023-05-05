@@ -29,7 +29,6 @@ export const usePostStore = create<PostStore>()(
     postDescription: '',
     setUploadId() {
       set((state): any => {
-        debugger
         state.postPhotos.push({
           uploadId: v1(),
           croppedPhoto: '',
@@ -40,13 +39,13 @@ export const usePostStore = create<PostStore>()(
     },
     setCroppedPhoto(uploadId: string, croppedPhoto: string) {
       set((state): any => {
-        debugger
         const photo = state.postPhotos.find(photo => {
           return photo.uploadId === uploadId
         })
 
         if (photo) {
           const photoIndex = state.postPhotos.indexOf(photo)
+
           state.postPhotos[photoIndex].croppedPhoto = croppedPhoto
           state.postPhotos[photoIndex].filteredPhoto = croppedPhoto
         }

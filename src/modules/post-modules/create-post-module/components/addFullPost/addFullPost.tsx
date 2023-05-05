@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 
 import UIkit from 'uikit'
 
@@ -18,6 +18,7 @@ interface IAddFullPost {
   callback?: () => void
   filterEditorModule: (isModalOpen: boolean) => void
   onClose: () => void
+  setIsDraftModalOpen: (isModalOpen: boolean) => void
 }
 
 export const AddFullPost: FC<IAddFullPost> = ({
@@ -25,15 +26,11 @@ export const AddFullPost: FC<IAddFullPost> = ({
   useStoreAddFullPostModule,
   filterEditorModule,
   onClose,
+  setIsDraftModalOpen,
 }) => {
-  const [description, setDescription] = useState('')
-
   const { postPhotos, clearPostPhotos, postDescription } = usePostStore()
   const { userId } = useUserStore()
   let imageUrl = postPhotos[0].filteredPhoto
-
-  console.log(postPhotos, 'postPhotos')
-  console.log(imageUrl, 'imageUrl')
   let isLoadedFromDB = postPhotos[0].isLoadedFromDB
 
   const onSuccessPostSent = () => {
@@ -52,6 +49,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
 
   const { mutate: addAllPostMutate } = useAddAllPostMutation()
   const onCloseClick = () => {
+    setIsDraftModalOpen(true)
     onClose()
     useStoreAddFullPostModule(false)
   }

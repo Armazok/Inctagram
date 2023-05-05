@@ -54,7 +54,6 @@ export const Sidebar: FC = () => {
 
   const onCloseClick = () => {
     setSelectedPhoto('')
-    setIsDraftModalOpen(true)
     modalWithContent.setIsModalOpen(false)
   }
 
@@ -157,6 +156,7 @@ export const Sidebar: FC = () => {
           filterEditorModule={filterEditorModule.setIsModalOpen}
           useStoreAddFullPostModule={useStoreAddFullPostModule.setIsModalOpen}
           onClose={onCloseClick}
+          setIsDraftModalOpen={setIsDraftModalOpen}
         />
       )}
       {useStoreAddFullPostModule.isModalOpen && (
@@ -165,6 +165,7 @@ export const Sidebar: FC = () => {
           useStoreAddFullPostModule={useStoreAddFullPostModule.setIsModalOpen}
           filterEditorModule={filterEditorModule.setIsModalOpen}
           onClose={onCloseClick}
+          setIsDraftModalOpen={setIsDraftModalOpen}
         />
       )}
       {isDraftModalOpen && (

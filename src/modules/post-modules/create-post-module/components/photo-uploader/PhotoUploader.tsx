@@ -25,7 +25,6 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
 
   const onSetSelectedPhotoClick = (file: any) => {
     setSelectedPhoto(file)
-    debugger
     setUploadId()
   }
   const onSuccessOpenDraft = async (data: any) => {
@@ -37,6 +36,7 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
   }
   const onOpenDraftClick = async () => {
     clearPostPhotos()
+
     await getItemFromDatabase({
       onSuccess: onSuccessOpenDraft,
       keyPath: IMAGES.KEY_PATH,
