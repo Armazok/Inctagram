@@ -15,9 +15,8 @@ type PostType = {
 interface PostStore {
   postPhotos: PostType[]
   postDescription: string
-  imageDbCount: number
-  setImageDbCount: (imageDbCount: number) => void
-  setCroppedPhoto: (croppedPhoto: string) => void
+  setUploadId: () => void
+  setCroppedPhoto: (uploadId: string, croppedPhoto: string) => void
   setPostDescription: (description: string) => void
   setFilteredPhoto: (uploadId: any, filteredPhoto: string) => void
   clearPostPhotos: () => void
@@ -28,21 +27,45 @@ export const usePostStore = create<PostStore>()(
   immer(set => ({
     postPhotos: [],
     postDescription: '',
-    imageDbCount: 0,
-    setImageDbCount(imageDbCount: number) {
+    setUploadId() {
       set((state): any => {
-        state.imageDbCount = imageDbCount
-      })
-    },
-    setCroppedPhoto(croppedPhoto: string) {
-      set((state): any => {
-        const uploadId = v1()
+        debugger
         state.postPhotos.push({
-          uploadId: uploadId,
-          croppedPhoto: croppedPhoto,
-          filteredPhoto: croppedPhoto,
+          uploadId: v1(),
+          croppedPhoto: '',
+          filteredPhoto: '',
           isLoadedFromDB: false,
         })
+      })
+    },
+    setCroppedPhoto(uploadId: string, croppedPhoto: string) {
+      set((state): any => {
+        debugger
+        const photo = state.postPhotos.find(photo => {
+          return photo.uploadId === uploadId
+        })
+
+        if (photo) {
+          const photoIndex = state.postPhotos.indexOf(photo)
+          state.postPhotos[photoIndex].croppedPhoto = croppedPhoto
+          state.postPhotos[photoIndex].filteredPhoto = croppedPhoto
+        }
+        // else {
+        //       state.postPhotos.push({
+        //           uploadId,
+        //           croppedPhoto,
+        //           filteredPhoto: croppedPhoto,
+        //           isLoadedFromDB: false,
+        //       })
+        // }
+        // const uploadId = v1()
+
+        // state.postPhotos.push({
+        //   uploadId: uploadId,
+        //   croppedPhoto: ,
+        //   filteredPhoto: croppedPhoto,
+        //   isLoadedFromDB: false,
+        // })
       })
     },
     setPostDescription(description: string) {
@@ -58,6 +81,7 @@ export const usePostStore = create<PostStore>()(
 
         if (photo) {
           const photoIndex = state.postPhotos.indexOf(photo)
+
           state.postPhotos[photoIndex].filteredPhoto = filteredPhoto
         }
       })

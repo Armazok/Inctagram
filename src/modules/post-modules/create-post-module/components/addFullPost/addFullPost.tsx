@@ -1,15 +1,16 @@
 import React, { FC, useState } from 'react'
 
+import UIkit from 'uikit'
+
+import upload = UIkit.upload
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
-import { useUploadPost } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
-import { clearDatabase } from '@/modules/post-modules/create-post-module/utils/clearDatabase'
-import { usePostStore } from '@/store'
-import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
-import { Preloader } from '@/ui'
 import { useAddAllPostMutation } from '@/modules/post-modules/create-post-module/components/hooks/useAddAllPost'
-import UIkit from 'uikit'
-import upload = UIkit.upload
+import { useUploadPost } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
+import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
+import { clearDatabase } from '@/modules/post-modules/create-post-module/utils/clearDatabase'
+import { usePostStore, useUserStore } from '@/store'
+import { Preloader } from '@/ui'
 
 interface IAddFullPost {
   isModalOpen: boolean
@@ -28,7 +29,9 @@ export const AddFullPost: FC<IAddFullPost> = ({
   const [description, setDescription] = useState('')
 
   const { postPhotos, clearPostPhotos, postDescription } = usePostStore()
+  const { userId } = useUserStore()
   let imageUrl = postPhotos[0].filteredPhoto
+
   console.log(postPhotos, 'postPhotos')
   console.log(imageUrl, 'imageUrl')
   let isLoadedFromDB = postPhotos[0].isLoadedFromDB
@@ -45,7 +48,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
     useStoreAddFullPostModule(false)
   }
 
-  const { mutate: addPhotoToThePost, isLoading } = useUploadPost(onSuccessPostSent)
+  const { mutate: addPhotoToThePost, isLoading } = useUploadPost(onSuccessPostSent, userId!)
 
   const { mutate: addAllPostMutate } = useAddAllPostMutation()
   const onCloseClick = () => {
@@ -66,10 +69,18 @@ export const AddFullPost: FC<IAddFullPost> = ({
     fetch(blobUrl)
       .then(response => response.blob())
       .then((blob: Blob) => {
-        formData.append('file', blob, 'image.png')
+        formData.append('file', blob) // add file to Form data
+
+        // formData.append('description', description) // add description to Form data
+        //
+        // const json = { description: description }
+        // formData.append('json', JSON.stringify(json)) // add JSON object to Form data as text field
+
+        // formData.append('file', blob, 'image.png')
         addPhotoToThePost(formData)
       })
     const uploadId = 'c794b16b-cfe8-42d3-b289-1e0853dd3f7f'
+
     if (uploadId && postDescription) {
       addAllPostMutate({
         description: postDescription,
@@ -93,7 +104,6 @@ export const AddFullPost: FC<IAddFullPost> = ({
         title={'Publication'}
         onBtnClick={addAllPost}
         showBackArrow={!isLoadedFromDB}
-        // showBackArrow={true}
         variant={'Publish'}
       >
         <AddPublication location={true} imageUrl={imageUrl} />

@@ -34,6 +34,7 @@ export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsTy
               },
               timestamp: Date.now(),
             }
+
             setItemToDatabase({
               keyPath: IMAGES.KEY_PATH,
               storeName: IMAGES.STORE_NAME,
@@ -45,8 +46,6 @@ export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsTy
             console.error('Error fetching Blob:', error)
           })
       })
-
-      // set draft to indexed db
     })
 
     clearPostPhotos()

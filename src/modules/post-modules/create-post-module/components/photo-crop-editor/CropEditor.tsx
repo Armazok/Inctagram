@@ -8,6 +8,8 @@ import getCroppedImg from './utils/canvasUtils'
 import { ZoomPopup } from './zoom-popup'
 
 import { usePostStore } from '@/store'
+import UIkit from 'uikit'
+import upload = UIkit.upload
 
 type PropsType = {
   image: string | File | null
@@ -44,10 +46,11 @@ export const CropEditor = ({
   const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels)
   }, [])
-  const { setCroppedPhoto } = usePostStore()
+  const { setCroppedPhoto, postPhotos } = usePostStore()
 
+  const uploadId = postPhotos[0].uploadId
   const onNextClick = () => {
-    setCroppedPhoto(croppedImage)
+    setCroppedPhoto(uploadId, croppedImage)
     cropEditorModule(false)
     filterEditorModule(true)
   }

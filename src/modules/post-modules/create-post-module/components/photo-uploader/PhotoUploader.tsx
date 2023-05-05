@@ -17,14 +17,21 @@ type PropsType = {
   setSelectedPhoto: (photo: string | File | null) => void
 }
 export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
+  const [imageDbCount, setImageDbCount] = useState(0)
   const modalWithContent = useStoreWithContentModal()
   const useStoreAddFullPostModule = useStoreAddPostModule()
   const cropEditorModule = useStoreCropEditorModule()
-  const { setPhotoFromDB, imageDbCount, setImageDbCount, clearPostPhotos } = usePostStore()
+  const { setPhotoFromDB, clearPostPhotos, setUploadId } = usePostStore()
 
+  const onSetSelectedPhotoClick = (file: any) => {
+    setSelectedPhoto(file)
+    debugger
+    setUploadId()
+  }
   const onSuccessOpenDraft = async (data: any) => {
     let blobUrl = URL.createObjectURL(data.filteredPhoto)
     let id = data.uploadId
+
     await setPhotoFromDB(blobUrl, id)
     useStoreAddFullPostModule.setIsModalOpen(true)
   }
@@ -44,6 +51,7 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
 
   const checkCountDB = async () => {
     const count = await countData(IMAGES.DB_NAME, IMAGES.STORE_NAME)
+
     setImageDbCount(count)
   }
 
@@ -61,7 +69,7 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
         <PhotoSelector
           cropEditorModule={cropEditorModule.setIsModalOpen}
           modalWithContent={modalWithContent.setIsModalOpen}
-          setSelectedPhoto={setSelectedPhoto}
+          setSelectedPhoto={onSetSelectedPhotoClick}
         />
         {imageDbCount > 0 && (
           <GlobalButton type={'button'} callback={onOpenDraftClick}>
