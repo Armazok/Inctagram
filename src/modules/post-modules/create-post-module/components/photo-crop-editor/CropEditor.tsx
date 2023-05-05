@@ -44,10 +44,11 @@ export const CropEditor = ({
   const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels)
   }, [])
-  const { setSelectedPhoto: setSelectedPhotoToStore } = usePostStore()
+  const { setCroppedPhoto, postPhotos } = usePostStore()
+  const uploadId = postPhotos[0].uploadId
 
   const onNextClick = () => {
-    setSelectedPhotoToStore(croppedImage)
+    setCroppedPhoto(uploadId, croppedImage)
     cropEditorModule(false)
     filterEditorModule(true)
   }

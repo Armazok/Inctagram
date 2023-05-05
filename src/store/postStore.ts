@@ -7,93 +7,98 @@ import { immer } from 'zustand/middleware/immer'
 
 type PostType = {
   uploadId: string
-  selectedPhoto: string
-  croppedPhoto?: string
-  filteredPhoto?: string
-  // description?: string
+  croppedPhoto: string
+  filteredPhoto: string
+  isLoadedFromDB: boolean
 }
-
-// type PhotosType = { [uploadId: string]: PostType }
 
 interface PostStore {
   postPhotos: PostType[]
-  setSelectedPhoto: (selectedPhoto: string) => void
-  setCroppedPhoto: (uploadId: any, croppedPhoto: string) => void
+  postDescription: string
+  setUploadId: () => void
+  setCroppedPhoto: (uploadId: string, croppedPhoto: string) => void
+  setPostDescription: (description: string) => void
   setFilteredPhoto: (uploadId: any, filteredPhoto: string) => void
   clearPostPhotos: () => void
-  setPhotoFromDB: (photo: PostType) => void
-  // setPostDescription: (uploadId: string, description: string) => void
+  setPhotoFromDB: (photo: string, id: string) => void
 }
 
 export const usePostStore = create<PostStore>()(
   immer(set => ({
     postPhotos: [],
-    setSelectedPhoto(selectedPhoto: string) {
+    postDescription: '',
+    setUploadId() {
       set((state): any => {
-        const uploadId = v1()
-
-        state.postPhotos = [
-          {
-            uploadId,
-            selectedPhoto,
-            croppedPhoto: '',
-            filteredPhoto: '',
-            // description: '',
-          },
-        ]
-      })
-      // const uploadId = v1()
-      // state.postPhotos[uploadId] = {
-      //   uploadId: uploadId,
-      //   selectedPhoto,
-      //   croppedPhoto: '',
-      //   filteredPhoto: '',
-      //   // description: '',
-      // }
-      // })
-    },
-    setCroppedPhoto(index, croppedPhoto) {
-      set((state): any => {
-        //
-        // const photo = state.postPhotos.find((photo: PostType) => {
-        //   photo.uploadId === uploadId
-        // })
-        // if (photo) {
-        //   const photoIndex = state.postPhotos.indexOf(photo)
-        //   state.postPhotos[photoIndex].croppedPhoto = croppedPhoto
-        // }
-        // })
-        state.postPhotos[index].croppedPhoto = croppedPhoto
+        state.postPhotos.push({
+          uploadId: v1(),
+          croppedPhoto: '',
+          filteredPhoto: '',
+          isLoadedFromDB: false,
+        })
       })
     },
-    setFilteredPhoto(index, filteredPhoto) {
+    setCroppedPhoto(uploadId: string, croppedPhoto: string) {
       set((state): any => {
-        state.postPhotos[index].filteredPhoto = filteredPhoto
+        const photo = state.postPhotos.find(photo => {
+          return photo.uploadId === uploadId
+        })
 
-        // const photo = state.postPhotos.find(photo => {
-        //   photo.uploadId === uploadId
-        // })
-        // if (photo) {
-        //   const photoIndex = state.postPhotos.indexOf(photo)
-        //   state.postPhotos[photoIndex].filteredPhoto = filteredPhoto
+        if (photo) {
+          const photoIndex = state.postPhotos.indexOf(photo)
+
+          state.postPhotos[photoIndex].croppedPhoto = croppedPhoto
+          state.postPhotos[photoIndex].filteredPhoto = croppedPhoto
+        }
+        // else {
+        //       state.postPhotos.push({
+        //           uploadId,
+        //           croppedPhoto,
+        //           filteredPhoto: croppedPhoto,
+        //           isLoadedFromDB: false,
+        //       })
         // }
+        // const uploadId = v1()
+
+        // state.postPhotos.push({
+        //   uploadId: uploadId,
+        //   croppedPhoto: ,
+        //   filteredPhoto: croppedPhoto,
+        //   isLoadedFromDB: false,
+        // })
+      })
+    },
+    setPostDescription(description: string) {
+      set((state): any => {
+        state.postDescription = description
+      })
+    },
+    setFilteredPhoto(uploadId, filteredPhoto) {
+      set((state): any => {
+        const photo = state.postPhotos.find(photo => {
+          return photo.uploadId === uploadId
+        })
+
+        if (photo) {
+          const photoIndex = state.postPhotos.indexOf(photo)
+
+          state.postPhotos[photoIndex].filteredPhoto = filteredPhoto
+        }
       })
     },
     clearPostPhotos() {
       set((state): any => {
-        debugger
         state.postPhotos = []
       })
     },
-    setPhotoFromDB(photo: PostType) {
+    setPhotoFromDB(photo: string, id: string) {
       set((state): any => {
-        state.postPhotos.push(photo)
+        state.postPhotos.push({
+          uploadId: id,
+          filteredPhoto: photo,
+          croppedPhoto: photo,
+          isLoadedFromDB: true,
+        })
       })
     },
-    // setPostDescription(uploadId, description) {
-    //   set((state): any => {
-    //     // state.postPhotos[uploadId].description = description
-    //   })
-    // },
   }))
 )

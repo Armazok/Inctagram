@@ -1,22 +1,39 @@
-export const countData = (dbName: string, storeName: string): any => {
-  debugger
-  const request = indexedDB.open(dbName)
+export const countData = (dbName: string, storeName: string): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(dbName)
 
-  request.onsuccess = function (event) {
-    //@ts-ignore
-    const db = event.target.result
-    const store = db.transaction(storeName, 'readonly').objectStore(storeName)
+    request.onupgradeneeded = function (event) {
+      //@ts-ignore
+      const db = event.target.result
 
-    // Use the count() method to count the number of records in the store
-    const countRequest = store.count()
-
-    countRequest.onsuccess = function (event: any) {
-      const count = event.target.result
-
-      return count
+      if (!db.objectStoreNames.contains(storeName)) {
+        db.createObjectStore(storeName)
+      }
     }
-    countRequest.onerror = function (event: any) {
-      return 0
+
+    request.onsuccess = function (event) {
+      //@ts-ignore
+      const db = event.target.result
+
+      if (!db.objectStoreNames.contains(storeName)) {
+        reject(0)
+
+        return
+      }
+
+      const store = db.transaction(storeName, 'readonly').objectStore(storeName)
+
+      // Use the count() method to count the number of records in the store
+      const countRequest = store.count()
+
+      countRequest.onsuccess = function (event: any) {
+        const count = event.target.result
+
+        resolve(count)
+      }
+      countRequest.onerror = function (event: any) {
+        reject(event)
+      }
     }
-  }
+  })
 }

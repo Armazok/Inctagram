@@ -1,10 +1,16 @@
 import React, { FC } from 'react'
 
+import UIkit from 'uikit'
+
+import upload = UIkit.upload
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
+import { useAddAllPostMutation } from '@/modules/post-modules/create-post-module/components/hooks/useAddAllPost'
 import { useUploadPost } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
+import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
 import { clearDatabase } from '@/modules/post-modules/create-post-module/utils/clearDatabase'
-import { usePostStore } from '@/store'
+import { usePostStore, useUserStore } from '@/store'
+import { Preloader } from '@/ui'
 
 interface IAddFullPost {
   isModalOpen: boolean
@@ -12,6 +18,7 @@ interface IAddFullPost {
   callback?: () => void
   filterEditorModule: (isModalOpen: boolean) => void
   onClose: () => void
+  setIsDraftModalOpen: (isModalOpen: boolean) => void
 }
 
 export const AddFullPost: FC<IAddFullPost> = ({
@@ -19,31 +26,30 @@ export const AddFullPost: FC<IAddFullPost> = ({
   useStoreAddFullPostModule,
   filterEditorModule,
   onClose,
+  setIsDraftModalOpen,
 }) => {
-  // const { descriptionLocal } = useUserStore()
-  const { postPhotos, clearPostPhotos } = usePostStore()
-  const imageId = 0
-  const { filteredPhoto, selectedPhoto, croppedPhoto } = postPhotos[imageId]
-  let imageUrl = ''
-
-  if (filteredPhoto) {
-    imageUrl = filteredPhoto
-  } else if (croppedPhoto) {
-    imageUrl = croppedPhoto
-  } else if (selectedPhoto) {
-    imageUrl = selectedPhoto
-  }
+  const { postPhotos, clearPostPhotos, postDescription } = usePostStore()
+  const { userId } = useUserStore()
+  let imageUrl = postPhotos[0].filteredPhoto
+  let isLoadedFromDB = postPhotos[0].isLoadedFromDB
 
   const onSuccessPostSent = () => {
+    if (isLoadedFromDB) {
+      clearDatabase({
+        dbName: IMAGES.DB_NAME,
+        storeName: IMAGES.STORE_NAME,
+        keyPath: IMAGES.KEY_PATH,
+      })
+    }
     clearPostPhotos()
-    clearDatabase()
     useStoreAddFullPostModule(false)
   }
 
-  const { mutate: addPhotoToThePost } = useUploadPost(onSuccessPostSent)
+  const { mutate: addPhotoToThePost, isLoading } = useUploadPost(onSuccessPostSent, userId!)
 
-  // const { mutate: addAllPostMutate } = useAddAllPostMutation()
+  const { mutate: addAllPostMutate } = useAddAllPostMutation()
   const onCloseClick = () => {
+    setIsDraftModalOpen(true)
     onClose()
     useStoreAddFullPostModule(false)
   }
@@ -61,19 +67,31 @@ export const AddFullPost: FC<IAddFullPost> = ({
     fetch(blobUrl)
       .then(response => response.blob())
       .then((blob: Blob) => {
-        formData.append('file', blob, 'image.png')
+        formData.append('file', blob) // add file to Form data
+
+        // formData.append('description', description) // add description to Form data
+        //
+        // const json = { description: description }
+        // formData.append('json', JSON.stringify(json)) // add JSON object to Form data as text field
+
+        // formData.append('file', blob, 'image.png')
         addPhotoToThePost(formData)
       })
-    // if (uploadId && descriptionLocal) {
-    //     addAllPostMutate({
-    //         description: descriptionLocal,
-    //         childrenMetadata: [{uploadId}],
-    //     })
-    // } else {
-    //   console.log('Bad Function Bad')
-    //   useStoreAddFullPostModule(false)
-    // }
+    const uploadId = 'c794b16b-cfe8-42d3-b289-1e0853dd3f7f'
+
+    if (uploadId && postDescription) {
+      addAllPostMutate({
+        description: postDescription,
+        // @ts-ignore
+        childrenMetadata: [{ uploadId }],
+      })
+      // } else {
+      //   console.log('Bad Function Bad')
+      //   useStoreAddFullPostModule(false)
+    }
   }
+
+  if (isLoading) return <Preloader />
 
   return (
     <>
@@ -83,7 +101,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
         onClose={onCloseClick}
         title={'Publication'}
         onBtnClick={addAllPost}
-        showBackArrow={true}
+        showBackArrow={!isLoadedFromDB}
         variant={'Publish'}
       >
         <AddPublication location={true} imageUrl={imageUrl} />
