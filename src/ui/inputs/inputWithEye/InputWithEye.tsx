@@ -17,7 +17,7 @@ interface PropsType {
 }
 
 export const InputWithEye: FC<Partial<PropsType>> = forwardRef(
-  ({ label, id, placeholder, error, ...restProps }, ref: ForwardedRef<any>) => {
+  ({ label, id, placeholder, error, ...restProps }, ref: ForwardedRef<HTMLInputElement>) => {
     const [showPass, setShowPass] = useState(false)
 
     return (

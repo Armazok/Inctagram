@@ -1,33 +1,28 @@
-import { CSSProperties, FC, ForwardedRef, forwardRef, HTMLInputTypeAttribute } from 'react'
+import {
+  CSSProperties,
+  ForwardedRef,
+  forwardRef,
+  HTMLInputTypeAttribute,
+  InputHTMLAttributes,
+} from 'react'
 
 import { FieldValues } from 'react-hook-form'
 
 import style from './Input.module.scss'
-export type InputType = {
+
+export type InputType = InputHTMLAttributes<HTMLInputElement> & {
   type: HTMLInputTypeAttribute
-  ref?: ForwardedRef<any>
   id?: string
   label?: string
-  placeholder?: string
   error?: string | FieldValues | any
-  classNameContainer?: CSSProperties
-  defaultValue?: string | any
+  classNameContainer?: string | CSSProperties
 }
 
-export const GlobalInput: FC<InputType> = forwardRef(
+export const GlobalInput = forwardRef(
   (
-    {
-      type,
-      label = '',
-      placeholder,
-      id,
-      error,
-      classNameContainer = '',
-      defaultValue,
-      ...restProps
-    },
-    ref: ForwardedRef<any>
-  ) => {
+    { type, label = '', id, error, classNameContainer = '', ...restProps }: InputType,
+    ref: ForwardedRef<HTMLInputElement>
+  ): JSX.Element => {
     return (
       <div className={`${style.container} ${classNameContainer}`}>
         <label htmlFor={id} className={`${style.label}`}>
@@ -38,11 +33,9 @@ export const GlobalInput: FC<InputType> = forwardRef(
             id={id}
             className={error ? style.inputBottomError : ''}
             type={type}
-            defaultValue={defaultValue}
-            placeholder={placeholder}
-            ref={ref}
             autoComplete={type === 'email' ? 'on' : 'off'}
             {...restProps}
+            ref={ref}
           />
           {error && <span className={style.error}>{error}</span>}
         </div>
