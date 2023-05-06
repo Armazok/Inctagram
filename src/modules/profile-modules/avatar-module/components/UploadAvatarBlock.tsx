@@ -77,7 +77,7 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
       </GlobalButton>
 
       <ModalWithContent
-        isOpen={UploadAvatarBlockModule.isModalOpen}
+        isOpen={UploadAvatarBlockModal.isModalOpen}
         onClose={onCloseClick}
         title={'Add a Profile Photo'}
       >

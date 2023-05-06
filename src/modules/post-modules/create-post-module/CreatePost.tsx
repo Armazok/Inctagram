@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import plusOutline from '@/assets/icons/plus-square-outline.svg'
 import plus from '@/assets/icons/plus-square.svg'
@@ -34,6 +36,8 @@ export const CreatePost = () => {
   const filterEditorModal = useStoreFilterEditorModal()
   const useStoreAddFullPostModal = useStoreAddPostModal()
 
+  const { query, replace, pathname } = useRouter()
+
   const onAddPhotoClick = () => {
     setSidebarModule(true)
     modalWithContent.setIsModalOpen(true)
@@ -52,6 +56,7 @@ export const CreatePost = () => {
       !useStoreAddFullPostModal.isModalOpen
     ) {
       setSidebarModule(false)
+      replace(pathname)
     }
   }, [
     modalWithContent.isModalOpen,
@@ -62,11 +67,17 @@ export const CreatePost = () => {
 
   return (
     <div>
-      <div className="flex gap-[15px] items-center" onClick={onAddPhotoClick}>
+      <Link
+        className="flex gap-[15px] items-center"
+        onClick={onAddPhotoClick}
+        href={{
+          query: { create: true },
+        }}
+      >
         <Image src={sidebarModule ? plus : plusOutline} alt={'Create'} height={24} width={24} />
         <div className={clsx('cursor-pointer', sidebarModule && 'text-accent-500')}>Create</div>
-      </div>
-      <PhotoUploader setSelectedPhoto={setSelectedPhoto} />
+      </Link>
+      {query.create && <PhotoUploader setSelectedPhoto={setSelectedPhoto} />}
       {selectedPhoto && (
         <CropEditor
           setSelectedPhoto={setSelectedPhoto}
