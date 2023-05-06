@@ -3,7 +3,7 @@ import axios from 'axios'
 import { ResMe } from '@/types'
 
 export const authInstance = axios.create({
-  baseURL: 'https://lionfish-app-3jdhn.ondigitalocean.app/',
+  baseURL: process.env.BASE_URL_APP_API_KEY,
   withCredentials: true,
 })
 
