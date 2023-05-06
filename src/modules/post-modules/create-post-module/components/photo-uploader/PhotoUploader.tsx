@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 import { ModalWithContent } from '@/components/modals'
 import {
-  useStoreAddPostModule,
-  useStoreCropEditorModule,
+  useStoreAddPostModal,
+  useStoreCropEditorModal,
   useStoreWithContentModal,
 } from '@/components/modals/store'
 import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
@@ -18,9 +18,10 @@ type PropsType = {
 }
 export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
   const [imageDbCount, setImageDbCount] = useState(0)
+
   const modalWithContent = useStoreWithContentModal()
-  const useStoreAddFullPostModule = useStoreAddPostModule()
-  const cropEditorModule = useStoreCropEditorModule()
+  const useStoreAddFullPostModal = useStoreAddPostModal()
+  const cropEditorModal = useStoreCropEditorModal()
   const { setPhotoFromDB, clearPostPhotos, setUploadId } = usePostStore()
 
   const onSetSelectedPhotoClick = (file: any) => {
@@ -32,7 +33,7 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
     let id = data.uploadId
 
     await setPhotoFromDB(blobUrl, id)
-    useStoreAddFullPostModule.setIsModalOpen(true)
+    useStoreAddFullPostModal.setIsModalOpen(true)
   }
   const onOpenDraftClick = async () => {
     clearPostPhotos()
@@ -67,7 +68,7 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
     >
       <>
         <PhotoSelector
-          cropEditorModule={cropEditorModule.setIsModalOpen}
+          cropEditorModule={cropEditorModal.setIsModalOpen}
           modalWithContent={modalWithContent.setIsModalOpen}
           setSelectedPhoto={onSetSelectedPhotoClick}
         />

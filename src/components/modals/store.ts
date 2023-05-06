@@ -6,13 +6,15 @@ interface StoreType {
   setIsModalOpen: (isModalOpen: boolean) => void
 }
 
-const storeModule = (set: any): StoreType => ({
+const createStore = (store: (set: (store: StoreType) => void) => StoreType) =>
+  create<StoreType, [['zustand/devtools', never]]>(devtools(store))
+const storeModal = (set: any): StoreType => ({
   isModalOpen: false,
   setIsModalOpen: isModalOpen => set({ isModalOpen: isModalOpen }, false, 'setIsModalOpen'),
 })
 
-export const useStoreWithContentModal = create(devtools(storeModule))
-export const useStoreCropEditorModule = create(devtools(storeModule))
-export const useStoreFilterEditorModule = create(devtools(storeModule))
-export const useStoreAddPostModule = create(devtools(storeModule))
-export const useStoreAvatarBlockModule = create(devtools(storeModule))
+export const useStoreWithContentModal = createStore(storeModal)
+export const useStoreCropEditorModal = createStore(storeModal)
+export const useStoreFilterEditorModal = createStore(storeModal)
+export const useStoreAddPostModal = createStore(storeModal)
+export const useStoreAvatarBlockModal = createStore(storeModal)
