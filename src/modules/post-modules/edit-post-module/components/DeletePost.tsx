@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { Confirm } from '@/components/modals'
-import { useDeletePostMutation } from '@/modules/post-modules/edit-post-module/hooks/useDeletePost'
-import { Preloader } from '@/ui'
+import { useDeletePost } from '@/modules/post-modules/edit-post-module/hooks/useDeletePost'
+import { useUserStore } from '@/store'
 
 type PropsType = {
   isDeleteModalOpen: boolean
@@ -22,11 +22,11 @@ export const DeletePost = ({
     onPostModalClose(false)
   }
 
-  //change this part to variable from store later, like this // const { userId } = useUserStore()
-  //@ts-ignore
-  const userId = JSON.parse(atob(localStorage.getItem('accessToken').split('.')[1])).userId
+  const { userId } = useUserStore()
 
-  const { isLoading, mutate: deletePost } = useDeletePostMutation(onSuccess, userId)
+  // const userId = JSON.parse(atob(localStorage.getItem('accessToken').split('.')[1])).userId
+
+  const { isLoading, mutate: deletePost } = useDeletePost(onSuccess, userId as number)
 
   const onDeleteModalCloseClick = () => {
     setIsDeleteModalOpen(false)
@@ -37,8 +37,6 @@ export const DeletePost = ({
       deletePost(postId)
     }
   }
-
-  if (isLoading) return <Preloader />
 
   return (
     <>

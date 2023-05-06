@@ -1,33 +1,50 @@
 import React, { useState } from 'react'
 
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
-import { useUploadAvatarMutation } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
 import { PhotoFilters } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/photoFilters/PhotoFilters'
-import { useUserStore } from '@/store'
+import { usePostStore } from '@/store'
 
 type PropsType = {
   cropSize: any
-  imageUrl: string
   isModalOpen: boolean
-  setOpenModal: (isModalOpen: any) => void
-  selectedPhoto: string | File | null
+  filterEditorModule: (isModalOpen: boolean) => void
+  useStoreAddFullPostModule: (isModalOpen: boolean) => void
+  cropEditorModule: (isModalOpen: boolean) => void
+  onClose: () => void
+  setIsDraftModalOpen: (isModalOpen: boolean) => void
 }
 
-export const FiltersEditor = ({ imageUrl, cropSize, setOpenModal, isModalOpen }: PropsType) => {
-  const { setUploadId } = useUserStore()
-  const [filter, setFilter] = useState('none')
+export const FiltersEditor = ({
+  cropSize,
+  isModalOpen,
+  cropEditorModule,
+  filterEditorModule,
+  useStoreAddFullPostModule,
+  onClose,
+  setIsDraftModalOpen,
+}: PropsType) => {
+  const { postPhotos } = usePostStore()
 
-  const { mutate: addPhotoToThePost } = useUploadAvatarMutation(val => {
-    setUploadId(val && val[0].uploadId)
-  })
+  const imageUrl = postPhotos[0].croppedPhoto
+  const uploadId = postPhotos[0].uploadId
+  const isLoadedFromDB = postPhotos[0].isLoadedFromDB
+
+  const { setFilteredPhoto } = usePostStore()
+  const [filter, setFilter] = useState('none')
 
   const onFilterClick = async (filter: string) => {
     setFilter(filter)
   }
 
+  const onBackClick = () => {
+    cropEditorModule(true)
+    filterEditorModule(false)
+  }
+
   const onCloseClick = () => {
-    setFilter('none')
-    setOpenModal('cropping')
+    setIsDraftModalOpen(true)
+    onClose()
+    filterEditorModule(false)
   }
 
   const onNextClick = () => {
@@ -46,33 +63,25 @@ export const FiltersEditor = ({ imageUrl, cropSize, setOpenModal, isModalOpen }:
     //@ts-ignore
     ctx.drawImage(image, 0, 0)
 
-    // @ts-ignore
-    canvas.toBlob((blob: string | Blob) => {
-      const formData = new FormData()
+    canvas.toBlob(blob => {
+      //@ts-ignore
+      const filteredImageUrl = URL.createObjectURL(blob)
 
-      formData.append('file', blob)
-
-      addPhotoToThePost(formData)
+      setFilteredPhoto(uploadId, String(filteredImageUrl))
     })
 
-    // canvas.toBlob(blob => {
-    //   //@ts-ignore
-    //   const filteredImageUrl = URL.createObjectURL(blob)
-    //
-    //   setFilteredImage(String(filteredImageUrl))
-    // })
-
-    setOpenModal('publication')
+    useStoreAddFullPostModule(true)
+    filterEditorModule(false)
   }
 
   return (
     <CreatePostModal
       showBackArrow={true}
+      onBackClick={onBackClick}
       variant={'Next'}
       isOpen={isModalOpen}
       onClose={onCloseClick}
       title={'Filter'}
-      onBackClick={onCloseClick}
       onBtnClick={onNextClick}
     >
       <div className={'flex flex-wrap justify-between'}>

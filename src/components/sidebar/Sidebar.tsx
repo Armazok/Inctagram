@@ -1,7 +1,6 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 
 // eslint-disable-next-line import/no-named-as-default
-import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -12,38 +11,15 @@ import homeOutline from '../../assets/icons/home-outline.svg'
 import home from '../../assets/icons/home.svg'
 import personOutline from '../../assets/icons/person-outline.svg'
 import person from '../../assets/icons/person.svg'
-import plusOutline from '../../assets/icons/plus-square-outline.svg'
-import plus from '../../assets/icons/plus-square.svg'
 import trendingOutline from '../../assets/icons/trending-up-outline.svg'
 import trending from '../../assets/icons/trending-up.svg'
 
-import { ModalWithContent } from '@/components/modals'
 import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
-import { AddFullPost } from '@/modules/post-modules/create-post-module/components/addFullPost/addFullPost'
-import { CropEditor } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/CropEditor'
-import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/FiltersEditor'
-import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
+// @ts-ignore
+import { PhotoUploader } from '@/modules/post-modules/create-post-module/components/photo-uploader/PhotoUploader'
+import { CreatePost } from '@/modules/post-modules/create-post-module/CreatePost'
 
 export const Sidebar: FC = () => {
-  const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [openModal, setOpenModal] = useState('')
-  const [cropSize, setCropSize] = useState<{
-    width: number
-    height: number
-  }>({
-    width: 100,
-    height: 100,
-  })
-
-  const onAddPhotoClick = () => {
-    setIsModalOpen(true)
-  }
-
-  const onCloseClick = () => {
-    setSelectedPhoto('')
-    setIsModalOpen(false)
-  }
   const { pathname } = useRouter()
 
   return (
@@ -61,9 +37,8 @@ export const Sidebar: FC = () => {
               Home
             </Link>
           </li>
-          <li className="flex gap-[15px] items-center" onClick={onAddPhotoClick}>
-            <Image src={isModalOpen ? plus : plusOutline} alt={'Create'} height={24} width={24} />
-            <div className={clsx('cursor-pointer', isModalOpen && 'text-accent-500')}>Create</div>
+          <li>
+            <CreatePost />
           </li>
           <li className="flex gap-[15px] items-center">
             <Image
@@ -107,37 +82,6 @@ export const Sidebar: FC = () => {
         </ul>
         <LogoutButton />
       </div>
-      <ModalWithContent isOpen={isModalOpen} onClose={onCloseClick} title={'Add photo'}>
-        <PhotoSelector setSelectedPhoto={setSelectedPhoto} />
-      </ModalWithContent>
-      {selectedPhoto && (
-        <CropEditor
-          isModalOpen={isModalOpen}
-          image={selectedPhoto}
-          setOpenModal={setOpenModal}
-          setSelectedPhoto={setSelectedPhoto}
-          setCropSize={setCropSize}
-        />
-      )}
-
-      {openModal === 'filters' && (
-        <FiltersEditor
-          selectedPhoto={selectedPhoto}
-          cropSize={cropSize}
-          imageUrl={String(selectedPhoto)}
-          isModalOpen={isModalOpen}
-          setOpenModal={setOpenModal}
-        />
-      )}
-
-      {openModal === 'publication' && (
-        <AddFullPost
-          imageUrl={String(selectedPhoto)}
-          onCloseClick={onCloseClick}
-          isModalOpen={isModalOpen}
-          setOpenModal={setIsModalOpen}
-        />
-      )}
     </aside>
   )
 }

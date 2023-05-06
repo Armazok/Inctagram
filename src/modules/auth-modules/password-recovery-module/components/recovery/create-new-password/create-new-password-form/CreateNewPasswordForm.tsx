@@ -22,7 +22,7 @@ export const CreateNewPasswordForm = ({ onSubmitHandler }: PropsType) => {
 
   return (
     <form
-      className="flex flex-col grow gap-[10px] pt-[22px]  pb-[18px] w-full gap-[24px]"
+      className="flex flex-col grow pt-[22px]  pb-[18px] w-full gap-[24px]"
       onSubmit={handleSubmit(onSubmit)}
     >
       <InputWithEye

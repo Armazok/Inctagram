@@ -4,21 +4,13 @@ import { RightDescription } from '@/modules/post-modules/create-post-module/comp
 
 type AddPublicationType = {
   imageUrl: string
-  text: string
-  setText: (newText: string) => void
   location: boolean
   callback?: () => void
 }
 
-export const AddPublication: FC<AddPublicationType> = ({
-  imageUrl,
-  text,
-  setText,
-  location,
-  callback,
-}) => {
+export const AddPublication: FC<AddPublicationType> = ({ imageUrl, location, callback }) => {
   return (
-    <div className={'flex flex-wrap'}>
+    <div className={'flex flex-wrap w-[972px] justify-between'}>
       <div className={'w-[436px]'}>
         <img
           src={imageUrl}
@@ -29,7 +21,7 @@ export const AddPublication: FC<AddPublicationType> = ({
           id={'image-publication'}
         />
       </div>
-      <RightDescription text={text} setText={setText} location={location} callback={callback} />
+      <RightDescription location={location} callback={callback} />
     </div>
   )
 }

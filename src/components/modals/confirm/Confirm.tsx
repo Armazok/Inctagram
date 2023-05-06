@@ -31,9 +31,9 @@ export const Confirm: FC<Props> = ({
       isOpen={isOpen}
       onRequestClose={onClose}
       ariaHideApp={false}
-      overlayClassName={'fixed w-full h-full top-0 left-0 bg-dark-900 z-[100]'}
+      overlayClassName={'fixed w-full h-full top-0 left-0 bg-dark-900/60 z-[100]'}
       className={
-        'absolute w-full max-h-[240px] max-w-[438px] bg-dark-300 border-dark-100 border rounded-sm top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200]'
+        'absolute w-full min-h-[240px] max-w-[438px] bg-dark-300 border-dark-100 border rounded-sm top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200]'
       }
     >
       <div
@@ -59,7 +59,7 @@ export const Confirm: FC<Props> = ({
       <div className={'flex justify-end pb-[36px] px-[24px] gap-6'}>
         <button
           className={
-            'py-[6px] px-[34px] w-[96px] h-[36px] flex justify-center align-middle border-[1px] bg-dark-300 border-accent-500 text-accent-500 leading-6 font-normal text-[16px] active:text-light-100 active:bg-accent-500'
+            'py-[6px] px-[34px] w-mim-[96px] h-[36px] flex justify-center align-middle border-[1px] bg-dark-300 border-accent-500 text-accent-500 leading-6 font-normal text-[16px] active:text-light-100 active:bg-accent-500'
           }
           onClick={() => onConfirm()}
           disabled={disabled}
@@ -69,7 +69,7 @@ export const Confirm: FC<Props> = ({
         {onDecline ? (
           <button
             className={
-              'py-[6px] px-[34px] w-max-[96px] h-[36px] flex justify-center align-middle border-[1px] bg-dark-300 border-accent-500 text-accent-500 leading-6 font-normal text-[16px] active:text-light-100 active:bg-accent-500'
+              'py-[6px] px-[34px] w-mim-[96px] h-[36px] flex justify-center align-middle border-[1px] bg-dark-300 border-accent-500 text-accent-500 leading-6 font-normal text-[16px] active:text-light-100 active:bg-accent-500'
             }
             onClick={() => onDecline?.()}
             disabled={disabled}

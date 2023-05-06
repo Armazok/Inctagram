@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 
 import { ModalWithContent } from '@/components/modals'
+import { useStoreAvatarBlockModal } from '@/components/modals/store'
 import { PhotoSelector, ProfileAvatarEditor } from '@/modules/profile-modules/avatar-module'
-import { DeleteAvatarButton } from '@/modules/profile-modules/avatar-module/components/DeleteButton'
-import { useDeleteAvatarMutation } from '@/modules/profile-modules/avatar-module/hooks/useDeleteAvatarMutation'
-import { useUploadAvatarMutation } from '@/modules/profile-modules/avatar-module/hooks/useUploadAvatarMutation'
+import { DeleteAvatarButton } from '@/modules/profile-modules/avatar-module/components/avatar-delete-button/DeleteButton'
+import { useDeleteAvatar } from '@/modules/profile-modules/avatar-module/hooks/useDeleteAvatar'
+import { useUploadAvatar } from '@/modules/profile-modules/avatar-module/hooks/useUploadAvatar'
 import { Avatar, GlobalButton, Preloader } from '@/ui'
 
 type PropsType = {
@@ -12,32 +13,41 @@ type PropsType = {
 }
 export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
-  const [isModalOpen, setIsModalOpen] = useState(false)
   const [avatar, setAvatar] = useState(avatarUrl)
 
+  const UploadAvatarBlockModal = useStoreAvatarBlockModal()
+
+  const onDeleteSuccess = () => {
+    setAvatar('')
+  }
+
+  const onUploadSuccess = (avatar: string) => {
+    setAvatar(avatar)
+    UploadAvatarBlockModal.setIsModalOpen(false)
+  }
+
   const { isLoading: isLoadingDeleteAvatar, mutate: deleteAvatar } =
-    useDeleteAvatarMutation(setAvatar)
+    useDeleteAvatar(onDeleteSuccess)
 
-  const { isLoading: isLoadingUploadAvatar, mutate: uploadAvatar } = useUploadAvatarMutation(
-    setAvatar,
-    setIsModalOpen
-  )
+  const { isLoading: isLoadingUploadAvatar, mutate: uploadAvatar } =
+    useUploadAvatar(onUploadSuccess)
 
+  const isDisabled = isLoadingUploadAvatar || isLoadingDeleteAvatar
   const isAvatarShown = avatar ? avatar : ''
 
   const onCloseClick = () => {
     setSelectedPhoto('')
-    setIsModalOpen(false)
+    UploadAvatarBlockModal.setIsModalOpen(false)
   }
 
   const onSaveClick = (formData: File) => {
     uploadAvatar(formData)
-    setIsModalOpen(false)
+    UploadAvatarBlockModal.setIsModalOpen(false)
     setSelectedPhoto('')
   }
 
   const onAddPhotoClick = () => {
-    setIsModalOpen(true)
+    UploadAvatarBlockModal.setIsModalOpen(true)
   }
 
   const onDeleteAvatarClick = () => {
@@ -50,23 +60,34 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
 
   return (
     <div className={'flex flex-col flex-nowrap items-center w-52 font-medium p-[5px]'}>
-      <div className={'mb-[30px] mt-[48px] w-52'}>
+      <div className={'mb-[30px] mt-[48px] w-52 sm:m-0'}>
         <Avatar alt={'profile photo'} src={isAvatarShown} className={``} />
-        {isAvatarShown && <DeleteAvatarButton onDeleteAvatarClick={onDeleteAvatarClick} />}
+        {isAvatarShown && (
+          <DeleteAvatarButton onDeleteAvatarClick={onDeleteAvatarClick} disabled={isDisabled} />
+        )}
       </div>
       <GlobalButton
         type={'button'}
         variant={'transparent'}
-        className={`text-[16px]`}
+        className={`text-[16px] sm:w-80 sm:h-12 sm:items-center`}
         callback={onAddPhotoClick}
+        disabled={isDisabled}
       >
         Add a Profile Photo
       </GlobalButton>
 
-      <ModalWithContent isOpen={isModalOpen} onClose={onCloseClick} title={'Add a Profile Photo'}>
+      <ModalWithContent
+        isOpen={UploadAvatarBlockModal.isModalOpen}
+        onClose={onCloseClick}
+        title={'Add a Profile Photo'}
+      >
         <>
           {selectedPhoto ? (
-            <ProfileAvatarEditor image={selectedPhoto} onSaveClick={onSaveClick} />
+            <ProfileAvatarEditor
+              image={selectedPhoto}
+              onSaveClick={onSaveClick}
+              disabled={isLoadingUploadAvatar}
+            />
           ) : (
             <PhotoSelector setSelectedPhoto={setSelectedPhoto} />
           )}

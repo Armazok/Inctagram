@@ -2,6 +2,9 @@
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx,scss,css}'],
   theme: {
+    screens: {
+      sm: { max: '360px' },
+    },
     extend: {
       colors: {
         accent: {

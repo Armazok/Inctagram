@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 
 import Image from 'next/image'
-import { FaEllipsisH, FaTimes, FaPen, FaTrash } from 'react-icons/fa'
+import { FaTimes, FaPen, FaTrash } from 'react-icons/fa'
 import Modal from 'react-modal'
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -10,7 +10,7 @@ import { AllEditPost } from '@/modules/post-modules/create-post-module/component
 import { DeletePost } from '@/modules/post-modules/edit-post-module/components/DeletePost'
 import { useGetPost } from '@/modules/post-modules/latest-posts/hooks/useGetPost'
 import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
-import { useUserStore } from '@/store'
+import { useSaveDescription, useUserStore } from '@/store'
 import { Avatar } from '@/ui'
 import { Dropdown } from '@/ui/dropdown/Dropdown'
 
@@ -20,10 +20,14 @@ interface Props {
 }
 
 export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
-  const { postId } = useUserStore()
+  const { postId, setDescriptionLocal } = useUserStore()
+  const { setDescription } = useSaveDescription()
   const { profileAvatar, profileData } = useGetProfile()
 
-  const { post, isLoading } = useGetPost(postId)
+  const { post, isLoading } = useGetPost(postId, description => {
+    setDescription(description)
+    setDescriptionLocal(description)
+  })
 
   const [isOpenDropdown, setIsOpenDropdown] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
@@ -44,7 +48,7 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
       isOpen={isOpen}
       onRequestClose={onClose}
       ariaHideApp={false}
-      overlayClassName="fixed w-full h-full top-0 left-0 bg-dark-900 z-[100]"
+      overlayClassName="fixed w-full h-full top-0 left-0 bg-dark-900/60 z-[100]"
       className="absolute w-full h-full max-h-[564px] max-w-[972px] bg-dark-300 border-dark-100 border rounded-sm top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200] focus:outline-none"
     >
       {isEditModalOpen && (
@@ -76,7 +80,12 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
               pagination={{ clickable: true }}
             >
               <SwiperSlide key={post?.id}>
-                <Image src={post?.images[0].url!} fill alt={'gg'} className="object-cover" />
+                <Image
+                  src={post?.images[0]?.url || ''}
+                  fill
+                  alt={post?.description || ''}
+                  className="object-cover"
+                />
               </SwiperSlide>
             </Swiper>
           )}

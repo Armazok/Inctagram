@@ -1,12 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { passwordRecoveryAPI } from '@/modules/auth-modules/password-recovery-module'
-
-export const useCreateNewPasswordMutation = () => {
-  return useMutation({
-    mutationFn: passwordRecoveryAPI.createNewPassword,
-  })
-}
+import { passwordRecoveryAPI } from '@/modules/auth-modules/password-recovery-module/api/passwordRecovary'
 
 export const useForgotPassword = (onSuccess: any, setCustomError?: any) => {
   const {
@@ -14,7 +8,7 @@ export const useForgotPassword = (onSuccess: any, setCustomError?: any) => {
     mutate: sendLinkPasswordRecovery,
     variables,
   } = useMutation({
-    mutationKey: ['passwordRecovery'],
+    mutationKey: ['password-recovery'],
     mutationFn: passwordRecoveryAPI.passwordRecoveryWithRecaptcha,
     onSuccess: () => {
       onSuccess()

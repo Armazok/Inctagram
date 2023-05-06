@@ -2,11 +2,10 @@ import React from 'react'
 
 import { useRouter } from 'next/router'
 
+import { PATH_ROUTE } from '@/common'
 import { FormLayout } from '@/components/FormLayout'
-import {
-  CreateNewPasswordForm,
-  useCreateNewPasswordMutation,
-} from '@/modules/auth-modules/password-recovery-module'
+import { CreateNewPasswordForm } from '@/modules/auth-modules/password-recovery-module'
+import { useCreateNewPassword } from '@/modules/auth-modules/password-recovery-module/hooks/useCreateNewPassword'
 import { NameTitle, Preloader } from '@/ui'
 
 type PropsType = {
@@ -16,11 +15,11 @@ type PropsType = {
 export const CreateNewPasswordPage = ({ recoveryCode = '' }: PropsType) => {
   const router = useRouter()
 
-  const { mutate: createNewPassword, isLoading } = useCreateNewPasswordMutation()
+  const { mutate: createNewPassword, isLoading } = useCreateNewPassword()
 
   const onSubmitHandler = async (newPassword: string) => {
     await createNewPassword({ newPassword, recoveryCode })
-    router.push('/')
+    router.push(PATH_ROUTE.LOGIN)
   }
 
   if (isLoading) return <Preloader />
