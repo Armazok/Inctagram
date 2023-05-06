@@ -3,7 +3,7 @@ import axios from 'axios'
 import { ResMe } from '@/types'
 
 export const authInstance = axios.create({
-  baseURL: process.env.BASE_URL_APP_API_KEY,
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   withCredentials: true,
 })
 
