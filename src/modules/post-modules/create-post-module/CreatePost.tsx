@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
-import { clsx } from 'clsx'
+// eslint-disable-next-line import/no-named-as-default
+import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
