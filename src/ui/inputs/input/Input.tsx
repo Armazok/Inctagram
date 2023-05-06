@@ -41,6 +41,7 @@ export const GlobalInput: FC<InputType> = forwardRef(
             defaultValue={defaultValue}
             placeholder={placeholder}
             ref={ref}
+            autoComplete={type === 'email' ? 'on' : 'off'}
             {...restProps}
           />
           {error && <span className={style.error}>{error}</span>}
