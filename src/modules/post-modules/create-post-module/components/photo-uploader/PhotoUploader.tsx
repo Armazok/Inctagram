@@ -44,6 +44,7 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
       storeName: IMAGES.STORE_NAME,
       dbName: IMAGES.DB_NAME,
     })
+    modalWithContent.setIsModalOpen(false)
   }
 
   const onCloseClick = () => {
