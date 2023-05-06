@@ -34,6 +34,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
   let isLoadedFromDB = postPhotos[0].isLoadedFromDB
 
   const onSuccessPostSent = () => {
+    debugger
     if (isLoadedFromDB) {
       clearDatabase({
         dbName: IMAGES.DB_NAME,
@@ -42,6 +43,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
       })
     }
     clearPostPhotos()
+    onClose()
     useStoreAddFullPostModule(false)
   }
 
@@ -67,28 +69,12 @@ export const AddFullPost: FC<IAddFullPost> = ({
     fetch(blobUrl)
       .then(response => response.blob())
       .then((blob: Blob) => {
-        formData.append('file', blob) // add file to Form data
+        formData.append('files', blob) // add file to Form data
+        formData.append('files', blob) // add file to Form data
 
-        // formData.append('description', description) // add description to Form data
-        //
-        // const json = { description: description }
-        // formData.append('json', JSON.stringify(json)) // add JSON object to Form data as text field
-
-        // formData.append('file', blob, 'image.png')
+        formData.append('description', postDescription) // add description to Form data
         addPhotoToThePost(formData)
       })
-    const uploadId = 'c794b16b-cfe8-42d3-b289-1e0853dd3f7f'
-
-    if (uploadId && postDescription) {
-      addAllPostMutate({
-        description: postDescription,
-        // @ts-ignore
-        childrenMetadata: [{ uploadId }],
-      })
-      // } else {
-      //   console.log('Bad Function Bad')
-      //   useStoreAddFullPostModule(false)
-    }
   }
 
   if (isLoading) return <Preloader />
