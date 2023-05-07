@@ -75,31 +75,15 @@ export const CreatePost = () => {
       {selectedPhoto && (
         <CropEditor
           setSelectedPhoto={setSelectedPhoto}
-          isModalOpen={cropEditorModal.isModalOpen}
-          filterEditorModule={filterEditorModal.setIsModalOpen}
-          cropEditorModule={cropEditorModal.setIsModalOpen}
           image={selectedPhoto}
           onClose={onCloseClick}
         />
       )}
       {filterEditorModal.isModalOpen && (
-        <FiltersEditor
-          isModalOpen={filterEditorModal.isModalOpen}
-          cropEditorModule={cropEditorModal.setIsModalOpen}
-          filterEditorModule={filterEditorModal.setIsModalOpen}
-          useStoreAddFullPostModule={useStoreAddFullPostModal.setIsModalOpen}
-          onClose={onCloseClick}
-          setIsDraftModalOpen={setIsDraftModalOpen}
-        />
+        <FiltersEditor onClose={onCloseClick} setIsDraftModalOpen={setIsDraftModalOpen} />
       )}
       {useStoreAddFullPostModal.isModalOpen && (
-        <AddFullPost
-          isModalOpen={useStoreAddFullPostModal.isModalOpen}
-          useStoreAddFullPostModule={useStoreAddFullPostModal.setIsModalOpen}
-          filterEditorModule={filterEditorModal.setIsModalOpen}
-          onClose={onCloseClick}
-          setIsDraftModalOpen={setIsDraftModalOpen}
-        />
+        <AddFullPost onClose={onCloseClick} setIsDraftModalOpen={setIsDraftModalOpen} />
       )}
       {isDraftModalOpen && (
         <SaveDraftPost
