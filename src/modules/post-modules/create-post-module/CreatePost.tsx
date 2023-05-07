@@ -25,12 +25,12 @@ export const CreatePost = () => {
   const [sidebarModule, setSidebarModule] = useState<boolean>(false)
   const [isDraftModalOpen, setIsDraftModalOpen] = useState(false)
 
+  const { query, replace, pathname } = useRouter()
+
   const modalWithContent = useStoreWithContentModal()
   const cropEditorModal = useStoreCropEditorModal()
   const filterEditorModal = useStoreFilterEditorModal()
   const useStoreAddFullPostModal = useStoreAddPostModal()
-
-  const { query, replace, pathname } = useRouter()
 
   const onAddPhotoClick = () => {
     setSidebarModule(true)
