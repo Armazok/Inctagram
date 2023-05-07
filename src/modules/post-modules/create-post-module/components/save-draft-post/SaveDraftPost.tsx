@@ -1,9 +1,9 @@
 import React from 'react'
 
+import { clearDatabase } from '@/common/utils/indexedDb/clearDatabase'
 import { Confirm } from '@/components/modals'
 import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
-import { clearDatabase } from '@/modules/post-modules/create-post-module/utils/clearDatabase'
-import { setItemToDatabase } from '@/modules/post-modules/create-post-module/utils/setItemToDatabase'
+import { setNewPostToIndexedDB } from '@/modules/post-modules/create-post-module/utils/setNewPostToIndexedDB'
 import { usePostStore } from '@/store'
 
 type PropsType = {
@@ -12,7 +12,7 @@ type PropsType = {
 }
 
 export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsType) => {
-  const { postPhotos, clearPostPhotos } = usePostStore()
+  const { postPhotos, clearPostPhotos, postDescription } = usePostStore()
 
   const clearPreviousDraft = async () => {
     await clearDatabase({
@@ -21,33 +21,10 @@ export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsTy
       keyPath: IMAGES.KEY_PATH,
     })
   }
+
   const onConfirmClick = async () => {
-    clearPreviousDraft().then(() => {
-      postPhotos.forEach(photo => {
-        fetch(photo.filteredPhoto)
-          .then(response => response.blob())
-          .then(blob => {
-            const imageData = {
-              data: {
-                filteredPhoto: blob,
-                uploadId: photo.uploadId,
-              },
-              timestamp: Date.now(),
-            }
-
-            setItemToDatabase({
-              keyPath: IMAGES.KEY_PATH,
-              storeName: IMAGES.STORE_NAME,
-              dbName: IMAGES.DB_NAME,
-              itemData: imageData,
-            })
-          })
-          .catch(error => {
-            console.error('Error fetching Blob:', error)
-          })
-      })
-    })
-
+    await clearPreviousDraft()
+    setNewPostToIndexedDB(postPhotos, postDescription)
     clearPostPhotos()
     setIsDraftModalOpen(false)
   }
