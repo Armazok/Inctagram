@@ -27,7 +27,6 @@ export const FiltersEditor = ({
 
   const imageUrl = postPhotos[0].croppedPhoto
   const uploadId = postPhotos[0].uploadId
-  const isLoadedFromDB = postPhotos[0].isLoadedFromDB
 
   const { setFilteredPhoto } = usePostStore()
   const [filter, setFilter] = useState('none')

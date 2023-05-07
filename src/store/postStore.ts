@@ -88,6 +88,7 @@ export const usePostStore = create<PostStore>()(
     clearPostPhotos() {
       set((state): any => {
         state.postPhotos = []
+        state.postDescription = ''
       })
     },
     setPhotoFromDB(photo: string, id: string) {
