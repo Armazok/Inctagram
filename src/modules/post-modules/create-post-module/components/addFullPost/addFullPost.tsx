@@ -3,12 +3,11 @@ import React, { FC } from 'react'
 import UIkit from 'uikit'
 
 import upload = UIkit.upload
+import { clearDatabase } from '@/common/utils/indexedDb/clearDatabase'
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
-import { useAddAllPostMutation } from '@/modules/post-modules/create-post-module/components/hooks/useAddAllPost'
 import { useUploadPost } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
 import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
-import { clearDatabase } from '@/modules/post-modules/create-post-module/utils/clearDatabase'
 import { usePostStore, useUserStore } from '@/store'
 import { Preloader } from '@/ui'
 
@@ -28,13 +27,11 @@ export const AddFullPost: FC<IAddFullPost> = ({
   onClose,
   setIsDraftModalOpen,
 }) => {
-  const { postPhotos, clearPostPhotos, postDescription } = usePostStore()
+  const { postPhotos, clearPostPhotos, postDescription, isLoadedFromDB } = usePostStore()
   const { userId } = useUserStore()
   let imageUrl = postPhotos[0].filteredPhoto
-  let isLoadedFromDB = postPhotos[0].isLoadedFromDB
 
   const onSuccessPostSent = () => {
-    debugger
     if (isLoadedFromDB) {
       clearDatabase({
         dbName: IMAGES.DB_NAME,
@@ -49,7 +46,6 @@ export const AddFullPost: FC<IAddFullPost> = ({
 
   const { mutate: addPhotoToThePost, isLoading } = useUploadPost(onSuccessPostSent, userId!)
 
-  const { mutate: addAllPostMutate } = useAddAllPostMutation()
   const onCloseClick = () => {
     setIsDraftModalOpen(true)
     onClose()
@@ -70,7 +66,6 @@ export const AddFullPost: FC<IAddFullPost> = ({
       .then(response => response.blob())
       .then((blob: Blob) => {
         formData.append('files', blob) // add file to Form data
-        formData.append('files', blob) // add file to Form data
 
         formData.append('description', postDescription) // add description to Form data
         addPhotoToThePost(formData)
@@ -87,7 +82,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
         onClose={onCloseClick}
         title={'Publication'}
         onBtnClick={addAllPost}
-        showBackArrow={!isLoadedFromDB}
+        showBackArrow={true}
         variant={'Publish'}
       >
         <AddPublication location={true} imageUrl={imageUrl} />

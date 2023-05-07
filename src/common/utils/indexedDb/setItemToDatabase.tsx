@@ -1,7 +1,4 @@
-import {
-  DatabaseMetaDataType,
-  getDatabase,
-} from '@/modules/post-modules/create-post-module/utils/getDatabase'
+import { DatabaseMetaDataType, getDatabase } from '@/common/utils/indexedDb/getDatabase'
 
 type SetItemParamsType = DatabaseMetaDataType & { itemData: any }
 
@@ -15,14 +12,5 @@ export const setItemToDatabase = async ({
   const tx = db.transaction([storeName], 'readwrite')
   const store = tx.objectStore(storeName)
 
-  // const request = store.put(itemData)
   const request = store.put(itemData, keyPath)
-
-  // await new Promise((resolve, reject) => {
-  //   tx.oncomplete = () => {
-  //     resolve('success')
-  //   }
-  //   tx.onerror = () => {
-  //     reject(tx.error)
-  //   }
 }
