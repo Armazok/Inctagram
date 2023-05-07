@@ -1,8 +1,16 @@
 import { useMutation } from '@tanstack/react-query'
 
+import { ResponseError } from '@/common'
 import { passwordRecoveryAPI } from '@/modules/auth-modules/password-recovery-module/api/passwordRecovary'
 
-export const useForgotPassword = (onSuccess: any, setCustomError?: any) => {
+interface ForgotPasswordType {
+  onSuccess: () => void
+  setError: (name: string, message: string) => void
+}
+export const useForgotPassword = (
+  onSuccess: ForgotPasswordType['onSuccess'],
+  setError: ForgotPasswordType['setError']
+) => {
   const {
     isLoading,
     mutate: sendLinkPasswordRecovery,
@@ -13,9 +21,10 @@ export const useForgotPassword = (onSuccess: any, setCustomError?: any) => {
     onSuccess: () => {
       onSuccess()
     },
-    onError: error => {
-      // @ts-ignore
-      setCustomError('email', error.response.data.messages[0].message)
+    onError: (error: ResponseError) => {
+      const { message } = error?.response?.data?.messages[0]
+
+      setError('email', message)
     },
   })
 

@@ -3,17 +3,36 @@ import React, { useState } from 'react'
 import { FieldValues, SubmitHandler } from 'react-hook-form'
 
 import { useGlobalForm } from '@/common'
+import { Confirm } from '@/components/modals'
 import { forgotPassSchema } from '@/modules/auth-modules/password-recovery-module'
 import { Captcha } from '@/modules/auth-modules/password-recovery-module/components/forgot-password/forgot-password-form/captcha/Captcha'
-import { GlobalButton, GlobalInput } from '@/ui'
+import { useForgotPassword } from '@/modules/auth-modules/password-recovery-module/hooks/useForgotPassword'
+import { GlobalButton, GlobalInput, Preloader } from '@/ui'
 
-type PropsType = {
-  onSubmitHandler: (email: string, recaptcha: string) => void
-}
-
-export const ForgotPasswordWithCaptcha = ({ onSubmitHandler }: PropsType) => {
-  const { errors, register, reset, handleSubmit } = useGlobalForm(forgotPassSchema)
+export const ForgotPasswordWithCaptcha = () => {
+  const { errors, register, reset, handleSubmit, setCustomError } = useGlobalForm(forgotPassSchema)
   const [captcha, setCaptcha] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const onConfirm = () => {
+    setIsModalOpen(false)
+  }
+  const onClose = () => {
+    setIsModalOpen(false)
+  }
+
+  const onSuccess = () => {
+    setIsModalOpen(true)
+  }
+  const { sendLinkPasswordRecovery, isLoading, variables } = useForgotPassword(
+    onSuccess,
+    setCustomError
+  )
+
+  const onSubmitHandler = async (email: string, recaptcha: string) => {
+    await sendLinkPasswordRecovery({ email, recaptcha })
+  }
+
   const onRecaptchaChange = (token: string) => {
     setCaptcha(token)
   }
@@ -24,6 +43,8 @@ export const ForgotPasswordWithCaptcha = ({ onSubmitHandler }: PropsType) => {
     onSubmitHandler(email, captcha)
     reset()
   }
+
+  if (isLoading) return <Preloader />
 
   return (
     <div className={'relative flex flex-col place-content-center w-4/5'}>
@@ -51,6 +72,15 @@ export const ForgotPasswordWithCaptcha = ({ onSubmitHandler }: PropsType) => {
         </GlobalButton>
         <Captcha onRecaptchaChangeHandler={onRecaptchaChange} />
       </form>
+
+      <Confirm
+        isOpen={isModalOpen}
+        onConfirm={onConfirm}
+        onClose={onClose}
+        title={'Email sent'}
+        text={`The link has been sent to your email ${variables?.email}. If you don’t receive an email send link again.`}
+        confirmButtonText={'Ok'}
+      />
     </div>
   )
 }
