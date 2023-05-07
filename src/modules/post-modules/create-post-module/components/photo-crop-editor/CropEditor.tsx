@@ -7,20 +7,25 @@ import { CropPopup } from './crop-popup'
 import getCroppedImg from './utils/canvasUtils'
 import { ZoomPopup } from './zoom-popup'
 
-import {
-  useStoreCropEditorModal,
-  useStoreFilterEditorModal,
-  useStoreWithContentModal,
-} from '@/components/modals/store'
 import { usePostStore } from '@/store'
 
 type PropsType = {
   image: string | File | null
+  isModalOpen: boolean
   setSelectedPhoto: (photo: string | File | null) => void
+  filterEditorModule: (isModalOpen: boolean) => void
+  cropEditorModule: (isModalOpen: boolean) => void
   onClose: () => void
 }
 
-export const CropEditor = ({ image, setSelectedPhoto, onClose }: PropsType) => {
+export const CropEditor = ({
+  image,
+  setSelectedPhoto,
+  isModalOpen,
+  filterEditorModule,
+  cropEditorModule,
+  onClose,
+}: PropsType) => {
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [aspect, setAspect] = useState<number>(4 / 5)
@@ -39,11 +44,6 @@ export const CropEditor = ({ image, setSelectedPhoto, onClose }: PropsType) => {
   }, [])
 
   const { setCroppedPhoto, postPhotos } = usePostStore()
-
-  const { isModalOpen } = useStoreWithContentModal()
-  const cropEditorModal = useStoreCropEditorModal()
-  const filterEditorModal = useStoreFilterEditorModal()
-
   let uploadId = ''
 
   if (postPhotos[0]) {
@@ -55,8 +55,8 @@ export const CropEditor = ({ image, setSelectedPhoto, onClose }: PropsType) => {
       width: croppedAreaPixels.width,
       height: croppedAreaPixels.height,
     })
-    cropEditorModal.setIsModalOpen(false)
-    filterEditorModal.setIsModalOpen(true)
+    cropEditorModule(false)
+    filterEditorModule(true)
   }
 
   useEffect(() => {

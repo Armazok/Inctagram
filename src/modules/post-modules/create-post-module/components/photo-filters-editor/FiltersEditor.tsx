@@ -1,46 +1,45 @@
 import React, { useState } from 'react'
 
-import {
-  useStoreAddPostModal,
-  useStoreCropEditorModal,
-  useStoreFilterEditorModal,
-  useStoreWithContentModal,
-} from '@/components/modals/store'
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { PhotoFilters } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/photoFilters/PhotoFilters'
 import { usePostStore } from '@/store'
 
 type PropsType = {
+  isModalOpen: boolean
+  filterEditorModule: (isModalOpen: boolean) => void
+  useStoreAddFullPostModule: (isModalOpen: boolean) => void
+  cropEditorModule: (isModalOpen: boolean) => void
   onClose: () => void
   setIsDraftModalOpen: (isModalOpen: boolean) => void
 }
 
-export const FiltersEditor = ({ onClose, setIsDraftModalOpen }: PropsType) => {
+export const FiltersEditor = ({
+  isModalOpen,
+  cropEditorModule,
+  filterEditorModule,
+  useStoreAddFullPostModule,
+  onClose,
+  setIsDraftModalOpen,
+}: PropsType) => {
   const [filter, setFilter] = useState('none')
 
   const { postPhotos, setFilteredPhoto, isLoadedFromDB } = usePostStore()
   const imageUrl = postPhotos[0].croppedPhoto
   const { uploadId, cropSize } = postPhotos[0]
-
-  const { isModalOpen } = useStoreWithContentModal()
-  const cropEditorModal = useStoreCropEditorModal()
-  const filterEditorModal = useStoreFilterEditorModal()
-  const useStoreAddFullPostModal = useStoreAddPostModal()
-
   const onFilterClick = async (filter: string) => {
     setFilter(filter)
   }
 
   const onBackClick = () => {
-    cropEditorModal.setIsModalOpen(true)
-    filterEditorModal.setIsModalOpen(false)
+    cropEditorModule(true)
+    filterEditorModule(false)
   }
 
   const onCloseClick = () => {
     saveFilteredPhoto()
     setIsDraftModalOpen(true)
     onClose()
-    filterEditorModal.setIsModalOpen(false)
+    filterEditorModule(false)
   }
 
   const saveFilteredPhoto = () => {
@@ -68,8 +67,8 @@ export const FiltersEditor = ({ onClose, setIsDraftModalOpen }: PropsType) => {
 
   const onNextClick = () => {
     saveFilteredPhoto()
-    useStoreAddFullPostModal.setIsModalOpen(true)
-    filterEditorModal.setIsModalOpen(false)
+    useStoreAddFullPostModule(true)
+    filterEditorModule(false)
   }
 
   return (

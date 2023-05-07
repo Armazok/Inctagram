@@ -4,11 +4,6 @@ import UIkit from 'uikit'
 
 import upload = UIkit.upload
 import { clearDatabase } from '@/common/utils/indexedDb/clearDatabase'
-import {
-  useStoreAddPostModal,
-  useStoreFilterEditorModal,
-  useStoreWithContentModal,
-} from '@/components/modals/store'
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
 import { useUploadPost } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
@@ -17,19 +12,24 @@ import { usePostStore, useUserStore } from '@/store'
 import { Preloader } from '@/ui'
 
 interface IAddFullPost {
+  isModalOpen: boolean
+  useStoreAddFullPostModule: (isModalOpen: any) => void
   callback?: () => void
+  filterEditorModule: (isModalOpen: boolean) => void
   onClose: () => void
   setIsDraftModalOpen: (isModalOpen: boolean) => void
 }
 
-export const AddFullPost: FC<IAddFullPost> = ({ onClose, setIsDraftModalOpen }) => {
+export const AddFullPost: FC<IAddFullPost> = ({
+  isModalOpen,
+  useStoreAddFullPostModule,
+  filterEditorModule,
+  onClose,
+  setIsDraftModalOpen,
+}) => {
   const { postPhotos, clearPostPhotos, postDescription, isLoadedFromDB } = usePostStore()
   const { userId } = useUserStore()
   let imageUrl = postPhotos[0].filteredPhoto
-
-  const { isModalOpen } = useStoreWithContentModal()
-  const filterEditorModal = useStoreFilterEditorModal()
-  const useStoreAddFullPostModal = useStoreAddPostModal()
 
   const onSuccessPostSent = () => {
     if (isLoadedFromDB) {
@@ -41,7 +41,7 @@ export const AddFullPost: FC<IAddFullPost> = ({ onClose, setIsDraftModalOpen }) 
     }
     clearPostPhotos()
     onClose()
-    useStoreAddFullPostModal.setIsModalOpen(false)
+    useStoreAddFullPostModule(false)
   }
 
   const { mutate: addPhotoToThePost, isLoading } = useUploadPost(onSuccessPostSent, userId!)
@@ -49,12 +49,12 @@ export const AddFullPost: FC<IAddFullPost> = ({ onClose, setIsDraftModalOpen }) 
   const onCloseClick = () => {
     setIsDraftModalOpen(true)
     onClose()
-    useStoreAddFullPostModal.setIsModalOpen(false)
+    useStoreAddFullPostModule(false)
   }
 
   const onBackClick = () => {
-    filterEditorModal.setIsModalOpen(true)
-    useStoreAddFullPostModal.setIsModalOpen(false)
+    filterEditorModule(true)
+    useStoreAddFullPostModule(false)
   }
 
   const addAllPost = async () => {
