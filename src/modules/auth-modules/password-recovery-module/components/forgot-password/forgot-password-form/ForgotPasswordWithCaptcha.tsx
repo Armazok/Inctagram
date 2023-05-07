@@ -63,7 +63,7 @@ export const ForgotPasswordWithCaptcha = () => {
         />
 
         <div
-          className={'pt-[18px] pb-[12px] text-[16px] leading-[24px] text-light-900 font-normal'}
+          className={'pt-[25px] pb-[12px] text-[16px] leading-[24px] text-light-900 font-normal'}
         >
           Enter your email address and we will send you further instructions
         </div>

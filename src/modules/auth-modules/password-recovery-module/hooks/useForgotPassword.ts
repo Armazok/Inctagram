@@ -22,9 +22,11 @@ export const useForgotPassword = (
       onSuccess()
     },
     onError: (error: ResponseError) => {
-      const { message } = error?.response?.data?.messages[0]
+      if (error.response.data) {
+        const { message } = error.response.data.messages[0]
 
-      setError('email', message)
+        setError('email', message)
+      }
     },
   })
 
