@@ -25,12 +25,12 @@ export const CreatePost = () => {
   const [sidebarModule, setSidebarModule] = useState<boolean>(false)
   const [isDraftModalOpen, setIsDraftModalOpen] = useState(false)
 
+  const { query, replace, pathname } = useRouter()
+
   const modalWithContent = useStoreWithContentModal()
   const cropEditorModal = useStoreCropEditorModal()
   const filterEditorModal = useStoreFilterEditorModal()
   const useStoreAddFullPostModal = useStoreAddPostModal()
-
-  const { query, replace, pathname } = useRouter()
 
   const onAddPhotoClick = () => {
     setSidebarModule(true)
@@ -75,15 +75,31 @@ export const CreatePost = () => {
       {selectedPhoto && (
         <CropEditor
           setSelectedPhoto={setSelectedPhoto}
+          isModalOpen={cropEditorModal.isModalOpen}
+          filterEditorModule={filterEditorModal.setIsModalOpen}
+          cropEditorModule={cropEditorModal.setIsModalOpen}
           image={selectedPhoto}
           onClose={onCloseClick}
         />
       )}
       {filterEditorModal.isModalOpen && (
-        <FiltersEditor onClose={onCloseClick} setIsDraftModalOpen={setIsDraftModalOpen} />
+        <FiltersEditor
+          isModalOpen={filterEditorModal.isModalOpen}
+          cropEditorModule={cropEditorModal.setIsModalOpen}
+          filterEditorModule={filterEditorModal.setIsModalOpen}
+          useStoreAddFullPostModule={useStoreAddFullPostModal.setIsModalOpen}
+          onClose={onCloseClick}
+          setIsDraftModalOpen={setIsDraftModalOpen}
+        />
       )}
       {useStoreAddFullPostModal.isModalOpen && (
-        <AddFullPost onClose={onCloseClick} setIsDraftModalOpen={setIsDraftModalOpen} />
+        <AddFullPost
+          isModalOpen={useStoreAddFullPostModal.isModalOpen}
+          useStoreAddFullPostModule={useStoreAddFullPostModal.setIsModalOpen}
+          filterEditorModule={filterEditorModal.setIsModalOpen}
+          onClose={onCloseClick}
+          setIsDraftModalOpen={setIsDraftModalOpen}
+        />
       )}
       {isDraftModalOpen && (
         <SaveDraftPost
