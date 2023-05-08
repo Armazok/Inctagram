@@ -1,8 +1,5 @@
 import React, { FC } from 'react'
 
-import UIkit from 'uikit'
-
-import upload = UIkit.upload
 import { clearDatabase } from '@/common/utils/indexedDb/clearDatabase'
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
