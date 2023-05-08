@@ -4,6 +4,7 @@
 }
 
 #nprogress .bar {
+
   @apply bg-accent-700;
 
   position: fixed;

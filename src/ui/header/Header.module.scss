@@ -3,15 +3,18 @@
 @import '../../styles/sass/mixins';
 
 .header {
+
   @include borderBottom($border);
 
   .title {
+
     @apply absolute px-0 py-12 pl-60;
 
     @include text($fontFamily, 26px, 36px);
   }
 
   .logout {
+
     @apply ml-auto;
   }
 }
