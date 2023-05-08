@@ -13,7 +13,6 @@ type PropsType = {
   image: string | File | null
   isModalOpen: boolean
   setSelectedPhoto: (photo: string | File | null) => void
-  setCropSize: (crop: { width: number; height: number }) => void
   filterEditorModule: (isModalOpen: boolean) => void
   cropEditorModule: (isModalOpen: boolean) => void
   onClose: () => void
@@ -22,7 +21,6 @@ type PropsType = {
 export const CropEditor = ({
   image,
   setSelectedPhoto,
-  setCropSize,
   isModalOpen,
   filterEditorModule,
   cropEditorModule,
@@ -53,7 +51,10 @@ export const CropEditor = ({
   }
 
   const onNextClick = () => {
-    setCroppedPhoto(uploadId, croppedImage)
+    setCroppedPhoto(uploadId, croppedImage, {
+      width: croppedAreaPixels.width,
+      height: croppedAreaPixels.height,
+    })
     cropEditorModule(false)
     filterEditorModule(true)
   }
@@ -64,7 +65,6 @@ export const CropEditor = ({
         setSelectedPhoto(String(croppedImage))
         setCropImg(String(croppedImage))
       })
-      setCropSize({ width: croppedAreaPixels.width, height: croppedAreaPixels.height })
     }
   }, [croppedAreaPixels])
 

@@ -3,41 +3,55 @@
 import { v1 } from 'uuid'
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
-// @ts-ignore
 
-type PostType = {
+export type PostType = {
   uploadId: string
   croppedPhoto: string
   filteredPhoto: string
-  isLoadedFromDB: boolean
+  cropSize: CropSizeType
 }
+
+type CropSizeType = { width: number; height: number }
 
 interface PostStore {
   postPhotos: PostType[]
   postDescription: string
+  isLoadedFromDB: boolean
   setUploadId: () => void
-  setCroppedPhoto: (uploadId: string, croppedPhoto: string) => void
+  setCroppedPhoto: (
+    uploadId: string,
+    croppedPhoto: string,
+    cropSize: { width: number; height: number }
+  ) => void
   setPostDescription: (description: string) => void
   setFilteredPhoto: (uploadId: any, filteredPhoto: string) => void
   clearPostPhotos: () => void
-  setPhotoFromDB: (photo: string, id: string) => void
+  setPhotoFromDB: (
+    id: string,
+    croppedPhoto: string,
+    filteredPhoto: string,
+    description: string,
+    cropSize: CropSizeType
+  ) => void
 }
 
 export const usePostStore = create<PostStore>()(
   immer(set => ({
     postPhotos: [],
     postDescription: '',
+    isLoadedFromDB: false,
     setUploadId() {
       set((state): any => {
         state.postPhotos.push({
           uploadId: v1(),
           croppedPhoto: '',
           filteredPhoto: '',
-          isLoadedFromDB: false,
+          cropSize: { width: 0, height: 0 },
         })
+        state.isLoadedFromDB = false
       })
     },
-    setCroppedPhoto(uploadId: string, croppedPhoto: string) {
+    setCroppedPhoto(uploadId: string, croppedPhoto: string, cropSize: CropSizeType) {
       set((state): any => {
         const photo = state.postPhotos.find(photo => {
           return photo.uploadId === uploadId
@@ -48,23 +62,8 @@ export const usePostStore = create<PostStore>()(
 
           state.postPhotos[photoIndex].croppedPhoto = croppedPhoto
           state.postPhotos[photoIndex].filteredPhoto = croppedPhoto
+          state.postPhotos[photoIndex].cropSize = cropSize
         }
-        // else {
-        //       state.postPhotos.push({
-        //           uploadId,
-        //           croppedPhoto,
-        //           filteredPhoto: croppedPhoto,
-        //           isLoadedFromDB: false,
-        //       })
-        // }
-        // const uploadId = v1()
-
-        // state.postPhotos.push({
-        //   uploadId: uploadId,
-        //   croppedPhoto: ,
-        //   filteredPhoto: croppedPhoto,
-        //   isLoadedFromDB: false,
-        // })
       })
     },
     setPostDescription(description: string) {
@@ -89,16 +88,25 @@ export const usePostStore = create<PostStore>()(
       set((state): any => {
         state.postPhotos = []
         state.postDescription = ''
+        state.isLoadedFromDB = false
       })
     },
-    setPhotoFromDB(photo: string, id: string) {
+    setPhotoFromDB(
+      id: string,
+      croppedPhoto: string,
+      filteredPhoto: string,
+      description: string,
+      cropSize: any
+    ) {
       set((state): any => {
         state.postPhotos.push({
           uploadId: id,
-          filteredPhoto: photo,
-          croppedPhoto: photo,
-          isLoadedFromDB: true,
+          filteredPhoto: filteredPhoto,
+          croppedPhoto: croppedPhoto,
+          cropSize: cropSize,
         })
+        state.isLoadedFromDB = true
+        state.postDescription = description
       })
     },
   }))

@@ -24,20 +24,13 @@ export const CreatePost = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
   const [sidebarModule, setSidebarModule] = useState<boolean>(false)
   const [isDraftModalOpen, setIsDraftModalOpen] = useState(false)
-  const [cropSize, setCropSize] = useState<{
-    width: number
-    height: number
-  }>({
-    width: 100,
-    height: 100,
-  })
+
+  const { query, replace, pathname } = useRouter()
 
   const modalWithContent = useStoreWithContentModal()
   const cropEditorModal = useStoreCropEditorModal()
   const filterEditorModal = useStoreFilterEditorModal()
   const useStoreAddFullPostModal = useStoreAddPostModal()
-
-  const { query, replace, pathname } = useRouter()
 
   const onAddPhotoClick = () => {
     setSidebarModule(true)
@@ -86,13 +79,11 @@ export const CreatePost = () => {
           filterEditorModule={filterEditorModal.setIsModalOpen}
           cropEditorModule={cropEditorModal.setIsModalOpen}
           image={selectedPhoto}
-          setCropSize={setCropSize}
           onClose={onCloseClick}
         />
       )}
       {filterEditorModal.isModalOpen && (
         <FiltersEditor
-          cropSize={cropSize}
           isModalOpen={filterEditorModal.isModalOpen}
           cropEditorModule={cropEditorModal.setIsModalOpen}
           filterEditorModule={filterEditorModal.setIsModalOpen}

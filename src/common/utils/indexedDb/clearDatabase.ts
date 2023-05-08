@@ -1,7 +1,4 @@
-import {
-  DatabaseMetaDataType,
-  getDatabase,
-} from '@/modules/post-modules/create-post-module/utils/getDatabase'
+import { DatabaseMetaDataType, getDatabase } from '@/common/utils/indexedDb/getDatabase'
 
 export const clearDatabase = async ({ dbName, storeName, keyPath }: DatabaseMetaDataType) => {
   const db = await getDatabase({ dbName, keyPath, storeName })
@@ -9,7 +6,4 @@ export const clearDatabase = async ({ dbName, storeName, keyPath }: DatabaseMeta
   const clearStore = clearTx.objectStore(storeName)
 
   clearStore.clear()
-
-  // clearTx.oncomplete = () => {
-  // }
 }
