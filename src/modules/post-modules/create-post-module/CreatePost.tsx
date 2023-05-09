@@ -19,9 +19,9 @@ import { CropEditor } from '@/modules/post-modules/create-post-module/components
 import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/FiltersEditor'
 import { PhotoUploader } from '@/modules/post-modules/create-post-module/components/photo-uploader/PhotoUploader'
 import { SaveDraftPost } from '@/modules/post-modules/create-post-module/components/save-draft-post/SaveDraftPost'
+import { usePostStore } from '@/store'
 
 export const CreatePost = () => {
-  const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
   const [sidebarModule, setSidebarModule] = useState<boolean>(false)
   const [isDraftModalOpen, setIsDraftModalOpen] = useState(false)
 
@@ -31,6 +31,7 @@ export const CreatePost = () => {
   const cropEditorModal = useStoreCropEditorModal()
   const filterEditorModal = useStoreFilterEditorModal()
   const useStoreAddFullPostModal = useStoreAddPostModal()
+  const { selectedPhotos, setSelectedPhotos, postPhotos } = usePostStore()
 
   const onAddPhotoClick = () => {
     setSidebarModule(true)
@@ -38,7 +39,7 @@ export const CreatePost = () => {
   }
 
   const onCloseClick = () => {
-    setSelectedPhoto('')
+    setSelectedPhotos('')
     modalWithContent.setIsModalOpen(false)
   }
 
@@ -71,14 +72,14 @@ export const CreatePost = () => {
         <Image src={sidebarModule ? plus : plusOutline} alt={'Create'} height={24} width={24} />
         <div className={clsx('cursor-pointer', sidebarModule && 'text-accent-500')}>Create</div>
       </Link>
-      {query.create && <PhotoUploader setSelectedPhoto={setSelectedPhoto} />}
-      {selectedPhoto && (
+      {query.create && <PhotoUploader setSelectedPhotos={setSelectedPhotos} />}
+      {selectedPhotos && (
         <CropEditor
-          setSelectedPhoto={setSelectedPhoto}
+          setSelectedPhotos={setSelectedPhotos}
           isModalOpen={cropEditorModal.isModalOpen}
           filterEditorModule={filterEditorModal.setIsModalOpen}
           cropEditorModule={cropEditorModal.setIsModalOpen}
-          image={selectedPhoto}
+          image={selectedPhotos}
           onClose={onCloseClick}
         />
       )}
