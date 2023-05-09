@@ -1,9 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Radio } from '@/ui/radio/Radio'
+import { accountAPI } from '@/modules/profile-modules/account-managment/api/account-api'
+// import { Radio } from '@/ui/Radio/Radio'
+
+export const getStaticProps = async () => {
+  const costs = await accountAPI.getCosts()
+
+  return {
+    props: { costs },
+  }
+}
+
+type PropsType = {
+  costs: any
+}
 
 export const SubscriptionType = () => {
+  const hasBusinessAccount = true
+
   // const [subscriptionTypeValue, setSubscriptionTypeValue] = useState('10$')
+  useEffect(() => {
+    //     getCosts
+  }, [hasBusinessAccount === true])
   const onSubscriptionTypeChange = (option: any) => {
     //     setAccountTypeValue(option)
   }
