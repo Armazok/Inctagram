@@ -3,24 +3,35 @@ import { authInstance } from '@/services'
 export const sendPublicationImage = (formData: File | Blob | FormData) => {
   debugger
 
-  // return authInstance.post<ResImagePublication>('posts/image', formData, {
-  return authInstance.post<ResImagePublication>('test/posts/images', formData, {
-    // return authInstance.post<ResImagePublication>(
-    //   'test/posts/',
-    //   { formData, description: 'test' },
-    //   {
+  return authInstance.post<ResImagePublication>('/posts', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
 }
 
 type ResImagePublication = {
+  id: number
+  ownerId: number
+  description: string
+  location: string
   images: [
     {
       uploadId: string
-      url: string
-      width: number
-      height: number
-      fileSize: number
+      versions: {
+        huge: {
+          url: string
+          width: number
+          height: number
+          fileSize: number
+        }
+        large: {
+          url: string
+          width: number
+          height: number
+          fileSize: number
+        }
+      }
     }
   ]
+  createdAt: string
+  updatedAt: string
 }
