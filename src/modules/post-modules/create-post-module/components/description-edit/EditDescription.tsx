@@ -6,8 +6,20 @@ interface IEditDescription {
   imageUrl: string
   location: boolean
   callback: () => void
+  text: string
+  setText: (newText: string) => void
 }
 
-export const EditDescription: FC<IEditDescription> = memo(({ imageUrl, location, callback }) => {
-  return <AddPublication imageUrl={imageUrl} location={location} callback={callback} />
-})
+export const EditDescription: FC<IEditDescription> = memo(
+  ({ imageUrl, location, callback, text, setText }) => {
+    return (
+      <AddPublication
+        text={text}
+        setText={setText}
+        imageUrl={imageUrl}
+        location={location}
+        callback={callback}
+      />
+    )
+  }
+)
