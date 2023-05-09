@@ -42,7 +42,6 @@ export const AddFullPost: FC<IAddFullPost> = ({
   }
 
   const { mutate: addPhotoToThePost, isLoading } = useUploadPost(onSuccessPostSent, userId!)
-
   const onCloseClick = () => {
     setIsDraftModalOpen(true)
     onClose()
@@ -57,16 +56,17 @@ export const AddFullPost: FC<IAddFullPost> = ({
   const addAllPost = async () => {
     const formData = new FormData()
 
-    const blobUrl = imageUrl as RequestInfo | URL
+    for (const photo of postPhotos) {
+      // formData.append, чтобы добавить каждое изображение в форму данных,
+      // используя параметры files, photo.selectedPhotos as File и photo.uploadId.
+      // Метод formData.append автоматически создаст правильный объект Request,
+      // содержащий файл, который можно передать в addPhotoToThePost.
+      formData.append('files', photo.selectedPhotos as File, photo.uploadId)
+    }
 
-    fetch(blobUrl)
-      .then(response => response.blob())
-      .then((blob: Blob) => {
-        formData.append('files', blob) // add file to Form data
+    formData.append('description', postDescription)
 
-        formData.append('description', postDescription) // add description to Form data
-        addPhotoToThePost(formData)
-      })
+    addPhotoToThePost(formData)
   }
 
   if (isLoading) return <Preloader />
