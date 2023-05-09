@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC } from 'react'
+import React, { ChangeEvent, FC, useState } from 'react'
 
 import { Location } from '@/modules/post-modules/create-post-module/components/location/location'
 import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
@@ -11,17 +11,24 @@ const MAX_CHARACTERS = 500
 type RightDescriptionType = {
   location: boolean
   callback?: () => void
+  text?: string
+  setText?: (newText: string) => void
 }
 
-export const RightDescription: FC<RightDescriptionType> = ({ location, callback }) => {
+export const RightDescription: FC<RightDescriptionType> = ({
+  location,
+  callback,
+  text,
+  setText,
+}) => {
   const { profileData, profileAvatar } = useGetProfile()
   const avatar = profileAvatar && profileAvatar
   const userName = profileData && profileData.userName
 
-  const { setPostDescription, postDescription } = usePostStore()
-
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setPostDescription(e.currentTarget.value)
+    if (setText) {
+      setText(e.currentTarget.value)
+    }
   }
 
   return (
@@ -33,11 +40,11 @@ export const RightDescription: FC<RightDescriptionType> = ({ location, callback 
       <div className={'flex'}>
         <Textarea
           maxLength={MAX_CHARACTERS}
-          value={postDescription}
+          value={text}
           onChange={handleTextChange}
           label={'Add publication description'}
         />
-        <p>{postDescription ? `${postDescription.length} / ${MAX_CHARACTERS}` : '0 / 500'}</p>
+        <p>{text ? `${text.length} / ${MAX_CHARACTERS}` : '0 / 500'}</p>
       </div>
 
       {location ? (
