@@ -3,8 +3,9 @@ import React from 'react'
 import { nanoid } from 'nanoid'
 
 import { EditSettingProfile } from '@/modules/profile-modules/settings-edit-profile-module'
+import AccountManagementPage from '@/pages/profile/settings/account-management'
 
-export const tabs = [
+export const settings_profile_tabs = [
   { id: nanoid(), label: 'General information', content: <EditSettingProfile /> },
   {
     id: nanoid(),
@@ -14,7 +15,7 @@ export const tabs = [
   {
     id: nanoid(),
     label: 'Account Management',
-    content: <div className="text-white mt-[20px] ml-[50px]">in future Account Management</div>,
+    content: <AccountManagementPage />,
   },
   {
     id: nanoid(),

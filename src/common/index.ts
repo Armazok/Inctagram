@@ -1,5 +1,5 @@
 export * from './capitalize-first-letter/capitalizeFirstLetter'
-export * from './constants/tabs-data'
+export * from './constants/settings-profile-tabs'
 export * from './helpers/no-refetch'
 export * from './hooks/useGlobalForm'
 export * from './hooks/useWindowResize'

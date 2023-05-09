@@ -55,7 +55,7 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
         <AllEditPost
           location={false}
           description={post!.description}
-          imageUrl={post!.images[0].url!}
+          imageUrl={post!.images[0].versions.huge.url}
           setOpenModal={setIsEditModalOpen}
           isModalOpen={isEditModalOpen}
           onCloseClick={() => setIsEditModalOpen(false)}
@@ -79,14 +79,16 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
               navigation
               pagination={{ clickable: true }}
             >
-              <SwiperSlide key={post?.id}>
-                <Image
-                  src={post?.images[0]?.url || ''}
-                  fill
-                  alt={post?.description || ''}
-                  className="object-cover"
-                />
-              </SwiperSlide>
+              {post?.images.map((image, idx) => (
+                <SwiperSlide key={idx}>
+                  <Image
+                    src={image.versions.huge.url || ''}
+                    fill
+                    alt={post?.description || ''}
+                    className="object-cover"
+                  />
+                </SwiperSlide>
+              ))}
             </Swiper>
           )}
         </div>

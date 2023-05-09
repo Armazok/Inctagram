@@ -1,19 +1,29 @@
 import { POSTS_PER_PAGE } from '@/modules/post-modules/latest-posts/contastants/latest-posts-constants'
 import { authInstance } from '@/services'
 
-interface PostImage {
+interface PostImageVersion {
   url: string
   width: number
   height: number
   fileSize: number
+}
+
+interface PostImage {
   uploadId: string
+  versions: {
+    huge: PostImageVersion
+    large: PostImageVersion
+  }
 }
 
 export interface Post {
   id: number
+  ownerId: number
   description: string
   location: null | string
   images: PostImage[]
+  createdAt: string
+  updatedAt: string
 }
 
 interface GetPostsResponse {
