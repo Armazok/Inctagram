@@ -1,5 +1,4 @@
 .header {
-
   @apply text-light-100 not-italic font-bold text-base leading-6;
 
   display: flex;
@@ -23,7 +22,6 @@
 }
 
 .selectStyle {
-
   @apply not-italic font-normal text-sm leading-6 text-light-100  border-2 border-dark-300 bg-dark-500;
 
   width: 100%;
@@ -35,7 +33,6 @@
 }
 
 .button {
-
   @apply text-light-100;
 
   @apply bg-dark-100;
