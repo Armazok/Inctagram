@@ -53,6 +53,9 @@ export default async function getCroppedImg(
   ctx.filter = filter || 'none'
   ctx.drawImage(image, 0, 0)
 
+  if (pixelCrop.width === 0 || pixelCrop.height === 0) {
+    return null
+  }
   const data = ctx.getImageData(pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height)
 
   canvas.width = pixelCrop.width
