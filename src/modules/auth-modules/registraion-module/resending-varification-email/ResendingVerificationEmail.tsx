@@ -11,13 +11,13 @@ import { Preloader } from '@/ui'
 type PropsType = { code: string }
 
 export const ResendingVerificationEmail: FC<PropsType> = ({ code }) => {
-  const { isLoading, isError } = useSendConfirmationCode(code)
+  const { isLoading, isError, isSuccess } = useSendConfirmationCode(code)
 
   if (isLoading) return <Preloader />
 
   return (
     <>
-      {!isError && <EmailSuccessMessage />}
+      {isSuccess && <EmailSuccessMessage />}
       {isError && <ResendingVerificationLink path={PATH_ROUTE.RESEND_FORM} />}
     </>
   )
