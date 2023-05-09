@@ -1,7 +1,11 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 
+// eslint-disable-next-line import/no-duplicates
+import Image from 'next/image'
+// eslint-disable-next-line import/no-duplicates
 import ImagePlaceholder from 'next/image'
 
+import plusAdd from '@/assets/icons/plus-square.svg'
 import placeholder from '@/assets/images/img-placeholder.png'
 import { GlobalButton } from '@/ui'
 
@@ -9,12 +13,16 @@ type PropsType = {
   setSelectedPhoto: (file: File) => void
   cropEditorModule?: (isModalOpen: boolean) => void
   modalWithContent?: (isModalOpen: boolean) => void
+  showButton?: boolean
+  placeholderShow?: boolean
 }
 
 export const PhotoSelector = ({
   setSelectedPhoto,
   cropEditorModule,
   modalWithContent,
+  showButton = true,
+  placeholderShow = true,
 }: PropsType) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -37,7 +45,9 @@ export const PhotoSelector = ({
   return (
     <div className={'flex flex-col items-center'}>
       <div>
-        <ImagePlaceholder src={placeholder} alt={'placeholder'} width={300} height={300} />
+        {placeholderShow && (
+          <ImagePlaceholder src={placeholder} alt={'placeholder'} width={300} height={300} />
+        )}
       </div>
       <input
         type="file"
@@ -47,13 +57,24 @@ export const PhotoSelector = ({
         id="fileInput"
         onChange={onFileSelectChange}
       />
-      <GlobalButton
-        type={'button'}
-        className={`text-[16px] my-[60px] mx-[60px] font-semibold`}
-        callback={onSelectClick}
-      >
-        Select from computer
-      </GlobalButton>
+      {showButton ? (
+        <GlobalButton
+          type={'button'}
+          className={`text-[16px] my-[60px] mx-[60px] font-semibold`}
+          callback={onSelectClick}
+        >
+          Select from computer
+        </GlobalButton>
+      ) : (
+        <Image
+          className={`text-[16px] my-[60px] mx-[60px] font-semibold`}
+          onClick={onSelectClick}
+          src={plusAdd}
+          width={50}
+          height={50}
+          alt="add"
+        />
+      )}
     </div>
   )
 }
