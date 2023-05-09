@@ -14,9 +14,9 @@ import { usePostStore } from '@/store'
 import { GlobalButton } from '@/ui'
 
 type PropsType = {
-  setSelectedPhoto: (photo: string | File | null) => void
+  setSelectedPhotos: (selectedPhotos: string | File | Blob | MediaSource) => void
 }
-export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
+export const PhotoUploader = ({ setSelectedPhotos }: PropsType) => {
   const [imageDbCount, setImageDbCount] = useState(0)
 
   const modalWithContent = useStoreWithContentModal()
@@ -25,15 +25,28 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
   const { setPhotoFromDB, clearPostPhotos, setUploadId } = usePostStore()
 
   const onSetSelectedPhotoClick = (file: any) => {
-    setSelectedPhoto(file)
-    setUploadId()
+    setSelectedPhotos(file)
+    setUploadId(file)
   }
   const onSuccessOpenDraft = async (data: any) => {
     let filteredPhoto = URL.createObjectURL(data.filteredPhoto)
     let croppedPhoto = URL.createObjectURL(data.croppedPhoto)
+    let selectedPhotos: string = ''
+
+    if (data.selectedPhotos instanceof Blob || data.selectedPhotos instanceof File) {
+      selectedPhotos = URL.createObjectURL(data.selectedPhotos)
+    }
+
     const { uploadId, description, cropSize } = data
 
-    await setPhotoFromDB(uploadId, croppedPhoto, filteredPhoto, description, cropSize)
+    await setPhotoFromDB(
+      uploadId,
+      croppedPhoto,
+      filteredPhoto,
+      description,
+      cropSize,
+      selectedPhotos
+    )
     useStoreAddFullPostModal.setIsModalOpen(true)
   }
   const onOpenDraftClick = async () => {
