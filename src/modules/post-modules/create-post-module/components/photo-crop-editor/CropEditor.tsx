@@ -7,12 +7,14 @@ import { CropPopup } from './crop-popup'
 import getCroppedImg from './utils/canvasUtils'
 import { ZoomPopup } from './zoom-popup'
 
+import { PlusPhoto } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/plus-photo/plusPhoto'
+import { PhotoUploader } from '@/modules/post-modules/create-post-module/components/photo-uploader/PhotoUploader'
 import { usePostStore } from '@/store'
 
 type PropsType = {
-  image: string | File | null
+  image: string | File | Blob | MediaSource
   isModalOpen: boolean
-  setSelectedPhoto: (photo: string | File | null) => void
+  setSelectedPhotos: (selectedPhotos: string | File | Blob | MediaSource) => void
   filterEditorModule: (isModalOpen: boolean) => void
   cropEditorModule: (isModalOpen: boolean) => void
   onClose: () => void
@@ -20,7 +22,7 @@ type PropsType = {
 
 export const CropEditor = ({
   image,
-  setSelectedPhoto,
+  setSelectedPhotos,
   isModalOpen,
   filterEditorModule,
   cropEditorModule,
@@ -29,7 +31,9 @@ export const CropEditor = ({
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [aspect, setAspect] = useState<number>(4 / 5)
-  const [imageUrl, setImageUrl] = useState<string>('')
+  const { setCroppedPhoto, imageUrl, setImageUrl, postPhotos } = usePostStore()
+
+  // const [imageUrl, setImageUrl] = useState<string>('')
 
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>({
     width: 0,
@@ -43,7 +47,6 @@ export const CropEditor = ({
     setCroppedAreaPixels(croppedAreaPixels)
   }, [])
 
-  const { setCroppedPhoto, postPhotos } = usePostStore()
   let uploadId = ''
 
   if (postPhotos[0]) {
@@ -61,8 +64,8 @@ export const CropEditor = ({
 
   useEffect(() => {
     if (croppedAreaPixels) {
-      getCroppedImg(imageUrl, croppedAreaPixels).then(croppedImage => {
-        setSelectedPhoto(String(croppedImage))
+      getCroppedImg(imageUrl as string, croppedAreaPixels).then(croppedImage => {
+        setSelectedPhotos(String(croppedImage))
         setCropImg(String(croppedImage))
       })
     }
@@ -86,7 +89,7 @@ export const CropEditor = ({
     >
       <div className={'relative h-[500px]'}>
         <Cropper
-          image={imageUrl}
+          image={String(imageUrl)}
           crop={crop}
           zoom={zoom}
           aspect={aspect}
@@ -98,6 +101,7 @@ export const CropEditor = ({
         <div className={'flex gap-3 absolute bottom-3 left-3'}>
           <CropPopup setAspect={setAspect} />
           <ZoomPopup zoom={zoom} setZoom={setZoom} />
+          <PlusPhoto />
         </div>
       </div>
     </CreatePostModal>
