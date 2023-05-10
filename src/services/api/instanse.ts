@@ -47,7 +47,7 @@ authInstance.interceptors.response.use(
         const redirect =
           process.env.NODE_ENV === 'development'
             ? 'http://localhost:3000/auth/login'
-            : `${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`
+            : `https://inctagram-main.vercel.app/auth/login`
 
         window.location.assign(redirect)
       }
