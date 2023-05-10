@@ -27,16 +27,21 @@ export const PhotoSelector = ({
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const onFileSelectChange = (event: any) => {
-    if (event.target.files && event.target.files.length) {
-      const file = event.target.files[0]
+    const files = event.target.files
 
-      setSelectedPhoto(file)
-      if (cropEditorModule && modalWithContent) {
-        cropEditorModule(true)
-        modalWithContent(false)
+    if (files && files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+
+        setSelectedPhoto(file)
+        if (cropEditorModule && modalWithContent) {
+          cropEditorModule(true)
+          modalWithContent(false)
+        }
       }
     }
   }
+
   const onSelectClick = () => {
     //@ts-ignore
     document.getElementById('fileInput').click()
@@ -56,6 +61,7 @@ export const PhotoSelector = ({
         className={'hidden'}
         id="fileInput"
         onChange={onFileSelectChange}
+        multiple
       />
       {showButton ? (
         <GlobalButton

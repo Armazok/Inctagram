@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
+import Image from 'next/image'
 import Cropper, { Area, Point } from 'react-easy-crop'
+import { Navigation, Pagination } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { CreatePostModal } from './../create-post-modal/CreatePostModal'
 import { CropPopup } from './crop-popup'
@@ -8,7 +11,6 @@ import getCroppedImg from './utils/canvasUtils'
 import { ZoomPopup } from './zoom-popup'
 
 import { PlusPhoto } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/plus-photo/plusPhoto'
-import { PhotoUploader } from '@/modules/post-modules/create-post-module/components/photo-uploader/PhotoUploader'
 import { usePostStore } from '@/store'
 
 type PropsType = {
@@ -32,8 +34,6 @@ export const CropEditor = ({
   const [zoom, setZoom] = useState(1)
   const [aspect, setAspect] = useState<number>(4 / 5)
   const { setCroppedPhoto, imageUrl, setImageUrl, postPhotos } = usePostStore()
-
-  // const [imageUrl, setImageUrl] = useState<string>('')
 
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>({
     width: 0,
@@ -72,10 +72,20 @@ export const CropEditor = ({
   }, [croppedAreaPixels])
 
   useEffect(() => {
-    const objectUrl = URL.createObjectURL(image as File)
+    if (image instanceof File) {
+      const objectUrl = URL.createObjectURL(image)
 
-    setImageUrl(objectUrl)
-  }, [])
+      setImageUrl(objectUrl)
+    }
+  }, [image])
+
+  useEffect(() => {
+    return () => {
+      if (imageUrl) {
+        URL.revokeObjectURL(String(imageUrl))
+      }
+    }
+  }, [imageUrl])
 
   return (
     <CreatePostModal
@@ -87,22 +97,43 @@ export const CropEditor = ({
       onBackClick={onClose}
       onBtnClick={onNextClick}
     >
-      <div className={'relative h-[500px]'}>
-        <Cropper
-          image={String(imageUrl)}
-          crop={crop}
-          zoom={zoom}
-          aspect={aspect}
-          onCropChange={setCrop}
-          onCropComplete={onCropComplete}
-          onZoomChange={setZoom}
-          zoomWithScroll={false}
-        />
-        <div className={'flex gap-3 absolute bottom-3 left-3'}>
-          <CropPopup setAspect={setAspect} />
-          <ZoomPopup zoom={zoom} setZoom={setZoom} />
-          <PlusPhoto />
-        </div>
+      <div className="relative h-[500px]">
+        <Swiper
+          className="h-full"
+          modules={[Navigation, Pagination]}
+          navigation
+          pagination={{ clickable: true }}
+        >
+          {postPhotos.map((image, idx) => (
+            <>
+              {image.selectedPhotos && typeof image.selectedPhotos !== 'string' && (
+                <SwiperSlide key={idx}>
+                  <Image
+                    src={URL.createObjectURL(image.selectedPhotos)}
+                    fill
+                    alt={'photo'}
+                    className="object-cover"
+                  />
+                </SwiperSlide>
+              )}
+              <Cropper
+                image={String(imageUrl)}
+                crop={crop}
+                zoom={zoom}
+                aspect={aspect}
+                onCropChange={setCrop}
+                onCropComplete={onCropComplete}
+                onZoomChange={setZoom}
+                zoomWithScroll={false}
+              />
+            </>
+          ))}
+        </Swiper>
+      </div>
+      <div className="flex gap-3 absolute bottom-3 left-3">
+        <CropPopup setAspect={setAspect} />
+        <ZoomPopup zoom={zoom} setZoom={setZoom} />
+        <PlusPhoto />
       </div>
     </CreatePostModal>
   )

@@ -58,7 +58,11 @@ export const FiltersEditor = ({
     ctx.drawImage(image, 0, 0)
 
     canvas.toBlob(blob => {
-      //@ts-ignore
+      if (!(blob instanceof Blob)) {
+        console.error('Expected a Blob object, but received', blob)
+
+        return
+      }
       const filteredImageUrl = URL.createObjectURL(blob)
 
       setFilteredPhoto(uploadId, String(filteredImageUrl))
