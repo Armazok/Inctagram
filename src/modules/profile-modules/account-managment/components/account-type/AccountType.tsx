@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { Radio } from '@/ui/Radio/Radio'
+import { Radio } from '@/ui/radio/Radio'
 
 export const AccountType = () => {
   const hasBusinessAccount = false

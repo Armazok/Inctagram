@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@ag-grid-community/styles@^29.3.4":
+  version "29.3.4"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/styles/-/styles-29.3.4.tgz#b03c02b33789bede9211315b7b4c887409ee1052"
+  integrity sha512-2zCINRzdL5wQ0nz/zNW/J59xGjXVNuOC/Eji3zGDwhOZsIKbrJ/Ml5/3IUdktxAQts34u0hTNl+nJZm1O6htXg==
+
 "@ampproject/remapping@^2.2.0":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.1.tgz#99e8e11851128b8702cd57c33684f1d0f260b630"
@@ -3232,6 +3237,18 @@ adjust-sourcemap-loader@^4.0.0:
   dependencies:
     loader-utils "^2.0.0"
     regex-parser "^2.2.11"
+
+ag-grid-community@^29.3.4:
+  version "29.3.4"
+  resolved "https://registry.yarnpkg.com/ag-grid-community/-/ag-grid-community-29.3.4.tgz#bd469299986d74102f71e61fe328fcf757f2be98"
+  integrity sha512-HQ/meI/4jBXitkpB7GIgmyQMEDm2MPLinZCGqGWnybZ5lnn77RIvBzNdcGlwqRxMjrbpIjRaQOcvWvki1KK4BA==
+
+ag-grid-react@^29.3.4:
+  version "29.3.4"
+  resolved "https://registry.yarnpkg.com/ag-grid-react/-/ag-grid-react-29.3.4.tgz#38fe68bbffecb82951a5ac37d863f710c5fd69c9"
+  integrity sha512-dZvVPq7myLOUnXILvWNPNI8tf9Oje5EowRnUEFJodVVWXhxvYwnNqYAj0py1AC66Ok16cpH7MVodtNkBkHzM7g==
+  dependencies:
+    prop-types "^15.8.1"
 
 agent-base@5:
   version "5.1.1"

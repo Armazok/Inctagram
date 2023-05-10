@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Radio } from '@/ui/Radio/Radio'
+import { Radio } from '@/ui/radio/Radio'
 
 export const SubscriptionType = () => {
   // const [subscriptionTypeValue, setSubscriptionTypeValue] = useState('10$')
