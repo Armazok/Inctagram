@@ -8,7 +8,7 @@ interface PostImageVersion {
   fileSize: number
 }
 
-interface PostImage {
+export interface PostImage {
   uploadId: string
   versions: {
     huge: PostImageVersion
@@ -59,4 +59,8 @@ export const getPost = async (postId: number | null) => {
   const res = await authInstance.get<GetPostResponse>(`posts/p/${postId}`)
 
   return res.data
+}
+
+export const deletePostImage = (postId: number, uploadId: string) => {
+  return authInstance.delete(`posts/${postId}/images/${uploadId}`)
 }
