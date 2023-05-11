@@ -7,12 +7,11 @@ export const SettingsProfile = () => {
   const [activeTab, setActiveTab] = useState(
     settings_profile_tabs && settings_profile_tabs[0].label
   )
+  const onChangeTab = (tabLabel: string | undefined) => setActiveTab(tabLabel ?? '')
 
   const tabsLayout = settings_profile_tabs.map(tab => {
     return <div key={tab.id}>{activeTab === tab.label && tab.content}</div>
   })
-
-  const onChangeTab = (tabLabel: string | undefined) => setActiveTab(tabLabel ?? '')
 
   return (
     <div className="relative w-full">
