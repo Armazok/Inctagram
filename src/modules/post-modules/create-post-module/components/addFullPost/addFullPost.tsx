@@ -62,9 +62,10 @@ export const AddFullPost: FC<IAddFullPost> = ({
     fetch(blobUrl)
       .then(response => response.blob())
       .then((blob: Blob) => {
+        formData.append('description', postDescription) // add description to Form data
+
         formData.append('files', blob) // add file to Form data
 
-        formData.append('description', postDescription) // add description to Form data
         addPhotoToThePost(formData)
       })
   }

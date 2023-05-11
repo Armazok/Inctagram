@@ -28,7 +28,10 @@ export const ForgotPasswordWithCaptcha = () => {
 
   const { sendLinkPasswordRecovery, isLoading, variables } = useForgotPassword(
     onSuccess,
-    (field: string, massage: string) => setCustomError(field, massage)
+    (field: string, massage: string) => {
+      setCustomError(field, massage)
+      setCaptcha('')
+    }
   )
 
   const onSubmitHandler = async (email: string, recaptcha: string) => {

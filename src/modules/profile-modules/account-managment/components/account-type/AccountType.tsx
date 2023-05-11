@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import { Radio } from '@/ui/radio/Radio'
 
 const accountTypes = ['personal', 'business']
 
-export const AccountType = () => {
-  const hasBusinessAccount = false
+export const AccountType = ({ setHasBusinessAccount, hasBusinessAccount }: any) => {
   const defaultAccountType = hasBusinessAccount ? 'business' : accountTypes[0]
   const [accountTypeValue, setAccountTypeValue] = useState(defaultAccountType)
 
   const onAccountTypeChange = (option: any) => {
+    if (option === 'business') {
+      setHasBusinessAccount(true)
+    } else {
+      setHasBusinessAccount(false)
+    }
+
     setAccountTypeValue(option)
   }
 
