@@ -3238,6 +3238,13 @@ adjust-sourcemap-loader@^4.0.0:
     loader-utils "^2.0.0"
     regex-parser "^2.2.11"
 
+advanced-cropper@~0.18.0:
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/advanced-cropper/-/advanced-cropper-0.18.0.tgz#dc09a572ac719ee6f149a73ffd4ef094b7b7e1a1"
+  integrity sha512-Bo0fiW8F+kI4f8zEm8YXIDkGNi+aXaQPxqDijU7hY+1ETACbvFnNCxssspgAwHBy9RpFlcXMmjcq+LImUOhaqQ==
+  dependencies:
+    tslib "^2.4.0"
+
 ag-grid-community@^29.3.4:
   version "29.3.4"
   resolved "https://registry.yarnpkg.com/ag-grid-community/-/ag-grid-community-29.3.4.tgz#bd469299986d74102f71e61fe328fcf757f2be98"
@@ -6016,11 +6023,6 @@ giget@^1.0.0:
     node-fetch-native "^1.0.2"
     pathe "^1.1.0"
     tar "^6.1.13"
-
-git-crypt@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/git-crypt/-/git-crypt-0.0.1.tgz#13bf714877e9897bd375e16df5ab4d4fbc5f2f58"
-  integrity sha512-TwbuDofpxoAhrHdHjnHyqPYwlK924zeYCeMtZh2NrVBzbUW/8XeIq6pwJxzHK4wb3kJB+sa2ZSNNZxP1FaeiNw==
 
 github-slugger@^1.0.0:
   version "1.5.0"
@@ -9594,6 +9596,15 @@ rc@^1.0.1, rc@^1.1.6:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-advanced-cropper@^0.19.2:
+  version "0.19.2"
+  resolved "https://registry.yarnpkg.com/react-advanced-cropper/-/react-advanced-cropper-0.19.2.tgz#cfa0ff134a3f702dfde00db9439402051f02735f"
+  integrity sha512-DP8fBLn7AjsAfXbdHg9TasSNGY0dOzr6ISg+NNQnwvdyL1zmBW7MqQowAh153MKjJDwSoRy8UE0oWE8Y9ADI0Q==
+  dependencies:
+    advanced-cropper "~0.18.0"
+    classnames "^2.2.6"
+    tslib "^2.4.0"
 
 react-async-script@^1.2.0:
   version "1.2.0"

@@ -3,7 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 
 type PropsType = {
-  imageSrc: string
+  imageSrc: string | File
   filter: string
   filterName: string
   onFilterClick: (filter: string) => void
@@ -23,7 +23,7 @@ export const PhotoFilterItem = ({
     <div className={'flex flex-col items-center px-[15px] py-[5px]'} onClick={onFilterClickHandler}>
       <Image
         alt={`filter ${filter}`}
-        src={imageSrc}
+        src={String(imageSrc)}
         style={{ filter: filter }}
         width={108}
         height={108}

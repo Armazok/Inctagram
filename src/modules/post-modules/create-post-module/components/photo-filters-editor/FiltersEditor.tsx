@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
 
+import Image from 'next/image'
+import { Navigation, Pagination } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
+
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { PhotoFilters } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/photoFilters/PhotoFilters'
 import { usePostStore } from '@/store'
@@ -24,8 +28,7 @@ export const FiltersEditor = ({
   const [filter, setFilter] = useState('none')
 
   const { postPhotos, setFilteredPhoto, isLoadedFromDB } = usePostStore()
-  const imageUrl = postPhotos[0].croppedPhoto
-  const { uploadId, cropSize } = postPhotos[0]
+
   const onFilterClick = async (filter: string) => {
     setFilter(filter)
   }
@@ -42,30 +45,77 @@ export const FiltersEditor = ({
     filterEditorModule(false)
   }
 
+  const imageUrl = postPhotos[0].croppedPhoto
+  const { uploadId, cropSize } = postPhotos[0]
+
+  console.log('croppedPhoto', postPhotos[0].croppedPhoto)
+
+  // const saveFilteredPhoto = () => {
+  //   const canvas = document.createElement('canvas')
+  //   const ctx = canvas.getContext('2d')
+  //   let image = document.getElementById('image-filtered')
+  //
+  //   if (!ctx || !image) {
+  //     return null
+  //   }
+  //   canvas.width = cropSize.width
+  //   canvas.height = cropSize.height
+  //   ctx.filter = filter
+  //
+  //   //@ts-ignore
+  //   ctx.drawImage(image, 0, 0)
+  //
+  //   canvas.toBlob(blob => {
+  //     if (!(blob instanceof Blob)) {
+  //       console.error('Expected a Blob object, but received', blob)
+  //
+  //       return
+  //     }
+  //     const filteredImageUrl = URL.createObjectURL(blob)
+  //
+  //     setFilteredPhoto(uploadId, String(filteredImageUrl))
+  //   })
+  // }
+
   const saveFilteredPhoto = () => {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
-    let image = document.getElementById('image-filtered')
+    // let image = document.getElementById('image-filtered')
 
-    if (!ctx || !image) {
+    if (!ctx) {
       return null
     }
-    canvas.width = cropSize.width
-    canvas.height = cropSize.height
-    ctx.filter = filter
 
-    //@ts-ignore
-    ctx.drawImage(image, 0, 0)
+    postPhotos.map(({ uploadId, croppedPhoto, cropSize }) => {
+      let image = document.getElementById(uploadId)
 
-    canvas.toBlob(blob => {
-      if (!(blob instanceof Blob)) {
-        console.error('Expected a Blob object, but received', blob)
-
-        return
+      if (
+        !(
+          image instanceof HTMLCanvasElement ||
+          image instanceof HTMLImageElement ||
+          image instanceof SVGImageElement ||
+          image instanceof HTMLVideoElement
+        )
+      ) {
+        return null
       }
-      const filteredImageUrl = URL.createObjectURL(blob)
 
-      setFilteredPhoto(uploadId, String(filteredImageUrl))
+      canvas.width = cropSize.width
+      canvas.height = cropSize.height
+      ctx.filter = filter
+
+      ctx.drawImage(image, 0, 0)
+
+      canvas.toBlob(blob => {
+        if (!(blob instanceof Blob)) {
+          console.error('Expected a Blob object, but received', blob)
+
+          return
+        }
+        const filteredImageUrl = URL.createObjectURL(blob)
+
+        setFilteredPhoto(uploadId, String(filteredImageUrl))
+      })
     })
   }
 
@@ -85,16 +135,30 @@ export const FiltersEditor = ({
       title={'Filter'}
       onBtnClick={onNextClick}
     >
-      <div className={'flex flex-wrap justify-between'}>
-        <div className={`w-[436px]`}>
-          <img
-            src={imageUrl}
-            alt="photo"
-            style={{ filter: filter, width: '434px' }}
-            id={'image-filtered'}
-          />
-        </div>
-        <PhotoFilters imageSrc={imageUrl} setFilter={onFilterClick} />
+      <div className="relative h-[500px]">
+        <Swiper
+          className="h-full"
+          modules={[Navigation, Pagination]}
+          navigation
+          pagination={{ clickable: true }}
+        >
+          {postPhotos.map((image, idx) => (
+            <>
+              {image.croppedPhoto && (
+                <SwiperSlide key={idx}>
+                  <Image
+                    style={{ filter: filter, width: '434px' }}
+                    src={image.croppedPhoto}
+                    fill
+                    alt={'photo'}
+                    className="object-cover"
+                  />
+                </SwiperSlide>
+              )}
+            </>
+          ))}
+        </Swiper>
+        <PhotoFilters imageSrc={String(imageUrl)} setFilter={onFilterClick} />
       </div>
     </CreatePostModal>
   )

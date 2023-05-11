@@ -57,7 +57,7 @@ const filters: FilterType[] = [
 ]
 
 type PropsType = {
-  imageSrc: string
+  imageSrc: string | File
   setFilter: (filter: string) => void
 }
 
@@ -78,5 +78,5 @@ export const PhotoFilters = ({ imageSrc, setFilter }: PropsType) => {
     )
   })
 
-  return <div className={'flex flex-wrap w-[436px]'}>{filtersList}</div>
+  return <div className={'flex flex-wrap '}>{filtersList}</div>
 }
