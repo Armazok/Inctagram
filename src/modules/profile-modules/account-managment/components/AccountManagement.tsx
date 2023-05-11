@@ -6,6 +6,7 @@ import { SubscriptionType } from '@/modules/profile-modules/account-managment/co
 
 export const AccountManagement = () => {
   const [hasBusinessAccount, setHasBusinessAccount] = useState(false)
+
   return (
     <div>
       <AccountType

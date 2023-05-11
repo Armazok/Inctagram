@@ -5,11 +5,11 @@ import {
   CostType,
   SubscriptionPeriodType,
 } from '@/modules/profile-modules/account-managment/api/account-api'
-import { useSubscription } from '@/modules/profile-modules/account-managment/store/subscriptionStore'
-import { Radio } from '@/ui/radio/Radio'
-import { useGetMyPayments } from '@/modules/profile-modules/my-payments/components/MyPayments'
 import { useGetCosts } from '@/modules/profile-modules/account-managment/hooks/useGetCosts'
+import { useSubscription } from '@/modules/profile-modules/account-managment/store/subscriptionStore'
+import { useGetMyPayments } from '@/modules/profile-modules/my-payments/components/MyPayments'
 import login from '@/pages/auth/login'
+import { Radio } from '@/ui/radio/Radio'
 
 export const SubscriptionType = () => {
   const { setNewSubscription } = useSubscription()

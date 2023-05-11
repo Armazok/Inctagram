@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+
 import { accountAPI } from '@/modules/profile-modules/account-managment/api/account-api'
 
 export const useGetCosts = () => {

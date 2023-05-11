@@ -1,13 +1,13 @@
 import React from 'react'
 
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 import paypal from '@/assets/icons/paypal.png'
 import stripe from '@/assets/icons/stripe.png'
 import { useSetSubscription } from '@/modules/profile-modules/account-managment/hooks/useSetSubscription'
 import { useSubscription } from '@/modules/profile-modules/account-managment/store/subscriptionStore'
 import { Preloader } from '@/ui'
-import { useRouter } from 'next/router'
 export const PaymentMethods = () => {
   const router = useRouter()
 
