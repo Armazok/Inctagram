@@ -10,7 +10,6 @@ export const AccountType = () => {
   const [accountTypeValue, setAccountTypeValue] = useState(defaultAccountType)
 
   const onAccountTypeChange = (option: any) => {
-    debugger
     setAccountTypeValue(option)
   }
 
@@ -22,14 +21,15 @@ export const AccountType = () => {
           'bg-dark-300 border-1 border-dark-300 mt-[6px] py-[14px] px-[26px] rounded-[5px]'
         }
       >
-        {accountTypes.map(type => {
+        {accountTypes.map(value => {
           return (
             <Radio
-              key={type}
+              key={value}
               callBack={onAccountTypeChange}
               name="accountType"
-              value={type}
-              checked={type === accountTypeValue}
+              value={value}
+              checked={value === accountTypeValue}
+              id={value}
             />
           )
         })}
