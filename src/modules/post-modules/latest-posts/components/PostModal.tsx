@@ -1,13 +1,12 @@
 import { FC, useState } from 'react'
 
 import Image from 'next/image'
-import { FaTimes, FaPen, FaTrash } from 'react-icons/fa'
+import { FaPen, FaTimes, FaTrash } from 'react-icons/fa'
 import Modal from 'react-modal'
-import { Navigation, Pagination } from 'swiper'
-import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { AllEditPost } from '@/modules/post-modules/create-post-module/components/description-edit/AllEditPost'
 import { DeletePost } from '@/modules/post-modules/edit-post-module/components/DeletePost'
+import { PostImagesSlider } from '@/modules/post-modules/latest-posts/components/PostImagesSlider'
 import { useGetPost } from '@/modules/post-modules/latest-posts/hooks/useGetPost'
 import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
 import { useSaveDescription, useUserStore } from '@/store'
@@ -70,27 +69,7 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
 
       <div className="grid grid-cols-2 h-full">
         <div>
-          {isLoading ? (
-            <div className="animate-pulse h-full bg-slate-200"></div>
-          ) : (
-            <Swiper
-              className="h-full"
-              modules={[Navigation, Pagination]}
-              navigation
-              pagination={{ clickable: true }}
-            >
-              {post?.images.map((image, idx) => (
-                <SwiperSlide key={idx}>
-                  <Image
-                    src={image.versions.huge.url || ''}
-                    fill
-                    alt={post?.description || ''}
-                    className="object-cover"
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          )}
+          <PostImagesSlider />
         </div>
 
         <div>
