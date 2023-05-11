@@ -2,9 +2,8 @@ const fs = require('fs')
 
 const axios = require('axios')
 const FormData = require('form-data')
+const { random, shuffle, take } = require('lodash')
 const { createApi } = require('unsplash-js')
-
-const userId = 6
 
 const unsplash = createApi({
   accessKey: 'tYGvV_aC41dAOtc-dWn-axAe9uY__AOSe4H6UAU4Va0',
@@ -35,75 +34,35 @@ const downloadAndSaveImage = async (url, id) => {
   console.log(`save: ${id}`)
 }
 
-const uploadPhoto = async fileName => {
-  console.log(`read: ${fileName}`)
-  const file = fs.readFileSync(`./photos/${fileName}`)
-
+const createPost = async files => {
   const formData = new FormData()
 
-  formData.append('file', file, fileName)
+  for (let i = 0; i < files.length; i++) {
+    const file = fs.readFileSync(`./photos/${files[i]}`)
 
-  console.log(`upload: ${fileName}`)
-
-  return axios.post('https://lionfish-app-3jdhn.ondigitalocean.app/posts/image', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTY4MjM2NzU5MywiZXhwIjoxNjgyNDUzOTkzfQ.BVG8FBmxIcW02AOirJGg9j7-njUPdFQGwCBnkBRWQyw',
-      Cookie:
-        'refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImRldmljZUlkIjo5OCwiaWF0IjoxNjgyMzY3NTkzLCJleHAiOjE2ODIzNjgxOTN9.92pghlrOlU3oT1ktPY-c2h38ccbcxJCI2gDTgfy0xdM',
-    },
-  })
-}
-
-const createPost = async uploadId => {
-  console.log('create post')
-
-  const data = {
-    description: 'string',
-    childrenMetadata: [
-      {
-        uploadId,
-      },
-    ],
+    formData.append('files', file, files[i])
   }
 
-  return axios.post('https://lionfish-app-3jdhn.ondigitalocean.app/posts/', data, {
+  return axios.post('https://urchin-app-debt4.ondigitalocean.app/posts', formData, {
     headers: {
       Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTY4MjM2NzU5MywiZXhwIjoxNjgyNDUzOTkzfQ.BVG8FBmxIcW02AOirJGg9j7-njUPdFQGwCBnkBRWQyw',
-      Cookie:
-        'refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImRldmljZUlkIjo5OCwiaWF0IjoxNjgyMzY3NTkzLCJleHAiOjE2ODIzNjgxOTN9.92pghlrOlU3oT1ktPY-c2h38ccbcxJCI2gDTgfy0xdM',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTY4MzY2NTIzOCwiZXhwIjoxNjgzNjY2MDE4fQ.bKi6QziEEioLfgkrkeS64e6rwcXQJB6eqhroE_XOoOc',
     },
   })
-}
-
-const downloadPhotos = async () => {
-  const response = await getCollection()
-  const photos = response.response.results
-
-  for (let photo of photos) {
-    const url = photo.urls.regular
-
-    await downloadAndSaveImage(url, photo.id)
-  }
 }
 
 const uploadPhotos = async () => {
   fs.readdir('./photos', async (err, files) => {
-    console.log(files)
+    for (let i = 0; i < 50; i++) {
+      const randomFiles = take(shuffle(files), random(3, 10))
 
-    for (let i = 0; i < files.length; i++) {
-      const responseUploadPhoto = await uploadPhoto(files[i])
+      try {
+        const response = await createPost(randomFiles)
 
-      const uploadId = responseUploadPhoto.data.images[0].uploadId
-
-      console.log(`uploadId: ${uploadId}`)
-
-      const responseCreatePost = await createPost(uploadId)
-      const postId = responseCreatePost.data.id
-
-      console.log(`post created: ${postId}`)
+        console.log(`post created: ${response.data.id}. photos: ${response.data.images.length}`)
+      } catch (e) {
+        console.log('err', e.message)
+      }
     }
   })
 }

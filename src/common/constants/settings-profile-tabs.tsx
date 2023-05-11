@@ -2,10 +2,11 @@ import React from 'react'
 
 import { nanoid } from 'nanoid'
 
+import { MyPayments } from '@/modules/profile-modules/my-payments/components/MyPayments'
 import { EditSettingProfile } from '@/modules/profile-modules/settings-edit-profile-module'
 import AccountManagementPage from '@/pages/profile/settings/account-management'
 
-export const tabs = [
+export const settings_profile_tabs = [
   { id: nanoid(), label: 'General information', content: <EditSettingProfile /> },
   {
     id: nanoid(),
@@ -15,15 +16,11 @@ export const tabs = [
   {
     id: nanoid(),
     label: 'Account Management',
-    content: (
-      <div className="text-white mt-[20px] ml-[50px]">
-        <AccountManagementPage />
-      </div>
-    ),
+    content: <AccountManagementPage />,
   },
   {
     id: nanoid(),
     label: 'My payments',
-    content: <div className="text-white mt-[20px] ml-[50px]">in future My payments</div>,
+    content: <MyPayments />,
   },
 ]

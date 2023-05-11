@@ -33,7 +33,7 @@ authInstance.interceptors.response.use(
 
       try {
         const response = await axios.post(
-          `https://lionfish-app-3jdhn.ondigitalocean.app/auth/update-tokens`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}/auth/update-tokens`,
           {},
           { withCredentials: true }
         )
@@ -47,7 +47,7 @@ authInstance.interceptors.response.use(
         const redirect =
           process.env.NODE_ENV === 'development'
             ? 'http://localhost:3000/auth/login'
-            : 'https://inctagram-develop.vercel.app/auth/login'
+            : `https://inctagram-main.vercel.app/auth/login`
 
         window.location.assign(redirect)
       }

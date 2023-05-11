@@ -10,7 +10,9 @@ export const useSendConfirmationCode = (code: string) => {
   })
 
   useEffect(() => {
-    code && mutation.mutate({ confirmationCode: code })
+    if (code) {
+      mutation.mutate({ confirmationCode: code })
+    }
   }, [code])
 
   return mutation

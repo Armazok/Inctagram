@@ -11,6 +11,7 @@ export const useGetPost = (
     data: post,
     isError,
     isLoading,
+    isFetching,
   } = useQuery({
     queryKey: [`post_${postId}`],
     onSuccess: data => {
@@ -23,5 +24,5 @@ export const useGetPost = (
     ...noRefetch,
   })
 
-  return { post, isError, isLoading }
+  return { post, isError, isLoading, isFetching }
 }

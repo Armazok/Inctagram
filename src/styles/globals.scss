@@ -35,47 +35,38 @@ body {
 }
 
 .container {
-
   @apply flex items-center justify-between w-full h-full mx-auto;
 }
 
 .mainBtn {
-
   @apply font-semibold leading-6 px-[24px] py-[6px] rounded-sm flex justify-center align-middle transition-all duration-300;
 }
 
 .default {
-
   @apply bg-accent-500 text-light-100 active:bg-accent-700 hover:bg-accent-100 disabled:bg-accent-900;
 }
 
 .white {
-
   @apply bg-light-100 text-dark-900 active:bg-light-700 hover:bg-light-700 disabled:bg-light-900 disabled:text-dark-100 focus:border-[2px] focus:border-accent-700;
 }
 
 .transparent {
-
   @apply text-accent-500 bg-transparent border-[1px] border-accent-500 hover:text-accent-100 hover:border-[1px] hover:border-accent-100 hover:bg-transparent disabled:border-accent-900 disabled:text-accent-900;
 }
 
 .black {
-
   @apply text-accent-500 outline-none hover:text-accent-100  disabled:text-accent-900 outline-none;
 }
 
 //tabs
 .tabsSelected {
-
   @apply cursor-pointer border-accent-500 text-accent-500 leading-6 text-sm font-semibold hover:border-b-2 hover:border-accent-500 hover:bg-accent-900 hover:text-accent-500 hover:leading-6 hover:text-sm hover:font-semibold active:bg-accent-100 active:border-b-2 active:border-accent-500 active:text-accent-500 active:leading-6 active:text-sm active:font-semibold focus:bg-accent-700  focus:border-b-2 focus:border-accent-500 focus:text-accent-500 focus:leading-6 focus:text-sm focus:font-semibold disabled:border-b-2 disabled:border-accent-500 disabled:text-accent-500 disabled:leading-6 disabled:text-sm disabled:font-semibold;
 }
 
 .tabsUnselected {
-
   @apply cursor-pointer  border-b-2 border-dark-100 text-dark-100 leading-6 text-sm font-semibold hover:border-b-2 hover:border-dark-100 hover:bg-accent-900 hover:text-dark-100 hover:leading-6 hover:text-sm hover:font-semibold active:bg-accent-100 active:border-b-2 active:border-dark-100 active:text-dark-100 active:leading-6 active:text-sm active:font-semibold focus:bg-accent-700  focus:border-b-2 focus:border-accent-500 focus:text-accent-500 focus:leading-6 focus:text-sm focus:font-semibold disabled:border-b-2 disabled:border-accent-500 disabled:text-accent-500 disabled:leading-6 disabled:text-sm disabled:font-semibold;
 }
 
 .ReactModal__Body--open {
-
   @apply overflow-hidden;
 }
