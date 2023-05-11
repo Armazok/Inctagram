@@ -5,17 +5,17 @@ import Image from 'next/image'
 import { Post } from '@/modules/post-modules/latest-posts/api/latest-posts-api'
 
 interface Props {
-  photo: Post
+  post: Post
   onPostClick: (id: number) => void
 }
 
-export const LatestPost: FC<Props> = ({ photo, onPostClick }) => {
+export const LatestPost: FC<Props> = ({ post, onPostClick }) => {
   return (
-    <div className="aspect-square relative" key={photo.id} onClick={() => onPostClick(photo.id)}>
+    <div className="aspect-square relative" key={post.id} onClick={() => onPostClick(post.id)}>
       <Image
-        src={photo.images[0]?.url}
-        width={photo.images[0]?.width}
-        height={photo.images[0]?.height}
+        src={post.images[0].versions.huge.url}
+        width={post.images[0].versions.huge.width}
+        height={post.images[0].versions.huge.height}
         alt=""
         className="w-full h-full object-cover cursor-pointer"
       />

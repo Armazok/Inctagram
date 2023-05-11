@@ -5,7 +5,6 @@ import { PhotoFilters } from '@/modules/post-modules/create-post-module/componen
 import { usePostStore } from '@/store'
 
 type PropsType = {
-  cropSize: any
   isModalOpen: boolean
   filterEditorModule: (isModalOpen: boolean) => void
   useStoreAddFullPostModule: (isModalOpen: boolean) => void
@@ -15,7 +14,6 @@ type PropsType = {
 }
 
 export const FiltersEditor = ({
-  cropSize,
   isModalOpen,
   cropEditorModule,
   filterEditorModule,
@@ -23,15 +21,11 @@ export const FiltersEditor = ({
   onClose,
   setIsDraftModalOpen,
 }: PropsType) => {
-  const { postPhotos } = usePostStore()
-
-  const imageUrl = postPhotos[0].croppedPhoto
-  const uploadId = postPhotos[0].uploadId
-  const isLoadedFromDB = postPhotos[0].isLoadedFromDB
-
-  const { setFilteredPhoto } = usePostStore()
   const [filter, setFilter] = useState('none')
 
+  const { postPhotos, setFilteredPhoto, isLoadedFromDB } = usePostStore()
+  const imageUrl = postPhotos[0].croppedPhoto
+  const { uploadId, cropSize } = postPhotos[0]
   const onFilterClick = async (filter: string) => {
     setFilter(filter)
   }
@@ -42,12 +36,13 @@ export const FiltersEditor = ({
   }
 
   const onCloseClick = () => {
+    saveFilteredPhoto()
     setIsDraftModalOpen(true)
     onClose()
     filterEditorModule(false)
   }
 
-  const onNextClick = () => {
+  const saveFilteredPhoto = () => {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
     let image = document.getElementById('image-filtered')
@@ -55,7 +50,6 @@ export const FiltersEditor = ({
     if (!ctx || !image) {
       return null
     }
-
     canvas.width = cropSize.width
     canvas.height = cropSize.height
     ctx.filter = filter
@@ -69,14 +63,17 @@ export const FiltersEditor = ({
 
       setFilteredPhoto(uploadId, String(filteredImageUrl))
     })
+  }
 
+  const onNextClick = () => {
+    saveFilteredPhoto()
     useStoreAddFullPostModule(true)
     filterEditorModule(false)
   }
 
   return (
     <CreatePostModal
-      showBackArrow={true}
+      showBackArrow={!isLoadedFromDB}
       onBackClick={onBackClick}
       variant={'Next'}
       isOpen={isModalOpen}

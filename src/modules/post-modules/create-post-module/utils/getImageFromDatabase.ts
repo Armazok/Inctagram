@@ -1,7 +1,4 @@
-import {
-  DatabaseMetaDataType,
-  getDatabase,
-} from '@/modules/post-modules/create-post-module/utils/getDatabase'
+import { DatabaseMetaDataType, getDatabase } from '@/common/utils/indexedDb/getDatabase'
 
 export const getItemFromDatabase = async ({
   onSuccess,

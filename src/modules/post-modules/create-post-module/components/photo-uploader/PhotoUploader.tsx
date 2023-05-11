@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
+import { countData } from '@/common/utils/indexedDb/countData'
 import { ModalWithContent } from '@/components/modals'
 import {
   useStoreAddPostModal,
@@ -7,7 +8,6 @@ import {
   useStoreWithContentModal,
 } from '@/components/modals/store'
 import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
-import { countData } from '@/modules/post-modules/create-post-module/utils/countData'
 import { getItemFromDatabase } from '@/modules/post-modules/create-post-module/utils/getImageFromDatabase'
 import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
 import { usePostStore } from '@/store'
@@ -29,10 +29,11 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
     setUploadId()
   }
   const onSuccessOpenDraft = async (data: any) => {
-    let blobUrl = URL.createObjectURL(data.filteredPhoto)
-    let id = data.uploadId
+    let filteredPhoto = URL.createObjectURL(data.filteredPhoto)
+    let croppedPhoto = URL.createObjectURL(data.croppedPhoto)
+    const { uploadId, description, cropSize } = data
 
-    await setPhotoFromDB(blobUrl, id)
+    await setPhotoFromDB(uploadId, croppedPhoto, filteredPhoto, description, cropSize)
     useStoreAddFullPostModal.setIsModalOpen(true)
   }
   const onOpenDraftClick = async () => {
@@ -44,6 +45,7 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
       storeName: IMAGES.STORE_NAME,
       dbName: IMAGES.DB_NAME,
     })
+    modalWithContent.setIsModalOpen(false)
   }
 
   const onCloseClick = () => {
