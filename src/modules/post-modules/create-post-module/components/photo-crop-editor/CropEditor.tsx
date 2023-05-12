@@ -1,10 +1,13 @@
-import React, { useRef } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
-import { CropperRef, FixedCropper, ImageRestriction } from 'react-advanced-cropper'
-import 'react-advanced-cropper/dist/themes/bubble.css'
+import Cropper, { Area, Point } from 'react-easy-crop'
 
 import { CreatePostModal } from './../create-post-modal/CreatePostModal'
 
+import { CropPopup } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/crop-popup'
+import { PlusPhoto } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/plus-photo/plusPhoto'
+import getCroppedImg from '@/modules/post-modules/create-post-module/components/photo-crop-editor/utils/canvasUtils'
+import { ZoomPopup } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/zoom-popup'
 import { usePostStore } from '@/store'
 
 type PropsType = {
@@ -16,11 +19,6 @@ type PropsType = {
   onClose: () => void
 }
 
-interface Image {
-  type?: string
-  src: string
-}
-
 export const CropEditor = ({
   image,
   setSelectedPhotos,
@@ -29,78 +27,65 @@ export const CropEditor = ({
   cropEditorModule,
   onClose,
 }: PropsType) => {
-  // const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
-  // const [zoom, setZoom] = useState(1)
-  // const [aspect, setAspect] = useState<number>(4 / 5)
-  const { setCroppedPhoto, imageUrl, setImageUrl, postPhotos } = usePostStore()
-  //
-  // const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>({
-  //   width: 0,
-  //   height: 0,
-  //   x: 0,
-  //   y: 0,
-  // })
+  const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
+  const [zoom, setZoom] = useState(1)
 
-  // const [croppedImage, setCropImg] = useState<string>('')
-  // const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
-  //   setCroppedAreaPixels(croppedAreaPixels)
-  // }, [])
-  //
+  const [aspect, setAspect] = useState<number>(4 / 5)
+
+  const { setCroppedPhoto, imageUrl, setImageUrl, postPhotos } = usePostStore()
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>({
+    width: 0,
+    height: 0,
+    x: 0,
+    y: 0,
+  })
+
+  const [croppedImage, setCropImg] = useState<string[]>([])
+
+  console.log('croppedImage', croppedImage)
+
+  const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
+    setCroppedAreaPixels(croppedAreaPixels)
+  }, [])
+
   const onNextClick = () => {
     postPhotos.map(post => {
       debugger
-      const { uploadId, croppedPhoto, cropSize } = post
+      const { uploadId } = post
 
-      setCroppedPhoto(
-        uploadId,
-        croppedPhoto,
-        cropSize
-        // {
-        // width: croppedAreaPixels.width,
-        // height: croppedAreaPixels.height,
-        // }
-      )
+      setCroppedPhoto(uploadId, croppedImage, {
+        width: croppedAreaPixels.width,
+        height: croppedAreaPixels.height,
+      })
     })
     cropEditorModule(false)
     filterEditorModule(true)
   }
-  //
-  // useEffect(() => {
-  //   if (croppedAreaPixels) {
-  //     getCroppedImg(imageUrl as string, croppedAreaPixels).then(croppedImage => {
-  //       setSelectedPhotos(String(croppedImage))
-  //       setCropImg(String(croppedImage))
-  //     })
-  //   }
-  // }, [croppedAreaPixels])
-  //
-  // useEffect(() => {
-  //   if (image instanceof File) {
-  //     const objectUrl = URL.createObjectURL(image)
-  //
-  //     setImageUrl(objectUrl)
-  //   }
-  // }, [image])
-  //
-  // useEffect(() => {
-  //   return () => {
-  //     if (imageUrl) {
-  //       URL.revokeObjectURL(String(imageUrl))
-  //     }
-  //   }
-  // }, [imageUrl])
 
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  const onUpload = () => {
-    if (inputRef.current) {
-      inputRef.current.click()
+  useEffect(() => {
+    if (croppedAreaPixels) {
+      getCroppedImg(imageUrl as string, croppedAreaPixels).then(croppedImage => {
+        setSelectedPhotos(String(croppedImage))
+        setCropImg([String(croppedImage)])
+      })
     }
-  }
+  }, [croppedAreaPixels])
 
-  const onChange = (cropper: CropperRef) => {
-    console.log(cropper.getCoordinates(), cropper.getCanvas())
-  }
+  useEffect(() => {
+    if (image instanceof File) {
+      const objectUrl = URL.createObjectURL(image)
+
+      setImageUrl(objectUrl)
+    }
+  }, [image])
+
+  useEffect(() => {
+    return () => {
+      if (imageUrl) {
+        URL.revokeObjectURL(String(imageUrl))
+      }
+    }
+  }, [imageUrl])
 
   return (
     <CreatePostModal
@@ -117,15 +102,15 @@ export const CropEditor = ({
           <>
             {image.selectedPhotos && typeof image.selectedPhotos !== 'string' && (
               <>
-                <FixedCropper
-                  stencilSize={{
-                    width: 280,
-                    height: 280,
-                  }}
-                  imageRestriction={ImageRestriction.stencil}
-                  src={URL.createObjectURL(image.selectedPhotos)}
-                  onChange={onChange}
-                  className={'cropper'}
+                <Cropper
+                  image={String(imageUrl)}
+                  crop={crop}
+                  zoom={zoom}
+                  aspect={aspect}
+                  onCropChange={setCrop}
+                  onCropComplete={onCropComplete}
+                  onZoomChange={setZoom}
+                  zoomWithScroll={false}
                 />
               </>
             )}
@@ -133,9 +118,9 @@ export const CropEditor = ({
         ))}
       </div>
       <div className="flex gap-3 absolute bottom-3 left-3">
-        {/*<CropPopup setAspect={setAspect} />*/}
-        {/*<ZoomPopup zoom={zoom} setZoom={setZoom} />*/}
-        {/*<PlusPhoto />*/}
+        <CropPopup setAspect={setAspect} />
+        <ZoomPopup zoom={zoom} setZoom={setZoom} />
+        <PlusPhoto />
       </div>
     </CreatePostModal>
   )

@@ -32,7 +32,11 @@ export const usePostStore = create<PostStore>()(
         state.selectedPhotos = selectedPhotos
       })
     },
-    setCroppedPhoto(uploadId: string, croppedPhoto: string, cropSize: CropSizeType) {
+    setCroppedPhoto(
+      uploadId: string,
+      croppedPhoto: string[],
+      cropSize: { width: number; height: number }
+    ) {
       set((state): any => {
         const photo = state.postPhotos.find(photo => {
           return photo.uploadId === uploadId
@@ -41,8 +45,8 @@ export const usePostStore = create<PostStore>()(
         if (photo) {
           const photoIndex = state.postPhotos.indexOf(photo)
 
-          state.postPhotos[photoIndex].croppedPhoto = croppedPhoto
-          state.postPhotos[photoIndex].filteredPhoto = croppedPhoto
+          state.postPhotos[photoIndex].croppedPhoto = croppedPhoto.join(' ')
+          state.postPhotos[photoIndex].filteredPhoto = croppedPhoto.join(' ')
           state.postPhotos[photoIndex].cropSize = cropSize
         }
       })
@@ -112,7 +116,7 @@ interface PostStore {
   setUploadId: (selectedPhotos: string | File | Blob | MediaSource) => void
   setCroppedPhoto: (
     uploadId: string,
-    croppedPhoto: string,
+    croppedPhoto: string[],
     cropSize: { width: number; height: number }
   ) => void
   setPostDescription: (description: string) => void

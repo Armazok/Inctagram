@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { FC, memo, useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
 
@@ -9,27 +9,24 @@ import { usePostStore } from '@/store'
 
 interface IPlusPhoto {}
 
-export const PlusPhoto: FC<IPlusPhoto> = ({}) => {
+export const PlusPhoto: FC<IPlusPhoto> = memo(({}) => {
   const [isOpen, setIsOpen] = useState(false)
   const { setUploadId, setSelectedPhotos, postPhotos, setImageUrl, imageUrl } = usePostStore()
   const wrapperRef = useRef<HTMLDivElement>(null)
 
-  console.log('postPhotos', postPhotos)
-  console.log('imageUrl', imageUrl)
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [wrapperRef])
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+  //       setIsOpen(false)
+  //     }
+  //   }
+  //
+  //   document.addEventListener('mousedown', handleClickOutside)
+  //
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside)
+  //   }
+  // }, [wrapperRef])
 
   const onSetSelectedPhotoClick = (file: any) => {
     setSelectedPhotos(file)
@@ -99,4 +96,4 @@ export const PlusPhoto: FC<IPlusPhoto> = ({}) => {
       )}
     </div>
   )
-}
+})

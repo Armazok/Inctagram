@@ -45,42 +45,9 @@ export const FiltersEditor = ({
     filterEditorModule(false)
   }
 
-  const imageUrl = postPhotos[0].croppedPhoto
-  const { uploadId, cropSize } = postPhotos[0]
-
-  console.log('croppedPhoto', postPhotos[0].croppedPhoto)
-
-  // const saveFilteredPhoto = () => {
-  //   const canvas = document.createElement('canvas')
-  //   const ctx = canvas.getContext('2d')
-  //   let image = document.getElementById('image-filtered')
-  //
-  //   if (!ctx || !image) {
-  //     return null
-  //   }
-  //   canvas.width = cropSize.width
-  //   canvas.height = cropSize.height
-  //   ctx.filter = filter
-  //
-  //   //@ts-ignore
-  //   ctx.drawImage(image, 0, 0)
-  //
-  //   canvas.toBlob(blob => {
-  //     if (!(blob instanceof Blob)) {
-  //       console.error('Expected a Blob object, but received', blob)
-  //
-  //       return
-  //     }
-  //     const filteredImageUrl = URL.createObjectURL(blob)
-  //
-  //     setFilteredPhoto(uploadId, String(filteredImageUrl))
-  //   })
-  // }
-
   const saveFilteredPhoto = () => {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
-    // let image = document.getElementById('image-filtered')
 
     if (!ctx) {
       return null
@@ -142,23 +109,27 @@ export const FiltersEditor = ({
           navigation
           pagination={{ clickable: true }}
         >
-          {postPhotos.map((image, idx) => (
-            <>
-              {image.croppedPhoto && (
-                <SwiperSlide key={idx}>
+          {postPhotos.map((image, idx) => {
+            if (image.croppedPhoto) {
+              return (
+                <SwiperSlide key={image.uploadId}>
                   <Image
-                    style={{ filter: filter, width: '434px' }}
+                    key={image.uploadId}
+                    style={{ filter: filter }}
                     src={image.croppedPhoto}
                     fill
                     alt={'photo'}
                     className="object-cover"
                   />
                 </SwiperSlide>
-              )}
-            </>
-          ))}
+              )
+            } else {
+              return null
+            }
+          })}
         </Swiper>
-        <PhotoFilters imageSrc={String(imageUrl)} setFilter={onFilterClick} />
+
+        {/*<PhotoFilters imageSrc={String(imageUrl)} setFilter={onFilterClick} />*/}
       </div>
     </CreatePostModal>
   )
