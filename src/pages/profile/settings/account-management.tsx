@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { AccountManagement } from '@/modules/profile-modules/account-managment/components/AccountManagement'
+import { AccountManagement } from '@/modules/profile-modules/account-managment'
 
 const AccountManagementPage = () => {
   return (
