@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -15,12 +15,7 @@ export const PaymentMethods = () => {
 
   const { subscription, setPaymentType } = useSubscription()
 
-  const onSuccess = (url: string) => {
-    if (url) {
-      router.push(url)
-    }
-  }
-  const { isLoading, mutate: setSubscription } = useSetSubscription(onSuccess)
+  const { isLoading, mutate: setSubscription, isSuccess, data } = useSetSubscription()
   const onPaypalClick = async () => {
     await setPaymentType('PAYPAL')
     setIsJokeModalOpen(true)
@@ -30,6 +25,16 @@ export const PaymentMethods = () => {
     await setPaymentType('STRIPE')
     setSubscription(subscription)
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      //@ts-ignore
+      router.push(data.data.url)
+    }
+  }, [isSuccess])
+
+  //@ts-ignore
+  // if (isSuccess) router.push(data.data.url)
 
   if (isLoading) return <Preloader />
 

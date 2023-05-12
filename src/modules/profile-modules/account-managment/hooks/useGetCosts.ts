@@ -1,22 +1,16 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { accountAPI } from '@/modules/profile-modules/account-managment/api/account-api'
+import { noRefetch } from '@/common'
 
 export const useGetCosts = () => {
-  const {
-    data: costs,
-    isError,
-    isLoading,
-    isFetching,
-  } = useQuery({
+  const { data, isError, isLoading, isSuccess } = useQuery({
     queryKey: ['get-costs'],
-    // onSuccess: data => {
-
-    // },
+    onSuccess: data => {},
+    onError: error => {},
     queryFn: () => accountAPI.getCosts(),
-
-    // ...noRefetch,
+    ...noRefetch,
   })
 
-  return { costs, isError, isLoading, isFetching }
+  return { data, isError, isLoading, isSuccess }
 }
