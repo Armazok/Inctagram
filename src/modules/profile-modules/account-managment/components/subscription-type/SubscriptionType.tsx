@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+
 import { useGetCosts } from '@/modules/profile-modules/account-managment/hooks/useGetCosts'
 import { useSubscription } from '@/modules/profile-modules/account-managment/store/subscriptionStore'
 import { Radio } from '@/ui/radio/Radio'
 
-export const SubscriptionType = () => {
+export const SubscriptionType = ({ costs }: any) => {
   const { setNewSubscription } = useSubscription()
 
   const { data, isSuccess, isError } = useGetCosts()
@@ -18,17 +19,25 @@ export const SubscriptionType = () => {
     setNewSubscription(typeDescription, amount)
   }
 
-  let costs = []
+  useEffect(() => {
+    if (data) {
+      let { amount, typeDescription } = data.data.data[0]
+
+      setSubscriptionTypeValue(amount + ' ' + typeDescription.toLowerCase())
+      setNewSubscription(typeDescription, amount)
+    }
+  }, [isSuccess])
 
   return (
     <div>
-      <h3>Your subscription costs:</h3>
-      <div className={'bg-dark-300 border-1 border-b-dark-300 mt-[6px] py-[14px] px-[26px]'}>
-        {isSuccess &&
-        //@ts-ignore
-        data.data.data
-          ? //@ts-ignore
-            data.data.data.map(({ amount, typeDescription }: any): any => {
+      <h3 className={'text-blue-50'}>Your subscription costs:</h3>
+      <div
+        className={'bg-dark-300 border-1 border-b-dark-300 mt-[6px] py-[14px] px-[26px] h-[115px]'}
+      >
+        {isSuccess && data && data.data.data
+          ? data.data.data.map(({ amount, typeDescription }: any): any => {
+              // costs
+              //   ? costs.map(({ amount, typeDescription }: any): any => {
               return (
                 <Radio
                   key={amount}

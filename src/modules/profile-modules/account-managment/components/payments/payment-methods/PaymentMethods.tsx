@@ -9,6 +9,7 @@ import { Confirm } from '@/components/modals'
 import { useSetSubscription } from '@/modules/profile-modules/account-managment/hooks/useSetSubscription'
 import { useSubscription } from '@/modules/profile-modules/account-managment/store/subscriptionStore'
 import { Preloader } from '@/ui'
+
 export const PaymentMethods = () => {
   const router = useRouter()
   const [iJokeModalOpen, setIsJokeModalOpen] = useState(false)
@@ -17,6 +18,7 @@ export const PaymentMethods = () => {
 
   const { isLoading, mutate: setSubscription, isSuccess, data } = useSetSubscription()
   const onPaypalClick = async () => {
+    // router.push('http://localhost:3000/profile/settings/edit?success=true')
     await setPaymentType('PAYPAL')
     setIsJokeModalOpen(true)
     // setSubscription(subscription)
@@ -32,9 +34,6 @@ export const PaymentMethods = () => {
       router.push(data.data.url)
     }
   }, [isSuccess])
-
-  //@ts-ignore
-  // if (isSuccess) router.push(data.data.url)
 
   if (isLoading) return <Preloader />
 
