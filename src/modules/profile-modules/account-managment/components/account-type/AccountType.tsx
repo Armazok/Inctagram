@@ -20,7 +20,7 @@ export const AccountType = ({ setHasBusinessAccount, hasBusinessAccount }: any) 
 
   return (
     <div className={'mb-[42px]'}>
-      <h3>Account type:</h3>
+      <h3 className={'text-blue-50'}>Account type:</h3>
       <div
         className={
           'bg-dark-300 border-1 border-dark-300 mt-[6px] py-[14px] px-[26px] rounded-[5px]'

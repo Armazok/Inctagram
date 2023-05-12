@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -9,19 +9,16 @@ import { Confirm } from '@/components/modals'
 import { useSetSubscription } from '@/modules/profile-modules/account-managment/hooks/useSetSubscription'
 import { useSubscription } from '@/modules/profile-modules/account-managment/store/subscriptionStore'
 import { Preloader } from '@/ui'
+
 export const PaymentMethods = () => {
   const router = useRouter()
   const [iJokeModalOpen, setIsJokeModalOpen] = useState(false)
 
   const { subscription, setPaymentType } = useSubscription()
 
-  const onSuccess = (url: string) => {
-    if (url) {
-      router.push(url)
-    }
-  }
-  const { isLoading, mutate: setSubscription } = useSetSubscription(onSuccess)
+  const { isLoading, mutate: setSubscription, isSuccess, data } = useSetSubscription()
   const onPaypalClick = async () => {
+    // router.push('http://localhost:3000/profile/settings/edit?success=true')
     await setPaymentType('PAYPAL')
     setIsJokeModalOpen(true)
     // setSubscription(subscription)
@@ -30,6 +27,13 @@ export const PaymentMethods = () => {
     await setPaymentType('STRIPE')
     setSubscription(subscription)
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      //@ts-ignore
+      router.push(data.data.url)
+    }
+  }, [isSuccess])
 
   if (isLoading) return <Preloader />
 

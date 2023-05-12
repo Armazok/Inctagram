@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 
 import { AccountType } from '@/modules/profile-modules/account-managment/components/account-type/AccountType'
-import { Payments } from '@/modules/profile-modules/account-managment/components/payments/Payments'
+import { PaymentMethods } from '@/modules/profile-modules/account-managment/components/payments/payment-methods/PaymentMethods'
+import { PaymentConfirmationModals } from '@/modules/profile-modules/account-managment/components/payments/PaymentsConfirmationModals'
 import { SubscriptionType } from '@/modules/profile-modules/account-managment/components/subscription-type/SubscriptionType'
 
 export const AccountManagement = () => {
@@ -14,12 +15,12 @@ export const AccountManagement = () => {
         hasBusinessAccount={hasBusinessAccount}
       />
       {hasBusinessAccount && (
-        // || (isSwitchedToBusiness
         <>
           <SubscriptionType />
-          <Payments />
+          <PaymentMethods />
         </>
       )}
+      <PaymentConfirmationModals />
     </div>
   )
 }
