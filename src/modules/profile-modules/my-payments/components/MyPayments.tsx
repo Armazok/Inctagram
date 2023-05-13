@@ -1,22 +1,12 @@
 import React, { ChangeEvent, useCallback, useMemo, useRef } from 'react'
 
-import { useQuery } from '@tanstack/react-query'
 import { AgGridReact } from 'ag-grid-react'
 
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
-import s from '../them.module.css'
+import s from './myPayments.module.scss'
 
-export const useGetMyPayments = () => {
-  return useQuery({
-    queryKey: ['get-my-payments'],
-    queryFn: async () => {
-      const res = await fetch('/api/payments')
-
-      return res.json()
-    },
-  })
-}
+import { useGetMyPayments } from '@/modules/profile-modules/my-payments/hooks/useGetMyPayments'
 
 export const MyPayments = () => {
   const { data } = useGetMyPayments()
@@ -46,7 +36,7 @@ export const MyPayments = () => {
   }, [])
 
   return (
-    <div className={`ag-theme-alpine-dark ${s.asd} `} style={{ height: 500, width: 972 }}>
+    <div className={`ag-theme-alpine-dark ${s.myPayments} `} style={{ height: 500, width: 972 }}>
       <AgGridReact
         ref={gridRef}
         animateRows={true}
@@ -57,6 +47,9 @@ export const MyPayments = () => {
         pagination={true}
         paginationPageSize={8}
         suppressHorizontalScroll={true}
+        gridOptions={{
+          suppressPropertyNamesCheck: true,
+        }}
       />
       <select className={s.optionsBlock} onChange={e => onPageSizeChanged(e)}>
         <option value={'25'}>25</option>
