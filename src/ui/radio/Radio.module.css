@@ -7,10 +7,13 @@
 
 /* для элемента label связанного с .custom-radio */
 .customRadio + label {
-
+  
   @apply text-light-100 text-sm leading-6 font-normal;
 
+  cursor: pointer;
   user-select: none;
+
+  position: relative;
 
   display: inline-flex;
   align-items: center;
@@ -37,16 +40,21 @@
 }
 /* стили при наведении курсора на радио */
 .customRadio:not(:disabled):not(:checked) + label:hover::before {
+  content: '';
+
+  box-shadow: 0 0 0 0.1rem rgba(76, 141, 255, 1);;
 }
 /* стили для активной радиокнопки (при нажатии на неё) */
 .customRadio:not(:disabled):active + label::before {
+  box-shadow: 0 0 0 0.1rem rgba(115, 165, 255, 1);
 }
 /* стили для радиокнопки, находящейся в фокусе */
 .customRadio:focus + label::before {
-  /*box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);*/
+  box-shadow: 0 0 0 0.1rem rgba(23, 23, 23, 1);
 }
 /* стили для радиокнопки, находящейся в фокусе и не находящейся в состоянии checked */
 .customRadio:focus:not(:checked) + label::before {
+  box-shadow: 0 0 0 0.1rem rgba(23, 23, 23, 1);;
 }
 /* стили для радиокнопки, находящейся в состоянии checked */
 .customRadio:checked + label::before {
@@ -57,5 +65,10 @@
 }
 /* стили для радиокнопки, находящейся в состоянии disabled */
 .customRadio:disabled + label::before {
-  background-color: #e9ecef;
+ border-color: #4C4C4C;
+}
+
+.customRadio:checked:disabled + label::before {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+  border-color: #4C4C4C;
 }
