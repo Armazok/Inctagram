@@ -1,20 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { tabs } from '@/common'
+import { settings_profile_tabs, useLocalStorage } from '@/common'
 import { TabsTitle } from '@/components/account'
 
 export const SettingsProfile = () => {
-  const [activeTab, setActiveTab] = useState(tabs && tabs[0].label)
+  const [storedTabsLabel, setStoredTabsLabel] = useLocalStorage(
+    'setting_tabs',
+    settings_profile_tabs[0].label
+  )
+  const [activeTab, setActiveTab] = useState('')
 
-  const tabsLayout = tabs.map(tab => {
+  const onChangeTab = (tabLabel: string | undefined) => {
+    setActiveTab(tabLabel ?? '')
+
+    setStoredTabsLabel(tabLabel ?? '')
+  }
+
+  const tabsLayout = settings_profile_tabs?.map(tab => {
     return <div key={tab.id}>{activeTab === tab.label && tab.content}</div>
   })
 
-  const onChangeTab = (tabLabel: string | undefined) => setActiveTab(tabLabel ?? '')
+  useEffect(() => {
+    setStoredTabsLabel(storedTabsLabel)
+    setActiveTab(storedTabsLabel)
+  }, [])
+  console.log('render')
 
   return (
     <div className="relative w-full">
-      <TabsTitle tabs={tabs} setActiveTab={onChangeTab} activeTab={activeTab} />
+      <TabsTitle tabs={settings_profile_tabs} setActiveTab={onChangeTab} activeTab={activeTab} />
       {tabsLayout}
     </div>
   )

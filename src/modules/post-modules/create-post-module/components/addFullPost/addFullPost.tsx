@@ -1,8 +1,5 @@
 import React, { FC } from 'react'
 
-import UIkit from 'uikit'
-
-import upload = UIkit.upload
 import { clearDatabase } from '@/common/utils/indexedDb/clearDatabase'
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
@@ -65,9 +62,10 @@ export const AddFullPost: FC<IAddFullPost> = ({
     fetch(blobUrl)
       .then(response => response.blob())
       .then((blob: Blob) => {
+        formData.append('description', postDescription) // add description to Form data
+
         formData.append('files', blob) // add file to Form data
 
-        formData.append('description', postDescription) // add description to Form data
         addPhotoToThePost(formData)
       })
   }

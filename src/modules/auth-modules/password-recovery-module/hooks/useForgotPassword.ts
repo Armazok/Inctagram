@@ -18,8 +18,12 @@ export const useForgotPassword = (
   } = useMutation({
     mutationKey: ['password-recovery'],
     mutationFn: passwordRecoveryAPI.passwordRecoveryWithRecaptcha,
-    onSuccess: () => {
-      onSuccess()
+    onSuccess: (data, variables, context) => {
+      if (data) {
+        onSuccess()
+      } else {
+        setError('email', 'user is not found')
+      }
     },
     onError: (error: ResponseError) => {
       if (error.response.data) {

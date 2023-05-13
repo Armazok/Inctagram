@@ -43,8 +43,8 @@ export const LatestPosts: FC = () => {
           data?.pages.map((page, idx) => (
             <React.Fragment key={idx}>
               {page &&
-                page.items.map(photo => (
-                  <LatestPost key={photo.id} photo={photo} onPostClick={onPostClick} />
+                page.items.map(post => (
+                  <LatestPost key={post.id} post={post} onPostClick={onPostClick} />
                 ))}
             </React.Fragment>
           ))}

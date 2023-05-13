@@ -20,39 +20,39 @@ authInstance.interceptors.request.use(
   error => Promise.reject(error)
 )
 
-// authInstance.interceptors.response.use(
-//   response => response,
-//   async error => {
-//     const originalRequest = error.config
-//
-//     console.log(error, 'error')
-//     console.log(originalRequest, 'originalRequest')
-//     if (!originalRequest._isRetry && error?.response?.data?.statusCode === 401) {
-//       originalRequest._isRetry = true
-//
-//       console.log(originalRequest, 'originalRequest - 2')
-//
-//       try {
-//         const response = await axios.post(
-//           `https://lionfish-app-3jdhn.ondigitalocean.app/auth/update-tokens`,
-//           {},
-//           { withCredentials: true }
-//         )
-//
-//         console.log(response, 'response')
-//
-//         localStorage.setItem('accessToken', accessToken in response )
-//
-//         originalRequest.headers['Authorization'] = `Bearer ${accessToken in response}`
-//
-//         return authInstance(originalRequest)
-//       } catch (e) {
-//         console.log(e, 'e')
-//         //localStorage.removeItem('accessToken')
-//
-//       }
-//     }
-//
-//     return Promise.reject(error)
-//   }
-// )
+authInstance.interceptors.response.use(
+  response => response,
+  async error => {
+    const originalRequest = error.config
+    const accessToken = localStorage.getItem('accessToken')
+
+    if (!accessToken) return
+
+    if (!originalRequest._isRetry && error?.response?.data?.statusCode === 401) {
+      originalRequest._isRetry = true
+
+      try {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/auth/update-tokens`,
+          {},
+          { withCredentials: true }
+        )
+
+        localStorage.setItem('accessToken', response.data?.accessToken)
+        originalRequest.headers['Authorization'] = `Bearer ${response.data?.accessToken}`
+
+        return authInstance(originalRequest)
+      } catch (e) {
+        localStorage.removeItem('accessToken')
+        const redirect =
+          process.env.NODE_ENV === 'development'
+            ? 'http://localhost:3000/auth/login'
+            : `https://inctagram-main.vercel.app/auth/login`
+
+        window.location.assign(redirect)
+      }
+    }
+
+    return Promise.reject(error)
+  }
+)
