@@ -40,6 +40,7 @@ export const CreatePost = () => {
   const onCloseClick = () => {
     setSelectedPhoto('')
     modalWithContent.setIsModalOpen(false)
+    cropEditorModal.setIsModalOpen(false)
   }
 
   useEffect(() => {
@@ -49,8 +50,8 @@ export const CreatePost = () => {
       !filterEditorModal.isModalOpen &&
       !useStoreAddFullPostModal.isModalOpen
     ) {
-      setSidebarModule(false)
       replace(pathname)
+      setSidebarModule(false)
     }
   }, [
     modalWithContent.isModalOpen,
