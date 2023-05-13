@@ -41,7 +41,15 @@ export const CreatePost = () => {
     setSelectedPhoto('')
     modalWithContent.setIsModalOpen(false)
     cropEditorModal.setIsModalOpen(false)
+    replace(pathname)
   }
+
+  useEffect(() => {
+    if (query.create) {
+      setSidebarModule(true)
+      modalWithContent.setIsModalOpen(true)
+    }
+  }, [query.create])
 
   useEffect(() => {
     if (
@@ -50,7 +58,6 @@ export const CreatePost = () => {
       !filterEditorModal.isModalOpen &&
       !useStoreAddFullPostModal.isModalOpen
     ) {
-      replace(pathname)
       setSidebarModule(false)
     }
   }, [
@@ -72,7 +79,7 @@ export const CreatePost = () => {
         <Image src={sidebarModule ? plus : plusOutline} alt={'Create'} height={24} width={24} />
         <div className={clsx('cursor-pointer', sidebarModule && 'text-accent-500')}>Create</div>
       </Link>
-      {query.create && <PhotoUploader setSelectedPhoto={setSelectedPhoto} />}
+      {<PhotoUploader setSelectedPhoto={setSelectedPhoto} />}
       {selectedPhoto && (
         <CropEditor
           setSelectedPhoto={setSelectedPhoto}

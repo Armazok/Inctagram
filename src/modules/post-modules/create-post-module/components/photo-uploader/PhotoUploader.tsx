@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import { useRouter } from 'next/router'
+
 import { countData } from '@/common/utils/indexedDb/countData'
 import { ModalWithContent } from '@/components/modals'
 import {
@@ -23,6 +25,8 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
   const useStoreAddFullPostModal = useStoreAddPostModal()
   const cropEditorModal = useStoreCropEditorModal()
   const { setPhotoFromDB, clearPostPhotos, setUploadId } = usePostStore()
+
+  const { replace, pathname } = useRouter()
 
   const onSetSelectedPhotoClick = (file: any) => {
     setSelectedPhoto(file)
@@ -50,6 +54,7 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
 
   const onCloseClick = () => {
     modalWithContent.setIsModalOpen(false)
+    replace(pathname)
   }
 
   const checkCountDB = async () => {
