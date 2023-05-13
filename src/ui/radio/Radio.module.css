@@ -37,8 +37,6 @@
 }
 /* стили при наведении курсора на радио */
 .customRadio:not(:disabled):not(:checked) + label:hover::before {
-
-  @apply bg-light-100;
 }
 /* стили для активной радиокнопки (при нажатии на неё) */
 .customRadio:not(:disabled):active + label::before {
