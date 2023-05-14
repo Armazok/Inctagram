@@ -20,5 +20,5 @@ export type SubscriptionType = {
   typeSubscription: SubscriptionPeriodType
   paymentType: PaymentType
   amount: number
-  autoRenew: boolean
+  // autoRenew: boolean
 }
