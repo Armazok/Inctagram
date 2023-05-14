@@ -13,7 +13,8 @@ export const SubscriptionType = ({ costs }: any) => {
 
   const onSubscriptionTypeChange = (option: any) => {
     setSubscriptionTypeValue(option)
-    let amount = Number(option.split(' ')[0])
+    //@ts-ignore
+    let amount = Number(option.split(' ')[0].slice(0, -1))
     let typeDescription = option.split(' ')[1].toUpperCase()
 
     setNewSubscription(typeDescription, amount)
@@ -23,7 +24,7 @@ export const SubscriptionType = ({ costs }: any) => {
     if (data) {
       let { amount, typeDescription } = data.data.data[0]
 
-      setSubscriptionTypeValue(amount + ' ' + typeDescription.toLowerCase())
+      setSubscriptionTypeValue(`${amount}$ ${typeDescription.toLowerCase()}`)
       setNewSubscription(typeDescription, amount)
     }
   }, [isSuccess])
@@ -36,6 +37,10 @@ export const SubscriptionType = ({ costs }: any) => {
       >
         {isSuccess && data && data.data.data
           ? data.data.data.map(({ amount, typeDescription }: any): any => {
+              let value = `${amount}$ ${
+                // typeDescription === 'SEMI_ANNUALLY' ? 'semiannually' :
+                typeDescription.toLowerCase()
+              }`
               // costs
               //   ? costs.map(({ amount, typeDescription }: any): any => {
               return (
@@ -43,8 +48,8 @@ export const SubscriptionType = ({ costs }: any) => {
                   key={amount}
                   callBack={onSubscriptionTypeChange}
                   name="subscriptionType"
-                  value={`${amount} ${typeDescription.toLowerCase()}`}
-                  checked={`${amount} ${typeDescription.toLowerCase()}` === subscriptionTypeValue}
+                  value={value}
+                  checked={value === subscriptionTypeValue}
                   id={typeDescription}
                 />
               )
