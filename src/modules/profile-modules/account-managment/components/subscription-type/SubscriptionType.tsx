@@ -4,10 +4,10 @@ import { useGetCosts } from '@/modules/profile-modules/account-managment/hooks/u
 import { useSubscription } from '@/modules/profile-modules/account-managment/store/subscriptionStore'
 import { Radio } from '@/ui/radio/Radio'
 
-export const SubscriptionType = ({ costs }: any) => {
+export const SubscriptionType = () => {
   const { setNewSubscription } = useSubscription()
 
-  const { data, isSuccess, isError } = useGetCosts()
+  const { data, isSuccess } = useGetCosts()
 
   const [subscriptionTypeValue, setSubscriptionTypeValue] = useState('')
 
@@ -41,6 +41,7 @@ export const SubscriptionType = ({ costs }: any) => {
                 // typeDescription === 'SEMI_ANNUALLY' ? 'semiannually' :
                 typeDescription.toLowerCase()
               }`
+
               // costs
               //   ? costs.map(({ amount, typeDescription }: any): any => {
               return (
