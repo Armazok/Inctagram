@@ -30,7 +30,7 @@ export const SubscriptionType = ({ costs }: any) => {
 
   return (
     <div>
-      <h3 className={'text-blue-50'}>Your subscription costs:</h3>
+      <h3 className={'text-blue-50'}>Choose subscription:</h3>
       <div
         className={'bg-dark-300 border-1 border-b-dark-300 mt-[6px] py-[14px] px-[26px] h-[115px]'}
       >
