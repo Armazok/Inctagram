@@ -24,16 +24,13 @@ authInstance.interceptors.response.use(
   response => response,
   async error => {
     const originalRequest = error.config
-    const accessToken = localStorage.getItem('accessToken')
-
-    if (!accessToken) return
 
     if (!originalRequest._isRetry && error?.response?.data?.statusCode === 401) {
       originalRequest._isRetry = true
 
       try {
         const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/auth/update-tokens`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}auth/update-tokens`,
           {},
           { withCredentials: true }
         )
@@ -44,12 +41,12 @@ authInstance.interceptors.response.use(
         return authInstance(originalRequest)
       } catch (e) {
         localStorage.removeItem('accessToken')
-        const redirect =
-          process.env.NODE_ENV === 'development'
-            ? 'http://localhost:3000/auth/login'
-            : `https://inctagram-main.vercel.app/auth/login`
-
-        window.location.assign(redirect)
+        // const redirect =
+        //   process.env.NODE_ENV === 'development'
+        //     ? 'http://localhost:3000/auth/login'
+        //     : `https://inctagram-main.vercel.app/auth/login`
+        //
+        // window.location.assign(redirect)
       }
     }
 
