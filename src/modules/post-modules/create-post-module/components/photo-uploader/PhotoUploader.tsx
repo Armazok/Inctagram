@@ -78,6 +78,7 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
           cropEditorModule={cropEditorModal.setIsModalOpen}
           modalWithContent={modalWithContent.setIsModalOpen}
           setSelectedPhoto={onSetSelectedPhotoClick}
+          maxImageSize={5}
         />
         {imageDbCount > 0 && (
           <GlobalButton type={'button'} callback={onOpenDraftClick}>
