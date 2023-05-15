@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react'
 
 // eslint-disable-next-line import/no-duplicates
 import Image from 'next/image'

@@ -89,7 +89,7 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
               disabled={isLoadingUploadAvatar}
             />
           ) : (
-            <PhotoSelector setSelectedPhoto={setSelectedPhoto} />
+            <PhotoSelector />
           )}
         </>
       </ModalWithContent>

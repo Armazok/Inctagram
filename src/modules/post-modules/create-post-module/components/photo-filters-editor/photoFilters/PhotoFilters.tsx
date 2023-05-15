@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { PhotoFilterItem } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/photoFilters/photoFilter/PhotoFilterItem'
+import { IPhoto } from '@/store/storeSelectorPhoto'
 
 type FilterType = {
   id: number
@@ -8,7 +9,7 @@ type FilterType = {
   filterName: string
 }
 
-const filters: FilterType[] = [
+export const filters: FilterType[] = [
   {
     id: 0,
     filter: 'none',
@@ -57,7 +58,7 @@ const filters: FilterType[] = [
 ]
 
 type PropsType = {
-  imageSrc: string | File
+  imageSrc: IPhoto
   setFilter: (filter: string) => void
 }
 
@@ -66,7 +67,7 @@ export const PhotoFilters = ({ imageSrc, setFilter }: PropsType) => {
     setFilter(filter)
   }
 
-  const filtersList = filters.map(({ id, filter, filterName }) => {
+  const filtersList = filters.map(({ id, filter, filterName }, index) => {
     return (
       <PhotoFilterItem
         key={id}

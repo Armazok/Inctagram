@@ -18,6 +18,8 @@ export interface IPhoto {
     zoom?: number
   }
   filteredUrl?: string | Blob
+  finalUrl?: string | Blob
+  filter?: string
 }
 
 interface ISelectorStore {
@@ -28,6 +30,7 @@ interface ISelectorStore {
   setAspectForImage: (id: string, newAspect: number) => void
   setCroppedAreaPixelsForImage: (id: string, croppedArea: Point, croppedAreaPixels: Area) => void
   setCroppedPhoto: (id: string, croppedPhoto: Point, cropSize: Area) => void
+  setFilterForImage: (id: string, filter: string | undefined) => void
 }
 
 export const useImageSelector = create<ISelectorStore>()(
@@ -180,6 +183,20 @@ export const useImageSelector = create<ISelectorStore>()(
         }
 
         return state
+      })
+    },
+    setFilterForImage(id, filter) {
+      set(state => {
+        const updatedImagesSelector = state.imagesSelector.map(image => {
+          debugger
+          if (image.id === id) {
+            return { ...image, filter }
+          }
+
+          return image
+        })
+
+        return { imagesSelector: updatedImagesSelector }
       })
     },
   }))
