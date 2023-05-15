@@ -4,7 +4,9 @@ import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
+import { PhotoFilters } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/photoFilters/PhotoFilters'
 import { usePostStore } from '@/store'
+import { useFilterStore } from '@/store/filterStore'
 import { IPhoto, useImageSelector } from '@/store/storeSelectorPhoto'
 
 type PropsType = {
@@ -24,21 +26,22 @@ export const FiltersEditor = ({
   onClose,
   setIsDraftModalOpen,
 }: PropsType) => {
-  const [filter, setFilter] = useState('none')
-
   const { isLoadedFromDB } = usePostStore()
-
-  const { imagesSelector } = useImageSelector()
-
+  const { imagesSelector, setImageSelector, setFilterForImage } = useImageSelector()
+  const { filter, setFilter } = useFilterStore()
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0)
   const onFilterClick = async (filter: string) => {
     setFilter(filter)
   }
-
   const onBackClick = () => {
     cropEditorModule(true)
     filterEditorModule(false)
   }
-
+  const onNextClick = () => {
+    // saveFilteredPhoto()
+    useStoreAddFullPostModule(true)
+    filterEditorModule(false)
+  }
   const onCloseClick = () => {
     // saveFilteredPhoto()
     setIsDraftModalOpen(true)
@@ -46,51 +49,43 @@ export const FiltersEditor = ({
     filterEditorModule(false)
   }
 
-  // const saveFilteredPhoto = () => {
-  //   const canvas = document.createElement('canvas')
-  //   const ctx = canvas.getContext('2d')
+  // const saveFilteredPhoto = async () => {
+  //   try {
+  //     const updatedImages = await Promise.all(
+  //       imagesSelector.map(async image => {
+  //         const { croppedAreaPixels } = image.cropData || {}
+  //         const { url } = image
   //
-  //   if (!ctx) {
-  //     return null
+  //         if (!url) {
+  //           console.error(`Image with id "${image.id}" does not have crop data`)
+  //
+  //           return image
+  //         }
+  //
+  //         const croppedImage = await getCroppedImg(url, croppedAreaPixels)
+  //
+  //         return {
+  //           ...image,
+  //           filteredUrl: croppedImage as string,
+  //         }
+  //       })
+  //     )
+  //
+  //     setImageSelector(updatedImages)
+  //     cropEditorModule(false)
+  //     filterEditorModule(true)
+  //   } catch (error) {
+  //     console.error('Error updating images:', error)
   //   }
-  //
-  //   postPhotos.map(({ uploadId, croppedPhoto, cropSize }) => {
-  //     let image = document.getElementById(uploadId)
-  //
-  //     if (
-  //       !(
-  //         image instanceof HTMLCanvasElement ||
-  //         image instanceof HTMLImageElement ||
-  //         image instanceof SVGImageElement ||
-  //         image instanceof HTMLVideoElement
-  //       )
-  //     ) {
-  //       return null
-  //     }
-  //
-  //     canvas.width = cropSize.width
-  //     canvas.height = cropSize.height
-  //     ctx.filter = filter
-  //
-  //     ctx.drawImage(image, 0, 0)
-  //
-  //     canvas.toBlob(blob => {
-  //       if (!(blob instanceof Blob)) {
-  //         console.error('Expected a Blob object, but received', blob)
-  //
-  //         return
-  //       }
-  //       const filteredImageUrl = URL.createObjectURL(blob)
-  //
-  //       setFilteredPhoto(uploadId, String(filteredImageUrl))
-  //     })
-  //   })
   // }
 
-  const onNextClick = () => {
-    // saveFilteredPhoto()
-    useStoreAddFullPostModule(true)
-    filterEditorModule(false)
+  const handleSlideChange = (swiper: any) => {
+    const activeIndex = swiper.activeIndex
+
+    setActiveSlideIndex(activeIndex)
+    const image = imagesSelector[activeIndex]
+
+    setFilterForImage(image.id, filter)
   }
 
   return (
@@ -104,25 +99,40 @@ export const FiltersEditor = ({
       onBtnClick={onNextClick}
     >
       <div className="relative h-[500px]">
-        <Swiper
-          className="h-full"
-          modules={[Navigation, Pagination]}
-          navigation
-          pagination={{ clickable: true }}
-        >
-          {imagesSelector.map((image, ind) => {
-            if (image) {
-              return (
-                <SwiperSlide key={ind}>
-                  <FilterImage key={ind} srs={image} />
-                </SwiperSlide>
-              )
-            } else {
-              return null
-            }
-          })}
-        </Swiper>
-        <div>{/*<PhotoFilters imageSrc={image.url} setFilter={onFilterClick} />*/}</div>
+        <div className="grid grid-cols-2 h-full">
+          <div>
+            <Swiper
+              className="h-full"
+              modules={[Navigation, Pagination]}
+              navigation
+              pagination={{ clickable: true }}
+              onSlideChange={handleSlideChange}
+            >
+              {imagesSelector.map((image, ind) => {
+                if (image) {
+                  return (
+                    <SwiperSlide key={ind}>
+                      <FilterImage key={ind} srs={image} />
+                    </SwiperSlide>
+                  )
+                } else {
+                  return null
+                }
+              })}
+            </Swiper>
+          </div>
+          <div>
+            {imagesSelector.map((image, ind) => {
+              if (ind === activeSlideIndex) {
+                console.log('PhotoFilters', image.filter)
+
+                return <PhotoFilters imageSrc={image} key={ind} setFilter={onFilterClick} />
+              } else {
+                return null
+              }
+            })}
+          </div>
+        </div>
       </div>
     </CreatePostModal>
   )
@@ -133,16 +143,15 @@ interface IFiltersEditor {
 }
 
 export const FilterImage: FC<IFiltersEditor> = memo(({ srs }) => {
-  const [filter, setFilter] = useState('none')
-
-  console.log('srs.filteredUrl', srs.filteredUrl)
+  const { filter } = useFilterStore()
 
   return (
     <>
       <img
+        className={'h-full'}
         src={String(srs.filteredUrl)}
         alt={srs.name}
-        style={{ width: '434px' }}
+        style={{ filter: filter, width: '434px' }}
         id={'image-filtered'}
       />
     </>
