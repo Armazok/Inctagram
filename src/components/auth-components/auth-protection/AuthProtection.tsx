@@ -12,6 +12,7 @@ const unProtectedPaths = [
   '/auth/recovery',
   '/auth/recovery/resend-form',
   '/auth/registration',
+  '/auth/registration/external-account',
   '/auth/registration/resend-form',
   '/auth/registration-confirmation',
 ]
