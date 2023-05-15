@@ -1,43 +1,54 @@
-import { useRef } from 'react'
+import { ChangeEvent, useRef } from 'react'
 
 // eslint-disable-next-line import/no-duplicates
 import Image from 'next/image'
 // eslint-disable-next-line import/no-duplicates
 import ImagePlaceholder from 'next/image'
+import { v1 } from 'uuid'
 
 import plusAdd from '@/assets/icons/plus-square.svg'
 import placeholder from '@/assets/images/img-placeholder.png'
+import { IPhoto, useImageSelector } from '@/store/storeSelectorPhoto'
 import { GlobalButton } from '@/ui'
 
 type PropsType = {
-  setSelectedPhoto: (file: File) => void
   cropEditorModule?: (isModalOpen: boolean) => void
   modalWithContent?: (isModalOpen: boolean) => void
   showButton?: boolean
   placeholderShow?: boolean
+  onAdd?: (photos: IPhoto[]) => void
 }
 
 export const PhotoSelector = ({
-  setSelectedPhoto,
   cropEditorModule,
   modalWithContent,
   showButton = true,
   placeholderShow = true,
+  onAdd,
 }: PropsType) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const { setImageSelector } = useImageSelector()
 
-  const onFileSelectChange = (event: any) => {
+  const onFileSelectChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
 
     if (files && files.length > 0) {
+      const newImages: IPhoto[] = []
+
       for (let i = 0; i < files.length; i++) {
         const file = files[i]
+        const url = URL.createObjectURL(file)
 
-        setSelectedPhoto(file)
-        if (cropEditorModule && modalWithContent) {
-          cropEditorModule(true)
-          modalWithContent(false)
-        }
+        newImages.push({ url, file, id: v1(), name: file.name, type: file.type, size: file.size })
+      }
+
+      setImageSelector(newImages)
+      if (onAdd && typeof onAdd === 'function') {
+        onAdd(newImages)
+      }
+      if (cropEditorModule && modalWithContent) {
+        cropEditorModule(true)
+        modalWithContent(false)
       }
     }
   }
