@@ -27,7 +27,6 @@ export const AllEditPost: FC<IEditPost> = ({
   const { mutate: editFunc } = useEditPostMutation(userId!)
 
   const editPost = () => {
-    debugger
     if (postId && text) {
       editFunc({ postId: postId, description: text })
     } else {
