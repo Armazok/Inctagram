@@ -6,6 +6,7 @@ import { AddPublication } from '@/modules/post-modules/create-post-module/compon
 import { useUploadPost } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
 import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
 import { usePostStore, useUserStore } from '@/store'
+import { useImageSelector } from '@/store/storeSelectorPhoto'
 import { Preloader } from '@/ui'
 
 interface IAddFullPost {
@@ -26,7 +27,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
 }) => {
   const { postPhotos, clearPostPhotos, postDescription, isLoadedFromDB } = usePostStore()
   const { userId } = useUserStore()
-  let imageUrl = postPhotos[0].filteredPhoto
+  const { imagesSelector } = useImageSelector()
 
   const onSuccessPostSent = () => {
     if (isLoadedFromDB) {
@@ -82,7 +83,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
         showBackArrow={true}
         variant={'Publish'}
       >
-        <AddPublication location={true} imageUrl={imageUrl} />
+        {/*<AddPublication location={true} imageUrl={imageUrl} />*/}
       </CreatePostModal>
     </>
   )
