@@ -30,7 +30,7 @@ authInstance.interceptors.response.use(
 
       try {
         const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}auth/update-tokens`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}/auth/update-tokens`,
           {},
           { withCredentials: true }
         )
