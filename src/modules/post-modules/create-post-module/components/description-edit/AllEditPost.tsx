@@ -1,7 +1,6 @@
 import React, { Dispatch, FC, SetStateAction, useState } from 'react'
 
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
-import { EditDescription } from '@/modules/post-modules/create-post-module/components/description-edit/EditDescription'
 import { useEditPostMutation } from '@/modules/post-modules/create-post-module/components/hooks/useEditPost'
 import { useUserStore } from '@/store'
 
@@ -43,13 +42,13 @@ export const AllEditPost: FC<IEditPost> = ({
         onBtnClick={() => ''}
         showBackArrow={false}
       >
-        <EditDescription
-          imageUrl={imageUrl}
-          location={location}
-          callback={editPost}
-          text={text}
-          setText={setText}
-        />
+        {/*<EditDescription*/}
+        {/*  imageUrl={imageUrl}*/}
+        {/*  location={location}*/}
+        {/*  callback={editPost}*/}
+        {/*  text={text}*/}
+        {/*  setText={setText}*/}
+        {/*/>*/}
       </CreatePostModal>
     </div>
   )
