@@ -16,26 +16,49 @@ export interface IPhoto {
     croppedAreaPixels?: Area
     aspect?: number
     zoom?: number
+    filterStyle?: string
   }
   filteredUrl?: string | Blob
-  finalUrl?: string | Blob
-  filter?: string
 }
 
 interface ISelectorStore {
   imagesSelector: IPhoto[]
+  filterStyle: string
+  setFilterStyle: (id: string, filterStyle: string) => void
   setImageSelector: (imagesSelector: IPhoto[]) => void
   setCropForImage: (id: string, newCrop: Point) => void
   setZoomForImage: (id: string, newZoom: number) => void
   setAspectForImage: (id: string, newAspect: number) => void
   setCroppedAreaPixelsForImage: (id: string, croppedArea: Point, croppedAreaPixels: Area) => void
-  setCroppedPhoto: (id: string, croppedPhoto: Point, cropSize: Area) => void
-  setFilterForImage: (id: string, filter: string | undefined) => void
+  setCroppedPhotoForImage: (id: string, croppedPhoto: Point, cropSize: Area) => void
 }
 
 export const useImageSelector = create<ISelectorStore>()(
   devtools(set => ({
     imagesSelector: [],
+    filterStyle: 'none',
+    setFilterStyle(id: string, filterStyle: string) {
+      set(state => {
+        const updatedImages = state.imagesSelector.map(image => {
+          if (image.id === id) {
+            return {
+              ...image,
+              cropData: {
+                ...image.cropData,
+                filterStyle: filterStyle,
+              },
+            }
+          }
+
+          return image
+        })
+
+        return {
+          ...state,
+          imagesSelector: updatedImages,
+        }
+      })
+    },
     setImageSelector(imagesSelector) {
       const newImages = imagesSelector.map(image => ({
         ...image,
@@ -149,7 +172,7 @@ export const useImageSelector = create<ISelectorStore>()(
         }
       })
     },
-    setCroppedPhoto(id: string, croppedPhoto: Point, cropSize: Rect) {
+    setCroppedPhotoForImage(id: string, croppedPhoto: Point, cropSize: Rect) {
       set((state: ISelectorStore) => {
         const photo = state.imagesSelector.find((photo: IPhoto) => photo.id === id)
 
@@ -183,20 +206,6 @@ export const useImageSelector = create<ISelectorStore>()(
         }
 
         return state
-      })
-    },
-    setFilterForImage(id, filter) {
-      set(state => {
-        const updatedImagesSelector = state.imagesSelector.map(image => {
-          debugger
-          if (image.id === id) {
-            return { ...image, filter }
-          }
-
-          return image
-        })
-
-        return { imagesSelector: updatedImagesSelector }
       })
     },
   }))
