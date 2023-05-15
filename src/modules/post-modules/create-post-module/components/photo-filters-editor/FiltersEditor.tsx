@@ -29,9 +29,9 @@ export const FiltersEditor = ({
 }: PropsType) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0)
   const { isLoadedFromDB } = usePostStore()
-  const { imagesSelector, setFilterStyle, setImageSelector } = useImageSelector()
+  const { imagesSelector, setFilterStyleForImage, setImageSelector } = useImageSelector()
   const handleFilterChange = (id: string, filterStyle: string) => {
-    setFilterStyle(id, filterStyle)
+    setFilterStyleForImage(id, filterStyle)
   }
 
   const onNextClick = async () => {

@@ -8,6 +8,8 @@ export interface IPhoto {
   file: File
   id: string
   url: string | Blob
+  filteredUrl?: string | Blob
+  finalUrl?: string | Blob
   name: string
   size: number
   type: string
@@ -18,14 +20,13 @@ export interface IPhoto {
     zoom?: number
     filterStyle?: string
   }
-  filteredUrl?: string | Blob
 }
 
 interface ISelectorStore {
   imagesSelector: IPhoto[]
-  filterStyle: string
-  setFilterStyle: (id: string, filterStyle: string) => void
   setImageSelector: (imagesSelector: IPhoto[]) => void
+  filterStyle: string
+  setFilterStyleForImage: (id: string, filterStyle: string) => void
   setCropForImage: (id: string, newCrop: Point) => void
   setZoomForImage: (id: string, newZoom: number) => void
   setAspectForImage: (id: string, newAspect: number) => void
@@ -37,7 +38,7 @@ export const useImageSelector = create<ISelectorStore>()(
   devtools(set => ({
     imagesSelector: [],
     filterStyle: 'none',
-    setFilterStyle(id: string, filterStyle: string) {
+    setFilterStyleForImage(id: string, filterStyle: string) {
       set(state => {
         const updatedImages = state.imagesSelector.map(image => {
           if (image.id === id) {
