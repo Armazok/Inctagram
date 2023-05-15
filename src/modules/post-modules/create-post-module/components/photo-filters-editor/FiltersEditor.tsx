@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, FC, memo } from 'react'
 
-import Image from 'next/image'
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
-import { PhotoFilters } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/photoFilters/PhotoFilters'
 import { usePostStore } from '@/store'
+import { IPhoto, useImageSelector } from '@/store/storeSelectorPhoto'
 
 type PropsType = {
   isModalOpen: boolean
@@ -27,7 +26,9 @@ export const FiltersEditor = ({
 }: PropsType) => {
   const [filter, setFilter] = useState('none')
 
-  const { postPhotos, setFilteredPhoto, isLoadedFromDB } = usePostStore()
+  const { isLoadedFromDB } = usePostStore()
+
+  const { imagesSelector } = useImageSelector()
 
   const onFilterClick = async (filter: string) => {
     setFilter(filter)
@@ -39,55 +40,55 @@ export const FiltersEditor = ({
   }
 
   const onCloseClick = () => {
-    saveFilteredPhoto()
+    // saveFilteredPhoto()
     setIsDraftModalOpen(true)
     onClose()
     filterEditorModule(false)
   }
 
-  const saveFilteredPhoto = () => {
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
-
-    if (!ctx) {
-      return null
-    }
-
-    postPhotos.map(({ uploadId, croppedPhoto, cropSize }) => {
-      let image = document.getElementById(uploadId)
-
-      if (
-        !(
-          image instanceof HTMLCanvasElement ||
-          image instanceof HTMLImageElement ||
-          image instanceof SVGImageElement ||
-          image instanceof HTMLVideoElement
-        )
-      ) {
-        return null
-      }
-
-      canvas.width = cropSize.width
-      canvas.height = cropSize.height
-      ctx.filter = filter
-
-      ctx.drawImage(image, 0, 0)
-
-      canvas.toBlob(blob => {
-        if (!(blob instanceof Blob)) {
-          console.error('Expected a Blob object, but received', blob)
-
-          return
-        }
-        const filteredImageUrl = URL.createObjectURL(blob)
-
-        setFilteredPhoto(uploadId, String(filteredImageUrl))
-      })
-    })
-  }
+  // const saveFilteredPhoto = () => {
+  //   const canvas = document.createElement('canvas')
+  //   const ctx = canvas.getContext('2d')
+  //
+  //   if (!ctx) {
+  //     return null
+  //   }
+  //
+  //   postPhotos.map(({ uploadId, croppedPhoto, cropSize }) => {
+  //     let image = document.getElementById(uploadId)
+  //
+  //     if (
+  //       !(
+  //         image instanceof HTMLCanvasElement ||
+  //         image instanceof HTMLImageElement ||
+  //         image instanceof SVGImageElement ||
+  //         image instanceof HTMLVideoElement
+  //       )
+  //     ) {
+  //       return null
+  //     }
+  //
+  //     canvas.width = cropSize.width
+  //     canvas.height = cropSize.height
+  //     ctx.filter = filter
+  //
+  //     ctx.drawImage(image, 0, 0)
+  //
+  //     canvas.toBlob(blob => {
+  //       if (!(blob instanceof Blob)) {
+  //         console.error('Expected a Blob object, but received', blob)
+  //
+  //         return
+  //       }
+  //       const filteredImageUrl = URL.createObjectURL(blob)
+  //
+  //       setFilteredPhoto(uploadId, String(filteredImageUrl))
+  //     })
+  //   })
+  // }
 
   const onNextClick = () => {
-    saveFilteredPhoto()
+    // saveFilteredPhoto()
     useStoreAddFullPostModule(true)
     filterEditorModule(false)
   }
@@ -109,18 +110,11 @@ export const FiltersEditor = ({
           navigation
           pagination={{ clickable: true }}
         >
-          {postPhotos.map((image, idx) => {
-            if (image.croppedPhoto) {
+          {imagesSelector.map((image, ind) => {
+            if (image) {
               return (
-                <SwiperSlide key={image.uploadId}>
-                  <Image
-                    key={image.uploadId}
-                    style={{ filter: filter }}
-                    src={image.croppedPhoto}
-                    fill
-                    alt={'photo'}
-                    className="object-cover"
-                  />
+                <SwiperSlide key={ind}>
+                  <FilterImage key={ind} srs={image} />
                 </SwiperSlide>
               )
             } else {
@@ -128,9 +122,29 @@ export const FiltersEditor = ({
             }
           })}
         </Swiper>
-
-        {/*<PhotoFilters imageSrc={String(imageUrl)} setFilter={onFilterClick} />*/}
+        <div>{/*<PhotoFilters imageSrc={image.url} setFilter={onFilterClick} />*/}</div>
       </div>
     </CreatePostModal>
   )
 }
+
+interface IFiltersEditor {
+  srs: IPhoto
+}
+
+export const FilterImage: FC<IFiltersEditor> = memo(({ srs }) => {
+  const [filter, setFilter] = useState('none')
+
+  console.log('srs.filteredUrl', srs.filteredUrl)
+
+  return (
+    <>
+      <img
+        src={String(srs.filteredUrl)}
+        alt={srs.name}
+        style={{ width: '434px' }}
+        id={'image-filtered'}
+      />
+    </>
+  )
+})
