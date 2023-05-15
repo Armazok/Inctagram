@@ -6,9 +6,17 @@ type AddPublicationType = {
   imageUrl: string
   location: boolean
   callback?: () => void
+  text?: string
+  setText?: (newText: string) => void
 }
 
-export const AddPublication: FC<AddPublicationType> = ({ imageUrl, location, callback }) => {
+export const AddPublication: FC<AddPublicationType> = ({
+  imageUrl,
+  location,
+  callback,
+  text,
+  setText,
+}) => {
   return (
     <div className={'flex flex-wrap w-[972px] justify-between'}>
       <div className={'w-[436px]'}>
@@ -21,7 +29,7 @@ export const AddPublication: FC<AddPublicationType> = ({ imageUrl, location, cal
           id={'image-publication'}
         />
       </div>
-      <RightDescription location={location} callback={callback} />
+      <RightDescription text={text} location={location} callback={callback} setText={setText} />
     </div>
   )
 }

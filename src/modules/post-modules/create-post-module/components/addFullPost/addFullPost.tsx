@@ -6,6 +6,7 @@ import { AddPublication } from '@/modules/post-modules/create-post-module/compon
 import { useUploadPost } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
 import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
 import { usePostStore, useUserStore } from '@/store'
+import { useImageSelector } from '@/store/storeSelectorPhoto'
 import { Preloader } from '@/ui'
 
 interface IAddFullPost {
@@ -26,7 +27,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
 }) => {
   const { postPhotos, clearPostPhotos, postDescription, isLoadedFromDB } = usePostStore()
   const { userId } = useUserStore()
-  let imageUrl = postPhotos[0].filteredPhoto
+  const { imagesSelector } = useImageSelector()
 
   const onSuccessPostSent = () => {
     if (isLoadedFromDB) {
@@ -42,7 +43,6 @@ export const AddFullPost: FC<IAddFullPost> = ({
   }
 
   const { mutate: addPhotoToThePost, isLoading } = useUploadPost(onSuccessPostSent, userId!)
-
   const onCloseClick = () => {
     setIsDraftModalOpen(true)
     onClose()
@@ -57,17 +57,17 @@ export const AddFullPost: FC<IAddFullPost> = ({
   const addAllPost = async () => {
     const formData = new FormData()
 
-    const blobUrl = imageUrl as RequestInfo | URL
+    for (const photo of postPhotos) {
+      // formData.append, чтобы добавить каждое изображение в форму данных,
+      // используя параметры files, photo.selectedPhotos as File и photo.uploadId.
+      // Метод formData.append автоматически создаст правильный объект Request,
+      // содержащий файл, который можно передать в addPhotoToThePost.
+      formData.append('files', photo.selectedPhotos as File, photo.uploadId)
+    }
 
-    fetch(blobUrl)
-      .then(response => response.blob())
-      .then((blob: Blob) => {
-        formData.append('description', postDescription) // add description to Form data
+    formData.append('description', postDescription)
 
-        formData.append('files', blob) // add file to Form data
-
-        addPhotoToThePost(formData)
-      })
+    addPhotoToThePost(formData)
   }
 
   if (isLoading) return <Preloader />
@@ -83,7 +83,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
         showBackArrow={true}
         variant={'Publish'}
       >
-        <AddPublication location={true} imageUrl={imageUrl} />
+        {/*<AddPublication location={true} imageUrl={imageUrl} />*/}
       </CreatePostModal>
     </>
   )

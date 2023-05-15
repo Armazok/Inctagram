@@ -5,11 +5,7 @@ export type ReqLogin = {
 
 export type ReqPublication = {
   description: string
-  childrenMetadata: [
-    {
-      uploadId: string
-    }
-  ]
+  files: string | File | Blob | MediaSource
 }
 
 export type ReqPasswordRecovery = {

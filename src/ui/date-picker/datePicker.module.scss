@@ -1,4 +1,5 @@
 .calendar {
+
   @apply bg-dark-500 rounded-sm border border-dark-300;
 
   max-height: 348px;
@@ -18,6 +19,7 @@
   }
 
   :global(.react-datepicker__day-name) {
+
     @apply not-italic font-normal text-[16px] leading-6 text-dark-100;
 
     display: inline-flex;
@@ -36,6 +38,7 @@
 }
 
 .blockContainer {
+
   @apply not-italic font-normal text-base leading-6 text-light-100  border-2 border-dark-300 bg-dark-500;
 
   display: flex;
@@ -49,6 +52,7 @@
   transition: 200ms;
 
   &:focus-visible {
+
     @apply border-accent-700 border-2;
 
     cursor: pointer;
@@ -57,6 +61,7 @@
   }
 
   &:hover {
+
     @apply border-dark-100 border-2;
 
     cursor: pointer;
@@ -65,6 +70,7 @@
   }
 
   &:active {
+
     @apply border-dark-300 border-2;
 
     cursor: pointer;
@@ -73,6 +79,7 @@
   }
 
   &:disabled {
+
     @apply border-dark-300 border-2 bg-dark-500;
 
     border-radius: 2px;
@@ -88,14 +95,17 @@
 }
 
 .errorText {
+
   @apply text-danger-500;
 }
 
 .disabledText {
+
   @apply text-light-900;
 }
 
 .errorBlockContainer {
+
   @apply text-danger-500 border-danger-500 border-2;
 
   border-radius: 2px;
@@ -103,6 +113,7 @@
 
 .day {
   &:global(.react-datepicker__day) {
+
     @apply text-light-100;
 
     position: relative;
@@ -117,6 +128,7 @@
 
     outline: none;
     &:focus-visible {
+
       @apply border-accent-300 border-2;
 
       background-color: transparent;
@@ -124,6 +136,7 @@
     }
 
     &:hover {
+
       @apply bg-accent-900;
 
       border-radius: 18px;
@@ -132,15 +145,18 @@
     }
 
     &:active {
+
       @apply bg-accent-900;
 
       border-radius: 18px;
     }
 
     &:global(.react-datepicker__day--today) {
+
       @apply text-accent-500;
 
       &:focus-visible {
+
         @apply text-accent-500;
 
         background-color: transparent;
@@ -149,6 +165,7 @@
       }
 
       &:hover {
+
         @apply text-accent-100;
 
         border-radius: 18px;
@@ -157,6 +174,7 @@
       }
 
       &:active {
+
         @apply text-light-100;
 
         border-radius: 18px;
@@ -164,6 +182,7 @@
     }
 
     &:global(.react-datepicker__day--selected) {
+
       @apply text-light-100;
 
       @apply border-accent-900 border-2 bg-accent-500;
@@ -179,9 +198,11 @@
     }
 
     &:global(.react-datepicker__week) {
+
       @apply text-light-900;
 
       &:focus-visible {
+
         @apply text-accent-300 border-2 border-accent-300;
 
         background-color: transparent;
@@ -189,6 +210,7 @@
       }
 
       &:hover {
+
         @apply bg-accent-900;
 
         border-radius: 18px;
@@ -197,6 +219,7 @@
       }
 
       &:active {
+
         @apply bg-accent-900;
 
         border-radius: 18px;
@@ -208,11 +231,13 @@
     }
     //стили для предыдущего или следующего месяца в текущем
     &:global(.react-datepicker__day--outside-month) {
+
       @apply text-dark-300;
 
       width: 36px;
       height: 36px;
       &:focus-visible {
+
         @apply text-dark-300;
 
         @apply border-2 border-accent-300;
@@ -222,6 +247,7 @@
       }
 
       &:hover {
+
         @apply bg-accent-900;
 
         border-radius: 18px;
@@ -230,6 +256,7 @@
       }
 
       &:active {
+
         @apply bg-accent-900;
 
         border-radius: 18px;
@@ -238,6 +265,7 @@
   }
 
   &:global(.react-datepicker__day--keyboard-selected) {
+
     @apply text-light-100 border-2 border-accent-900 bg-accent-500;
 
     position: relative;
@@ -250,6 +278,7 @@
     transition: 200ms;
 
     &:focus-visible {
+
       @apply text-accent-500;
 
       background-color: transparent;
@@ -258,6 +287,7 @@
     }
 
     &:hover {
+
       @apply text-accent-100;
 
       border-radius: 18px;
@@ -266,6 +296,7 @@
     }
 
     &:active {
+
       @apply text-light-100;
 
       border-radius: 18px;
@@ -273,12 +304,14 @@
   }
 
   &:global(.react-datepicker__day--in-selecting-range) {
+
     @apply bg-accent-900 border-2 border-accent-900 text-light-900;
 
     border-radius: 0;
   }
 
   &:global(.react-datepicker__day--selecting-range-end) {
+
     @apply border-2 border-accent-900;
 
     position: relative;
@@ -288,6 +321,7 @@
     border-radius: 0 18px 18px 0 !important;
 
     &:before {
+
       @apply bg-accent-500;
 
       content: '';
@@ -308,6 +342,7 @@
     border-radius: 18px 0 0 18px !important;
 
     &:before {
+
       @apply bg-accent-500;
 
       content: '';
@@ -324,6 +359,7 @@
 
   //выбранный после выбранного периода
   &:global(.react-datepicker__day--in-range) {
+
     @apply text-light-900 bg-accent-900;
 
     border: 2px solid #234e99;
@@ -337,6 +373,7 @@
   }
 
   &:global(.react-datepicker__day--range-end) {
+
     @apply bg-accent-500 border-2 border-accent-900;
 
     border-radius: 0 50% 50% 0;
