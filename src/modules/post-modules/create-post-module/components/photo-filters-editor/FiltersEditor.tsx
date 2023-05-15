@@ -1,13 +1,13 @@
-import React, { useState, FC, memo } from 'react'
+import React, { useState } from 'react'
 
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
+import { FilterImage } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/FilterImage'
 import { PhotoFilters } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/photoFilters/PhotoFilters'
 import { usePostStore } from '@/store'
-import { useFilterStore } from '@/store/filterStore'
-import { IPhoto, useImageSelector } from '@/store/storeSelectorPhoto'
+import { useImageSelector } from '@/store/storeSelectorPhoto'
 
 type PropsType = {
   isModalOpen: boolean
@@ -26,13 +26,13 @@ export const FiltersEditor = ({
   onClose,
   setIsDraftModalOpen,
 }: PropsType) => {
-  const { isLoadedFromDB } = usePostStore()
-  const { imagesSelector, setImageSelector, setFilterForImage } = useImageSelector()
-  const { filter, setFilter } = useFilterStore()
   const [activeSlideIndex, setActiveSlideIndex] = useState(0)
-  const onFilterClick = async (filter: string) => {
-    setFilter(filter)
+  const { isLoadedFromDB } = usePostStore()
+  const { imagesSelector, setFilterStyle } = useImageSelector()
+  const handleFilterChange = (id: string, filterStyle: string) => {
+    setFilterStyle(id, filterStyle)
   }
+
   const onBackClick = () => {
     cropEditorModule(true)
     filterEditorModule(false)
@@ -47,6 +47,12 @@ export const FiltersEditor = ({
     setIsDraftModalOpen(true)
     onClose()
     filterEditorModule(false)
+  }
+
+  const handleSlideChange = (swiper: any) => {
+    const activeIndex = swiper.activeIndex
+
+    setActiveSlideIndex(activeIndex)
   }
 
   // const saveFilteredPhoto = async () => {
@@ -79,15 +85,6 @@ export const FiltersEditor = ({
   //   }
   // }
 
-  const handleSlideChange = (swiper: any) => {
-    const activeIndex = swiper.activeIndex
-
-    setActiveSlideIndex(activeIndex)
-    const image = imagesSelector[activeIndex]
-
-    setFilterForImage(image.id, filter)
-  }
-
   return (
     <CreatePostModal
       showBackArrow={!isLoadedFromDB}
@@ -112,7 +109,11 @@ export const FiltersEditor = ({
                 if (image) {
                   return (
                     <SwiperSlide key={ind}>
-                      <FilterImage key={ind} srs={image} />
+                      <FilterImage
+                        key={ind}
+                        filterStyle={image.cropData?.filterStyle! || 'none'}
+                        srs={image}
+                      />
                     </SwiperSlide>
                   )
                 } else {
@@ -124,9 +125,13 @@ export const FiltersEditor = ({
           <div>
             {imagesSelector.map((image, ind) => {
               if (ind === activeSlideIndex) {
-                console.log('PhotoFilters', image.filter)
-
-                return <PhotoFilters imageSrc={image} key={ind} setFilter={onFilterClick} />
+                return (
+                  <PhotoFilters
+                    imageSrc={image}
+                    key={ind}
+                    setFilter={filter => handleFilterChange(image.id, filter)}
+                  />
+                )
               } else {
                 return null
               }
@@ -137,23 +142,3 @@ export const FiltersEditor = ({
     </CreatePostModal>
   )
 }
-
-interface IFiltersEditor {
-  srs: IPhoto
-}
-
-export const FilterImage: FC<IFiltersEditor> = memo(({ srs }) => {
-  const { filter } = useFilterStore()
-
-  return (
-    <>
-      <img
-        className={'h-full'}
-        src={String(srs.filteredUrl)}
-        alt={srs.name}
-        style={{ filter: filter, width: '434px' }}
-        id={'image-filtered'}
-      />
-    </>
-  )
-})
