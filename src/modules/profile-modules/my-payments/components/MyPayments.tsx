@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useMemo, useRef } from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { AgGridReact } from 'ag-grid-react'
 
@@ -6,10 +6,21 @@ import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 import s from './myPayments.module.scss'
 
+import { myPaymentsType } from '@/modules/profile-modules/my-payments/api/my-payments-api'
 import { useGetMyPayments } from '@/modules/profile-modules/my-payments/hooks/useGetMyPayments'
 
 export const MyPayments = () => {
-  const { data } = useGetMyPayments()
+  const [state, setState] = useState<myPaymentsType[]>([])
+
+  const { data, isSuccess } = useGetMyPayments()
+
+  console.log(data)
+  console.log(isSuccess)
+  useEffect(() => {
+    if (data) {
+      setState(data)
+    }
+  }, [isSuccess])
   const columnDefs = [
     { field: 'startDate', header: 'Date of Payment' },
     { field: 'endDate', header: 'End date of subscription' },
@@ -41,7 +52,7 @@ export const MyPayments = () => {
         ref={gridRef}
         animateRows={true}
         rowSelection={'multiple'}
-        rowData={data}
+        rowData={state}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         pagination={true}

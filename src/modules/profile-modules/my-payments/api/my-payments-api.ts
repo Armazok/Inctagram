@@ -1,14 +1,17 @@
+import { authInstance } from '@/services'
+
 export const getMyPayments = () => {
-  return fetch('/api/payments')
-  // return authInstance.get('subscriptions/my-payments')
+  return authInstance
+    .get<{ data: myPaymentsType[] }>('subscriptions/my-payments')
+    .then(res => res.data)
 }
-//
-// type myPaymentsType = {
-//   userId: number
-//   customerId: string
-//   dateOfPayment: string
-//   endDateOfSubscription: string
-//   price: number
-//   subscriptionType: string
-//   paymentType: string
-// }
+
+export type myPaymentsType = {
+  userId: number
+  customerId: string
+  dateOfPayment: string
+  endDateOfSubscription: string
+  price: number
+  subscriptionType: string
+  paymentType: string
+}
