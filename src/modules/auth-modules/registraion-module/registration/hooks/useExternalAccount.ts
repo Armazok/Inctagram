@@ -31,7 +31,7 @@ export const useExternalAccount = () => {
       }, 1500)
 
       console.log(data, 'data')
-      // setToken(data.data?.accessToken)
+      setToken(data.data?.accessToken)
     },
     onError: (error: ResponseError) => {
       errorRequestExternal()
