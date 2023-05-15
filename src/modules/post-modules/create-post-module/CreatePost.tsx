@@ -19,7 +19,7 @@ import { CropEditor } from '@/modules/post-modules/create-post-module/components
 import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/FiltersEditor'
 import { PhotoUploader } from '@/modules/post-modules/create-post-module/components/photo-uploader/PhotoUploader'
 import { SaveDraftPost } from '@/modules/post-modules/create-post-module/components/save-draft-post/SaveDraftPost'
-import { usePostStore } from '@/store'
+import { useImageSelector } from '@/store/storeSelectorPhoto'
 
 export const CreatePost = () => {
   const [sidebarModule, setSidebarModule] = useState<boolean>(false)
@@ -31,7 +31,7 @@ export const CreatePost = () => {
   const cropEditorModal = useStoreCropEditorModal()
   const filterEditorModal = useStoreFilterEditorModal()
   const useStoreAddFullPostModal = useStoreAddPostModal()
-  const { selectedPhotos, setSelectedPhotos, postPhotos } = usePostStore()
+  const { setImageSelector, imagesSelector } = useImageSelector()
 
   const onAddPhotoClick = () => {
     setSidebarModule(true)
@@ -39,7 +39,7 @@ export const CreatePost = () => {
   }
 
   const onCloseClick = () => {
-    setSelectedPhotos('')
+    setImageSelector([])
     modalWithContent.setIsModalOpen(false)
   }
 
@@ -72,14 +72,12 @@ export const CreatePost = () => {
         <Image src={sidebarModule ? plus : plusOutline} alt={'Create'} height={24} width={24} />
         <div className={clsx('cursor-pointer', sidebarModule && 'text-accent-500')}>Create</div>
       </Link>
-      {query.create && <PhotoUploader setSelectedPhotos={setSelectedPhotos} />}
-      {selectedPhotos && (
+      {query.create && <PhotoUploader />}
+      {imagesSelector && (
         <CropEditor
-          setSelectedPhotos={setSelectedPhotos}
           isModalOpen={cropEditorModal.isModalOpen}
           filterEditorModule={filterEditorModal.setIsModalOpen}
           cropEditorModule={cropEditorModal.setIsModalOpen}
-          image={selectedPhotos}
           onClose={onCloseClick}
         />
       )}
