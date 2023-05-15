@@ -86,7 +86,6 @@ export const CropEditor = ({
   }
 
   const onNextClick = async () => {
-    debugger
     try {
       const updatedImages = await Promise.all(
         imagesSelector.map(async image => {
