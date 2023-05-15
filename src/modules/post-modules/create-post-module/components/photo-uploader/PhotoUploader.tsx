@@ -13,21 +13,15 @@ import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
 import { usePostStore } from '@/store'
 import { GlobalButton } from '@/ui'
 
-type PropsType = {
-  setSelectedPhotos: (selectedPhotos: string | File | Blob | MediaSource) => void
-}
-export const PhotoUploader = ({ setSelectedPhotos }: PropsType) => {
+type PropsType = {}
+export const PhotoUploader = ({}: PropsType) => {
   const [imageDbCount, setImageDbCount] = useState(0)
 
   const modalWithContent = useStoreWithContentModal()
   const useStoreAddFullPostModal = useStoreAddPostModal()
   const cropEditorModal = useStoreCropEditorModal()
-  const { setPhotoFromDB, clearPostPhotos, setUploadId } = usePostStore()
+  const { setPhotoFromDB, clearPostPhotos } = usePostStore()
 
-  const onSetSelectedPhotoClick = (file: any) => {
-    setSelectedPhotos(file)
-    setUploadId(file)
-  }
   const onSuccessOpenDraft = async (data: any) => {
     let filteredPhoto = URL.createObjectURL(data.filteredPhoto)
     let croppedPhoto = URL.createObjectURL(data.croppedPhoto)
@@ -85,7 +79,6 @@ export const PhotoUploader = ({ setSelectedPhotos }: PropsType) => {
         <PhotoSelector
           cropEditorModule={cropEditorModal.setIsModalOpen}
           modalWithContent={modalWithContent.setIsModalOpen}
-          setSelectedPhoto={onSetSelectedPhotoClick}
         />
         {imageDbCount > 0 && (
           <GlobalButton type={'button'} callback={onOpenDraftClick}>
