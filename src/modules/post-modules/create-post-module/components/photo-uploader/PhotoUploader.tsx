@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import { useRouter } from 'next/router'
+
 import { countData } from '@/common/utils/indexedDb/countData'
 import { ModalWithContent } from '@/components/modals'
 import {
@@ -22,6 +24,12 @@ export const PhotoUploader = ({}: PropsType) => {
   const cropEditorModal = useStoreCropEditorModal()
   const { setPhotoFromDB, clearPostPhotos } = usePostStore()
 
+  const { replace, pathname } = useRouter()
+
+  const onSetSelectedPhotoClick = (file: any) => {
+    // setSelectedPhoto(file)
+    // setUploadId()
+  }
   const onSuccessOpenDraft = async (data: any) => {
     let filteredPhoto = URL.createObjectURL(data.filteredPhoto)
     let croppedPhoto = URL.createObjectURL(data.croppedPhoto)
@@ -57,6 +65,7 @@ export const PhotoUploader = ({}: PropsType) => {
 
   const onCloseClick = () => {
     modalWithContent.setIsModalOpen(false)
+    replace(pathname)
   }
 
   const checkCountDB = async () => {
@@ -79,6 +88,7 @@ export const PhotoUploader = ({}: PropsType) => {
         <PhotoSelector
           cropEditorModule={cropEditorModal.setIsModalOpen}
           modalWithContent={modalWithContent.setIsModalOpen}
+          maxImageSize={5}
         />
         {imageDbCount > 0 && (
           <GlobalButton type={'button'} callback={onOpenDraftClick}>

@@ -41,7 +41,16 @@ export const CreatePost = () => {
   const onCloseClick = () => {
     setImageSelector([])
     modalWithContent.setIsModalOpen(false)
+    cropEditorModal.setIsModalOpen(false)
+    replace(pathname)
   }
+
+  useEffect(() => {
+    if (query.create) {
+      setSidebarModule(true)
+      modalWithContent.setIsModalOpen(true)
+    }
+  }, [query.create])
 
   useEffect(() => {
     if (

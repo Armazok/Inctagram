@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef } from 'react'
+import React, { ChangeEvent, useRef, useState } from 'react';
 
 // eslint-disable-next-line import/no-duplicates
 import Image from 'next/image'
@@ -14,6 +14,7 @@ import { GlobalButton } from '@/ui'
 type PropsType = {
   cropEditorModule?: (isModalOpen: boolean) => void
   modalWithContent?: (isModalOpen: boolean) => void
+  maxImageSize?: number
   showButton?: boolean
   placeholderShow?: boolean
   onAdd?: (photos: IPhoto[]) => void
@@ -22,12 +23,22 @@ type PropsType = {
 export const PhotoSelector = ({
   cropEditorModule,
   modalWithContent,
+  maxImageSize,
   showButton = true,
   placeholderShow = true,
   onAdd,
 }: PropsType) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [error, setError] = useState('')
   const { setImageSelector } = useImageSelector()
+
+  const checkImageSize = (file: File, maxImageSize: number, onSuccessSetFile: any) => {
+    if (file.size <= maxImageSize * 1024 * 1024) {
+      onSuccessSetFile(file)
+    } else {
+      setError(`Image size should not be more than ${maxImageSize} MB`)
+    }
+  }
 
   const onFileSelectChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
@@ -52,7 +63,6 @@ export const PhotoSelector = ({
       }
     }
   }
-
   const onSelectClick = () => {
     //@ts-ignore
     document.getElementById('fileInput').click()
@@ -75,13 +85,16 @@ export const PhotoSelector = ({
         multiple
       />
       {showButton ? (
-        <GlobalButton
-          type={'button'}
-          className={`text-[16px] my-[60px] mx-[60px] font-semibold`}
-          callback={onSelectClick}
-        >
-          Select from computer
-        </GlobalButton>
+        <>
+          <div className={'text-danger-700 mt-[20px]'}>{error}</div>
+          <GlobalButton
+            type={'button'}
+            className={`text-[16px] my-[60px] mx-[60px] font-semibold`}
+            callback={onSelectClick}
+          >
+            Select from computer
+          </GlobalButton>
+        </>
       ) : (
         <Image
           className={`text-[16px] my-[60px] mx-[60px] font-semibold`}

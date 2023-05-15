@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 
 import { Radio } from '@/ui/radio/Radio'
 
-const accountTypes = ['personal', 'business']
+const accountTypes = ['Personal', 'Business']
 
 export const AccountType = ({ setHasBusinessAccount, hasBusinessAccount }: any) => {
-  const defaultAccountType = hasBusinessAccount ? 'business' : accountTypes[0]
+  const defaultAccountType = hasBusinessAccount ? 'Business' : accountTypes[0]
   const [accountTypeValue, setAccountTypeValue] = useState(defaultAccountType)
 
   const onAccountTypeChange = (option: any) => {
-    if (option === 'business') {
+    if (option === 'Business') {
       setHasBusinessAccount(true)
     } else {
       setHasBusinessAccount(false)
@@ -20,7 +20,7 @@ export const AccountType = ({ setHasBusinessAccount, hasBusinessAccount }: any) 
 
   return (
     <div className={'mb-[42px]'}>
-      <h3>Account type:</h3>
+      <h3 className={'text-blue-50'}>Account type:</h3>
       <div
         className={
           'bg-dark-300 border-1 border-dark-300 mt-[6px] py-[14px] px-[26px] rounded-[5px]'

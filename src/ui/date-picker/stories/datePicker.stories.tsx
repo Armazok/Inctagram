@@ -14,7 +14,7 @@ const meta: Meta<typeof DateCalendar> = {
     },
     docs: {
       description: {
-        component: ' DatePicker - это компонент, предназначенный для выбора даты ',
+        component: 'DatePicker - this is a component designed for date selection ',
       },
     },
   },
@@ -22,17 +22,16 @@ const meta: Meta<typeof DateCalendar> = {
     errorMessage: {
       options: [null, 'ErrorMessage'],
       control: { type: 'radio' },
-      description: 'вывести сообщение об ошибки и показать красным цветом',
+      description: 'print an error message and show it in red',
     },
     label: {
-      // options: ['Date', null],
       control: { type: 'text' },
-      description: 'Добавить имя над компонентой',
+      description: 'Add a name above the component',
     },
     disabled: {
       options: [true, false],
       control: { type: 'radio' },
-      description: 'Заблокировать кнопку',
+      description: 'Lock the button',
     },
   },
 }
