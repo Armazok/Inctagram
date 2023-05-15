@@ -1,8 +1,6 @@
 import { authInstance } from '@/services'
 
 export const sendPublicationImage = (formData: File | Blob | FormData) => {
-  debugger
-
   return authInstance.post<ResImagePublication>('/posts', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
