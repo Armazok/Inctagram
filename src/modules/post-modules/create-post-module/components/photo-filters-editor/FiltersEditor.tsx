@@ -4,6 +4,7 @@ import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
+import getCroppedImg from '@/modules/post-modules/create-post-module/components/photo-crop-editor/utils/canvasUtils'
 import { FilterImage } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/FilterImage'
 import { PhotoFilters } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/photoFilters/PhotoFilters'
 import { usePostStore } from '@/store'
@@ -28,18 +29,44 @@ export const FiltersEditor = ({
 }: PropsType) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0)
   const { isLoadedFromDB } = usePostStore()
-  const { imagesSelector, setFilterStyle } = useImageSelector()
+  const { imagesSelector, setFilterStyle, setImageSelector } = useImageSelector()
   const handleFilterChange = (id: string, filterStyle: string) => {
     setFilterStyle(id, filterStyle)
   }
 
+  const onNextClick = async () => {
+    try {
+      const updatedImages = await Promise.all(
+        imagesSelector.map(async image => {
+          const { croppedAreaPixels } = image.cropData || {}
+          const { filterStyle } = image.cropData || {}
+          const { url } = image
+
+          if (!url) {
+            console.error(`Image with id "${image.id}" does not have crop data`)
+
+            return image
+          }
+
+          const croppedImage = await getCroppedImg(url, croppedAreaPixels, filterStyle)
+
+          return {
+            ...image,
+            finalUrl: croppedImage as string,
+          }
+        })
+      )
+
+      setImageSelector(updatedImages)
+      useStoreAddFullPostModule(true)
+      filterEditorModule(false)
+    } catch (error) {
+      console.error('Error updating images:', error)
+    }
+  }
+
   const onBackClick = () => {
     cropEditorModule(true)
-    filterEditorModule(false)
-  }
-  const onNextClick = () => {
-    // saveFilteredPhoto()
-    useStoreAddFullPostModule(true)
     filterEditorModule(false)
   }
   const onCloseClick = () => {
