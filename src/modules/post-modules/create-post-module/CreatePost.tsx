@@ -102,6 +102,7 @@ export const CreatePost = () => {
       )}
       {useStoreAddFullPostModal.isModalOpen && (
         <AddFullPost
+          location={false}
           isModalOpen={useStoreAddFullPostModal.isModalOpen}
           useStoreAddFullPostModule={useStoreAddFullPostModal.setIsModalOpen}
           filterEditorModule={filterEditorModal.setIsModalOpen}
