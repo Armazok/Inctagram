@@ -13,7 +13,7 @@ type PropsType = {
 }
 
 export const ExternalAccount: FC<PropsType> = ({ code, email }) => {
-  const { confirmMerge, cancelMerge, closeModal, isLoading, modalContent } = useExternalAccount()
+  const { confirmMerge, cancelMerge, closePopup, isLoading, popupContent } = useExternalAccount()
 
   return (
     <>
@@ -44,11 +44,11 @@ export const ExternalAccount: FC<PropsType> = ({ code, email }) => {
         <Image src={BroSingUp} alt={'broSingUp'} height={290} width={290} priority />
       </div>
       <Confirm
-        isOpen={modalContent.isOpen}
-        onConfirm={closeModal}
-        onClose={closeModal}
+        isOpen={popupContent.isOpen}
+        onConfirm={closePopup}
+        onClose={closePopup}
         title="Merger of Accounts"
-        text={modalContent.text}
+        text={popupContent.content}
         confirmButtonText="OK"
       />
     </>
