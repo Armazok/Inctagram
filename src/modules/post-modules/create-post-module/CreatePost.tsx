@@ -19,9 +19,9 @@ import { CropEditor } from '@/modules/post-modules/create-post-module/components
 import { FiltersEditor } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/FiltersEditor'
 import { PhotoUploader } from '@/modules/post-modules/create-post-module/components/photo-uploader/PhotoUploader'
 import { SaveDraftPost } from '@/modules/post-modules/create-post-module/components/save-draft-post/SaveDraftPost'
+import { useImageSelector } from '@/store/storeSelectorPhoto'
 
 export const CreatePost = () => {
-  const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
   const [sidebarModule, setSidebarModule] = useState<boolean>(false)
   const [isDraftModalOpen, setIsDraftModalOpen] = useState(false)
 
@@ -31,6 +31,7 @@ export const CreatePost = () => {
   const cropEditorModal = useStoreCropEditorModal()
   const filterEditorModal = useStoreFilterEditorModal()
   const useStoreAddFullPostModal = useStoreAddPostModal()
+  const { setImageSelector, imagesSelector } = useImageSelector()
 
   const onAddPhotoClick = () => {
     setSidebarModule(true)
@@ -38,7 +39,7 @@ export const CreatePost = () => {
   }
 
   const onCloseClick = () => {
-    setSelectedPhoto('')
+    setImageSelector([])
     modalWithContent.setIsModalOpen(false)
     cropEditorModal.setIsModalOpen(false)
     replace(pathname)
@@ -59,6 +60,7 @@ export const CreatePost = () => {
       !useStoreAddFullPostModal.isModalOpen
     ) {
       setSidebarModule(false)
+      replace(pathname)
     }
   }, [
     modalWithContent.isModalOpen,
@@ -79,14 +81,12 @@ export const CreatePost = () => {
         <Image src={sidebarModule ? plus : plusOutline} alt={'Create'} height={24} width={24} />
         <div className={clsx('cursor-pointer', sidebarModule && 'text-accent-500')}>Create</div>
       </Link>
-      {<PhotoUploader setSelectedPhoto={setSelectedPhoto} />}
-      {selectedPhoto && (
+      {query.create && <PhotoUploader />}
+      {imagesSelector && (
         <CropEditor
-          setSelectedPhoto={setSelectedPhoto}
           isModalOpen={cropEditorModal.isModalOpen}
           filterEditorModule={filterEditorModal.setIsModalOpen}
           cropEditorModule={cropEditorModal.setIsModalOpen}
-          image={selectedPhoto}
           onClose={onCloseClick}
         />
       )}
@@ -102,6 +102,7 @@ export const CreatePost = () => {
       )}
       {useStoreAddFullPostModal.isModalOpen && (
         <AddFullPost
+          location={false}
           isModalOpen={useStoreAddFullPostModal.isModalOpen}
           useStoreAddFullPostModule={useStoreAddFullPostModal.setIsModalOpen}
           filterEditorModule={filterEditorModal.setIsModalOpen}

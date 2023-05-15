@@ -5,7 +5,7 @@ import Image from 'next/image'
 import maximize from '@/assets/icons/maximize.svg'
 
 type PropsType = {
-  zoom: number
+  zoom?: number
   setZoom: (zoom: number) => void
 }
 
@@ -46,7 +46,7 @@ export const ZoomPopup: FC<PropsType> = ({ zoom, setZoom }) => {
             className={'cursor-pointer'}
             type="range"
             min="1"
-            max="2"
+            max="3"
             step="0.01"
             value={zoom}
             onChange={onZoomChange}

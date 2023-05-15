@@ -44,7 +44,10 @@ const meta: Meta<typeof Radio> = {
 export default meta
 const wrapper = 'w-full flex justify-center items-center bg-secondBgColor h-60 gap-2'
 
-export const RadioUI: { render: (args) => JSX.Element } = {
+export const RadioUI: {
+  // @ts-ignore
+  render: (args) => JSX.Element
+} = {
   render: args => (
     <div className={wrapper}>
       <Radio id={'1'} value={'Radio 1'} name={'radio'} {...args} />

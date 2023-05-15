@@ -15,29 +15,40 @@ import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
 import { usePostStore } from '@/store'
 import { GlobalButton } from '@/ui'
 
-type PropsType = {
-  setSelectedPhoto: (photo: string | File | null) => void
-}
-export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
+type PropsType = {}
+export const PhotoUploader = ({}: PropsType) => {
   const [imageDbCount, setImageDbCount] = useState(0)
 
   const modalWithContent = useStoreWithContentModal()
   const useStoreAddFullPostModal = useStoreAddPostModal()
   const cropEditorModal = useStoreCropEditorModal()
-  const { setPhotoFromDB, clearPostPhotos, setUploadId } = usePostStore()
+  const { setPhotoFromDB, clearPostPhotos } = usePostStore()
 
   const { replace, pathname } = useRouter()
 
   const onSetSelectedPhotoClick = (file: any) => {
-    setSelectedPhoto(file)
-    setUploadId()
+    // setSelectedPhoto(file)
+    // setUploadId()
   }
   const onSuccessOpenDraft = async (data: any) => {
     let filteredPhoto = URL.createObjectURL(data.filteredPhoto)
     let croppedPhoto = URL.createObjectURL(data.croppedPhoto)
+    let selectedPhotos: string = ''
+
+    if (data.selectedPhotos instanceof Blob || data.selectedPhotos instanceof File) {
+      selectedPhotos = URL.createObjectURL(data.selectedPhotos)
+    }
+
     const { uploadId, description, cropSize } = data
 
-    await setPhotoFromDB(uploadId, croppedPhoto, filteredPhoto, description, cropSize)
+    await setPhotoFromDB(
+      uploadId,
+      croppedPhoto,
+      filteredPhoto,
+      description,
+      cropSize,
+      selectedPhotos
+    )
     useStoreAddFullPostModal.setIsModalOpen(true)
   }
   const onOpenDraftClick = async () => {
@@ -77,7 +88,7 @@ export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
         <PhotoSelector
           cropEditorModule={cropEditorModal.setIsModalOpen}
           modalWithContent={modalWithContent.setIsModalOpen}
-          setSelectedPhoto={onSetSelectedPhotoClick}
+          maxImageSize={5}
         />
         {imageDbCount > 0 && (
           <GlobalButton type={'button'} callback={onOpenDraftClick}>

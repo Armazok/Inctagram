@@ -10,7 +10,6 @@ export const useUploadPost = (onSuccessPostSent: any, userId: number) => {
     mutationFn: sendPublicationImage,
     onSuccess: data => {
       onSuccessPostSent(data.data.images)
-      // onSuccessUploadPost && onSuccessUploadPost()
       client.invalidateQueries({ queryKey: ['posts', `user_${userId}`] })
       toast.success('Success')
     },
