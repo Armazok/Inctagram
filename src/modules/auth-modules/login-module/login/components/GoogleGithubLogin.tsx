@@ -1,46 +1,35 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import github from '@/assets/icons/github-svgrepo.png'
 import google from '@/assets/icons/google-svgrepo.png'
+import { useAuth2ControllerPopup } from '@/common'
 import { Confirm } from '@/components/modals'
 import { AUTH2_STATUS, OAUTH_AUTHORIZATION } from '@/services'
 
 export const GoogleGithubLogin = () => {
-  const [modalData, setModalData] = useState({
-    modalText: '',
-    isOpenModal: false,
-  })
+  const { popupContent, setAuth2ContentPopup, closePopup } = useAuth2ControllerPopup()
 
   const { query } = useRouter()
   const query_status = query['status_code'] as string
-
-  const closeModal = () => {
-    setModalData({
-      ...modalData,
-      isOpenModal: false,
-    })
-  }
 
   useEffect(() => {
     if (!query_status) return
 
     if (query_status === AUTH2_STATUS['401']) {
-      setModalData({
-        ...modalData,
-        modalText: `This account is not in the system, if you want to register, go to the page "Sign Up" `,
-        isOpenModal: true,
-      })
+      setAuth2ContentPopup(
+        true,
+        `This account is not in the system, if you want to register, go to the page "Sign Up" `
+      )
     }
 
     if (query_status === AUTH2_STATUS['204']) {
-      setModalData({
-        ...modalData,
-        modalText: `A user with this email already exists. Go to your email to continue`,
-        isOpenModal: true,
-      })
+      setAuth2ContentPopup(
+        true,
+        `A user with this email already exists. Go to your email for further instructions`
+      )
     }
   }, [query_status])
 
@@ -57,11 +46,11 @@ export const GoogleGithubLogin = () => {
       </div>
 
       <Confirm
-        isOpen={modalData.isOpenModal}
-        onConfirm={closeModal}
-        onClose={closeModal}
-        title="Login"
-        text={modalData.modalText}
+        isOpen={popupContent.isOpen}
+        onConfirm={closePopup}
+        onClose={closePopup}
+        title={query_status === AUTH2_STATUS['401'] ? 'Login' : 'Email Sent'}
+        text={popupContent.content}
         confirmButtonText="OK"
       />
     </>
