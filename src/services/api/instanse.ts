@@ -40,7 +40,8 @@ authInstance.interceptors.response.use(
 
         return authInstance(originalRequest)
       } catch (e) {
-        localStorage.removeItem('accessToken')
+        console.warn(e)
+        // localStorage.removeItem('accessToken')
         // const redirect =
         //   process.env.NODE_ENV === 'development'
         //     ? 'http://localhost:3000/auth/login'
