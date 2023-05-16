@@ -12,7 +12,7 @@ type PropsType = {
 }
 
 export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsType) => {
-  const { imagesSelector, description } = useImageSelector()
+  const { imagesSelector, description, setDescription } = useImageSelector()
 
   const clearPreviousDraft = async () => {
     await clearDatabase({
@@ -26,6 +26,7 @@ export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsTy
     await clearPreviousDraft()
     setNewPostToIndexedDB(imagesSelector, description)
     setIsDraftModalOpen(false)
+    setDescription('')
   }
 
   const onDiscardClick = async () => {

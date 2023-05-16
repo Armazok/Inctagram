@@ -37,6 +37,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
   const [postDescription, setPostDescription] = useState(description)
   const onSuccessPostSent = () => {
     onClose()
+    setDescription('')
     useStoreAddFullPostModule(false)
   }
 
@@ -82,8 +83,11 @@ export const AddFullPost: FC<IAddFullPost> = ({
       showBackArrow={true}
       variant={'Publish'}
     >
-      <div>
-        <div className="grid grid-cols-2 h-full">
+      <div className={'flex flex-wrap flex-row'}>
+        <div
+          // className="grid grid-cols-2 h-full"
+          className="max-w-[485px]"
+        >
           <div>
             <Swiper
               className="h-full"
@@ -105,10 +109,10 @@ export const AddFullPost: FC<IAddFullPost> = ({
             </Swiper>
           </div>
         </div>
-        <div>
+        <div className="max-w-[480px]">
           <RightDescription
             text={postDescription}
-            location={location}
+            location={true}
             callback={callback}
             setText={setPostDescription}
           />
