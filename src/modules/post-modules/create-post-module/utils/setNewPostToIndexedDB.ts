@@ -12,51 +12,49 @@ type ImageDataType = {
 }
 
 export const setNewPostToIndexedDB = async (postPhotos: IPhoto[], postDescription: string) => {
-  let indexedDbArray = [] as IPhoto[]
+  let indexedDbArray: IPhoto[] = []
 
-  postPhotos.forEach(photo => {
-    let photoData = {
-      ...photo,
-      id: photo.id,
-      filteredUrl: photo.filteredUrl,
-      finalUrl: photo.finalUrl ? photo.finalUrl : photo.filteredUrl,
-    }
+  await Promise.all(
+    postPhotos.map(async photo => {
+      let photoData = {
+        ...photo,
+        id: photo.id,
+        filteredUrl: photo.filteredUrl,
+        finalUrl: photo.finalUrl ? photo.finalUrl : photo.filteredUrl,
+      }
 
-    // @ts-ignore
-    fetch(photoData.finalUrl)
-      .then(response => response.blob())
-      .then(blob => {
-        photoData.finalUrl = blob
-      })
-      .then(() => {
-        //@ts-ignore
-        fetch(photoData.filteredUrl)
-          .then(response => response.blob())
-          .then(blob => {
-            photoData.filteredUrl = blob
-            // @ts-ignore
-            indexedDbArray.push(photoData)
-          })
-      })
-      .catch(error => {
+      try {
+        // @ts-ignore
+        const finalUrlResponse = await fetch(photoData.finalUrl)
+        const finalUrlBlob = await finalUrlResponse.blob()
+
+        photoData.finalUrl = finalUrlBlob
+
+        // @ts-ignore
+        const filteredUrlResponse = await fetch(photoData.filteredUrl)
+        const filteredUrlBlob = await filteredUrlResponse.blob()
+
+        photoData.filteredUrl = filteredUrlBlob
+
+        indexedDbArray.push(photoData)
+      } catch (error) {
         console.error('Error fetching Blob:', error)
-      })
-      .then(() => {
-        let imageData: ImageDataType = {
-          data: {
-            photoArray: indexedDbArray,
-            description: postDescription,
-          },
-          timestamp: Date.now(),
-        }
+      }
+    })
+  )
 
-        debugger
-        setItemToDatabase({
-          keyPath: IMAGES.KEY_PATH,
-          storeName: IMAGES.STORE_NAME,
-          dbName: IMAGES.DB_NAME,
-          itemData: imageData,
-        })
-      })
+  let imageData: ImageDataType = {
+    data: {
+      photoArray: indexedDbArray,
+      description: postDescription,
+    },
+    timestamp: Date.now(),
+  }
+
+  setItemToDatabase({
+    keyPath: IMAGES.KEY_PATH,
+    storeName: IMAGES.STORE_NAME,
+    dbName: IMAGES.DB_NAME,
+    itemData: imageData,
   })
 }
