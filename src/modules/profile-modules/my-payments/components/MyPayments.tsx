@@ -1,37 +1,87 @@
 import React, { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { AgGridReact } from 'ag-grid-react'
-
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
+import { AgGridReact } from 'ag-grid-react'
+import { AgGridReact as AgGridReactType } from 'ag-grid-react/lib/agGridReact'
+
 import s from './myPayments.module.scss'
 
-import { myPaymentsType } from '@/modules/profile-modules/my-payments/api/my-payments-api'
-import { useGetMyPayments } from '@/modules/profile-modules/my-payments/hooks/useGetMyPayments'
+import { capitalizeFirstLetter } from '@/common'
+import {
+  dateChangesFormat,
+  myPaymentsType,
+  useGetMyPayments,
+} from '@/modules/profile-modules/my-payments'
 
+/**
+ * My payments - a component for displaying paid subscriptions
+ * @property {React.RefObject} ref - Reference to the grid component
+ * @property {boolean} animateRows - Flag whether rows should be animated
+ * @property {string|undefined} rowSelection - Sets row selection mode ('single', 'multiple', undefined)
+ * @property {Array} rowData - Array of payment data objects to be displayed in the grid
+ * @property {Array} columnDefs - Array of column definitions for the grid
+ * @property {object} defaultColDef - Default column definitions for the grid
+ * @property {boolean} pagination - Flag whether pagination should be enabled
+ * @property {number} paginationPageSize - Number of payments to show per page in pagination
+ * @property {boolean} suppressHorizontalScroll - Flag whether horizontal scroll should be suppressed
+ * @property {boolean} suppressPropertyNamesCheck - Flag whether property name checks should be suppressed
+ * @property {string} overlayLoadingTemplate - Template displayed when data is being loaded
+ * @property {string} overlayNoRowsTemplate - Template displayed when no payments are available or when an error occurred on the server
+ *
+ * columnDefs - An array containing column definitions for the table
+ * @type {Array}
+ *
+ * onPageSizeChanged - A callback function to handle changes in the table page selection
+ * @returns {Function} The callback function that updates the table page size
+ *
+ * defaultColDef - The default column definition settings for the table, with sorting enabled
+ * @type {Object}
+ * @const
+ * {@link https://www.ag-grid.com/react-data-grid/}
+ */
 export const MyPayments = () => {
-  const [state, setState] = useState<myPaymentsType[]>([])
+  const [myPaymentsData, setMyPaymentsData] = useState<myPaymentsType[]>([])
 
   const { data, isSuccess } = useGetMyPayments()
+  const gridRef = useRef<AgGridReactType>()
 
-  console.log(data)
-  console.log(isSuccess)
-  useEffect(() => {
-    if (data) {
-      setState(data)
-    }
-  }, [isSuccess])
   const columnDefs = [
-    { field: 'startDate', header: 'Date of Payment' },
-    { field: 'endDate', header: 'End date of subscription' },
+    {
+      field: 'dateOfPayment',
+      header: 'Date of Payment',
+      valueFormatter: params => dateChangesFormat(params.value),
+    },
+    {
+      field: 'endDateOfSubscription',
+      header: 'End date of subscription',
+      valueFormatter: params => dateChangesFormat(params.value),
+    },
     {
       field: 'price',
       header: 'Price',
-      valueFormatter: (params: any) => '$' + params.data.price,
+      valueFormatter: params => '$' + params.value,
     },
-    { field: 'subscription', header: 'Subscription Type' },
-    { field: 'payments', header: 'Payment Type' },
+    {
+      field: 'subscriptionType',
+      header: 'Subscription Type',
+      valueFormatter: params => capitalizeFirstLetter(params.value),
+    },
+    {
+      field: 'paymentType',
+      header: 'Payment Type',
+      valueFormatter: params => capitalizeFirstLetter(params.value),
+    },
   ]
+
+  const onPageSizeChanged = useCallback(
+    gridRef => (e: ChangeEvent<HTMLSelectElement>) => {
+      const value = Number(e.currentTarget.value)
+
+      gridRef.current.api.paginationSetPageSize(value)
+    },
+    []
+  )
 
   const defaultColDef = useMemo(
     () => ({
@@ -39,12 +89,12 @@ export const MyPayments = () => {
     }),
     []
   )
-  const gridRef = useRef<any>()
-  const onPageSizeChanged = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-    const value = e.currentTarget.value
 
-    gridRef.current.api.paginationSetPageSize(value)
-  }, [])
+  useEffect(() => {
+    if (data) {
+      setMyPaymentsData(data)
+    }
+  }, [isSuccess])
 
   return (
     <div className={`ag-theme-alpine-dark ${s.myPayments} `} style={{ height: 500, width: 972 }}>
@@ -52,17 +102,21 @@ export const MyPayments = () => {
         ref={gridRef}
         animateRows={true}
         rowSelection={'multiple'}
-        rowData={state}
+        rowData={myPaymentsData}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         pagination={true}
         paginationPageSize={8}
         suppressHorizontalScroll={true}
-        gridOptions={{
-          suppressPropertyNamesCheck: true,
-        }}
+        suppressPropertyNamesCheck={true}
+        overlayLoadingTemplate={'Loading the payment...'}
+        overlayNoRowsTemplate={
+          !isSuccess
+            ? 'Error on the server, try again or contact technical support'
+            : 'You have no payments'
+        }
       />
-      <select className={s.optionsBlock} onChange={e => onPageSizeChanged(e)}>
+      <select className={s.optionsBlock} onChange={e => onPageSizeChanged(gridRef)(e)}>
         <option value={'25'}>25</option>
         <option value={'50'}>50</option>
         <option value={'75'}>75</option>
