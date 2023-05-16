@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getMyPayments } from '@/modules/profile-modules/my-payments'
 
 export const useGetMyPayments = () => {
-  const { data, isSuccess, isError } = useQuery({
+  const { data, isSuccess } = useQuery({
     queryKey: ['get-my-payments'],
     queryFn: () => getMyPayments(),
     onError: err => {
@@ -11,5 +11,5 @@ export const useGetMyPayments = () => {
     },
   })
 
-  return { data, isSuccess, isError }
+  return { data, isSuccess }
 }

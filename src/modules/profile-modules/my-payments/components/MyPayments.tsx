@@ -3,16 +3,11 @@ import React, { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState }
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 import { AgGridReact } from 'ag-grid-react'
-import { AgGridReact as AgGridReactType } from 'ag-grid-react/lib/agGridReact'
 
 import s from './myPayments.module.scss'
 
 import { capitalizeFirstLetter } from '@/common'
-import {
-  dateChangesFormat,
-  myPaymentsType,
-  useGetMyPayments,
-} from '@/modules/profile-modules/my-payments'
+import { dateChangesFormat, useGetMyPayments } from '@/modules/profile-modules/my-payments'
 
 /**
  * My payments - a component for displaying paid subscriptions
@@ -41,47 +36,44 @@ import {
  * {@link https://www.ag-grid.com/react-data-grid/}
  */
 export const MyPayments = () => {
-  const [myPaymentsData, setMyPaymentsData] = useState<myPaymentsType[]>([])
+  const [myPaymentsData, setMyPaymentsData] = useState<any>([])
 
   const { data, isSuccess } = useGetMyPayments()
-  const gridRef = useRef<AgGridReactType>()
+  const gridRef = useRef<any>()
 
   const columnDefs = [
     {
       field: 'dateOfPayment',
       header: 'Date of Payment',
-      valueFormatter: params => dateChangesFormat(params.value),
+      valueFormatter: (params: any) => dateChangesFormat(params.value),
     },
     {
       field: 'endDateOfSubscription',
       header: 'End date of subscription',
-      valueFormatter: params => dateChangesFormat(params.value),
+      valueFormatter: (params: any) => dateChangesFormat(params.value),
     },
     {
       field: 'price',
       header: 'Price',
-      valueFormatter: params => '$' + params.value,
+      valueFormatter: (params: any) => '$' + params.value,
     },
     {
       field: 'subscriptionType',
       header: 'Subscription Type',
-      valueFormatter: params => capitalizeFirstLetter(params.value),
+      valueFormatter: (params: any) => capitalizeFirstLetter(params.value),
     },
     {
       field: 'paymentType',
       header: 'Payment Type',
-      valueFormatter: params => capitalizeFirstLetter(params.value),
+      valueFormatter: (params: any) => capitalizeFirstLetter(params.value),
     },
   ]
 
-  const onPageSizeChanged = useCallback(
-    gridRef => (e: ChangeEvent<HTMLSelectElement>) => {
-      const value = Number(e.currentTarget.value)
+  const onPageSizeChanged = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+    const value = Number(e.currentTarget.value)
 
-      gridRef.current.api.paginationSetPageSize(value)
-    },
-    []
-  )
+    gridRef.current.api.paginationSetPageSize(value)
+  }, [])
 
   const defaultColDef = useMemo(
     () => ({
@@ -109,14 +101,16 @@ export const MyPayments = () => {
         paginationPageSize={8}
         suppressHorizontalScroll={true}
         suppressPropertyNamesCheck={true}
-        overlayLoadingTemplate={'Loading the payment...'}
-        overlayNoRowsTemplate={
-          !isSuccess
-            ? 'Error on the server, try again or contact technical support'
-            : 'You have no payments'
-        }
+        // overlayNoRowsTemplate={
+        //   !isSuccess
+        //     ? 'Error on the server, try again or contact technical support'
+        //     : 'You have no payments'
+        // }
       />
-      <select className={s.optionsBlock} onChange={e => onPageSizeChanged(gridRef)(e)}>
+      <select
+        className={s.optionsBlock}
+        onChange={(e: ChangeEvent<HTMLSelectElement>) => onPageSizeChanged(e)}
+      >
         <option value={'25'}>25</option>
         <option value={'50'}>50</option>
         <option value={'75'}>75</option>
