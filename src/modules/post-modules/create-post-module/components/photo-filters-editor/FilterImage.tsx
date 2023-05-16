@@ -9,14 +9,14 @@ interface IFiltersEditor {
 
 export const FilterImage: FC<IFiltersEditor> = memo(({ srs, filterStyle }) => {
   return (
-    <>
+    <div className={'flex justify-center'}>
       <img
-        className={'h-full'}
+        className={'max-h-[499px]'}
         src={String(srs.filteredUrl)}
         alt={srs.name}
-        style={{ filter: filterStyle, width: '434px' }}
+        style={{ filter: filterStyle }}
         id={'image-filtered'}
       />
-    </>
+    </div>
   )
 })
