@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -8,8 +8,7 @@ import { CreatePostModal } from '@/modules/post-modules/create-post-module/compo
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
 import { RightDescription } from '@/modules/post-modules/create-post-module/components/description-add/rightDescription'
 import { useUploadPost } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
-import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
-import { usePostStore, useUserStore } from '@/store'
+import { useUserStore } from '@/store'
 import { useImageSelector } from '@/store/storeSelectorPhoto'
 import { Preloader } from '@/ui'
 
@@ -21,8 +20,6 @@ interface IAddFullPost {
   setIsDraftModalOpen: (isModalOpen: boolean) => void
   location: boolean
   callback?: () => void
-  text?: string
-  setText?: (newText: string) => void
 }
 
 export const AddFullPost: FC<IAddFullPost> = ({
@@ -31,30 +28,22 @@ export const AddFullPost: FC<IAddFullPost> = ({
   filterEditorModule,
   onClose,
   setIsDraftModalOpen,
-  setText,
-  text,
   location,
   callback,
 }) => {
-  const { clearPostPhotos, postDescription, isLoadedFromDB } = usePostStore()
   const { userId } = useUserStore()
-  const { imagesSelector } = useImageSelector()
+  const { imagesSelector, setDescription, description } = useImageSelector()
 
+  const [postDescription, setPostDescription] = useState(description)
   const onSuccessPostSent = () => {
-    if (isLoadedFromDB) {
-      clearDatabase({
-        dbName: IMAGES.DB_NAME,
-        storeName: IMAGES.STORE_NAME,
-        keyPath: IMAGES.KEY_PATH,
-      })
-    }
-    clearPostPhotos()
     onClose()
+    setDescription('')
     useStoreAddFullPostModule(false)
   }
 
   const { mutate: addPhotoToThePost, isLoading } = useUploadPost(onSuccessPostSent, userId!)
   const onCloseClick = () => {
+    setDescription(postDescription)
     setIsDraftModalOpen(true)
     onClose()
     useStoreAddFullPostModule(false)
@@ -68,16 +57,17 @@ export const AddFullPost: FC<IAddFullPost> = ({
   const addAllPost = async () => {
     const formData = new FormData()
 
-    for (const photo of imagesSelector) {
-      // formData.append, чтобы добавить каждое изображение в форму данных,
-      // используя параметры files, photo.selectedPhotos as File и photo.uploadId.
-      // Метод formData.append автоматически создаст правильный объект Request,
-      // содержащий файл, который можно передать в addPhotoToThePost.
-      formData.append('files', photo.file as File, photo.id)
-    }
+    await Promise.all(
+      imagesSelector.map(async photo => {
+        // @ts-ignore
+        const response = await fetch(photo.finalUrl)
+        const blob = await response.blob()
+
+        formData.append('files', blob)
+      })
+    )
 
     formData.append('description', postDescription)
-
     addPhotoToThePost(formData)
   }
 
@@ -93,8 +83,11 @@ export const AddFullPost: FC<IAddFullPost> = ({
       showBackArrow={true}
       variant={'Publish'}
     >
-      <div>
-        <div className="grid grid-cols-2 h-full">
+      <div className={'flex flex-wrap flex-row'}>
+        <div
+          // className="grid grid-cols-2 h-full"
+          className="max-w-[485px]"
+        >
           <div>
             <Swiper
               className="h-full"
@@ -116,8 +109,13 @@ export const AddFullPost: FC<IAddFullPost> = ({
             </Swiper>
           </div>
         </div>
-        <div>
-          <RightDescription text={text} location={location} callback={callback} setText={setText} />
+        <div className="max-w-[480px]">
+          <RightDescription
+            text={postDescription}
+            location={true}
+            callback={callback}
+            setText={setPostDescription}
+          />
         </div>
       </div>
     </CreatePostModal>
