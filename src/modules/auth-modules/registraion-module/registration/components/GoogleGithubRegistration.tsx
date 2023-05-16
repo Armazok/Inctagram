@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import github from '@/assets/icons/github-svgrepo.png'
 import google from '@/assets/icons/google-svgrepo.png'
+import { useAuth2ControllerPopup } from '@/common'
 import { Confirm } from '@/components/modals'
 import { AUTH2_STATUS, OAUTH_AUTHORIZATION } from '@/services'
 
 export const GoogleGithubRegistration = () => {
-  const [isOpen, seIsOpen] = useState(false)
+  const { popupContent, setAuth2ContentPopup, closePopup } = useAuth2ControllerPopup()
 
   const { query } = useRouter()
   const query_status = query['status_code'] as string
@@ -18,7 +19,10 @@ export const GoogleGithubRegistration = () => {
     if (!query_status) return
 
     if (query_status === AUTH2_STATUS['400']) {
-      seIsOpen(true)
+      setAuth2ContentPopup(
+        true,
+        `An error occurred while registering. This user already exists. Go to page "Sign In" `
+      )
     }
   }, [query_status])
 
@@ -35,11 +39,11 @@ export const GoogleGithubRegistration = () => {
       </div>
 
       <Confirm
-        isOpen={isOpen}
-        onConfirm={() => seIsOpen(false)}
-        onClose={() => seIsOpen(false)}
+        isOpen={popupContent.isOpen}
+        onConfirm={closePopup}
+        onClose={closePopup}
         title="Registered"
-        text={`An error occurred while registering. This user already exists. Go to page "Sign In" `}
+        text={popupContent.content}
         confirmButtonText="OK"
       />
     </>

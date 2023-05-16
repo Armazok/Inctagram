@@ -24,7 +24,6 @@ export const SettingsProfile = () => {
     setStoredTabsLabel(storedTabsLabel)
     setActiveTab(storedTabsLabel)
   }, [])
-  console.log('render')
 
   return (
     <div className="relative w-full">

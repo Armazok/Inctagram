@@ -38,9 +38,9 @@ export const FiltersEditor = ({
     try {
       const updatedImages = await Promise.all(
         imagesSelector.map(async image => {
+          const { url } = image
           const { croppedAreaPixels } = image.cropData || {}
           const { filterStyle } = image.cropData || {}
-          const { url } = image
 
           if (!url) {
             console.error(`Image with id "${image.id}" does not have crop data`)
@@ -70,7 +70,6 @@ export const FiltersEditor = ({
     filterEditorModule(false)
   }
   const onCloseClick = () => {
-    // saveFilteredPhoto()
     setIsDraftModalOpen(true)
     onClose()
     filterEditorModule(false)
@@ -81,36 +80,6 @@ export const FiltersEditor = ({
 
     setActiveSlideIndex(activeIndex)
   }
-
-  // const saveFilteredPhoto = async () => {
-  //   try {
-  //     const updatedImages = await Promise.all(
-  //       imagesSelector.map(async image => {
-  //         const { croppedAreaPixels } = image.cropData || {}
-  //         const { url } = image
-  //
-  //         if (!url) {
-  //           console.error(`Image with id "${image.id}" does not have crop data`)
-  //
-  //           return image
-  //         }
-  //
-  //         const croppedImage = await getCroppedImg(url, croppedAreaPixels)
-  //
-  //         return {
-  //           ...image,
-  //           filteredUrl: croppedImage as string,
-  //         }
-  //       })
-  //     )
-  //
-  //     setImageSelector(updatedImages)
-  //     cropEditorModule(false)
-  //     filterEditorModule(true)
-  //   } catch (error) {
-  //     console.error('Error updating images:', error)
-  //   }
-  // }
 
   return (
     <CreatePostModal

@@ -32,11 +32,14 @@ interface ISelectorStore {
   setAspectForImage: (id: string, newAspect: number) => void
   setCroppedAreaPixelsForImage: (id: string, croppedArea: Point, croppedAreaPixels: Area) => void
   setCroppedPhotoForImage: (id: string, croppedPhoto: Point, cropSize: Area) => void
+  description: string
+  setDescription: (description: string) => void
 }
 
 export const useImageSelector = create<ISelectorStore>()(
   devtools(set => ({
     imagesSelector: [],
+    description: '',
     filterStyle: 'none',
     setFilterStyleForImage(id: string, filterStyle: string) {
       set(state => {
@@ -183,7 +186,6 @@ export const useImageSelector = create<ISelectorStore>()(
           const blob = new Blob([photo.url], { type: 'image/jpeg' })
           const filteredUrl = URL.createObjectURL(blob)
 
-          debugger
           const updatedPhoto = {
             ...photo,
             cropData: {
@@ -208,6 +210,12 @@ export const useImageSelector = create<ISelectorStore>()(
 
         return state
       })
+    },
+    setDescription(description) {
+      set(state => ({
+        ...state,
+        description: description,
+      }))
     },
   }))
 )
