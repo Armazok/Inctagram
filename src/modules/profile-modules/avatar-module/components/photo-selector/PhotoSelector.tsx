@@ -4,6 +4,7 @@ import React, { ChangeEvent, useRef, useState } from 'react'
 import Image from 'next/image'
 // eslint-disable-next-line import/no-duplicates
 import ImagePlaceholder from 'next/image'
+// eslint-disable-next-line import/no-duplicates
 import { v1 } from 'uuid'
 
 import plusAdd from '@/assets/icons/plus-square.svg'
@@ -32,12 +33,20 @@ export const PhotoSelector = ({
   const [error, setError] = useState('')
   const { setImageSelector } = useImageSelector()
 
-  const checkImageSize = (file: File, maxImageSize: number, onSuccessSetFile: any) => {
+  const checkImageSize = (file: File, maxImageSize: number, onSuccessSetFile: any, array: any) => {
     if (file.size <= maxImageSize * 1024 * 1024) {
-      onSuccessSetFile(file)
+      onSuccessSetFile(file, array)
     } else {
       setError(`Image size should not be more than ${maxImageSize} MB`)
+
+      return
     }
+  }
+
+  const onSuccessAddFileToArray = (file: File, newImagesArray: IPhoto[]) => {
+    const url = URL.createObjectURL(file)
+
+    newImagesArray.push({ url, file, id: v1(), name: file.name, type: file.type, size: file.size })
   }
 
   const onFileSelectChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -48,9 +57,12 @@ export const PhotoSelector = ({
 
       for (let i = 0; i < files.length; i++) {
         const file = files[i]
-        const url = URL.createObjectURL(file)
 
-        newImages.push({ url, file, id: v1(), name: file.name, type: file.type, size: file.size })
+        if (maxImageSize) {
+          checkImageSize(file, maxImageSize, onSuccessAddFileToArray, newImages)
+        } else {
+          onSuccessAddFileToArray(file, newImages)
+        }
       }
 
       setImageSelector(newImages)

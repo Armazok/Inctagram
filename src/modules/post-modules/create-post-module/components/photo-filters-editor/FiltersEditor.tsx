@@ -70,7 +70,6 @@ export const FiltersEditor = ({
     filterEditorModule(false)
   }
   const onCloseClick = () => {
-    // saveFilteredPhoto()
     setIsDraftModalOpen(true)
     onClose()
     filterEditorModule(false)
