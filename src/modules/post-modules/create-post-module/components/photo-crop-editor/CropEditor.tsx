@@ -73,7 +73,6 @@ export const CropEditor = ({
     setAspectForImage,
     setCroppedAreaPixelsForImage,
   } = useImageSelector()
-
   const onCropComplete = useCallback((id: string, croppedArea: Rect, croppedAreaPixels: Rect) => {
     setCroppedAreaPixelsForImage(id, croppedArea, croppedAreaPixels)
   }, [])
@@ -83,6 +82,11 @@ export const CropEditor = ({
   }
   const handleZoomChange = (id: string, newZoom: number) => {
     setZoomForImage(id, newZoom)
+  }
+
+  const onCloseClick = () => {
+    setImageSelector([])
+    onClose()
   }
 
   const onNextClick = async () => {
@@ -121,7 +125,7 @@ export const CropEditor = ({
       variant={'Next'}
       isOpen={isModalOpen}
       title={'Cropping'}
-      onClose={onClose}
+      onClose={onCloseClick}
       onBackClick={onClose}
       onBtnClick={onNextClick}
     >

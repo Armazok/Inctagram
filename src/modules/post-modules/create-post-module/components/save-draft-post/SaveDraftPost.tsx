@@ -4,7 +4,7 @@ import { clearDatabase } from '@/common/utils/indexedDb/clearDatabase'
 import { Confirm } from '@/components/modals'
 import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
 import { setNewPostToIndexedDB } from '@/modules/post-modules/create-post-module/utils/setNewPostToIndexedDB'
-import { usePostStore } from '@/store'
+import { useImageSelector } from '@/store/storeSelectorPhoto'
 
 type PropsType = {
   isDraftModalOpen: boolean
@@ -12,7 +12,7 @@ type PropsType = {
 }
 
 export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsType) => {
-  const { postPhotos, clearPostPhotos, postDescription } = usePostStore()
+  const { imagesSelector, description } = useImageSelector()
 
   const clearPreviousDraft = async () => {
     await clearDatabase({
@@ -24,18 +24,15 @@ export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsTy
 
   const onConfirmClick = async () => {
     await clearPreviousDraft()
-    setNewPostToIndexedDB(postPhotos, postDescription)
-    clearPostPhotos()
+    setNewPostToIndexedDB(imagesSelector, description)
     setIsDraftModalOpen(false)
   }
 
   const onDiscardClick = async () => {
-    clearPreviousDraft()
-    await postPhotos.forEach(photo => {
-      URL.revokeObjectURL(photo.croppedPhoto)
-      URL.revokeObjectURL(photo.filteredPhoto)
-    })
-    clearPostPhotos()
+    // await postPhotos.forEach(photo => {
+    //   URL.revokeObjectURL(photo.croppedPhoto)
+    //   URL.revokeObjectURL(photo.filteredPhoto)
+    // })
     setIsDraftModalOpen(false)
   }
 

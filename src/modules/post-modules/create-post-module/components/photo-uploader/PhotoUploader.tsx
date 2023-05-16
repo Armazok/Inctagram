@@ -12,7 +12,7 @@ import {
 import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
 import { getItemFromDatabase } from '@/modules/post-modules/create-post-module/utils/getImageFromDatabase'
 import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
-import { usePostStore } from '@/store'
+import { IPhoto, useImageSelector } from '@/store/storeSelectorPhoto'
 import { GlobalButton } from '@/ui'
 
 type PropsType = {}
@@ -22,38 +22,23 @@ export const PhotoUploader = ({}: PropsType) => {
   const modalWithContent = useStoreWithContentModal()
   const useStoreAddFullPostModal = useStoreAddPostModal()
   const cropEditorModal = useStoreCropEditorModal()
-  const { setPhotoFromDB, clearPostPhotos } = usePostStore()
 
   const { replace, pathname } = useRouter()
 
-  const onSetSelectedPhotoClick = (file: any) => {
-    // setSelectedPhoto(file)
-    // setUploadId()
-  }
+  const { setImageSelector, setDescription } = useImageSelector()
+
   const onSuccessOpenDraft = async (data: any) => {
-    let filteredPhoto = URL.createObjectURL(data.filteredPhoto)
-    let croppedPhoto = URL.createObjectURL(data.croppedPhoto)
-    let selectedPhotos: string = ''
+    let { photoArray, description } = data
 
-    if (data.selectedPhotos instanceof Blob || data.selectedPhotos instanceof File) {
-      selectedPhotos = URL.createObjectURL(data.selectedPhotos)
-    }
-
-    const { uploadId, description, cropSize } = data
-
-    await setPhotoFromDB(
-      uploadId,
-      croppedPhoto,
-      filteredPhoto,
-      description,
-      cropSize,
-      selectedPhotos
-    )
-    useStoreAddFullPostModal.setIsModalOpen(true)
+    photoArray.map((photo: IPhoto) => {
+      photo.filteredUrl = URL.createObjectURL(photo.filteredUrl as Blob)
+      photo.finalUrl = URL.createObjectURL(photo.finalUrl as Blob)
+    })
+    setImageSelector(photoArray)
+    setDescription(description)
   }
   const onOpenDraftClick = async () => {
-    clearPostPhotos()
-
+    setImageSelector([])
     await getItemFromDatabase({
       onSuccess: onSuccessOpenDraft,
       keyPath: IMAGES.KEY_PATH,
@@ -61,6 +46,7 @@ export const PhotoUploader = ({}: PropsType) => {
       dbName: IMAGES.DB_NAME,
     })
     modalWithContent.setIsModalOpen(false)
+    useStoreAddFullPostModal.setIsModalOpen(true)
   }
 
   const onCloseClick = () => {
