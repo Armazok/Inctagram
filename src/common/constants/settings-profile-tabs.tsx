@@ -2,7 +2,7 @@ import React from 'react'
 
 import { nanoid } from 'nanoid'
 
-import { MyPayments } from '@/modules/profile-modules/my-payments/components/MyPayments'
+import { MyPayments } from '@/modules/profile-modules/my-payments/'
 import { EditSettingProfile } from '@/modules/profile-modules/settings-edit-profile-module'
 import AccountManagementPage from '@/pages/profile/settings/account-management'
 
