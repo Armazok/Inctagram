@@ -7,6 +7,12 @@ export const accountAPI = {
   setSubscription: (data: SubscriptionType) => {
     return authInstance.post<{ url: string }>('/subscriptions', data)
   },
+  getCurrentSubscription: () => {
+    return authInstance.get<CurrentSubscriptionResponseType>('/subscriptions/current-subscriptions')
+  },
+  setCancelAutoRenewal: () => {
+    return authInstance.post('/subscriptions/canceled-auto-renewal')
+  },
 }
 
 export type CostType = {
@@ -21,4 +27,17 @@ export type SubscriptionType = {
   paymentType: PaymentType
   amount: number
   autoRenew: boolean
+}
+
+export type CurrentSubscriptionType = {
+  userId: number
+  subscriptionId: string
+  dateOfPayment: string
+  endDateOfSubscription: string
+  autoRenewal: boolean
+}
+
+export type CurrentSubscriptionResponseType = {
+  data: CurrentSubscriptionType[]
+  hasAutoRenewal: boolean
 }
