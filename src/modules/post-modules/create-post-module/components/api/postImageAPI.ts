@@ -7,13 +7,29 @@ export const sendPublicationImage = (formData: File | Blob | FormData) => {
 }
 
 type ResImagePublication = {
+  id: number
+  ownerId: number
+  description: string
+  location: string
   images: [
     {
       uploadId: string
-      url: string
-      width: number
-      height: number
-      fileSize: number
+      versions: {
+        huge: {
+          url: string
+          width: number
+          height: number
+          fileSize: number
+        }
+        large: {
+          url: string
+          width: number
+          height: number
+          fileSize: number
+        }
+      }
     }
   ]
+  createdAt: string
+  updatedAt: string
 }

@@ -1,63 +1,60 @@
 import { setItemToDatabase } from '@/common/utils/indexedDb/setItemToDatabase'
 import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
 import { PostType } from '@/store'
-
-type PostDataDBType = {
-  uploadId: string
-  filteredPhoto?: Blob
-  croppedPhoto?: Blob
-  cropSize: any
-  description?: string
-}
+import { IPhoto } from '@/store/storeSelectorPhoto'
 
 type ImageDataType = {
-  data: PostDataDBType
+  data: {
+    photoArray: IPhoto[]
+    description: string
+  }
   timestamp: number
 }
 
-export const setNewPostToIndexedDB = async (postPhotos: PostType[], postDescription: string) => {
-  postPhotos.forEach(photo => {
-    let imageData: ImageDataType = {
-      data: {
-        uploadId: photo.uploadId,
-        description: postDescription,
-        cropSize: photo.cropSize,
-      },
-      timestamp: Date.now(),
-    }
+export const setNewPostToIndexedDB = async (postPhotos: IPhoto[], postDescription: string) => {
+  let indexedDbArray: IPhoto[] = []
 
-    fetch(photo.filteredPhoto)
-      .then(response => response.blob())
-      .then(blob => {
-        imageData.data.filteredPhoto = blob
-      })
-      .then(() => {
-        fetch(photo.croppedPhoto)
-          .then(response => response.blob())
-          .then(blob => {
-            imageData.data.croppedPhoto = blob
-            setItemToDatabase({
-              keyPath: IMAGES.KEY_PATH,
-              storeName: IMAGES.STORE_NAME,
-              dbName: IMAGES.DB_NAME,
-              itemData: imageData,
-            })
-          })
-      })
-      .catch(error => {
+  await Promise.all(
+    postPhotos.map(async photo => {
+      let photoData = {
+        ...photo,
+        id: photo.id,
+        filteredUrl: photo.filteredUrl,
+        finalUrl: photo.finalUrl ? photo.finalUrl : photo.filteredUrl,
+      }
+
+      try {
+        // @ts-ignore
+        const finalUrlResponse = await fetch(photoData.finalUrl)
+        const finalUrlBlob = await finalUrlResponse.blob()
+
+        photoData.finalUrl = finalUrlBlob
+
+        // @ts-ignore
+        const filteredUrlResponse = await fetch(photoData.filteredUrl)
+        const filteredUrlBlob = await filteredUrlResponse.blob()
+
+        photoData.filteredUrl = filteredUrlBlob
+
+        indexedDbArray.push(photoData)
+      } catch (error) {
         console.error('Error fetching Blob:', error)
-      })
+      }
+    })
+  )
+
+  let imageData: ImageDataType = {
+    data: {
+      photoArray: indexedDbArray,
+      description: postDescription,
+    },
+    timestamp: Date.now(),
+  }
+
+  setItemToDatabase({
+    keyPath: IMAGES.KEY_PATH,
+    storeName: IMAGES.STORE_NAME,
+    dbName: IMAGES.DB_NAME,
+    itemData: imageData,
   })
 }
-
-// const convertToBlob = async (url: string) => {
-//   fetch(url)
-//     .then(response => response.blob())
-//     .then(blob => {
-//       debugger
-//       return blob
-//     })
-//     .catch(error => {
-//       console.error('Error fetching Blob:', error)
-//     })
-// }
