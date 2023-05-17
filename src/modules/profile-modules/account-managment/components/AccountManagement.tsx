@@ -6,21 +6,24 @@ import { PaymentMethods } from '@/modules/profile-modules/account-managment/comp
 import { PaymentConfirmationModals } from '@/modules/profile-modules/account-managment/components/payments/PaymentsConfirmationModals'
 import { SubscriptionType } from '@/modules/profile-modules/account-managment/components/subscription-type/SubscriptionType'
 import { useGetCurrentSubscription } from '@/modules/profile-modules/account-managment/hooks/useGetCurrentSubscription'
+import { useUserStore } from '@/store'
 
 export const AccountManagement = () => {
-  const [hasBusinessAccount, setHasBusinessAccount] = useState(false)
+  // const [hasBusinessAccount, setHasBusinessAccount] = useState(false)
   const { currentSubscriptions } = useGetCurrentSubscription()
 
   const hasCurrentSubscriptions = currentSubscriptions && !!currentSubscriptions.data.length
+  const { hasBusinessAccount, setHasBusinessAccount } = useUserStore()
+  const [isSwitchedToBusiness, setIsSwitchedToBusiness] = useState(hasBusinessAccount)
 
   return (
     <div>
       {hasCurrentSubscriptions && <CurrentSubscription />}
       <AccountType
-        setHasBusinessAccount={setHasBusinessAccount}
-        hasBusinessAccount={hasBusinessAccount}
+        setIsSwitchedToBusiness={setIsSwitchedToBusiness}
+        isSwitchedToBusiness={isSwitchedToBusiness}
       />
-      {hasBusinessAccount && (
+      {isSwitchedToBusiness && (
         <>
           <SubscriptionType />
           <PaymentMethods />

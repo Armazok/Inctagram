@@ -1,18 +1,26 @@
 import React, { useState } from 'react'
 
 import { Radio } from '@/ui/radio/Radio'
+import { useUserStore } from '@/store'
 
 const accountTypes = ['Personal', 'Business']
 
-export const AccountType = ({ setHasBusinessAccount, hasBusinessAccount }: any) => {
-  const defaultAccountType = hasBusinessAccount ? 'Business' : accountTypes[0]
+type PropsType = {
+  setIsSwitchedToBusiness: (isSwitchedToBusiness: boolean) => void
+  isSwitchedToBusiness: boolean
+}
+
+export const AccountType = ({ setIsSwitchedToBusiness, isSwitchedToBusiness }: PropsType) => {
+  const { hasBusinessAccount } = useUserStore()
+  const defaultAccountType =
+    hasBusinessAccount || isSwitchedToBusiness ? 'Business' : accountTypes[0]
   const [accountTypeValue, setAccountTypeValue] = useState(defaultAccountType)
 
   const onAccountTypeChange = (option: any) => {
     if (option === 'Business') {
-      setHasBusinessAccount(true)
+      setIsSwitchedToBusiness(true)
     } else {
-      setHasBusinessAccount(false)
+      setIsSwitchedToBusiness(false)
     }
 
     setAccountTypeValue(option)

@@ -18,10 +18,7 @@ export const PaymentMethods = () => {
 
   const { isLoading, mutate: setSubscription, isSuccess, data } = useSetSubscription()
   const onPaypalClick = async () => {
-    // router.push('http://localhost:3000/profile/settings/edit?success=true')
-    await setPaymentType('PAYPAL')
     setIsJokeModalOpen(true)
-    // setSubscription(subscription)
   }
   const onStripeClick = async () => {
     await setPaymentType('STRIPE')
