@@ -56,7 +56,6 @@ export const MyPayments = () => {
   )
 
   setMyPaymentsDataEffect(data, isSuccess, setMyPaymentsData)
-  debugger
 
   return (
     <div className={`ag-theme-alpine-dark ${s.myPayments} `} style={{ height: 500, width: 972 }}>
