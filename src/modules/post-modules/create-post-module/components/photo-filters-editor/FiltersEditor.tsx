@@ -69,8 +69,8 @@ export const FiltersEditor = ({
     cropEditorModule(true)
     filterEditorModule(false)
   }
-  const onCloseClick = () => {
-    setIsDraftModalOpen(true)
+  const onCloseClick = async () => {
+    await setIsDraftModalOpen(true)
     onClose()
     filterEditorModule(false)
   }

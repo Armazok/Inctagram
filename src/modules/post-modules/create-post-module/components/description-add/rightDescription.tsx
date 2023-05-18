@@ -30,7 +30,7 @@ export const RightDescription: FC<RightDescriptionType> = ({
   }
 
   return (
-    <div className={'flex flex-col w-[536px] '}>
+    <div className={'flex flex-col max-w-[536px] '}>
       <div className={'flex text-center'}>
         <Avatar alt={'photoAvatar'} width={55} height={55} src={avatar} />
         <div>{userName}</div>
