@@ -42,10 +42,15 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
     setIsEditModalOpen(true)
   }
 
+  const onRequestClose = () => {
+    setIsOpenDropdown(false)
+    onClose()
+  }
+
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={onClose}
+      onRequestClose={onRequestClose}
       ariaHideApp={false}
       overlayClassName="fixed w-full h-full top-0 left-0 bg-dark-900/60 z-[100]"
       className="absolute w-full h-full max-h-[564px] max-w-[972px] bg-dark-300 border-dark-100 border rounded-sm top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200] focus:outline-none"
