@@ -1,6 +1,6 @@
 import { authInstance } from '@/services'
 
-interface Device {
+export interface Device {
   ip: string
   userAgent: string
   lastVisit: string
@@ -20,4 +20,8 @@ export const getSessions = async () => {
 
 export const deleteSessions = async () => {
   return authInstance.delete('sessions')
+}
+
+export const deleteSession = async (deviceId: number) => {
+  return authInstance.delete(`sessions/${deviceId}`)
 }

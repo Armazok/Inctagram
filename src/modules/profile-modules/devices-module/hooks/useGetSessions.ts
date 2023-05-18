@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { UAParser } from 'ua-parser-js'
 
+import { noRefetch } from '@/common'
 import { getSessions } from '@/modules/profile-modules/devices-module/api/devices-api'
 
 export const useGetSessions = () => {
@@ -20,6 +21,8 @@ export const useGetSessions = () => {
         ...new UAParser(device.userAgent),
       })),
     }),
+    ...noRefetch,
+    refetchOnMount: true,
   })
 
   return { sessions, isLoading, isError, isSuccess, isFetching }

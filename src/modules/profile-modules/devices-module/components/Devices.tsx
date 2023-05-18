@@ -1,16 +1,21 @@
 import { FC, useState } from 'react'
 
-import { format } from 'date-fns'
-
 import { Confirm } from '@/components/modals'
 import { BrowserIconSwitch } from '@/modules/profile-modules/devices-module/components/BrowserIconSwitch'
+import { OtherDevice } from '@/modules/profile-modules/devices-module/components/OtherDevice'
+import { useDeleteSessions } from '@/modules/profile-modules/devices-module/hooks/useDeleteSessions'
 import { useGetSessions } from '@/modules/profile-modules/devices-module/hooks/useGetSessions'
 import { GlobalButton } from '@/ui'
 
 export const Devices: FC = () => {
   const { sessions, isLoading, isError, isFetching } = useGetSessions()
   const [isConfirmOpened, setIsConfirmOpened] = useState(false)
+
+  const { mutate: deleteSessions } = useDeleteSessions()
+
   const onConfirm = () => {
+    deleteSessions()
+
     setIsConfirmOpened(false)
   }
 
@@ -75,33 +80,10 @@ export const Devices: FC = () => {
                 />
               </div>
 
-              <div className="mt-6 text-white font-semibold">Active sessions</div>
+              <div className="mt-6 mb-4 text-white font-semibold">Active sessions</div>
 
               {otherDevices.map(device => (
-                <div
-                  className="border-dark-100 border rounded-sm py-6 px-4 mt-2"
-                  key={device.deviceId}
-                >
-                  <div className="grid gap-3 grid-cols-[36px_1fr]">
-                    <div>
-                      <BrowserIconSwitch browser={device.getBrowser()} size={36} color={'#fff'} />
-                    </div>
-
-                    <div>
-                      <div className="text-base font-bold text-white">
-                        {`${device.getBrowser().name} (${device.getOS().name} ${
-                          device.getOS().version
-                        })`}
-                      </div>
-
-                      <div className="mt-3 text-sm text-white">ip: {device.ip}</div>
-
-                      <div className="mt-2 text-sm text-white font-medium">
-                        Last visit: {format(new Date(device.lastVisit), 'dd.MM.yyyy HH:mm:ss')}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <OtherDevice device={device} key={device.deviceId} />
               ))}
             </>
           )}
