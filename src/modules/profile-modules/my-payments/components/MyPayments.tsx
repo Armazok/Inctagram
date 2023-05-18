@@ -40,6 +40,7 @@ export const MyPayments = () => {
   const [myPaymentsData, setMyPaymentsData] = useState<myPaymentsType[]>([])
 
   const { data, isSuccess } = useGetMyPayments()
+
   const gridRef = useRef<any>()
 
   const onPageSizeChanged = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
