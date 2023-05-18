@@ -7,12 +7,14 @@
   height: 100%;
 
   .label {
+
     @apply flex flex-col justify-center;
 
     @include textInput(14px, 24px, #4c4c4c, $weight);
   }
 
   input {
+
     @include borderBottom($borderInput);
 
     @include textInput(16px, 24px, #bdc1c7, $weight);
@@ -30,6 +32,7 @@
     outline-offset: 0;
 
     &::placeholder {
+
       @include textInput(16px, 24px, #bdc1c7, $weight);
 
       background: transparent;
@@ -38,10 +41,12 @@
     }
 
     &.inputBottomError {
+
       @include borderBottom(#cc1439);
     }
 
     &:hover {
+
       @include borderBottom(#bdc1c7);
 
       color: #bdc1c7;
@@ -52,6 +57,7 @@
     }
 
     &:active {
+
       @include borderBottom(#ffffff);
 
       color: #ffffff;
@@ -61,6 +67,7 @@
     }
 
     &:focus {
+
       @include borderBottom(#ffffff);
 
       color: #ffffff;
@@ -70,6 +77,7 @@
     }
 
     &:disabled {
+
       @include borderBottom(#4c4c4c);
 
       color: #4c4c4c;
@@ -100,6 +108,7 @@
 }
 
 .error {
+
   @include textInput(14px, 18px, #cc1439, $weight);
 
   position: absolute;

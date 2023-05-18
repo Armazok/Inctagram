@@ -3,7 +3,6 @@ import React, { FC, useState } from 'react'
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import { clearDatabase } from '@/common/utils/indexedDb/clearDatabase'
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
 import { RightDescription } from '@/modules/post-modules/create-post-module/components/description-add/rightDescription'
@@ -112,7 +111,6 @@ export const AddFullPost: FC<IAddFullPost> = ({
         <div className="max-w-[480px]">
           <RightDescription
             text={postDescription}
-            location={true}
             callback={callback}
             setText={setPostDescription}
           />

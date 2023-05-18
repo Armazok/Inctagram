@@ -2,6 +2,7 @@ import React, { Dispatch, FC, SetStateAction, useState } from 'react'
 
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { useEditPostMutation } from '@/modules/post-modules/create-post-module/components/hooks/useEditPost'
+import { EditPublication } from '@/modules/post-modules/edit-post-module/components/description-edit/edit-publication'
 import { useUserStore } from '@/store'
 
 interface IEditPost {
@@ -10,16 +11,9 @@ interface IEditPost {
   setOpenModal: Dispatch<SetStateAction<boolean>>
   imageUrl: string
   description: string
-  location: boolean
 }
 
-export const AllEditPost: FC<IEditPost> = ({
-  isModalOpen,
-  onCloseClick,
-  imageUrl,
-  location,
-  description,
-}) => {
+export const EditPost: FC<IEditPost> = ({ isModalOpen, onCloseClick, imageUrl, description }) => {
   const { postId, userId } = useUserStore()
   const [text, setText] = useState<string>(description)
 
@@ -42,13 +36,7 @@ export const AllEditPost: FC<IEditPost> = ({
         onBtnClick={() => ''}
         showBackArrow={false}
       >
-        {/*<EditDescription*/}
-        {/*  imageUrl={imageUrl}*/}
-        {/*  location={location}*/}
-        {/*  callback={editPost}*/}
-        {/*  text={text}*/}
-        {/*  setText={setText}*/}
-        {/*/>*/}
+        <EditPublication imageUrl={imageUrl} callback={editPost} text={text} setText={setText} />
       </CreatePostModal>
     </div>
   )
