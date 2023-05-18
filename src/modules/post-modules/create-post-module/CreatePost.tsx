@@ -39,7 +39,6 @@ export const CreatePost = () => {
   }
 
   const onCloseClick = () => {
-    setImageSelector([])
     modalWithContent.setIsModalOpen(false)
     cropEditorModal.setIsModalOpen(false)
     replace(pathname)

@@ -18,11 +18,16 @@ const unProtectedPaths = [
 ]
 const AuthProtection: FC<PropsWithChildren> = memo(({ children }) => {
   const { pathname, replace } = useRouter()
-  const { setUserId } = useUserStore()
+  const { setUserId, setHasBusinessAccount } = useUserStore()
 
-  const { isSuccess, isError, fetchStatus } = useMeQuery(userId => {
-    setUserId(userId)
-  })
+  const { isSuccess, isError, fetchStatus } = useMeQuery(
+    userId => {
+      setUserId(userId)
+    },
+    hasBusinessAccount => {
+      setHasBusinessAccount(hasBusinessAccount)
+    }
+  )
 
   useEffect(() => {
     if (isSuccess && unProtectedPaths.includes(pathname)) {
