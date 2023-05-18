@@ -11,9 +11,7 @@ type PropsType = {
 }
 
 export const AccountType = ({ setIsSwitchedToBusiness, isSwitchedToBusiness }: PropsType) => {
-  const { hasBusinessAccount } = useUserStore()
-  const defaultAccountType =
-    hasBusinessAccount || isSwitchedToBusiness ? 'Business' : accountTypes[0]
+  const defaultAccountType = isSwitchedToBusiness ? 'Business' : accountTypes[0]
   const [accountTypeValue, setAccountTypeValue] = useState(defaultAccountType)
 
   const onAccountTypeChange = (option: any) => {

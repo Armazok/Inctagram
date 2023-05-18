@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { AccountType } from '@/modules/profile-modules/account-managment/components/account-type/AccountType'
 import { CurrentSubscription } from '@/modules/profile-modules/account-managment/components/current-subscription/CurrentSubscription'
@@ -9,12 +9,14 @@ import { useGetCurrentSubscription } from '@/modules/profile-modules/account-man
 import { useUserStore } from '@/store'
 
 export const AccountManagement = () => {
-  // const [hasBusinessAccount, setHasBusinessAccount] = useState(false)
   const { currentSubscriptions } = useGetCurrentSubscription()
-
-  const hasCurrentSubscriptions = currentSubscriptions && !!currentSubscriptions.data.length
   const { hasBusinessAccount, setHasBusinessAccount } = useUserStore()
-  const [isSwitchedToBusiness, setIsSwitchedToBusiness] = useState(hasBusinessAccount)
+  const hasCurrentSubscriptions = currentSubscriptions && !!currentSubscriptions.data.length
+  const [isSwitchedToBusiness, setIsSwitchedToBusiness] = useState(hasBusinessAccount || false)
+
+  useEffect(() => {
+    setIsSwitchedToBusiness(hasBusinessAccount)
+  }, [hasBusinessAccount])
 
   return (
     <div>
@@ -23,11 +25,13 @@ export const AccountManagement = () => {
         setIsSwitchedToBusiness={setIsSwitchedToBusiness}
         isSwitchedToBusiness={isSwitchedToBusiness}
       />
-      {isSwitchedToBusiness && (
+      {isSwitchedToBusiness || hasBusinessAccount ? (
         <>
           <SubscriptionType />
           <PaymentMethods />
         </>
+      ) : (
+        ''
       )}
       <PaymentConfirmationModals />
     </div>
