@@ -8,8 +8,9 @@ export const useDeletePostImage = (postId: number, uploadId: string) => {
   const { isLoading, mutate } = useMutation({
     mutationKey: ['delete-post-image'],
     mutationFn: () => deletePostImage(postId, uploadId),
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: [`post_${postId}`] })
+    onSuccess: async () => {
+      await client.invalidateQueries({ queryKey: [`post_${postId}`] })
+      await client.invalidateQueries({ queryKey: [`posts`] })
     },
     onError: () => {
       console.log('post delete image error')
