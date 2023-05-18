@@ -35,6 +35,8 @@ export const PhotoUploader = ({}: PropsType) => {
       photo.filteredUrl = URL.createObjectURL(photo.filteredUrl)
       // @ts-ignore
       photo.finalUrl = URL.createObjectURL(photo.finalUrl)
+      // @ts-ignore
+      photo.url = URL.createObjectURL(photo.url)
     })
     setImageSelector(photoArray)
     setDescription(description)

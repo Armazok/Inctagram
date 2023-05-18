@@ -34,7 +34,7 @@ export const FiltersEditor = ({
     setFilterStyleForImage(id, filterStyle)
   }
 
-  const onNextClick = async () => {
+  const setFilteredPhotos = async () => {
     try {
       const updatedImages = await Promise.all(
         imagesSelector.map(async image => {
@@ -58,11 +58,14 @@ export const FiltersEditor = ({
       )
 
       setImageSelector(updatedImages)
-      useStoreAddFullPostModule(true)
-      filterEditorModule(false)
     } catch (error) {
       console.error('Error updating images:', error)
     }
+  }
+  const onNextClick = async () => {
+    await setFilteredPhotos()
+    useStoreAddFullPostModule(true)
+    filterEditorModule(false)
   }
 
   const onBackClick = () => {
@@ -70,6 +73,7 @@ export const FiltersEditor = ({
     filterEditorModule(false)
   }
   const onCloseClick = async () => {
+    await setFilteredPhotos()
     await setIsDraftModalOpen(true)
     onClose()
     filterEditorModule(false)

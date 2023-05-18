@@ -15,6 +15,10 @@ export const setNewPostToIndexedDB = async (postPhotos: IPhoto[], postDescriptio
     const draftPhotos = await Promise.all(
       postPhotos.map(async photo => {
         // @ts-ignore
+        const urlResponse = await fetch(photo.url)
+        const urlBlob = await urlResponse.blob()
+
+        // @ts-ignore
         const FilteredUrlResponse = await fetch(photo.filteredUrl)
         const filteredUrlBlob = await FilteredUrlResponse.blob()
 
@@ -33,6 +37,7 @@ export const setNewPostToIndexedDB = async (postPhotos: IPhoto[], postDescriptio
           ...photo,
           filteredUrl: filteredUrlBlob,
           finalUrl: finalUrlBlob,
+          url: urlBlob,
         }
       })
     )
