@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { IconBaseProps } from 'react-icons'
-import { FaChrome, FaEdge, FaFirefox, FaInternetExplorer } from 'react-icons/fa'
+import { FaChrome, FaEdge, FaFirefox, FaInternetExplorer, FaSafari } from 'react-icons/fa'
 import { IBrowser } from 'ua-parser-js'
 
 type Props = {
@@ -18,6 +18,9 @@ export const BrowserIconSwitch: FC<Props> = ({ browser, ...rest }) => {
 
     case 'Edge':
       return <FaEdge {...rest} />
+
+    case 'Safari':
+      return <FaSafari {...rest} />
 
     default:
       return <FaInternetExplorer {...rest} />

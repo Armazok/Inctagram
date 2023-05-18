@@ -51,6 +51,7 @@ export const OtherDevice: FC<Props> = ({ device }) => {
             callback={() => setIsConfirmOpened(true)}
             type={'button'}
             variant={'transparent'}
+            disabled={isLoading}
           >
             Logout
           </GlobalButton>
