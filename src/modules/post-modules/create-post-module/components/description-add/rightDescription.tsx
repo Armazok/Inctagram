@@ -1,22 +1,20 @@
-import React, { ChangeEvent, FC, useState } from 'react'
+import React, { ChangeEvent, FC } from 'react'
 
 import { Location } from '@/modules/post-modules/create-post-module/components/location/location'
 import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
-import { usePostStore, useUserStore } from '@/store'
 import { Avatar, GlobalButton, Textarea } from '@/ui'
-import { Button } from '@/ui/buttons/stories/GlobalButton.stories'
 
 const MAX_CHARACTERS = 500
 
 type RightDescriptionType = {
-  location: boolean
+  location?: boolean
   callback?: () => void
   text?: string
   setText?: (newText: string) => void
 }
 
 export const RightDescription: FC<RightDescriptionType> = ({
-  location,
+  location = true,
   callback,
   text,
   setText,
