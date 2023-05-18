@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 import { Radio } from '@/ui/radio/Radio'
-import { useUserStore } from '@/store'
 
 const accountTypes = ['Personal', 'Business']
 
