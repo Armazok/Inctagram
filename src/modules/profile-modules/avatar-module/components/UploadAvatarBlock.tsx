@@ -30,7 +30,6 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
     }
   }
 
-  console.log('selectedPhoto', selectedPhoto)
   const onDeleteSuccess = () => {
     setAvatar('')
   }
