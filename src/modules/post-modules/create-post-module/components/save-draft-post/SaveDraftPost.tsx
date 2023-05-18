@@ -34,6 +34,7 @@ export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsTy
     //   URL.revokeObjectURL(photo.croppedPhoto)
     //   URL.revokeObjectURL(photo.filteredPhoto)
     // })
+    await clearPreviousDraft()
     setIsDraftModalOpen(false)
   }
 

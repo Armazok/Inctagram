@@ -11,43 +11,11 @@ type ImageDataType = {
   timestamp: number
 }
 
-export const setNewPostToIndexedDB = async (postPhotos: IPhoto[], postDescription: string) => {
-  let indexedDbArray: IPhoto[] = []
-
-  await Promise.all(
-    postPhotos.map(async photo => {
-      let photoData = {
-        ...photo,
-        id: photo.id,
-        filteredUrl: photo.filteredUrl,
-        finalUrl: photo.finalUrl ? photo.finalUrl : photo.filteredUrl,
-      }
-
-      try {
-        // @ts-ignore
-        const finalUrlResponse = await fetch(photoData.finalUrl)
-        const finalUrlBlob = await finalUrlResponse.blob()
-
-        photoData.finalUrl = finalUrlBlob
-
-        // @ts-ignore
-        const filteredUrlResponse = await fetch(photoData.filteredUrl)
-        const filteredUrlBlob = await filteredUrlResponse.blob()
-
-        photoData.filteredUrl = filteredUrlBlob
-
-        indexedDbArray.push(photoData)
-      } catch (error) {
-        console.error('Error fetching Blob:', error)
-      }
-    })
-  )
+export const setNewPostToIndexedDB = (postPhotos: IPhoto[], postDescription: string) => {
+  // await convertToBlob(postPhotos)
 
   let imageData: ImageDataType = {
-    data: {
-      photoArray: indexedDbArray,
-      description: postDescription,
-    },
+    data: { photoArray: postPhotos, description: postDescription },
     timestamp: Date.now(),
   }
 
@@ -58,3 +26,28 @@ export const setNewPostToIndexedDB = async (postPhotos: IPhoto[], postDescriptio
     itemData: imageData,
   })
 }
+
+// const convertToBlob = async (postPhotos: IPhoto[]) => {
+//   postPhotos.map(async photo => {
+//     let photoData = {
+//       ...photo,
+//       id: photo.id,
+//       filteredUrl: photo.filteredUrl,
+//       finalUrl: photo.finalUrl ? photo.finalUrl : photo.filteredUrl,
+//     }
+//     try {
+//       const finalUrlResponse = photoData.finalUrl
+//       // @ts-ignore
+//       const finalUrlBlob = await finalUrlResponse.blob()
+//       photoData.finalUrl = finalUrlBlob
+//       // @ts-ignore
+//       const filteredUrlResponse = await photoData.filteredUrl
+//       // @ts-ignore
+//       const filteredUrlBlob = filteredUrlResponse.blob()
+//
+//       photoData.filteredUrl = filteredUrlBlob
+//     } catch (error) {
+//       console.error('Error fetching Blob:', error)
+//     }
+//   })
+// }
