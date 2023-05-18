@@ -33,15 +33,15 @@ export const PhotoSelector = ({
   const [error, setError] = useState('')
   const { setImageSelector } = useImageSelector()
 
-  const checkImageSize = (file: File, maxImageSize: number, onSuccessSetFile: any, array: any) => {
-    if (file.size <= maxImageSize * 1024 * 1024) {
-      onSuccessSetFile(file, array)
-    } else {
-      setError(`Image size should not be more than ${maxImageSize} MB`)
-
-      return
-    }
-  }
+  // const checkImageSize = (file: File, maxImageSize: number, onSuccessSetFile: any, array: any) => {
+  //   if (file.size <= maxImageSize * 1024 * 1024) {
+  //     onSuccessSetFile(file, array)
+  //   } else {
+  //     setError(`Image size should not be more than ${maxImageSize} MB`)
+  //
+  //     return
+  //   }
+  // }
 
   const onSuccessAddFileToArray = (file: File, newImagesArray: IPhoto[]) => {
     const url = URL.createObjectURL(file)
@@ -58,11 +58,13 @@ export const PhotoSelector = ({
       for (let i = 0; i < files.length; i++) {
         const file = files[i]
 
-        if (maxImageSize) {
-          checkImageSize(file, maxImageSize, onSuccessAddFileToArray, newImages)
-        } else {
-          onSuccessAddFileToArray(file, newImages)
-        }
+        onSuccessAddFileToArray(file, newImages)
+
+        // if (maxImageSize) {
+        //   checkImageSize(file, maxImageSize, onSuccessAddFileToArray, newImages)
+        // } else {
+        //   onSuccessAddFileToArray(file, newImages)
+        // }
       }
 
       setImageSelector(newImages)

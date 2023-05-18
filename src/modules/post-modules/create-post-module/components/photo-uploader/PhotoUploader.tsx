@@ -30,13 +30,14 @@ export const PhotoUploader = ({}: PropsType) => {
   const onSuccessOpenDraft = async (data: any) => {
     let { photoArray, description } = data
 
-    // photoArray.map((photo: IPhoto) => {
-    //   // @ts-ignore
-    //   photo.filteredUrl = URL.createObjectURL(photo.filteredUrl)
-    //   // @ts-ignore
-    //   photo.finalUrl = URL.createObjectURL(photo.finalUrl)
-    // })
-
+    photoArray.map((photo: IPhoto) => {
+      // @ts-ignore
+      photo.filteredUrl = URL.createObjectURL(photo.filteredUrl)
+      // @ts-ignore
+      photo.finalUrl = URL.createObjectURL(photo.finalUrl)
+      // @ts-ignore
+      photo.url = URL.createObjectURL(photo.url)
+    })
     setImageSelector(photoArray)
     setDescription(description)
   }
