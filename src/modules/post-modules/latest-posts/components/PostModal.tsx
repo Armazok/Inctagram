@@ -114,11 +114,11 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
             onPostModalClose={onClose}
           />
           <div className="px-6 py-3 flex items-center justify-between">
-            <div className="flex items-center">
+            <div className="flex">
               <Avatar
                 src={profileAvatar && profileAvatar}
-                width={43}
-                height={43}
+                width={36}
+                height={36}
                 alt={profileData.userName}
                 className={'mb-[5rem]'}
               />
