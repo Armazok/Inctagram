@@ -7,7 +7,11 @@ import { PostImagesSlide } from '@/modules/post-modules/latest-posts/components/
 import { useGetPost } from '@/modules/post-modules/latest-posts/hooks/useGetPost'
 import { useUserStore } from '@/store'
 
-export const PostImagesSlider: FC = () => {
+interface IPostImagesSlider {
+  showIconDelete?: boolean
+}
+
+export const PostImagesSlider: FC<IPostImagesSlider> = ({ showIconDelete }) => {
   const { postId } = useUserStore()
 
   const { post, isLoading, isFetching } = useGetPost(postId)
@@ -26,6 +30,7 @@ export const PostImagesSlider: FC = () => {
           {post?.images.map(image => (
             <SwiperSlide key={image.uploadId}>
               <PostImagesSlide
+                showIconDelete={showIconDelete}
                 postId={post.id}
                 image={image}
                 description={post.description}
