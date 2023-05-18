@@ -1,16 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { getMyPayments } from '@/modules/profile-modules/my-payments/api/my-payments-api'
+import { getMyPayments } from '@/modules/profile-modules/my-payments'
 
 export const useGetMyPayments = () => {
-  const { data } = useQuery({
+  const { data, isSuccess } = useQuery({
     queryKey: ['get-my-payments'],
-    queryFn: async () => {
-      const res = await getMyPayments()
-
-      return res.json()
+    queryFn: () => getMyPayments(),
+    onError: err => {
+      console.log(err)
     },
   })
 
-  return { data }
+  return { data, isSuccess }
 }

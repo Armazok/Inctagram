@@ -1,17 +1,29 @@
 .myPayments {
+  /*Header height*/
   --ag-header-height: 48px;
+  /*The color of the text in the title*/
   --ag-header-foreground-color: #fff;
+  /*Background color in the header*/
   --ag-header-background-color: #171717;
+  /*The color of the title when hovering the cursor*/
   --ag-header-cell-hover-background-color: #397df6;
-  --ag-header-cell-moving-background-color: #00e8aa;
+  /*Color of the outer frame and header*/
   --ag-border-color: #171717;
+  /*Row height*/
   --ag-row-height: 47px;
+  /*The border color of each row*/
   --ag-row-border-color: #171717;
+  /*The color of each even cell*/
+  //the color of each even cell
   --ag-odd-row-background-color: #0d0d0d;
+  /*The color of each odd cell*/
   --ag-background-color: #0d0d0d;
-  --ag-selected-row-background-color: #2f68cc;
-  --ag-row-hover-color: #234e99;
+  /*The color of each selected row*/
 
+  --ag-selected-row-background-color: #2f68cc;
+  /*The color of the line on which the cursor is hovered*/
+  --ag-row-hover-color: #234e99;
+  /*Remove the right scroll*/
   --ag-cell-horizontal-border: hidden;
 
   position: relative;
@@ -24,13 +36,10 @@
   line-height: 24px;
 
   border-radius: 2px;
-}
-.ag-body-horizontal-scroll-viewport {
-  overflow-x: scroll;
-}
 
-.optionsBlock {
-  position: absolute;
-  right: 325px;
-  bottom: 15px;
+  .optionsBlock {
+    position: absolute;
+    right: 325px;
+    bottom: 15px;
+  }
 }
