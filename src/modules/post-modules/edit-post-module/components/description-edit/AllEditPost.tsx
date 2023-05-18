@@ -17,11 +17,12 @@ export const EditPost: FC<IEditPost> = ({ isModalOpen, onCloseClick, imageUrl, d
   const { postId, userId } = useUserStore()
   const [text, setText] = useState<string>(description)
 
-  const { mutate: editFunc } = useEditPostMutation(userId!)
+  const { mutate: editFunc } = useEditPostMutation(postId)
 
   const editPost = () => {
-    if (postId && text) {
+    if (postId) {
       editFunc({ postId: postId, description: text })
+      onCloseClick()
     } else {
       console.log('editPost BAD BAD')
     }
