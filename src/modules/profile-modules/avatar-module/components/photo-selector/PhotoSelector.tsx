@@ -9,27 +9,25 @@ import { v1 } from 'uuid'
 
 import plusAdd from '@/assets/icons/plus-square.svg'
 import placeholder from '@/assets/images/img-placeholder.png'
+import { modalType } from '@/modules/post-modules/create-post-module'
 import { IPhoto, useImageSelector } from '@/store/storeSelectorPhoto'
 import { GlobalButton } from '@/ui'
 
 type PropsType = {
-  cropEditorModule?: (isModalOpen: boolean) => void
-  modalWithContent?: (isModalOpen: boolean) => void
   maxImageSize?: number
   showButton?: boolean
   placeholderShow?: boolean
   onAdd?: (photos: IPhoto[]) => void
-}
+} & Partial<modalType>
 
 export const PhotoSelector = ({
-  cropEditorModule,
-  modalWithContent,
-  maxImageSize,
+  setModal,
+  isModalOpen,
   showButton = true,
   placeholderShow = true,
   onAdd,
 }: PropsType) => {
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [error, setError] = useState('')
   const { setImageSelector } = useImageSelector()
 
@@ -71,9 +69,8 @@ export const PhotoSelector = ({
       if (onAdd && typeof onAdd === 'function') {
         onAdd(newImages)
       }
-      if (cropEditorModule && modalWithContent) {
-        cropEditorModule(true)
-        modalWithContent(false)
+      if (isModalOpen && setModal) {
+        setModal('crop-editor')
       }
     }
   }

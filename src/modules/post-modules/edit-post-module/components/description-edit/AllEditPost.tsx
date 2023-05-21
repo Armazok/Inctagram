@@ -1,7 +1,7 @@
 import React, { Dispatch, FC, SetStateAction, useState } from 'react'
 
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
-import { useEditPostMutation } from '@/modules/post-modules/create-post-module/components/hooks/useEditPost'
+import { useEditPostMutation } from '@/modules/post-modules/create-post-module/hooks/useEditPost'
 import { EditPublication } from '@/modules/post-modules/edit-post-module/components/description-edit/edit-publication'
 import { useUserStore } from '@/store'
 

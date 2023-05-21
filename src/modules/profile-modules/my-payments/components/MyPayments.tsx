@@ -26,13 +26,13 @@ import { setMyPaymentsDataEffect } from '@/modules/profile-modules/my-payments/c
  * @property {string} overlayNoRowsTemplate - Template displayed when no payments are available or when an error occurred on the server
  *
  * columnDefs - An array containing column definitions for the table
- * @type {Array}
+ * @types {Array}
  *
  * onPageSizeChanged - A callback function to handle changes in the table page selection
  * @returns {Function} The callback function that updates the table page size
  *
  * defaultColDef - The default column definition settings for the table, with sorting enabled
- * @type {Object}
+ * @types {Object}
  * @const
  * {@link https://www.ag-grid.com/react-data-grid/}
  */

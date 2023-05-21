@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
-import { sendPublicationImage } from '@/modules/post-modules/create-post-module/components/api/postImageAPI'
+import { sendPublicationImage } from '@/modules/post-modules/create-post-module/api/postImageAPI'
 export const useUploadPost = (onSuccessPostSent: any, userId: number) => {
   const client = useQueryClient()
 

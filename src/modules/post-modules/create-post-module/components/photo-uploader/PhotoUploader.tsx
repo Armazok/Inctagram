@@ -4,24 +4,17 @@ import { useRouter } from 'next/router'
 
 import { countData } from '@/common/utils/indexedDb/countData'
 import { ModalWithContent } from '@/components/modals'
-import {
-  useStoreAddPostModal,
-  useStoreCropEditorModal,
-  useStoreWithContentModal,
-} from '@/components/modals/store'
+import { modalType } from '@/modules/post-modules/create-post-module'
 import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
 import { getItemFromDatabase } from '@/modules/post-modules/create-post-module/utils/getImageFromDatabase'
 import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
 import { IPhoto, useImageSelector } from '@/store/storeSelectorPhoto'
 import { GlobalButton } from '@/ui'
 
-type PropsType = {}
-export const PhotoUploader = ({}: PropsType) => {
-  const [imageDbCount, setImageDbCount] = useState(0)
+type PropsType = modalType
 
-  const modalWithContent = useStoreWithContentModal()
-  const useStoreAddFullPostModal = useStoreAddPostModal()
-  const cropEditorModal = useStoreCropEditorModal()
+export const PhotoUploader: React.FC<PropsType> = ({ isModalOpen, onClose, setModal }) => {
+  const [imageDbCount, setImageDbCount] = useState(0)
 
   const { replace, pathname } = useRouter()
 
@@ -49,12 +42,11 @@ export const PhotoUploader = ({}: PropsType) => {
       storeName: IMAGES.STORE_NAME,
       dbName: IMAGES.DB_NAME,
     })
-    modalWithContent.setIsModalOpen(false)
-    useStoreAddFullPostModal.setIsModalOpen(true)
+    setModal('add-full-post')
   }
 
   const onCloseClick = () => {
-    modalWithContent.setIsModalOpen(false)
+    onClose()
     replace(pathname)
   }
 
@@ -66,20 +58,12 @@ export const PhotoUploader = ({}: PropsType) => {
 
   useEffect(() => {
     checkCountDB()
-  }, [modalWithContent.isModalOpen])
+  }, [isModalOpen])
 
   return (
-    <ModalWithContent
-      isOpen={modalWithContent.isModalOpen}
-      onClose={onCloseClick}
-      title={'Add photo'}
-    >
+    <ModalWithContent isOpen={isModalOpen} onClose={onCloseClick} title={'Add photo'}>
       <>
-        <PhotoSelector
-          cropEditorModule={cropEditorModal.setIsModalOpen}
-          modalWithContent={modalWithContent.setIsModalOpen}
-          maxImageSize={5}
-        />
+        <PhotoSelector isModalOpen={isModalOpen} setModal={setModal} maxImageSize={5} />
         {imageDbCount > 0 && (
           <GlobalButton type={'button'} callback={onOpenDraftClick}>
             Open draft

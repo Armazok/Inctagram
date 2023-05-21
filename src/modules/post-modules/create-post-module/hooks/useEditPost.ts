@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { sendEditPost } from '@/modules/post-modules/create-post-module/components/api/edit/sendEditPost'
+import { sendEditPost } from '@/modules/post-modules/create-post-module/api/edit/sendEditPost'
 
 export const useEditPostMutation = (postId: number | null) => {
   const client = useQueryClient()
