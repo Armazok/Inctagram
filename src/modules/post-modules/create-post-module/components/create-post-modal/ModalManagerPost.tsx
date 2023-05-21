@@ -11,7 +11,7 @@ import {
 
 type ModalManagerPostType = {
   onClose: () => void
-  isModalOpen: string | boolean
+  isModalOpen: string
   setModal: (value: stateModalType) => void
 }
 

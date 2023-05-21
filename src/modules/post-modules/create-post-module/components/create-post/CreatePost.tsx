@@ -12,7 +12,7 @@ import { ModalManagerPost, stateModalType } from '@/modules/post-modules/create-
 import { createPostEffect } from '@/modules/post-modules/create-post-module/components/create-post/custom/custom'
 
 export const CreatePost = () => {
-  const [modalOpen, setModal] = useState<boolean | stateModalType>(false)
+  const [modalOpen, setModal] = useState<stateModalType>('')
   const { query, replace, pathname } = useRouter()
 
   const onCloseClick = () => {
