@@ -2,16 +2,14 @@ import React from 'react'
 
 import { clearDatabase } from '@/common/utils/indexedDb/clearDatabase'
 import { Confirm } from '@/components/modals'
+import { modalType } from '@/modules/post-modules/create-post-module'
 import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
 import { setNewPostToIndexedDB } from '@/modules/post-modules/create-post-module/utils/setNewPostToIndexedDB'
 import { useImageSelector } from '@/store/storeSelectorPhoto'
 
-type PropsType = {
-  isDraftModalOpen: boolean
-  setIsDraftModalOpen: (isDraftModalOpen: boolean) => void
-}
+type PropsType = modalType
 
-export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsType) => {
+export const SaveDraftPost = ({ isModalOpen, onClose }: PropsType) => {
   const { imagesSelector, description, setDescription } = useImageSelector()
 
   const clearPreviousDraft = async () => {
@@ -25,7 +23,7 @@ export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsTy
   const onConfirmClick = async () => {
     await clearPreviousDraft()
     setNewPostToIndexedDB(imagesSelector, description)
-    setIsDraftModalOpen(false)
+    onClose()
     setDescription('')
   }
 
@@ -35,13 +33,13 @@ export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsTy
     //   URL.revokeObjectURL(photo.filteredPhoto)
     // })
     await clearPreviousDraft()
-    setIsDraftModalOpen(false)
+    onClose()
   }
 
   return (
     <div>
       <Confirm
-        isOpen={isDraftModalOpen}
+        isOpen={isModalOpen}
         onConfirm={onConfirmClick}
         onClose={onDiscardClick}
         onDecline={onDiscardClick}
