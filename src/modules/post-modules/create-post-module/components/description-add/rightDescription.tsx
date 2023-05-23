@@ -35,7 +35,7 @@ export const RightDescription: FC<RightDescriptionType> = ({
         <Avatar alt={'photoAvatar'} width={36} height={36} src={avatar} />
         <div className={'font-semibold'}>{userName}</div>
       </div>
-      <div className={'w-full'}>
+      <div className={'w-[80%]'}>
         <Textarea
           textAreaClassName={'w-full bg-dark-500 resize-none bg-dark-500 border-dark-100'}
           maxLength={MAX_CHARACTERS}
