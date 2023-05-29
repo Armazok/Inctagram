@@ -10,7 +10,7 @@ export const getDraftPost = async () => {
   })
 
   try {
-    let { photoArray, description } = data
+    let { photoArray } = data
 
     photoArray.map((photo: IPhoto) => {
       // @ts-ignore
@@ -21,7 +21,7 @@ export const getDraftPost = async () => {
       photo.url = URL.createObjectURL(photo.url)
     })
 
-    return data
+    return { photoArray: photoArray, description: data.description }
   } catch (e) {
     console.log(e)
   }

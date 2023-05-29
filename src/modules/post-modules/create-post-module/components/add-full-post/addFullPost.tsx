@@ -10,8 +10,6 @@ import { CreatePostModal } from '@/modules/post-modules/create-post-module/compo
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
 import { RightDescription } from '@/modules/post-modules/create-post-module/components/description-add/rightDescription'
 import { useUploadPost } from '@/modules/post-modules/create-post-module/hooks/useAddPostImgMutation'
-import { useUploadPost } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
-import { indexedDbPostDraft } from '@/modules/post-modules/create-post-module/indexedDB/indexedDbPostDraft.repository'
 import { useUserStore } from '@/store'
 import { useImageSelector } from '@/store/storeSelectorPhoto'
 import { Preloader } from '@/ui'
@@ -26,11 +24,11 @@ export const AddFullPost: FC<IAddFullPost & modalType> = ({ isModalOpen, setModa
   const { push } = useRouter()
 
   const [postDescription, setPostDescription] = useState(description)
+
   const onSuccessPostSent = async () => {
     push(PATH_ROUTE.PROFILE)
     onClose()
     setDescription('')
-    await indexedDbPostDraft.clearPreviousDraft()
   }
 
   const { mutate: addPhotoToThePost, isLoading } = useUploadPost(onSuccessPostSent, userId!)

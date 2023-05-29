@@ -10,8 +10,8 @@ import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
 import { useImageSelector } from '@/store/storeSelectorPhoto'
 import { GlobalButton } from '@/ui'
 
-type PropsType = {}
-export const PhotoUploader = ({}: PropsType) => {
+type PropsType = modalType
+export const PhotoUploader = ({ isModalOpen, onClose, setModal }: PropsType) => {
   const [imageDbCount, setImageDbCount] = useState(0)
 
   const { replace, pathname } = useRouter()
@@ -20,9 +20,11 @@ export const PhotoUploader = ({}: PropsType) => {
 
   const onOpenDraftClick = async () => {
     await setImageSelector([])
+    //@ts-ignore
     const { photoArray, description } = await getDraftPost()
 
     await setImageSelector(photoArray)
+    debugger
     await setDescription(description)
     setModal('add-full-post')
   }
