@@ -40,6 +40,7 @@ export const AccountType = ({ setIsSwitchedToBusiness, isSwitchedToBusiness }: P
               value={value}
               checked={value === accountTypeValue}
               id={value}
+              disabled={value === 'Personal' && isSwitchedToBusiness}
             />
           )
         })}
