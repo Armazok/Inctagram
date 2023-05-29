@@ -1,13 +1,17 @@
 import React, { FC, useState } from 'react'
 
+import { useRouter } from 'next/router'
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { modalType } from '@/modules/post-modules/create-post-module'
+import { PATH_ROUTE } from '@/common'
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
 import { RightDescription } from '@/modules/post-modules/create-post-module/components/description-add/rightDescription'
 import { useUploadPost } from '@/modules/post-modules/create-post-module/hooks/useAddPostImgMutation'
+import { useUploadPost } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
+import { indexedDbPostDraft } from '@/modules/post-modules/create-post-module/indexedDB/indexedDbPostDraft.repository'
 import { useUserStore } from '@/store'
 import { useImageSelector } from '@/store/storeSelectorPhoto'
 import { Preloader } from '@/ui'
@@ -19,11 +23,14 @@ interface IAddFullPost {
 export const AddFullPost: FC<IAddFullPost & modalType> = ({ isModalOpen, setModal, onClose }) => {
   const { userId } = useUserStore()
   const { imagesSelector, setDescription, description } = useImageSelector()
+  const { push } = useRouter()
 
   const [postDescription, setPostDescription] = useState(description)
-  const onSuccessPostSent = () => {
+  const onSuccessPostSent = async () => {
+    push(PATH_ROUTE.PROFILE)
     onClose()
     setDescription('')
+    await indexedDbPostDraft.clearPreviousDraft()
   }
 
   const { mutate: addPhotoToThePost, isLoading } = useUploadPost(onSuccessPostSent, userId!)
