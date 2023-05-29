@@ -1,4 +1,4 @@
-import { DatabaseMetaDataType, getDatabase } from '@/common/utils/indexedDb/getDatabase'
+import { DatabaseMetaDataType, getDatabase } from '@/common/indexedDb/previous/getDatabase'
 
 type SetItemParamsType = DatabaseMetaDataType & { itemData: any }
 

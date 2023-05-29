@@ -5,4 +5,5 @@ export const PATH_ROUTE = {
   LOGIN: '/auth/login',
   REGISTRATION: '/auth/registration',
   SUBSCRIPTION: '/settings/account-management',
+  PROFILE: '/profile',
 } as const

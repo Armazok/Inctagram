@@ -2,46 +2,28 @@ import React, { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/router'
 
-import { countData } from '@/common/utils/indexedDb/countData'
 import { ModalWithContent } from '@/components/modals'
 import { modalType } from '@/modules/post-modules/create-post-module'
-import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
-import { getItemFromDatabase } from '@/modules/post-modules/create-post-module/utils/getImageFromDatabase'
+import { getDraftPost } from '@/modules/post-modules/create-post-module/indexedDB/getDraftPost'
+import { indexedDbPostDraft } from '@/modules/post-modules/create-post-module/indexedDB/indexedDbPostDraft.repository'
 import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
-import { IPhoto, useImageSelector } from '@/store/storeSelectorPhoto'
+import { useImageSelector } from '@/store/storeSelectorPhoto'
 import { GlobalButton } from '@/ui'
 
-type PropsType = modalType
-
-export const PhotoUploader: React.FC<PropsType> = ({ isModalOpen, onClose, setModal }) => {
+type PropsType = {}
+export const PhotoUploader = ({}: PropsType) => {
   const [imageDbCount, setImageDbCount] = useState(0)
 
   const { replace, pathname } = useRouter()
 
   const { setImageSelector, setDescription } = useImageSelector()
 
-  const onSuccessOpenDraft = async (data: any) => {
-    let { photoArray, description } = data
-
-    photoArray.map((photo: IPhoto) => {
-      // @ts-ignore
-      photo.filteredUrl = URL.createObjectURL(photo.filteredUrl)
-      // @ts-ignore
-      photo.finalUrl = URL.createObjectURL(photo.finalUrl)
-      // @ts-ignore
-      photo.url = URL.createObjectURL(photo.url)
-    })
-    setImageSelector(photoArray)
-    setDescription(description)
-  }
   const onOpenDraftClick = async () => {
-    setImageSelector([])
-    await getItemFromDatabase({
-      onSuccess: onSuccessOpenDraft,
-      keyPath: IMAGES.KEY_PATH,
-      storeName: IMAGES.STORE_NAME,
-      dbName: IMAGES.DB_NAME,
-    })
+    await setImageSelector([])
+    const { photoArray, description } = await getDraftPost()
+
+    await setImageSelector(photoArray)
+    await setDescription(description)
     setModal('add-full-post')
   }
 
@@ -51,7 +33,7 @@ export const PhotoUploader: React.FC<PropsType> = ({ isModalOpen, onClose, setMo
   }
 
   const checkCountDB = async () => {
-    const count = await countData(IMAGES.DB_NAME, IMAGES.STORE_NAME)
+    const count = await indexedDbPostDraft.checkCountDraftPost()
 
     setImageDbCount(count)
   }
