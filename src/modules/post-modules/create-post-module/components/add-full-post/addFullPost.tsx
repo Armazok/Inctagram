@@ -1,8 +1,10 @@
 import React, { FC, useState } from 'react'
 
+import { useRouter } from 'next/router'
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
+import { PATH_ROUTE } from '@/common'
 import { modalType } from '@/modules/post-modules/create-post-module'
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
@@ -19,9 +21,12 @@ interface IAddFullPost {
 export const AddFullPost: FC<IAddFullPost & modalType> = ({ isModalOpen, setModal, onClose }) => {
   const { userId } = useUserStore()
   const { imagesSelector, setDescription, description } = useImageSelector()
+  const { push } = useRouter()
 
   const [postDescription, setPostDescription] = useState(description)
-  const onSuccessPostSent = () => {
+
+  const onSuccessPostSent = async () => {
+    push(PATH_ROUTE.PROFILE)
     onClose()
     setDescription('')
   }

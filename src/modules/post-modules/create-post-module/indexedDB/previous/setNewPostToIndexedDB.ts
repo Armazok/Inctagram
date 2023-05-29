@@ -1,4 +1,4 @@
-import { setItemToDatabase } from '@/common/utils/indexedDb/setItemToDatabase'
+import { setItemToDatabase } from '@/common/indexedDb/previous/setItemToDatabase'
 import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
 import { IPhoto } from '@/store/storeSelectorPhoto'
 
