@@ -153,7 +153,7 @@ export const useImageSelector = create<ISelectorStore>()(
         if (imageIndex === -1) {
           return state
         }
-        // const blob = new Blob([state.imagesSelector[imageIndex].url], { type: 'image/jpeg' })
+        // const blob = new Blob([state.imagesSelector[imageIndex].url], { types: 'image/jpeg' })
         // const filteredUrl = URL.createObjectURL(blob)
 
         const updatedImage = {

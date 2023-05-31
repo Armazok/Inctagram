@@ -6,7 +6,7 @@ export const Location = () => {
   return (
     <div
       className={
-        'border-t-2  mt-9 border-s-light-100 h-full w-full flex-col justify-center align-middle '
+        'border-t-2  mt-9 border-s-light-100 h-full w-[80%] flex-col justify-center align-middle '
       }
     >
       <div className={'flex flex-col align-middle justify-center pt-6 pl-3 pr-3 gap-6'}>

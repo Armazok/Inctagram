@@ -20,8 +20,8 @@ export const PhotoFilterItem = ({ imageSrc, filter, filterName, onFilterClick }:
         alt={`filter ${filter}`}
         src={String(imageSrc.filteredUrl)}
         style={{ filter: filter }}
-        width={108}
-        height={108}
+        width={95}
+        height={95}
       />
       <div className={'text-light-100 text-[16px] mt-[6px]'}>{filterName}</div>
     </div>

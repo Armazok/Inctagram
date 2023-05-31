@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
+import { modalType } from '@/modules/post-modules/create-post-module'
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import getCroppedImg from '@/modules/post-modules/create-post-module/components/photo-crop-editor/utils/canvasUtils'
 import { FilterImage } from '@/modules/post-modules/create-post-module/components/photo-filters-editor/FilterImage'
@@ -10,23 +11,9 @@ import { PhotoFilters } from '@/modules/post-modules/create-post-module/componen
 import { usePostStore } from '@/store'
 import { useImageSelector } from '@/store/storeSelectorPhoto'
 
-type PropsType = {
-  isModalOpen: boolean
-  filterEditorModule: (isModalOpen: boolean) => void
-  useStoreAddFullPostModule: (isModalOpen: boolean) => void
-  cropEditorModule: (isModalOpen: boolean) => void
-  onClose: () => void
-  setIsDraftModalOpen: (isModalOpen: boolean) => void
-}
+type PropsType = modalType
 
-export const FiltersEditor = ({
-  isModalOpen,
-  cropEditorModule,
-  filterEditorModule,
-  useStoreAddFullPostModule,
-  onClose,
-  setIsDraftModalOpen,
-}: PropsType) => {
+export const FiltersEditor = ({ isModalOpen, setModal }: PropsType) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0)
   const { isLoadedFromDB } = usePostStore()
   const { imagesSelector, setFilterStyleForImage, setImageSelector } = useImageSelector()
@@ -34,7 +21,7 @@ export const FiltersEditor = ({
     setFilterStyleForImage(id, filterStyle)
   }
 
-  const onNextClick = async () => {
+  const setFilteredPhotos = async () => {
     try {
       const updatedImages = await Promise.all(
         imagesSelector.map(async image => {
@@ -58,21 +45,21 @@ export const FiltersEditor = ({
       )
 
       setImageSelector(updatedImages)
-      useStoreAddFullPostModule(true)
-      filterEditorModule(false)
     } catch (error) {
       console.error('Error updating images:', error)
     }
   }
+  const onNextClick = async () => {
+    await setFilteredPhotos()
+    setModal('add-full-post')
+  }
 
   const onBackClick = () => {
-    cropEditorModule(true)
-    filterEditorModule(false)
+    setModal('crop-editor')
   }
-  const onCloseClick = () => {
-    setIsDraftModalOpen(true)
-    onClose()
-    filterEditorModule(false)
+  const onCloseClick = async () => {
+    await setFilteredPhotos()
+    await setModal('save-draft-post')
   }
 
   const handleSlideChange = (swiper: any) => {

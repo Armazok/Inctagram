@@ -9,39 +9,37 @@ import { v1 } from 'uuid'
 
 import plusAdd from '@/assets/icons/plus-square.svg'
 import placeholder from '@/assets/images/img-placeholder.png'
+import { modalType } from '@/modules/post-modules/create-post-module'
 import { IPhoto, useImageSelector } from '@/store/storeSelectorPhoto'
 import { GlobalButton } from '@/ui'
 
 type PropsType = {
-  cropEditorModule?: (isModalOpen: boolean) => void
-  modalWithContent?: (isModalOpen: boolean) => void
   maxImageSize?: number
   showButton?: boolean
   placeholderShow?: boolean
   onAdd?: (photos: IPhoto[]) => void
-}
+} & Partial<modalType>
 
 export const PhotoSelector = ({
-  cropEditorModule,
-  modalWithContent,
-  maxImageSize,
+  setModal,
+  isModalOpen,
   showButton = true,
   placeholderShow = true,
   onAdd,
 }: PropsType) => {
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [error, setError] = useState('')
   const { setImageSelector } = useImageSelector()
 
-  const checkImageSize = (file: File, maxImageSize: number, onSuccessSetFile: any, array: any) => {
-    if (file.size <= maxImageSize * 1024 * 1024) {
-      onSuccessSetFile(file, array)
-    } else {
-      setError(`Image size should not be more than ${maxImageSize} MB`)
-
-      return
-    }
-  }
+  // const checkImageSize = (file: File, maxImageSize: number, onSuccessSetFile: any, array: any) => {
+  //   if (file.size <= maxImageSize * 1024 * 1024) {
+  //     onSuccessSetFile(file, array)
+  //   } else {
+  //     setError(`Image size should not be more than ${maxImageSize} MB`)
+  //
+  //     return
+  //   }
+  // }
 
   const onSuccessAddFileToArray = (file: File, newImagesArray: IPhoto[]) => {
     const url = URL.createObjectURL(file)
@@ -58,20 +56,21 @@ export const PhotoSelector = ({
       for (let i = 0; i < files.length; i++) {
         const file = files[i]
 
-        if (maxImageSize) {
-          checkImageSize(file, maxImageSize, onSuccessAddFileToArray, newImages)
-        } else {
-          onSuccessAddFileToArray(file, newImages)
-        }
+        onSuccessAddFileToArray(file, newImages)
+
+        // if (maxImageSize) {
+        //   checkImageSize(file, maxImageSize, onSuccessAddFileToArray, newImages)
+        // } else {
+        //   onSuccessAddFileToArray(file, newImages)
+        // }
       }
 
       setImageSelector(newImages)
       if (onAdd && typeof onAdd === 'function') {
         onAdd(newImages)
       }
-      if (cropEditorModule && modalWithContent) {
-        cropEditorModule(true)
-        modalWithContent(false)
+      if (isModalOpen && setModal) {
+        setModal('crop-editor')
       }
     }
   }

@@ -1,56 +1,44 @@
 import React, { FC, useState } from 'react'
 
+import { useRouter } from 'next/router'
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
+import { PATH_ROUTE } from '@/common'
+import { modalType } from '@/modules/post-modules/create-post-module'
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
 import { RightDescription } from '@/modules/post-modules/create-post-module/components/description-add/rightDescription'
-import { useUploadPost } from '@/modules/post-modules/create-post-module/components/hooks/useAddPostImgMutation'
+import { useUploadPost } from '@/modules/post-modules/create-post-module/hooks/useAddPostImgMutation'
 import { useUserStore } from '@/store'
 import { useImageSelector } from '@/store/storeSelectorPhoto'
 import { Preloader } from '@/ui'
 
 interface IAddFullPost {
-  isModalOpen: boolean
-  useStoreAddFullPostModule: (isModalOpen: any) => void
-  filterEditorModule: (isModalOpen: boolean) => void
-  onClose: () => void
-  setIsDraftModalOpen: (isModalOpen: boolean) => void
-  location: boolean
-  callback?: () => void
+  location?: boolean
 }
 
-export const AddFullPost: FC<IAddFullPost> = ({
-  isModalOpen,
-  useStoreAddFullPostModule,
-  filterEditorModule,
-  onClose,
-  setIsDraftModalOpen,
-  location,
-  callback,
-}) => {
+export const AddFullPost: FC<IAddFullPost & modalType> = ({ isModalOpen, setModal, onClose }) => {
   const { userId } = useUserStore()
   const { imagesSelector, setDescription, description } = useImageSelector()
+  const { push } = useRouter()
 
   const [postDescription, setPostDescription] = useState(description)
-  const onSuccessPostSent = () => {
+
+  const onSuccessPostSent = async () => {
+    push(PATH_ROUTE.PROFILE)
     onClose()
     setDescription('')
-    useStoreAddFullPostModule(false)
   }
 
   const { mutate: addPhotoToThePost, isLoading } = useUploadPost(onSuccessPostSent, userId!)
-  const onCloseClick = () => {
+  const onCloseClick = async () => {
     setDescription(postDescription)
-    setIsDraftModalOpen(true)
-    onClose()
-    useStoreAddFullPostModule(false)
+    await setModal('save-draft-post')
   }
 
   const onBackClick = () => {
-    filterEditorModule(true)
-    useStoreAddFullPostModule(false)
+    setModal('filters-editor')
   }
 
   const addAllPost = async () => {
@@ -109,11 +97,7 @@ export const AddFullPost: FC<IAddFullPost> = ({
           </div>
         </div>
         <div className="max-w-[480px]">
-          <RightDescription
-            text={postDescription}
-            callback={callback}
-            setText={setPostDescription}
-          />
+          <RightDescription text={postDescription} setText={setPostDescription} />
         </div>
       </div>
     </CreatePostModal>

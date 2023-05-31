@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { ChangeEvent, useCallback, useMemo, useRef, useState } from 'react'
 
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
@@ -6,8 +6,9 @@ import { AgGridReact } from 'ag-grid-react'
 
 import s from './myPayments.module.scss'
 
-import { capitalizeFirstLetter } from '@/common'
-import { dateChangesFormat, useGetMyPayments } from '@/modules/profile-modules/my-payments'
+import { myPaymentsType, useGetMyPayments } from '@/modules/profile-modules/my-payments'
+import { columnDefs } from '@/modules/profile-modules/my-payments/constants/arrayOfColumnDefinitionsForTheGrid'
+import { setMyPaymentsDataEffect } from '@/modules/profile-modules/my-payments/custom/setMyPaymentsDataEffect'
 
 /**
  * My payments - a component for displaying paid subscriptions
@@ -25,49 +26,22 @@ import { dateChangesFormat, useGetMyPayments } from '@/modules/profile-modules/m
  * @property {string} overlayNoRowsTemplate - Template displayed when no payments are available or when an error occurred on the server
  *
  * columnDefs - An array containing column definitions for the table
- * @type {Array}
+ * @types {Array}
  *
  * onPageSizeChanged - A callback function to handle changes in the table page selection
  * @returns {Function} The callback function that updates the table page size
  *
  * defaultColDef - The default column definition settings for the table, with sorting enabled
- * @type {Object}
+ * @types {Object}
  * @const
  * {@link https://www.ag-grid.com/react-data-grid/}
  */
 export const MyPayments = () => {
-  const [myPaymentsData, setMyPaymentsData] = useState<any>([])
+  const [myPaymentsData, setMyPaymentsData] = useState<myPaymentsType[]>([])
 
   const { data, isSuccess } = useGetMyPayments()
-  const gridRef = useRef<any>()
 
-  const columnDefs = [
-    {
-      field: 'dateOfPayment',
-      header: 'Date of Payment',
-      valueFormatter: (params: any) => dateChangesFormat(params.value),
-    },
-    {
-      field: 'endDateOfSubscription',
-      header: 'End date of subscription',
-      valueFormatter: (params: any) => dateChangesFormat(params.value),
-    },
-    {
-      field: 'price',
-      header: 'Price',
-      valueFormatter: (params: any) => '$' + params.value,
-    },
-    {
-      field: 'subscriptionType',
-      header: 'Subscription Type',
-      valueFormatter: (params: any) => capitalizeFirstLetter(params.value),
-    },
-    {
-      field: 'paymentType',
-      header: 'Payment Type',
-      valueFormatter: (params: any) => capitalizeFirstLetter(params.value),
-    },
-  ]
+  const gridRef = useRef<any>()
 
   const onPageSizeChanged = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
     const value = Number(e.currentTarget.value)
@@ -82,11 +56,7 @@ export const MyPayments = () => {
     []
   )
 
-  useEffect(() => {
-    if (data) {
-      setMyPaymentsData(data)
-    }
-  }, [isSuccess])
+  setMyPaymentsDataEffect(data, isSuccess, setMyPaymentsData)
 
   return (
     <div className={`ag-theme-alpine-dark ${s.myPayments} `} style={{ height: 500, width: 972 }}>
@@ -101,11 +71,6 @@ export const MyPayments = () => {
         paginationPageSize={8}
         suppressHorizontalScroll={true}
         suppressPropertyNamesCheck={true}
-        // overlayNoRowsTemplate={
-        //   !isSuccess
-        //     ? 'Error on the server, try again or contact technical support'
-        //     : 'You have no payments'
-        // }
       />
       <select
         className={s.optionsBlock}

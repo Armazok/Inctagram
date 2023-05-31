@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -9,6 +9,7 @@ import Slider from 'react-slick'
 
 import { CreatePostModal } from './../create-post-modal/CreatePostModal'
 
+import { modalType } from '@/modules/post-modules/create-post-module'
 import { Crop } from '@/modules/post-modules/create-post-module/components/crop'
 import { CropPopup } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/crop-popup'
 import getCroppedImg from '@/modules/post-modules/create-post-module/components/photo-crop-editor/utils/canvasUtils'
@@ -16,19 +17,9 @@ import { ZoomPopup } from '@/modules/post-modules/create-post-module/components/
 import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
 import { IPhoto, useImageSelector } from '@/store/storeSelectorPhoto'
 
-type PropsType = {
-  isModalOpen: boolean
-  filterEditorModule: (isModalOpen: boolean) => void
-  cropEditorModule: (isModalOpen: boolean) => void
-  onClose: () => void
-}
+type PropsType = modalType
 
-export const CropEditor = ({
-  isModalOpen,
-  filterEditorModule,
-  cropEditorModule,
-  onClose,
-}: PropsType) => {
+export const CropEditor = ({ setModal, isModalOpen, onClose }: PropsType) => {
   const settings = {
     customPaging: function (index: number) {
       const photo = imagesSelector[index]
@@ -84,7 +75,7 @@ export const CropEditor = ({
     setZoomForImage(id, newZoom)
   }
 
-  const onCloseClick = () => {
+  const onCloseClick = async () => {
     setImageSelector([])
     onClose()
   }
@@ -112,11 +103,13 @@ export const CropEditor = ({
       )
 
       setImageSelector(updatedImages)
-      cropEditorModule(false)
-      filterEditorModule(true)
+      setModal('filters-editor')
     } catch (error) {
       console.error('Error updating images:', error)
     }
+  }
+  const onBackClick = () => {
+    setModal('photo-uploader')
   }
 
   return (
@@ -126,7 +119,7 @@ export const CropEditor = ({
       isOpen={isModalOpen}
       title={'Cropping'}
       onClose={onCloseClick}
-      onBackClick={onClose}
+      onBackClick={onBackClick}
       onBtnClick={onNextClick}
     >
       <Slider {...settings}>
