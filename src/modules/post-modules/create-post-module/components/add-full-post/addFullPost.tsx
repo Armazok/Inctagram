@@ -26,9 +26,9 @@ export const AddFullPost: FC<IAddFullPost & modalType> = ({ isModalOpen, setModa
   const [postDescription, setPostDescription] = useState(description)
 
   const onSuccessPostSent = async () => {
-    push(PATH_ROUTE.PROFILE)
     onClose()
     setDescription('')
+    push(PATH_ROUTE.PROFILE)
   }
 
   const { mutate: addPhotoToThePost, isLoading } = useUploadPost(onSuccessPostSent, userId!)

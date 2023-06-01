@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
+import { SubscriptionPeriodType } from '@/modules/profile-modules/account-managment/api/account-api'
 import { useGetCosts } from '@/modules/profile-modules/account-managment/hooks/useGetCosts'
 import { useSubscription } from '@/modules/profile-modules/account-managment/store/subscriptionStore'
 import { Radio } from '@/ui/radio/Radio'
@@ -11,12 +12,16 @@ export const SubscriptionType = () => {
 
   const [subscriptionTypeValue, setSubscriptionTypeValue] = useState('')
 
-  const onSubscriptionTypeChange = (option: any) => {
-    setSubscriptionTypeValue(option)
-    //@ts-ignore
-    let amount = Number(option.split(' ')[0].slice(0, -1))
-    let typeDescription = option.split(' ')[1].toUpperCase()
+  const getFinalPriceDescription = (amount: number, typeDescription: SubscriptionPeriodType) => {
+    return `${amount}$ ${typeDescription.replace('_', '-').toLowerCase()}`
+  }
 
+  const onSubscriptionTypeChange = (
+    amount: number,
+    typeDescription: SubscriptionPeriodType,
+    option: any
+  ) => {
+    setSubscriptionTypeValue(option)
     setNewSubscription(typeDescription, amount)
   }
 
@@ -24,7 +29,7 @@ export const SubscriptionType = () => {
     if (data) {
       let { amount, typeDescription } = data.data.data[0]
 
-      setSubscriptionTypeValue(`${amount}$ ${typeDescription.toLowerCase()}`)
+      setSubscriptionTypeValue(getFinalPriceDescription(amount, typeDescription))
       setNewSubscription(typeDescription, amount)
     }
   }, [isSuccess])
@@ -37,17 +42,12 @@ export const SubscriptionType = () => {
       >
         {isSuccess && data && data.data.data
           ? data.data.data.map(({ amount, typeDescription }: any): any => {
-              let value = `${amount}$ ${
-                // typeDescription === 'SEMI_ANNUALLY' ? 'semiannually' :
-                typeDescription.toLowerCase()
-              }`
+              let value = getFinalPriceDescription(amount, typeDescription)
 
-              // costs
-              //   ? costs.map(({ amount, typeDescription }: any): any => {
               return (
                 <Radio
                   key={amount}
-                  callBack={onSubscriptionTypeChange}
+                  callBack={() => onSubscriptionTypeChange(amount, typeDescription, value)}
                   name="subscriptionType"
                   value={value}
                   checked={value === subscriptionTypeValue}
