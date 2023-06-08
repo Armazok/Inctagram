@@ -1,0 +1,23 @@
+
+.container table {
+    border: 1px solid lightgray;
+    background: #747d86;
+}
+
+.container tbody {
+    border-bottom: 1px solid lightgray;
+}
+
+.container th {
+    border-bottom: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    padding: 2px 4px;
+}
+
+.container tfoot {
+    color: gray;
+}
+
+.container tfoot th {
+    font-weight: normal;
+}
