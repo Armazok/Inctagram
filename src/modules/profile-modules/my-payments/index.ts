@@ -4,3 +4,4 @@ export * from './hooks/useGetMyPayments'
 export * from './types/my-payments-type'
 
 export { MyPayments } from './components/MyPayments'
+export { MyPayments2 } from './components/MyPayments2'
