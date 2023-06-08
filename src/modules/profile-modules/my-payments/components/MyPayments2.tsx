@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 
 import {
+  getTableProps,
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
+  PaginationState,
+  getPaginationRowModel,
+  SortingState,
 } from '@tanstack/react-table'
 import { useTable } from 'react-table'
 
@@ -19,7 +23,11 @@ import {
 import { setMyPaymentsDataEffect } from '@/modules/profile-modules/my-payments/custom/setMyPaymentsDataEffect'
 export const MyPayments2 = () => {
   const [myPaymentsData, setMyPaymentsData] = useState<any[]>([])
-
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
+  const [sorting, setSorting] = useState<SortingState>([])
   const { data, isSuccess } = useGetMyPayments()
 
   setMyPaymentsDataEffect(data, isSuccess, setMyPaymentsData)
@@ -59,9 +67,25 @@ export const MyPayments2 = () => {
     data: myPaymentsData,
   })
 
+  const tableProps = useReactTable({
+    data: myPaymentsData,
+    columns: columns,
+    state: {
+      pagination,
+      sorting,
+    },
+    onSortingChange: setSorting,
+    onPaginationChange: setPagination,
+    // Pipeline
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    debugTable: true,
+    manualSorting: true,
+  })
+
   return (
     <>
-      <div className="text-light-100 p-2 block max-w-full overflow-x-scroll overflow-y-hidden">
+      <div className="text-accent-500 p-2 block max-w-full overflow-x-scroll overflow-y-hidden">
         <div className={s.container}>
           <table className="w-full " {...getTableProps()}>
             <thead>
