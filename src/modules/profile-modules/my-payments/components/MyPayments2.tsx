@@ -21,28 +21,32 @@ export const MyPayments2 = () => {
   const { data, isSuccess } = useGetMyPayments()
 
   setMyPaymentsDataEffect(data, isSuccess, setMyPaymentsData)
-
   const columns = React.useMemo(
     () => [
       {
         accessor: 'dateOfPayment',
         header: 'Date of Payment',
+        Cell: (params: any) => dateChangesFormat(params.value),
       },
       {
         accessor: 'endDateOfSubscription',
         header: 'End date of subscription',
+        Cell: (params: any) => dateChangesFormat(params.value),
       },
       {
         accessor: 'price',
         header: 'Price',
+        Cell: (params: any) => '$' + params.value,
       },
       {
         accessor: 'subscriptionType',
         header: 'Subscription Type',
+        Cell: (params: any) => capitalizeFirstLetter(params.value),
       },
       {
         accessor: 'paymentType',
         header: 'Payment Type',
+        Cell: (params: any) => capitalizeFirstLetter(params.value),
       },
     ],
     []
