@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import {
   flexRender,
@@ -9,6 +9,7 @@ import {
   getPaginationRowModel,
   SortingState,
   ColumnDef,
+  sortingFns,
 } from '@tanstack/react-table'
 
 import s from './index.module.scss'
@@ -23,20 +24,39 @@ import { setMyPaymentsDataEffect } from '@/modules/profile-modules/my-payments/c
 
 export const MyPayments2 = () => {
   const [myPaymentsData, setMyPaymentsData] = useState<any[]>([])
-  const [{ pageIndex, pageSize }, setPagination] = React.useState<PaginationState>({
+  const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 2,
   })
+
+  const [sorting, setSorting] = useState<SortingState>([])
+  // {
+  //   pageNumber:
+  //   sortDrection asd desc
+  //   pageSize
+  //   sortBy id
+  // }
+  const sort = sorting.map(({ id }) => `${id}`)
+  const dir = sorting.map(({ desc }) => `${desc ? 'DESC' : 'ASC'}`)
+  const sortBy = sort.length > 0 ? sort[0] : ''
+  const sortDirection = dir.length > 0 ? dir[0] : ''
+  //SortBy = asc | desc
+  // sortDirection = id
   const fetchDataOptions = {
-    pageIndex,
-    pageSize,
+    pageNumber: pageIndex,
+    pageSize: pageSize,
+    sortBy: sortBy,
+    sortDirection: sortDirection,
   }
+
+  // sorting.map(s => `${s.id}:${s.desc ? 'DESC' : 'ASC'}`).join(','),
+  console.log(fetchDataOptions)
   // const dataQuery = useQuery(
   //     ['data', fetchDataOptions],
   //     () => fetchData(fetchDataOptions),
   //     { keepPreviousData: true }
   // )
-  const pagination = React.useMemo(
+  const pagination = useMemo(
     () => ({
       pageIndex,
       pageSize,
@@ -44,12 +64,11 @@ export const MyPayments2 = () => {
     [pageIndex, pageSize]
   )
 
-  const [sorting, setSorting] = useState<SortingState>([])
   const { data, isSuccess } = useGetMyPayments()
 
   setMyPaymentsDataEffect(data, isSuccess, setMyPaymentsData)
 
-  const columns: ColumnDef<myPaymentsType>[] = React.useMemo(
+  const columns: ColumnDef<myPaymentsType>[] = useMemo(
     () => [
       {
         accessor: 'dateOfPayment',
@@ -95,17 +114,15 @@ export const MyPayments2 = () => {
     manualSorting: true,
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
+    enableSortingRemoval: true,
     // Pipeline
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     debugTable: true,
     getSortedRowModel: getSortedRowModel(),
+    enableSorting: true,
+    sortingFns,
   })
-
-  // console.log(sorting)
-  // console.log(pageSize)
-  // console.log(pageIndex)
-  console.log('1')
 
   return (
     <>
@@ -114,10 +131,8 @@ export const MyPayments2 = () => {
           <table className="w-full ">
             <thead>
               {tableProps.getHeaderGroups().map((headerGroup, key) => (
-                // eslint-disable-next-line react/jsx-key
                 <tr key={key}>
                   {headerGroup.headers.map(header => (
-                    // eslint-disable-next-line react/jsx-key
                     <th key={header.id} colSpan={header.colSpan}>
                       {header.isPlaceholder ? null : (
                         <div
@@ -129,7 +144,6 @@ export const MyPayments2 = () => {
                           }}
                         >
                           {flexRender(header.column.columnDef.header, header.getContext())}
-                          {/*{header.getContext()}*/}
                           {{
                             asc: ' 🔼',
                             desc: ' 🔽',
