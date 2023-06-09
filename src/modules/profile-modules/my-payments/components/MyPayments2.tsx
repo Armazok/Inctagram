@@ -1,32 +1,43 @@
 import React, { useState } from 'react'
 
 import {
-  getTableProps,
-  createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
   PaginationState,
+  getSortedRowModel,
   getPaginationRowModel,
   SortingState,
 } from '@tanstack/react-table'
-import { useTable } from 'react-table'
 
 import s from './index.module.scss'
 
 import { capitalizeFirstLetter } from '@/common'
-import {
-  dateChangesFormat,
-  myPaymentsType,
-  useGetMyPayments,
-} from '@/modules/profile-modules/my-payments'
+import { dateChangesFormat, useGetMyPayments } from '@/modules/profile-modules/my-payments'
 import { setMyPaymentsDataEffect } from '@/modules/profile-modules/my-payments/custom/setMyPaymentsDataEffect'
 export const MyPayments2 = () => {
   const [myPaymentsData, setMyPaymentsData] = useState<any[]>([])
-  const [pagination, setPagination] = React.useState<PaginationState>({
+  const [{ pageIndex, pageSize }, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 2,
   })
+  const fetchDataOptions = {
+    pageIndex,
+    pageSize,
+  }
+  // const dataQuery = useQuery(
+  //     ['data', fetchDataOptions],
+  //     () => fetchData(fetchDataOptions),
+  //     { keepPreviousData: true }
+  // )
+  const pagination = React.useMemo(
+    () => ({
+      pageIndex,
+      pageSize,
+    }),
+    [pageIndex, pageSize]
+  )
+
   const [sorting, setSorting] = useState<SortingState>([])
   const { data, isSuccess } = useGetMyPayments()
 
@@ -35,42 +46,37 @@ export const MyPayments2 = () => {
     () => [
       {
         accessor: 'dateOfPayment',
-        Header: 'Date of Payment',
-        Cell: (params: any) => dateChangesFormat(params.value),
-        disableSortBy: true,
+        header: 'Date of Payment',
+        cell: (params: any) => dateChangesFormat(params.getValue()),
+        accessorKey: 'dateOfPayment',
       },
       {
         accessor: 'endDateOfSubscription',
-        Header: 'End date of subscription',
-        Cell: (params: any) => dateChangesFormat(params.value),
-        disableSortBy: true,
+        header: 'End date of subscription',
+        cell: (params: any) => dateChangesFormat(params.getValue()),
+        accessorKey: 'endDateOfSubscription',
       },
       {
         accessor: 'price',
-        Header: 'Price',
-        Cell: (params: any) => '$' + params.value,
-        disableSortBy: true,
+        header: 'Price',
+        cell: (params: any) => '$' + params.getValue(),
+        accessorKey: 'price',
       },
       {
         accessor: 'subscriptionType',
-        Header: 'Subscription Type',
-        Cell: (params: any) => capitalizeFirstLetter(params.value),
-        disableSortBy: true,
+        header: 'Subscription Type',
+        cell: (params: any) => capitalizeFirstLetter(params.getValue()),
+        accessorKey: 'subscriptionType',
       },
       {
         accessor: 'paymentType',
-        Header: 'Payment Type',
-        Cell: (params: any) => capitalizeFirstLetter(params.value),
-        disableSortBy: true,
+        header: 'Payment Type',
+        cell: (params: any) => capitalizeFirstLetter(params.getValue()),
+        accessorKey: 'paymentType',
       },
     ],
     []
   )
-  //@ts-ignore
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
-    columns: columns,
-    data: myPaymentsData,
-  })
 
   const tableProps = useReactTable({
     data: myPaymentsData,
@@ -79,52 +85,138 @@ export const MyPayments2 = () => {
       pagination,
       sorting,
     },
+    manualSorting: true,
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
     // Pipeline
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     debugTable: true,
-    manualSorting: true,
+    getSortedRowModel: getSortedRowModel(),
   })
+
+  // console.log(sorting)
+  // console.log(pageSize)
+  // console.log(pageIndex)
 
   return (
     <>
       <div className="text-accent-500 p-2 block max-w-full overflow-x-scroll overflow-y-hidden">
         <div className={s.container}>
-          <table className="w-full " {...getTableProps()}>
+          <table className="w-full ">
             <thead>
-              {headerGroups.map(headerGroup => (
+              {tableProps.getHeaderGroups().map(headerGroup => (
                 // eslint-disable-next-line react/jsx-key
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map(column => (
+                <tr>
+                  {headerGroup.headers.map(header => (
                     // eslint-disable-next-line react/jsx-key
-                    <th
-                      {...column.getHeaderProps(column.getSortByToggleProps())}
-                      onClick={() => console.log(column.render('Header'))}
-                    >
-                      {column.render('Header')}
+                    <th key={header.id} colSpan={header.colSpan}>
+                      {header.isPlaceholder ? null : (
+                        <div
+                          {...{
+                            className: header.column.getCanSort()
+                              ? 'cursor-pointer select-none'
+                              : '',
+                            onClick: header.column.getToggleSortingHandler(),
+                          }}
+                        >
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                          {/*{header.getContext()}*/}
+                          {{
+                            asc: ' 🔼',
+                            desc: ' 🔽',
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </div>
+                      )}
                     </th>
                   ))}
                 </tr>
               ))}
             </thead>
-            <tbody {...getTableBodyProps()}>
-              {rows.map(row => {
-                prepareRow(row)
-
+            <tbody>
+              {tableProps.getRowModel().rows.map(row => {
                 return (
-                  // eslint-disable-next-line react/jsx-key
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map(cell => (
-                      // eslint-disable-next-line react/jsx-key
-                      <td {...cell.getCellProps()}> {cell.render('Cell')} </td>
-                    ))}
+                  <tr key={row.id}>
+                    {row.getVisibleCells().map(cell => {
+                      return (
+                        <td key={cell.id} style={{ width: cell.column.getSize() }}>
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </td>
+                      )
+                    })}
                   </tr>
                 )
               })}
             </tbody>
           </table>
+          <div className="h-2" />
+          <div className="flex items-center gap-2">
+            <button
+              className="border rounded p-1"
+              onClick={() => tableProps.setPageIndex(0)}
+              disabled={!tableProps.getCanPreviousPage()}
+            >
+              {'<<'}
+            </button>
+            <button
+              className="border rounded p-1"
+              onClick={() => tableProps.previousPage()}
+              disabled={!tableProps.getCanPreviousPage()}
+            >
+              {'<'}
+            </button>
+            <button
+              className="border rounded p-1"
+              onClick={() => tableProps.nextPage()}
+              disabled={!tableProps.getCanNextPage()}
+            >
+              {'>'}
+            </button>
+            <button
+              className="border rounded p-1"
+              onClick={() => tableProps.setPageIndex(tableProps.getPageCount() - 1)}
+              disabled={!tableProps.getCanNextPage()}
+            >
+              {'>>'}
+            </button>
+            <span className="flex items-center gap-1">
+              <div>Page</div>
+              <strong>
+                {tableProps.getState().pagination.pageIndex + 1} of {tableProps.getPageCount()}
+              </strong>
+            </span>
+            <span className="flex items-center gap-1">
+              | Go to page:
+              <input
+                type="number"
+                defaultValue={tableProps.getState().pagination.pageIndex + 1}
+                onChange={e => {
+                  const page = e.target.value ? Number(e.target.value) - 1 : 0
+
+                  tableProps.setPageIndex(page)
+                }}
+                className="border p-1 rounded w-16"
+              />
+            </span>
+            <select
+              value={tableProps.getState().pagination.pageSize}
+              onChange={e => {
+                tableProps.setPageSize(Number(e.target.value))
+              }}
+            >
+              {[10, 20, 30, 40, 50].map(pageSize => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
+                </option>
+              ))}
+            </select>
+            {/*{dataQuery.isFetching ? 'Loading...' : null}*/}
+          </div>
+          <div>{tableProps.getRowModel().rows.length} Rows</div>
+          {/*<div>*/}
+          {/*  <button onClick={() => rerender()}>Force Rerender</button>*/}
+          {/*</div>*/}
+          {/*<pre>{JSON.stringify(pagination, null, 2)}</pre>*/}
         </div>
       </div>
     </>
