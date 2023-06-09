@@ -37,26 +37,31 @@ export const MyPayments2 = () => {
         accessor: 'dateOfPayment',
         Header: 'Date of Payment',
         Cell: (params: any) => dateChangesFormat(params.value),
+        disableSortBy: true,
       },
       {
         accessor: 'endDateOfSubscription',
         Header: 'End date of subscription',
         Cell: (params: any) => dateChangesFormat(params.value),
+        disableSortBy: true,
       },
       {
         accessor: 'price',
         Header: 'Price',
         Cell: (params: any) => '$' + params.value,
+        disableSortBy: true,
       },
       {
         accessor: 'subscriptionType',
         Header: 'Subscription Type',
         Cell: (params: any) => capitalizeFirstLetter(params.value),
+        disableSortBy: true,
       },
       {
         accessor: 'paymentType',
         Header: 'Payment Type',
         Cell: (params: any) => capitalizeFirstLetter(params.value),
+        disableSortBy: true,
       },
     ],
     []
@@ -94,7 +99,12 @@ export const MyPayments2 = () => {
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map(column => (
                     // eslint-disable-next-line react/jsx-key
-                    <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                      onClick={() => console.log(column.render('Header'))}
+                    >
+                      {column.render('Header')}
+                    </th>
                   ))}
                 </tr>
               ))}
