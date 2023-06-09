@@ -8,13 +8,19 @@ import {
   getSortedRowModel,
   getPaginationRowModel,
   SortingState,
+  ColumnDef,
 } from '@tanstack/react-table'
 
 import s from './index.module.scss'
 
 import { capitalizeFirstLetter } from '@/common'
-import { dateChangesFormat, useGetMyPayments } from '@/modules/profile-modules/my-payments'
+import {
+  dateChangesFormat,
+  myPaymentsType,
+  useGetMyPayments,
+} from '@/modules/profile-modules/my-payments'
 import { setMyPaymentsDataEffect } from '@/modules/profile-modules/my-payments/custom/setMyPaymentsDataEffect'
+
 export const MyPayments2 = () => {
   const [myPaymentsData, setMyPaymentsData] = useState<any[]>([])
   const [{ pageIndex, pageSize }, setPagination] = React.useState<PaginationState>({
@@ -42,7 +48,8 @@ export const MyPayments2 = () => {
   const { data, isSuccess } = useGetMyPayments()
 
   setMyPaymentsDataEffect(data, isSuccess, setMyPaymentsData)
-  const columns = React.useMemo(
+
+  const columns: ColumnDef<myPaymentsType>[] = React.useMemo(
     () => [
       {
         accessor: 'dateOfPayment',
@@ -98,6 +105,7 @@ export const MyPayments2 = () => {
   // console.log(sorting)
   // console.log(pageSize)
   // console.log(pageIndex)
+  console.log('1')
 
   return (
     <>
@@ -105,9 +113,9 @@ export const MyPayments2 = () => {
         <div className={s.container}>
           <table className="w-full ">
             <thead>
-              {tableProps.getHeaderGroups().map(headerGroup => (
+              {tableProps.getHeaderGroups().map((headerGroup, key) => (
                 // eslint-disable-next-line react/jsx-key
-                <tr>
+                <tr key={key}>
                   {headerGroup.headers.map(header => (
                     // eslint-disable-next-line react/jsx-key
                     <th key={header.id} colSpan={header.colSpan}>
