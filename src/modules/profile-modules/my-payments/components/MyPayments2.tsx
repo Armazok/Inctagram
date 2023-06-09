@@ -9,7 +9,6 @@ import {
   getPaginationRowModel,
   SortingState,
   ColumnDef,
-  sortingFns,
 } from '@tanstack/react-table'
 
 import s from './index.module.scss'
@@ -111,24 +110,22 @@ export const MyPayments2 = () => {
       pagination,
       sorting,
     },
-    manualSorting: true,
+    // manualSorting: true,
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
-    enableSortingRemoval: true,
     // Pipeline
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     debugTable: true,
     getSortedRowModel: getSortedRowModel(),
-    enableSorting: true,
-    sortingFns,
   })
 
+  // overflow-x-scroll overflow-y-hidden
   return (
     <>
-      <div className="text-accent-500 p-2 block max-w-full overflow-x-scroll overflow-y-hidden">
+      <div className=" text-accent-500 p-2 block max-w-full ">
         <div className={s.container}>
-          <table className="w-full ">
+          <table>
             <thead>
               {tableProps.getHeaderGroups().map((headerGroup, key) => (
                 <tr key={key}>
@@ -172,7 +169,7 @@ export const MyPayments2 = () => {
             </tbody>
           </table>
           <div className="h-2" />
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-light-100 font-normal text-sm">
             <button
               className="border rounded p-1"
               onClick={() => tableProps.setPageIndex(0)}
@@ -217,10 +214,11 @@ export const MyPayments2 = () => {
 
                   tableProps.setPageIndex(page)
                 }}
-                className="border p-1 rounded w-16"
+                className="border p-1 rounded w-16 bg-dark-500 text-light-100 text-sm font-normal"
               />
             </span>
             <select
+              className={'bg-dark-500 text-light-100 text-sm font-normal'}
               value={tableProps.getState().pagination.pageSize}
               onChange={e => {
                 tableProps.setPageSize(Number(e.target.value))
