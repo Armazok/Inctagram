@@ -25,7 +25,7 @@ export const MyPayments2 = () => {
   const [myPaymentsData, setMyPaymentsData] = useState<any[]>([])
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 2,
+    pageSize: 10,
   })
 
   const [sorting, setSorting] = useState<SortingState>([])
@@ -124,7 +124,7 @@ export const MyPayments2 = () => {
   return (
     <>
       <div className=" text-accent-500 p-2 block max-w-full ">
-        <div className={s.container}>
+        <div className={`w-[972px] ${s.container}`}>
           <table>
             <thead>
               {tableProps.getHeaderGroups().map((headerGroup, key) => (
@@ -169,7 +169,7 @@ export const MyPayments2 = () => {
             </tbody>
           </table>
           <div className="h-2" />
-          <div className="flex items-center gap-2 text-light-100 font-normal text-sm">
+          <div className="pt-2 flex items-center gap-2 text-light-100 font-normal text-sm">
             <button
               className="border rounded p-1"
               onClick={() => tableProps.setPageIndex(0)}
