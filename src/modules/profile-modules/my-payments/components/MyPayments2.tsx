@@ -34,7 +34,6 @@ export const MyPayments2 = () => {
   //   sortDrection asd desc
   //   pageSize
   //   sortBy id
-  //
   // }
   const sort = sorting.map(({ id }) => `${id}`)
   const dir = sorting.map(({ desc }) => `${desc ? 'DESC' : 'ASC'}`)
