@@ -75,6 +75,8 @@ export const PhotoSelector = ({
     } else {
       setError('You can upload from 1 to 10 images')
     }
+    // fixed a bug where it was impossible to upload the same photo
+    event.target.value = ''
   }
   const onSelectClick = () => {
     //@ts-ignore
