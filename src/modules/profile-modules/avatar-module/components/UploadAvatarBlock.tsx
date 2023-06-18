@@ -6,6 +6,7 @@ import { PhotoSelector, ProfileAvatarEditor } from '@/modules/profile-modules/av
 import { DeleteAvatarButton } from '@/modules/profile-modules/avatar-module/components/avatar-delete-button/DeleteButton'
 import { useDeleteAvatar } from '@/modules/profile-modules/avatar-module/hooks/useDeleteAvatar'
 import { useUploadAvatar } from '@/modules/profile-modules/avatar-module/hooks/useUploadAvatar'
+// eslint-disable-next-line import/namespace
 import { IPhoto, useImageSelector } from '@/store/storeSelectorPhoto'
 import { Avatar, GlobalButton, Preloader } from '@/ui'
 

@@ -57,6 +57,7 @@ export const CropEditor = ({ setModal, isModalOpen, onClose }: PropsType) => {
   }
 
   const {
+    deleteImage,
     imagesSelector,
     setCropForImage,
     setImageSelector,
@@ -112,6 +113,10 @@ export const CropEditor = ({ setModal, isModalOpen, onClose }: PropsType) => {
     setModal('photo-uploader')
   }
 
+  const onDeleteImage = (id: string) => {
+    deleteImage(id)
+  }
+
   return (
     <CreatePostModal
       showBackArrow={true}
@@ -143,12 +148,18 @@ export const CropEditor = ({ setModal, isModalOpen, onClose }: PropsType) => {
                   setZoom={zoom => handleZoomChange(e.id, zoom)}
                 />
                 <CropPopup setAspect={aspect => setAspectForImage(e.id, aspect)} />
+                <button
+                  type={'submit'}
+                  onClick={() => onDeleteImage(e.id)}
+                  className={'h-6 w-6 bg-dark-500 pt-0.5'}
+                >
+                  X
+                </button>
               </div>
             </div>
           )
         })}
       </Slider>
-
       <PhotoSelector onAdd={handleAddPhoto} showButton={false} placeholderShow={false} />
     </CreatePostModal>
   )

@@ -25,6 +25,7 @@ export interface IPhoto {
 interface ISelectorStore {
   imagesSelector: IPhoto[]
   setImageSelector: (imagesSelector: IPhoto[]) => void
+  deleteImage: (id: string) => void
   filterStyle: string
   setFilterStyleForImage: (id: string, filterStyle: string) => void
   setCropForImage: (id: string, newCrop: Point) => void
@@ -74,6 +75,10 @@ export const useImageSelector = create<ISelectorStore>()(
         imagesSelector: newImages,
       }))
     },
+    deleteImage: (id: string) =>
+      set(state => ({
+        imagesSelector: state.imagesSelector.filter((image: IPhoto) => image.id !== id),
+      })),
     setCropForImage(id: string, newCrop: Point) {
       set(state => {
         const imageIndex = state.imagesSelector.findIndex(img => img.id === id) // получаем индекс объекта IPhoto по id
