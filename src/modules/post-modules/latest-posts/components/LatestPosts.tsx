@@ -40,12 +40,10 @@ export const LatestPosts: FC = () => {
 
   return (
     <div className="mt-14">
-      {/*{true && <LatestPostsLoader />}*/}
-
       <div className="grid grid-cols-4 gap-3">
         {skeletonIsPublication && <SkeletonPost />}
         {isLoading
-          ? [...Array(10).keys()].map(i => {
+          ? [...Array(30).keys()].map(i => {
               return <SkeletonPost key={i} />
             })
           : data?.pages.map((page, idx) => (
