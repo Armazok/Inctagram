@@ -40,8 +40,6 @@ export const LatestPosts: FC = () => {
 
   return (
     <div className="mt-14">
-      {/*{true && <LatestPostsLoader />}*/}
-
       <div className="grid grid-cols-4 gap-3">
         {skeletonIsPublication && <SkeletonPost />}
         {isLoading
