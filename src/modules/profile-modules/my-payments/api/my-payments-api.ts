@@ -3,6 +3,6 @@ import { authInstance } from '@/services'
 
 export const getMyPayments = () => {
   return authInstance
-    .get<{ data: myPaymentsType[] }>('subscriptions/my-paymentsasdf')
+    .get<{ data: myPaymentsType[] }>('subscriptions/my-payments')
     .then(res => res.data)
 }
