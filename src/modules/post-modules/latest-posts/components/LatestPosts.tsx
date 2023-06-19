@@ -39,10 +39,10 @@ export const LatestPosts: FC = () => {
   }, [inView, hasNextPage])
 
   return (
-    <div className="mt-14 max-w-full">
+    <div className="mt-14">
       <div className="grid grid-cols-4 gap-3">
         {skeletonIsPublication && <SkeletonPost />}
-        {true
+        {isLoading
           ? [...Array(30).keys()].map(i => {
               return <SkeletonPost key={i} />
             })
