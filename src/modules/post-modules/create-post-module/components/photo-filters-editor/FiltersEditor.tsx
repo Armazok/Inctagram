@@ -78,11 +78,11 @@ export const FiltersEditor = ({ isModalOpen, setModal }: PropsType) => {
       title={'Filter'}
       onBtnClick={onNextClick}
     >
-      <div className="relative h-[500px]">
+      <div className="relative h-full">
         <div className="grid grid-cols-2 h-full">
           <div>
             <Swiper
-              className="h-full"
+              className="h-full flex-wrap"
               modules={[Navigation, Pagination]}
               navigation
               pagination={{ clickable: true }}

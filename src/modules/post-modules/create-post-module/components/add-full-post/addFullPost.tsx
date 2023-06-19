@@ -104,7 +104,7 @@ export const AddFullPost: FC<IAddFullPost & modalType> = ({ isModalOpen, setModa
             </Swiper>
           </div>
         </div>
-        <div className="max-w-[480px]">
+        <div className="w-full">
           <RightDescription text={postDescription} setText={setPostDescription} />
         </div>
       </div>
