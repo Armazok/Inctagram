@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { PATH_ROUTE } from '@/common'
 import { modalType, useStoreIsLoadingPublication } from '@/modules/post-modules/create-post-module'
+import { sendPublicationImage } from '@/modules/post-modules/create-post-module/api/postImageAPI'
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
 import { RightDescription } from '@/modules/post-modules/create-post-module/components/description-add/rightDescription'
@@ -31,7 +32,11 @@ export const AddFullPost: FC<IAddFullPost & modalType> = ({ isModalOpen, setModa
     push(PATH_ROUTE.PROFILE)
   }
 
-  const { mutate: addPhotoToThePost, isLoading } = useUploadPost(onSuccessPostSent, userId!)
+  const { mutate: addPhotoToThePost, isLoading } = useUploadPost(
+    onSuccessPostSent,
+    userId!,
+    skeletonIsPublication
+  )
   const onCloseClick = async () => {
     setDescription(postDescription)
     await setModal('save-draft-post')
@@ -59,7 +64,9 @@ export const AddFullPost: FC<IAddFullPost & modalType> = ({ isModalOpen, setModa
     setModal('')
   }
 
-  useEffect(() => skeletonIsPublication(isLoading), [isLoading])
+  useEffect(() => {
+    skeletonIsPublication(isLoading)
+  }, [isLoading])
 
   return (
     <CreatePostModal
