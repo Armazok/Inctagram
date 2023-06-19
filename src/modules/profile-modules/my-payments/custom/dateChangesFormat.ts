@@ -1,7 +1,9 @@
 import { format } from 'date-fns'
 
-export const dateChangesFormat = (text: string) => {
-  const date = new Date(text)
+export const dateChangesFormat = (text: string | undefined) => {
+  if (text) {
+    const date = new Date(text)
 
-  return format(date, 'dd.MM.yyyy')
+    return format(date, 'dd.MM.yyyy')
+  }
 }

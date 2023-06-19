@@ -3,7 +3,7 @@ import React from 'react'
 import { nanoid } from 'nanoid'
 
 import { Devices } from '@/modules/profile-modules/devices-module'
-import { MyPayments, MyPayments2 } from '@/modules/profile-modules/my-payments'
+import { MyPayments } from '@/modules/profile-modules/my-payments'
 import { EditSettingProfile } from '@/modules/profile-modules/settings-edit-profile-module'
 import AccountManagementPage from '@/pages/profile/settings/account-management'
 
@@ -22,6 +22,6 @@ export const settings_profile_tabs = [
   {
     id: nanoid(),
     label: 'My payments',
-    content: <MyPayments2 />,
+    content: <MyPayments />,
   },
 ]
