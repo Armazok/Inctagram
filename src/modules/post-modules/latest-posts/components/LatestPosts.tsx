@@ -3,6 +3,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import { useStoreIsLoadingPublication } from '@/modules/post-modules/create-post-module'
+import { useUploadPost } from '@/modules/post-modules/create-post-module/hooks/useAddPostImgMutation'
 import { LatestPost } from '@/modules/post-modules/latest-posts/components/LatestPost'
 import { LatestPostsLoader } from '@/modules/post-modules/latest-posts/components/LatestPostsLoader'
 import { PostModal } from '@/modules/post-modules/latest-posts/components/PostModal'
@@ -20,6 +21,7 @@ export const LatestPosts: FC = () => {
   const [isOpenPostModal, setIsOpenPostModal] = useState(false)
 
   const skeletonIsPublication = useStoreIsLoadingPublication(state => state.isLoadingPublication)
+
   const onClose = () => {
     setIsOpenPostModal(false)
   }
