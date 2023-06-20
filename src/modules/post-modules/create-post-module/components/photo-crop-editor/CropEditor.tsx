@@ -23,15 +23,18 @@ export const CropEditor = ({ setModal, isModalOpen, onClose }: PropsType) => {
   const settings = {
     customPaging: function (index: number) {
       const photo = imagesSelector[index]
-      let imageUrl = photo.url
+      let imageUrl = ''
 
-      if (typeof imageUrl !== 'string' || imageUrl.startsWith('blob:')) {
+      if (photo && photo.url) {
+        // @ts-ignore
+        imageUrl = photo.url
+      } else if (photo && photo.file) {
         imageUrl = URL.createObjectURL(photo.file)
       }
 
       return (
         <a>
-          <img src={String(imageUrl)} alt={photo.name} />
+          <img src={String(imageUrl)} alt={photo?.name} />
         </a>
       )
     },
@@ -113,8 +116,8 @@ export const CropEditor = ({ setModal, isModalOpen, onClose }: PropsType) => {
     setModal('photo-uploader')
   }
 
-  const onDeleteImage = (id: string) => {
-    deleteImage(id)
+  const onDeleteImage = (url: string | Blob) => {
+    deleteImage(url)
   }
 
   return (
@@ -131,6 +134,7 @@ export const CropEditor = ({ setModal, isModalOpen, onClose }: PropsType) => {
         {imagesSelector.map((e, key) => {
           return (
             <div key={e.id} className="relative h-[500px]">
+              {/*{console.log(e.url)}*/}
               <Crop
                 src={e}
                 aspect={e.cropData?.aspect || 3 / 4}
@@ -150,7 +154,7 @@ export const CropEditor = ({ setModal, isModalOpen, onClose }: PropsType) => {
                 <CropPopup setAspect={aspect => setAspectForImage(e.id, aspect)} />
                 <button
                   type={'submit'}
-                  onClick={() => onDeleteImage(e.id)}
+                  onClick={() => onDeleteImage(e.name)}
                   className={'h-6 w-6 bg-dark-500 pt-0.5'}
                 >
                   X
