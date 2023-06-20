@@ -35,7 +35,7 @@ export const Sidebar: FC = () => {
       'flex gap-[15px] items-center mt-14'
     ),
     favorites: clsx(
-      pathname === '/favorites' ? 'text-accent-500' : 'text-amber-100',
+      pathname === '/favorites' ? 'text-accent-500' : '',
       'flex gap-[15px] items-center'
     ),
     hidden: 'md:hidden',
