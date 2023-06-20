@@ -14,7 +14,8 @@ import {
 import { capitalizeFirstLetter } from '@/common'
 import {
   dateChangesFormat,
-  myPaymentsType, setMyPaymentsDataEffect,
+  myPaymentsType,
+  setMyPaymentsDataEffect,
   useGetMyPayments,
 } from '@/modules/profile-modules/my-payments'
 import { SkeletonMyPayments } from '@/ui/skeletons/SkeletonMyPayments'
