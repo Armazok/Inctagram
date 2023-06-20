@@ -79,5 +79,5 @@ export const PhotoFilters = ({ imageSrc, setFilter }: PropsType) => {
     )
   })
 
-  return <div className={'flex flex-wrap '}>{filtersList}</div>
+  return <div className={'my-7 mb-auto mt-auto grid grid-cols-3 gap-1'}>{filtersList}</div>
 }

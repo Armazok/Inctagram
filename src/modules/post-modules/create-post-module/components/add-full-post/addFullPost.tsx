@@ -78,7 +78,7 @@ export const AddFullPost: FC<IAddFullPost & modalType> = ({ isModalOpen, setModa
       showBackArrow={true}
       variant={'Publish'}
     >
-      <div className={'flex flex-wrap flex-row'}>
+      <div className={'flex flex-row'}>
         <div
           // className="grid grid-cols-2 h-full"
           className="max-w-[485px]"
@@ -104,7 +104,7 @@ export const AddFullPost: FC<IAddFullPost & modalType> = ({ isModalOpen, setModa
             </Swiper>
           </div>
         </div>
-        <div className="max-w-[480px]">
+        <div className="w-full">
           <RightDescription text={postDescription} setText={setPostDescription} />
         </div>
       </div>
