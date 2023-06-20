@@ -4,11 +4,13 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
 import { Rect } from '@popperjs/core'
+import ImagePlaceholder from 'next/image'
 import { Point } from 'react-easy-crop'
 import Slider from 'react-slick'
 
 import { CreatePostModal } from './../create-post-modal/CreatePostModal'
 
+import placeholder from '@/assets/images/img-placeholder.png'
 import { modalType } from '@/modules/post-modules/create-post-module'
 import { Crop } from '@/modules/post-modules/create-post-module/components/crop'
 import { CropPopup } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/crop-popup'
@@ -123,47 +125,54 @@ export const CropEditor = ({ setModal, isModalOpen, onClose }: PropsType) => {
   return (
     <CreatePostModal
       showBackArrow={true}
-      variant={'Next'}
+      variant={imagesSelector.length === 0 ? undefined : 'Next'}
       isOpen={isModalOpen}
       title={'Cropping'}
       onClose={onCloseClick}
       onBackClick={onBackClick}
       onBtnClick={onNextClick}
     >
-      <Slider {...settings}>
-        {imagesSelector.map((e, key) => {
-          return (
-            <div key={e.id} className="relative h-[500px]">
-              {/*{console.log(e.url)}*/}
-              <Crop
-                src={e}
-                aspect={e.cropData?.aspect || 3 / 4}
-                crop={e.cropData?.crop || { x: 0, y: 0 }}
-                onCropChange={location => handleCropChange(e.id, location)}
-                zoom={e.cropData?.zoom || 1}
-                onZoomChange={zoom => handleZoomChange(e.id, zoom)}
-                onCropComplete={(croppedArea, croppedAreaPixels) =>
-                  onCropComplete(e.id, croppedArea, croppedAreaPixels)
-                }
-              />
-              <div className="absolute bottom-[3rem] left-[3rem] ">
-                <ZoomPopup
+      {imagesSelector.length === 0 ? (
+        <div className={'flex flex-col pt-10 justify-center items-center'}>
+          {' '}
+          <ImagePlaceholder src={placeholder} alt={'placeholder'} width={300} height={300} />
+        </div>
+      ) : (
+        <Slider {...settings}>
+          {imagesSelector.map((e, key) => {
+            return (
+              <div key={e.id} className="relative h-[500px]">
+                <Crop
+                  src={e}
+                  aspect={e.cropData?.aspect || 3 / 4}
+                  crop={e.cropData?.crop || { x: 0, y: 0 }}
+                  onCropChange={location => handleCropChange(e.id, location)}
                   zoom={e.cropData?.zoom || 1}
-                  setZoom={zoom => handleZoomChange(e.id, zoom)}
+                  onZoomChange={zoom => handleZoomChange(e.id, zoom)}
+                  onCropComplete={(croppedArea, croppedAreaPixels) =>
+                    onCropComplete(e.id, croppedArea, croppedAreaPixels)
+                  }
                 />
-                <CropPopup setAspect={aspect => setAspectForImage(e.id, aspect)} />
-                <button
-                  type={'submit'}
-                  onClick={() => onDeleteImage(e.name)}
-                  className={'h-6 w-6 bg-dark-500 pt-0.5'}
-                >
-                  X
-                </button>
+                <div className="absolute bottom-[3rem] left-[3rem] ">
+                  <ZoomPopup
+                    zoom={e.cropData?.zoom || 1}
+                    setZoom={zoom => handleZoomChange(e.id, zoom)}
+                  />
+                  <CropPopup setAspect={aspect => setAspectForImage(e.id, aspect)} />
+                  <button
+                    type={'submit'}
+                    onClick={() => onDeleteImage(e.name)}
+                    className={'h-6 w-6 bg-dark-500 pt-0.5'}
+                  >
+                    X
+                  </button>
+                </div>
               </div>
-            </div>
-          )
-        })}
-      </Slider>
+            )
+          })}
+        </Slider>
+      )}
+
       <PhotoSelector onAdd={handleAddPhoto} showButton={false} placeholderShow={false} />
     </CreatePostModal>
   )
