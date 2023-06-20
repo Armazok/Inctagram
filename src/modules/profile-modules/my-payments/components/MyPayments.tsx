@@ -11,15 +11,12 @@ import {
   ColumnDef,
 } from '@tanstack/react-table'
 
-import s from './index.module.scss'
-
 import { capitalizeFirstLetter } from '@/common'
 import {
   dateChangesFormat,
-  myPaymentsType,
+  myPaymentsType, setMyPaymentsDataEffect,
   useGetMyPayments,
 } from '@/modules/profile-modules/my-payments'
-import { setMyPaymentsDataEffect } from '@/modules/profile-modules/my-payments/custom/setMyPaymentsDataEffect'
 import { SkeletonMyPayments } from '@/ui/skeletons/SkeletonMyPayments'
 
 export const MyPayments = () => {
@@ -141,9 +138,13 @@ export const MyPayments = () => {
   return (
     <>
       <div className=" text-accent-500 p-2 block max-w-full ">
-        <div className={`w-[972px] ${s.container}`}>
+        <div className={`max-w-[972px]`}>
           <table>
-            <thead>
+            <thead
+              className={
+                'h-12 bg-dark-500 border-2 border-dark-500 border-r-2 text-light-100 font-semibold text-sm'
+              }
+            >
               {tableProps.getHeaderGroups().map((headerGroup, key) => (
                 <tr key={key}>
                   {headerGroup.headers.map(header => (
@@ -172,10 +173,17 @@ export const MyPayments = () => {
             <tbody>
               {tableProps.getRowModel().rows.map(row => {
                 return (
-                  <tr key={row.id}>
+                  <tr
+                    className={'border-[1px] border-dark-500 text-light-100 font-normal text-sm'}
+                    key={row.id}
+                  >
                     {row.getVisibleCells().map(cell => {
                       return (
-                        <td key={cell.id} style={{ width: cell.column.getSize() }}>
+                        <td
+                          className={'pb-3 pt-3 text-center'}
+                          key={cell.id}
+                          style={{ width: cell.column.getSize() }}
+                        >
                           <div>{flexRender(cell.column.columnDef.cell, cell.getContext())}</div>
                         </td>
                       )
