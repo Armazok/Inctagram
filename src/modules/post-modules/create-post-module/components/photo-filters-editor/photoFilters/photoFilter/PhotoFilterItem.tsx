@@ -15,7 +15,10 @@ export const PhotoFilterItem = ({ imageSrc, filter, filterName, onFilterClick }:
   }
 
   return (
-    <div className={'flex flex-col items-center px-[15px] py-[5px]'} onClick={onFilterClickHandler}>
+    <div
+      className={'flex flex-col items-center px-[15px] py-[5px] '}
+      onClick={onFilterClickHandler}
+    >
       <img
         alt={`filter ${filter}`}
         src={String(imageSrc.filteredUrl)}
