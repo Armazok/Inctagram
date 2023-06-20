@@ -42,7 +42,7 @@ export const Sidebar: FC = () => {
   }
 
   return (
-    <aside className="h-screen sticky top-0 max-w-[320px] w-full border-r-[1px] border-r-bgLogBorder">
+    <aside className="h-screen sticky top-0 max-w-[320px] w-full border-r-[1px] border-r-bgLogBorder md:max-w-[100px]">
       <div className="text-light-100 font-medium flex flex-col items-center justify-between py-[72px] h-full">
         <ul className="list-none flex gap-6 flex-col">
           <li>
