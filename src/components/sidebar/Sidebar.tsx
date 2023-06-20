@@ -18,7 +18,6 @@ import trending from '../../assets/icons/trending-up.svg'
 
 import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
 import { CreatePost } from '@/modules/post-modules/create-post-module'
-// @ts-ignore
 
 export const Sidebar: FC = () => {
   const { pathname } = useRouter()
