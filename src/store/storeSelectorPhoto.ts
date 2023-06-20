@@ -25,7 +25,7 @@ export interface IPhoto {
 interface ISelectorStore {
   imagesSelector: IPhoto[]
   setImageSelector: (imagesSelector: IPhoto[]) => void
-  deleteImage: (id: string) => void
+  deleteImage: (url: string | Blob) => void
   filterStyle: string
   setFilterStyleForImage: (id: string, filterStyle: string) => void
   setCropForImage: (id: string, newCrop: Point) => void
@@ -75,9 +75,9 @@ export const useImageSelector = create<ISelectorStore>()(
         imagesSelector: newImages,
       }))
     },
-    deleteImage: (id: string) =>
+    deleteImage: (name: string | Blob) =>
       set(state => ({
-        imagesSelector: state.imagesSelector.filter((image: IPhoto) => image.id !== id),
+        imagesSelector: state.imagesSelector.filter((image: IPhoto) => image.name !== name),
       })),
     setCropForImage(id: string, newCrop: Point) {
       set(state => {

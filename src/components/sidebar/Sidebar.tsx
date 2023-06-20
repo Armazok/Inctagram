@@ -38,11 +38,11 @@ export const Sidebar: FC = () => {
       pathname === '/favorites' ? 'text-accent-500' : '',
       'flex gap-[15px] items-center'
     ),
-    hidden: 'md:hidden',
+    hidden: 'lg:hidden',
   }
 
   return (
-    <aside className="h-screen sticky top-0 max-w-[320px] w-full border-r-[1px] border-r-bgLogBorder md:max-w-[100px]">
+    <aside className="h-screen sticky top-0 max-w-[320px] w-full border-r-[1px] border-r-bgLogBorder lg:max-w-[100px]">
       <div className="text-light-100 font-medium flex flex-col items-center justify-between py-[72px] h-full">
         <ul className="list-none flex gap-6 flex-col">
           <li>
