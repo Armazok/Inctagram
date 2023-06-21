@@ -118,7 +118,6 @@ export const MyPayments = () => {
     ],
     [isSuccess, isLoading]
   )
-
   const tableProps = useReactTable({
     data: myPaymentsData,
     columns: columns,
