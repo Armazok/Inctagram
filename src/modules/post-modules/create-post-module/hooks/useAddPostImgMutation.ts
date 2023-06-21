@@ -16,10 +16,11 @@ export const useUploadPost = (
       await client.invalidateQueries({ queryKey: ['posts', `user_${userId}`] })
       onSuccessPostSent(data.data.images)
       toast.success('Success')
-      skeletonIsPublication(isLoading)
+      skeletonIsPublication(false)
     },
     onError: () => {
       console.log('useAddPostMutation ERROR')
+      skeletonIsPublication(false)
     },
   })
 

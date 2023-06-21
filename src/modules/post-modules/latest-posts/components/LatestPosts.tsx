@@ -3,14 +3,13 @@ import React, { FC, useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import { useStoreIsLoadingPublication } from '@/modules/post-modules/create-post-module'
-import { useUploadPost } from '@/modules/post-modules/create-post-module/hooks/useAddPostImgMutation'
 import { LatestPost } from '@/modules/post-modules/latest-posts/components/LatestPost'
 import { LatestPostsLoader } from '@/modules/post-modules/latest-posts/components/LatestPostsLoader'
 import { PostModal } from '@/modules/post-modules/latest-posts/components/PostModal'
 import { useGetLatestPosts } from '@/modules/post-modules/latest-posts/hooks/useGetLatestPosts'
 import { useMeQuery } from '@/services/hookMe'
 import { useUserStore } from '@/store'
-import { SkeletonPost } from '@/ui/skeletons/SkeletonPost'
+import { SkeletonPost } from '@/ui'
 
 export const LatestPosts: FC = () => {
   const { data: me } = useMeQuery()
@@ -21,6 +20,12 @@ export const LatestPosts: FC = () => {
   const [isOpenPostModal, setIsOpenPostModal] = useState(false)
 
   const skeletonIsPublication = useStoreIsLoadingPublication(state => state.isLoadingPublication)
+
+  const usedToDrawArraysOfSkeletons = (value: number) => {
+    return [...Array(value).keys()].map(i => {
+      return <SkeletonPost key={i} />
+    })
+  }
 
   const onClose = () => {
     setIsOpenPostModal(false)
@@ -43,9 +48,7 @@ export const LatestPosts: FC = () => {
       <div className="grid grid-cols-4 gap-3">
         {skeletonIsPublication && <SkeletonPost />}
         {isLoading
-          ? [...Array(30).keys()].map(i => {
-              return <SkeletonPost key={i} />
-            })
+          ? usedToDrawArraysOfSkeletons(32)
           : data?.pages.map((page, idx) => (
               <React.Fragment key={idx}>
                 {page &&
@@ -58,10 +61,11 @@ export const LatestPosts: FC = () => {
 
       {isSuccess && (
         <div className="pt-4" ref={ref}>
-          {isFetchingNextPage && <LatestPostsLoader />}
+          {isFetchingNextPage && (
+            <div className={'grid grid-cols-4 gap-3'}>{usedToDrawArraysOfSkeletons(12)}</div>
+          )}
         </div>
       )}
-
       <PostModal isOpen={isOpenPostModal} onClose={onClose} />
     </div>
   )
