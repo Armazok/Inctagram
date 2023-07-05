@@ -13,8 +13,4 @@ const storeModal = (set: any): StoreType => ({
   setIsModalOpen: isModalOpen => set({ isModalOpen: isModalOpen }, false, 'setIsModalOpen'),
 })
 
-export const useStoreWithContentModal = createStore(storeModal)
-export const useStoreCropEditorModal = createStore(storeModal)
-export const useStoreFilterEditorModal = createStore(storeModal)
-export const useStoreAddPostModal = createStore(storeModal)
 export const useStoreAvatarBlockModal = createStore(storeModal)

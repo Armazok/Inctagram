@@ -1,18 +1,17 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
 import { useRouter } from 'next/router'
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { PATH_ROUTE } from '@/common'
-import { modalType } from '@/modules/post-modules/create-post-module'
+import { modalType, useStoreIsLoadingPublication } from '@/modules/post-modules/create-post-module'
 import { CreatePostModal } from '@/modules/post-modules/create-post-module/components/create-post-modal/CreatePostModal'
 import { AddPublication } from '@/modules/post-modules/create-post-module/components/description-add/add-publication'
 import { RightDescription } from '@/modules/post-modules/create-post-module/components/description-add/rightDescription'
 import { useUploadPost } from '@/modules/post-modules/create-post-module/hooks/useAddPostImgMutation'
 import { useUserStore } from '@/store'
 import { useImageSelector } from '@/store/storeSelectorPhoto'
-import { Preloader } from '@/ui'
 
 interface IAddFullPost {
   location?: boolean
@@ -25,13 +24,18 @@ export const AddFullPost: FC<IAddFullPost & modalType> = ({ isModalOpen, setModa
 
   const [postDescription, setPostDescription] = useState(description)
 
+  const skeletonIsPublication = useStoreIsLoadingPublication(state => state.setIsLoadingPublication)
   const onSuccessPostSent = async () => {
-    push(PATH_ROUTE.PROFILE)
     onClose()
     setDescription('')
+    push(PATH_ROUTE.PROFILE)
   }
 
-  const { mutate: addPhotoToThePost, isLoading } = useUploadPost(onSuccessPostSent, userId!)
+  const { mutate: addPhotoToThePost, isLoading } = useUploadPost(
+    onSuccessPostSent,
+    userId!,
+    skeletonIsPublication
+  )
   const onCloseClick = async () => {
     setDescription(postDescription)
     await setModal('save-draft-post')
@@ -56,9 +60,12 @@ export const AddFullPost: FC<IAddFullPost & modalType> = ({ isModalOpen, setModa
 
     formData.append('description', postDescription)
     addPhotoToThePost(formData)
+    setModal('')
   }
 
-  if (isLoading) return <Preloader />
+  useEffect(() => {
+    skeletonIsPublication(isLoading)
+  }, [isLoading])
 
   return (
     <CreatePostModal
@@ -70,7 +77,7 @@ export const AddFullPost: FC<IAddFullPost & modalType> = ({ isModalOpen, setModa
       showBackArrow={true}
       variant={'Publish'}
     >
-      <div className={'flex flex-wrap flex-row'}>
+      <div className={'flex flex-row'}>
         <div
           // className="grid grid-cols-2 h-full"
           className="max-w-[485px]"
@@ -96,7 +103,7 @@ export const AddFullPost: FC<IAddFullPost & modalType> = ({ isModalOpen, setModa
             </Swiper>
           </div>
         </div>
-        <div className="max-w-[480px]">
+        <div className="w-full">
           <RightDescription text={postDescription} setText={setPostDescription} />
         </div>
       </div>

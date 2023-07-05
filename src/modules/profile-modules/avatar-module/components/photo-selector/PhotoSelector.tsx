@@ -50,7 +50,7 @@ export const PhotoSelector = ({
   const onFileSelectChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
 
-    if (files && files.length > 0) {
+    if (files && files.length > 0 && files.length < 11) {
       const newImages: IPhoto[] = []
 
       for (let i = 0; i < files.length; i++) {
@@ -72,7 +72,11 @@ export const PhotoSelector = ({
       if (isModalOpen && setModal) {
         setModal('crop-editor')
       }
+    } else {
+      setError('You can upload from 1 to 10 images')
     }
+    // fixed a bug where it was impossible to upload the same photo
+    event.target.value = ''
   }
   const onSelectClick = () => {
     //@ts-ignore

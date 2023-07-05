@@ -30,7 +30,7 @@ export const RightDescription: FC<RightDescriptionType> = ({
   }
 
   return (
-    <div className={'flex flex-col gap-3 w-[536px] p-4'}>
+    <div className={'flex flex-col gap-3 w-full p-4'}>
       <div className={'flex items-center gap-3'}>
         <Avatar alt={'photoAvatar'} width={36} height={36} src={avatar} />
         <div className={'font-semibold'}>{userName}</div>

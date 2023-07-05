@@ -39,7 +39,7 @@ export const LogoutButton: FC = () => {
     <div>
       <button onClick={() => setIsModalOpen(true)} className="flex items-center">
         <FaSignOutAlt className="mr-4" />
-        Logout
+        <span className={'lg:hidden'}>Logout</span>
       </button>
 
       <Confirm

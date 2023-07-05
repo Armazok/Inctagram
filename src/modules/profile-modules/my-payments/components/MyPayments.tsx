@@ -1,86 +1,269 @@
-import React, { ChangeEvent, useCallback, useMemo, useRef, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
-import 'ag-grid-community/styles/ag-grid.css'
-import 'ag-grid-community/styles/ag-theme-alpine.css'
-import { AgGridReact } from 'ag-grid-react'
+import {
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+  PaginationState,
+  getSortedRowModel,
+  getPaginationRowModel,
+  SortingState,
+  ColumnDef,
+} from '@tanstack/react-table'
 
-import s from './myPayments.module.scss'
+import { capitalizeFirstLetter } from '@/common'
+import {
+  dateChangesFormat,
+  myPaymentsType,
+  setMyPaymentsDataEffect,
+  useGetMyPayments,
+} from '@/modules/profile-modules/my-payments'
+import { SkeletonMyPayments } from '@/ui/skeletons/SkeletonMyPayments'
 
-import { myPaymentsType, useGetMyPayments } from '@/modules/profile-modules/my-payments'
-import { columnDefs } from '@/modules/profile-modules/my-payments/constants/arrayOfColumnDefinitionsForTheGrid'
-import { setMyPaymentsDataEffect } from '@/modules/profile-modules/my-payments/custom/setMyPaymentsDataEffect'
-
-/**
- * My payments - a component for displaying paid subscriptions
- * @property {React.RefObject} ref - Reference to the grid component
- * @property {boolean} animateRows - Flag whether rows should be animated
- * @property {string|undefined} rowSelection - Sets row selection mode ('single', 'multiple', undefined)
- * @property {Array} rowData - Array of payment data objects to be displayed in the grid
- * @property {Array} columnDefs - Array of column definitions for the grid
- * @property {object} defaultColDef - Default column definitions for the grid
- * @property {boolean} pagination - Flag whether pagination should be enabled
- * @property {number} paginationPageSize - Number of payments to show per page in pagination
- * @property {boolean} suppressHorizontalScroll - Flag whether horizontal scroll should be suppressed
- * @property {boolean} suppressPropertyNamesCheck - Flag whether property name checks should be suppressed
- * @property {string} overlayLoadingTemplate - Template displayed when data is being loaded
- * @property {string} overlayNoRowsTemplate - Template displayed when no payments are available or when an error occurred on the server
- *
- * columnDefs - An array containing column definitions for the table
- * @types {Array}
- *
- * onPageSizeChanged - A callback function to handle changes in the table page selection
- * @returns {Function} The callback function that updates the table page size
- *
- * defaultColDef - The default column definition settings for the table, with sorting enabled
- * @types {Object}
- * @const
- * {@link https://www.ag-grid.com/react-data-grid/}
- */
 export const MyPayments = () => {
-  const [myPaymentsData, setMyPaymentsData] = useState<myPaymentsType[]>([])
+  const [myPaymentsData, setMyPaymentsData] = useState<any[]>([])
+  const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
 
-  const { data, isSuccess } = useGetMyPayments()
+  const [sorting, setSorting] = useState<SortingState>([])
 
-  const gridRef = useRef<any>()
+  const sort = sorting.map(({ id }) => `${id}`)
+  const dir = sorting.map(({ desc }) => `${desc ? 'DESC' : 'ASC'}`)
+  const sortBy = sort.length > 0 ? sort[0] : ''
+  const sortDirection = dir.length > 0 ? dir[0] : ''
 
-  const onPageSizeChanged = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-    const value = Number(e.currentTarget.value)
+  const fetchDataOptions = {
+    pageNumber: pageIndex,
+    pageSize: pageSize,
+    sortBy: sortBy,
+    sortDirection: sortDirection,
+  }
 
-    gridRef.current.api.paginationSetPageSize(value)
-  }, [])
+  // {
+  //   pageNumber:
+  //   sortDrection asd desc
+  //   pageSize
+  //   sortBy id
+  // }
+  //SortBy = asc | desc
+  // sortDirection = id
+  // console.log(fetchDataOptions)
 
-  const defaultColDef = useMemo(
+  // sorting.map(s => `${s.id}:${s.desc ? 'DESC' : 'ASC'}`).join(','),
+  // const dataQuery = useQuery(
+  //     ['data', fetchDataOptions],
+  //     () => fetchData(fetchDataOptions),
+  //     { keepPreviousData: true }
+  // )
+
+  const pagination = useMemo(
     () => ({
-      sortable: true,
+      pageIndex,
+      pageSize,
     }),
-    []
+    [pageIndex, pageSize]
   )
 
-  setMyPaymentsDataEffect(data, isSuccess, setMyPaymentsData)
+  const { data, isSuccess, isLoading } = useGetMyPayments()
+
+  setMyPaymentsDataEffect(data, isSuccess, isLoading, setMyPaymentsData)
+
+  const columns: ColumnDef<myPaymentsType>[] = useMemo(
+    () => [
+      {
+        accessor: 'dateOfPayment',
+        header: 'Date of Payment',
+        cell: (params: any) =>
+          isLoading || !isSuccess ? <SkeletonMyPayments /> : dateChangesFormat(params.getValue()),
+        accessorKey: 'dateOfPayment',
+      },
+      {
+        accessor: 'endDateOfSubscription',
+        header: 'End date of subscription',
+        cell: (params: any) =>
+          isLoading || !isSuccess ? <SkeletonMyPayments /> : dateChangesFormat(params.getValue()),
+        accessorKey: 'endDateOfSubscription',
+      },
+      {
+        accessor: 'price',
+        header: 'Price',
+        cell: (params: any) =>
+          isLoading || !isSuccess ? <SkeletonMyPayments /> : '$' + params.getValue(),
+        accessorKey: 'price',
+      },
+      {
+        accessor: 'subscriptionType',
+        header: 'Subscription Type',
+        cell: (params: any) =>
+          isLoading || !isSuccess ? (
+            <SkeletonMyPayments />
+          ) : (
+            capitalizeFirstLetter(params.getValue())
+          ),
+        accessorKey: 'subscriptionType',
+      },
+      {
+        accessor: 'paymentType',
+        header: 'Payment Type',
+        cell: (params: any) =>
+          isLoading || !isSuccess ? (
+            <SkeletonMyPayments />
+          ) : (
+            capitalizeFirstLetter(params.getValue())
+          ),
+        accessorKey: 'paymentType',
+      },
+    ],
+    [isSuccess, isLoading]
+  )
+  const tableProps = useReactTable({
+    data: myPaymentsData,
+    columns: columns,
+    state: {
+      pagination,
+      sorting,
+    },
+    // manualSorting: true,
+    onSortingChange: setSorting,
+    onPaginationChange: setPagination,
+    // Pipeline
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    debugTable: true,
+    getSortedRowModel: getSortedRowModel(),
+  })
 
   return (
-    <div className={`ag-theme-alpine-dark ${s.myPayments} `} style={{ height: 500, width: 972 }}>
-      <AgGridReact
-        ref={gridRef}
-        animateRows={true}
-        rowSelection={'multiple'}
-        rowData={myPaymentsData}
-        columnDefs={columnDefs}
-        defaultColDef={defaultColDef}
-        pagination={true}
-        paginationPageSize={8}
-        suppressHorizontalScroll={true}
-        suppressPropertyNamesCheck={true}
-      />
-      <select
-        className={s.optionsBlock}
-        onChange={(e: ChangeEvent<HTMLSelectElement>) => onPageSizeChanged(e)}
-      >
-        <option value={'25'}>25</option>
-        <option value={'50'}>50</option>
-        <option value={'75'}>75</option>
-        <option value={'100'}>100</option>
-      </select>
-    </div>
+    <>
+      <div className=" text-accent-500 p-2 block max-w-full ">
+        <div className={`max-w-[972px]`}>
+          <table>
+            <thead
+              className={
+                'h-12 bg-dark-500 border-2 border-dark-500 border-r-2 text-light-100 font-semibold text-sm'
+              }
+            >
+              {tableProps.getHeaderGroups().map((headerGroup, key) => (
+                <tr key={key}>
+                  {headerGroup.headers.map(header => (
+                    <th key={header.id} colSpan={header.colSpan}>
+                      {header.isPlaceholder ? null : (
+                        <div
+                          {...{
+                            className: header.column.getCanSort()
+                              ? 'cursor-pointer select-none'
+                              : '',
+                            onClick: header.column.getToggleSortingHandler(),
+                          }}
+                        >
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                          {{
+                            asc: ' 🔼',
+                            desc: ' 🔽',
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </div>
+                      )}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody>
+              {tableProps.getRowModel().rows.map(row => {
+                return (
+                  <tr
+                    className={'border-[1px] border-dark-500 text-light-100 font-normal text-sm'}
+                    key={row.id}
+                  >
+                    {row.getVisibleCells().map(cell => {
+                      return (
+                        <td
+                          className={'pb-3 pt-3 text-center'}
+                          key={cell.id}
+                          style={{ width: cell.column.getSize() }}
+                        >
+                          <div>{flexRender(cell.column.columnDef.cell, cell.getContext())}</div>
+                        </td>
+                      )
+                    })}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+          <div className="h-2" />
+          <div className="pt-2 flex items-center gap-2 text-light-100 font-normal text-sm">
+            <button
+              className="border rounded p-1"
+              onClick={() => tableProps.setPageIndex(0)}
+              disabled={!tableProps.getCanPreviousPage()}
+            >
+              {'<<'}
+            </button>
+            <button
+              className="border rounded p-1"
+              onClick={() => tableProps.previousPage()}
+              disabled={!tableProps.getCanPreviousPage()}
+            >
+              {'<'}
+            </button>
+            <button
+              className="border rounded p-1"
+              onClick={() => tableProps.nextPage()}
+              disabled={!tableProps.getCanNextPage()}
+            >
+              {'>'}
+            </button>
+            <button
+              className="border rounded p-1"
+              onClick={() => tableProps.setPageIndex(tableProps.getPageCount() - 1)}
+              disabled={!tableProps.getCanNextPage()}
+            >
+              {'>>'}
+            </button>
+            <span className="flex items-center gap-1">
+              <div>Page</div>
+              <strong>
+                {tableProps.getState().pagination.pageIndex + 1} of {tableProps.getPageCount()}
+              </strong>
+            </span>
+            <span className="flex items-center gap-1">
+              | Go to page:
+              <input
+                type="number"
+                defaultValue={tableProps.getState().pagination.pageIndex + 1}
+                onChange={e => {
+                  const page = e.target.value ? Number(e.target.value) - 1 : 0
+
+                  tableProps.setPageIndex(page)
+                }}
+                className="border p-1 rounded w-16 bg-dark-500 text-light-100 text-sm font-normal"
+              />
+            </span>
+            <select
+              className={'bg-dark-500 text-light-100 text-sm font-normal'}
+              value={tableProps.getState().pagination.pageSize}
+              onChange={e => {
+                tableProps.setPageSize(Number(e.target.value))
+              }}
+            >
+              {[10, 20, 30, 40, 50].map(pageSize => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
+                </option>
+              ))}
+            </select>
+            {/*{dataQuery.isFetching ? 'Loading...' : null}*/}
+          </div>
+          <div>{tableProps.getRowModel().rows.length} Rows</div>
+          {/*<div>*/}
+          {/*  <button onClick={() => rerender()}>Force Rerender</button>*/}
+          {/*</div>*/}
+          {/*<pre>{JSON.stringify(pagination, null, 2)}</pre>*/}
+        </div>
+      </div>
+    </>
   )
 }

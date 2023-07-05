@@ -24,7 +24,6 @@ export const PhotoUploader = ({ isModalOpen, onClose, setModal }: PropsType) => 
     const { photoArray, description } = await getDraftPost()
 
     await setImageSelector(photoArray)
-    debugger
     await setDescription(description)
     setModal('add-full-post')
   }

@@ -12,10 +12,12 @@ export const PaymentConfirmationModals = () => {
 
   const onErrorClose = () => {
     setIisErrorModalOpen(false)
+    replace(pathname)
   }
 
   const onSuccessClose = () => {
     setIsSuccessModalOpen(false)
+    replace(pathname)
   }
 
   return (

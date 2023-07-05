@@ -31,7 +31,9 @@ export const CreatePost = () => {
         }}
       >
         <Image src={modalOpen ? plus : plusOutline} alt={'Create'} height={24} width={24} />
-        <div className={clsx('cursor-pointer', modalOpen && 'text-accent-500')}>Create</div>
+        <div className={clsx('cursor-pointer', modalOpen && 'text-accent-500', 'lg:hidden')}>
+          Create
+        </div>
       </Link>
       {query.create && (
         <ModalManagerPost onClose={onCloseClick} isModalOpen={modalOpen} setModal={setModal} />
