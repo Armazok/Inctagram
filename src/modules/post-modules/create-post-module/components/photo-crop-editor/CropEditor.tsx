@@ -109,6 +109,7 @@ export const CropEditor = ({ setModal, isModalOpen, onClose }: PropsType) => {
       )
 
       setImageSelector(updatedImages)
+      console.log('updatedImages', updatedImages)
       setModal('filters-editor')
     } catch (error) {
       console.error('Error updating images:', error)

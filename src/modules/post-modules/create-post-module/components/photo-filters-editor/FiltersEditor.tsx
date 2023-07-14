@@ -45,6 +45,7 @@ export const FiltersEditor = ({ isModalOpen, setModal }: PropsType) => {
       )
 
       setImageSelector(updatedImages)
+      console.log('updatedImages', updatedImages)
     } catch (error) {
       console.error('Error updating images:', error)
     }
