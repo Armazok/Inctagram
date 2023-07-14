@@ -1,79 +1,52 @@
 import React, { useEffect, useState } from 'react'
 
-import { countData } from '@/common/utils/indexedDb/countData'
+import { useRouter } from 'next/router'
+
 import { ModalWithContent } from '@/components/modals'
-import {
-  useStoreAddPostModal,
-  useStoreCropEditorModal,
-  useStoreWithContentModal,
-} from '@/components/modals/store'
-import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
-import { getItemFromDatabase } from '@/modules/post-modules/create-post-module/utils/getImageFromDatabase'
+import { modalType } from '@/modules/post-modules/create-post-module'
+import { getDraftPost } from '@/modules/post-modules/create-post-module/indexedDB/getDraftPost'
+import { indexedDbPostDraft } from '@/modules/post-modules/create-post-module/indexedDB/indexedDbPostDraft.repository'
 import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
-import { usePostStore } from '@/store'
+import { useImageSelector } from '@/store/storeSelectorPhoto'
 import { GlobalButton } from '@/ui'
 
-type PropsType = {
-  setSelectedPhoto: (photo: string | File | null) => void
-}
-export const PhotoUploader = ({ setSelectedPhoto }: PropsType) => {
+type PropsType = modalType
+export const PhotoUploader = ({ isModalOpen, onClose, setModal }: PropsType) => {
   const [imageDbCount, setImageDbCount] = useState(0)
 
-  const modalWithContent = useStoreWithContentModal()
-  const useStoreAddFullPostModal = useStoreAddPostModal()
-  const cropEditorModal = useStoreCropEditorModal()
-  const { setPhotoFromDB, clearPostPhotos, setUploadId } = usePostStore()
+  const { replace, pathname } = useRouter()
 
-  const onSetSelectedPhotoClick = (file: any) => {
-    setSelectedPhoto(file)
-    setUploadId()
-  }
-  const onSuccessOpenDraft = async (data: any) => {
-    let filteredPhoto = URL.createObjectURL(data.filteredPhoto)
-    let croppedPhoto = URL.createObjectURL(data.croppedPhoto)
-    const { uploadId, description, cropSize } = data
+  const { setImageSelector, setDescription } = useImageSelector()
 
-    await setPhotoFromDB(uploadId, croppedPhoto, filteredPhoto, description, cropSize)
-    useStoreAddFullPostModal.setIsModalOpen(true)
-  }
   const onOpenDraftClick = async () => {
-    clearPostPhotos()
+    await setImageSelector([])
+    //@ts-ignore
+    const { photoArray, description } = await getDraftPost()
 
-    await getItemFromDatabase({
-      onSuccess: onSuccessOpenDraft,
-      keyPath: IMAGES.KEY_PATH,
-      storeName: IMAGES.STORE_NAME,
-      dbName: IMAGES.DB_NAME,
-    })
-    modalWithContent.setIsModalOpen(false)
+    await setImageSelector(photoArray)
+    await setDescription(description)
+    setModal('add-full-post')
   }
 
   const onCloseClick = () => {
-    modalWithContent.setIsModalOpen(false)
+    onClose()
+    replace(pathname)
   }
 
   const checkCountDB = async () => {
-    const count = await countData(IMAGES.DB_NAME, IMAGES.STORE_NAME)
+    const count = await indexedDbPostDraft.checkCountDraftPost()
 
     setImageDbCount(count)
   }
 
   useEffect(() => {
     checkCountDB()
-  }, [modalWithContent.isModalOpen])
+  }, [isModalOpen])
 
   return (
-    <ModalWithContent
-      isOpen={modalWithContent.isModalOpen}
-      onClose={onCloseClick}
-      title={'Add photo'}
-    >
+    <ModalWithContent isOpen={isModalOpen} onClose={onCloseClick} title={'Add photo'}>
       <>
-        <PhotoSelector
-          cropEditorModule={cropEditorModal.setIsModalOpen}
-          modalWithContent={modalWithContent.setIsModalOpen}
-          setSelectedPhoto={onSetSelectedPhotoClick}
-        />
+        <PhotoSelector isModalOpen={isModalOpen} setModal={setModal} maxImageSize={5} />
         {imageDbCount > 0 && (
           <GlobalButton type={'button'} callback={onOpenDraftClick}>
             Open draft

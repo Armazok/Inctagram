@@ -6,16 +6,30 @@ import { PhotoSelector, ProfileAvatarEditor } from '@/modules/profile-modules/av
 import { DeleteAvatarButton } from '@/modules/profile-modules/avatar-module/components/avatar-delete-button/DeleteButton'
 import { useDeleteAvatar } from '@/modules/profile-modules/avatar-module/hooks/useDeleteAvatar'
 import { useUploadAvatar } from '@/modules/profile-modules/avatar-module/hooks/useUploadAvatar'
+// eslint-disable-next-line import/namespace
+import { IPhoto, useImageSelector } from '@/store/storeSelectorPhoto'
 import { Avatar, GlobalButton, Preloader } from '@/ui'
 
 type PropsType = {
   avatarUrl?: string
 }
 export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
-  const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
-  const [avatar, setAvatar] = useState(avatarUrl)
-
   const UploadAvatarBlockModal = useStoreAvatarBlockModal()
+  const [avatar, setAvatar] = useState(avatarUrl)
+  const { imagesSelector, setImageSelector } = useImageSelector()
+
+  const [selectedPhoto, setSelectedPhoto] = useState<string | File | null>('')
+
+  const handleAddPhoto = (photos: IPhoto[]) => {
+    const uniquePhotos = photos.filter(
+      photo => !imagesSelector.some(item => item.url === photo.url)
+    )
+
+    if (uniquePhotos.length > 0) {
+      setSelectedPhoto(uniquePhotos[0].file)
+      setImageSelector([uniquePhotos[0]])
+    }
+  }
 
   const onDeleteSuccess = () => {
     setAvatar('')
@@ -89,7 +103,7 @@ export const UploadAvatarBlock = ({ avatarUrl = '' }: PropsType) => {
               disabled={isLoadingUploadAvatar}
             />
           ) : (
-            <PhotoSelector setSelectedPhoto={setSelectedPhoto} />
+            <PhotoSelector onAdd={handleAddPhoto} />
           )}
         </>
       </ModalWithContent>

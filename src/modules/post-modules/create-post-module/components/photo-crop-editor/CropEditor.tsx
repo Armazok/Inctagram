@@ -1,105 +1,179 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback } from 'react'
 
-import Cropper, { Area, Point } from 'react-easy-crop'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+
+import { Rect } from '@popperjs/core'
+import ImagePlaceholder from 'next/image'
+import { Point } from 'react-easy-crop'
+import Slider from 'react-slick'
 
 import { CreatePostModal } from './../create-post-modal/CreatePostModal'
-import { CropPopup } from './crop-popup'
-import getCroppedImg from './utils/canvasUtils'
-import { ZoomPopup } from './zoom-popup'
 
-import { usePostStore } from '@/store'
+import placeholder from '@/assets/images/img-placeholder.png'
+import { modalType } from '@/modules/post-modules/create-post-module'
+import { Crop } from '@/modules/post-modules/create-post-module/components/crop'
+import { CropPopup } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/crop-popup'
+import getCroppedImg from '@/modules/post-modules/create-post-module/components/photo-crop-editor/utils/canvasUtils'
+import { ZoomPopup } from '@/modules/post-modules/create-post-module/components/photo-crop-editor/zoom-popup'
+import { PhotoSelector } from '@/modules/profile-modules/avatar-module'
+import { IPhoto, useImageSelector } from '@/store/storeSelectorPhoto'
 
-type PropsType = {
-  image: string | File | null
-  isModalOpen: boolean
-  setSelectedPhoto: (photo: string | File | null) => void
-  filterEditorModule: (isModalOpen: boolean) => void
-  cropEditorModule: (isModalOpen: boolean) => void
-  onClose: () => void
-}
+type PropsType = modalType
 
-export const CropEditor = ({
-  image,
-  setSelectedPhoto,
-  isModalOpen,
-  filterEditorModule,
-  cropEditorModule,
-  onClose,
-}: PropsType) => {
-  const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
-  const [zoom, setZoom] = useState(1)
-  const [aspect, setAspect] = useState<number>(4 / 5)
-  const [imageUrl, setImageUrl] = useState<string>('')
+export const CropEditor = ({ setModal, isModalOpen, onClose }: PropsType) => {
+  const settings = {
+    customPaging: function (index: number) {
+      const photo = imagesSelector[index]
+      let imageUrl = ''
 
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>({
-    width: 0,
-    height: 0,
-    x: 0,
-    y: 0,
-  })
+      if (photo && photo.url) {
+        // @ts-ignore
+        imageUrl = photo.url
+      } else if (photo && photo.file) {
+        imageUrl = URL.createObjectURL(photo.file)
+      }
 
-  const [croppedImage, setCropImg] = useState<string>('')
-  const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
-    setCroppedAreaPixels(croppedAreaPixels)
-  }, [])
-
-  const { setCroppedPhoto, postPhotos } = usePostStore()
-  let uploadId = ''
-
-  if (postPhotos[0]) {
-    uploadId = postPhotos[0].uploadId
+      return (
+        <a>
+          <img src={String(imageUrl)} alt={photo?.name} />
+        </a>
+      )
+    },
+    dots: true,
+    swipe: false,
+    arrows: true,
+    dotsClass: 'slick-dots slick-thumb',
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   }
+  const handleAddPhoto = (photos: IPhoto[]) => {
+    const duplicatePhotos = photos.filter(photo =>
+      imagesSelector.some(item => item.url === photo.url)
+    )
 
-  const onNextClick = () => {
-    setCroppedPhoto(uploadId, croppedImage, {
-      width: croppedAreaPixels.width,
-      height: croppedAreaPixels.height,
-    })
-    cropEditorModule(false)
-    filterEditorModule(true)
-  }
+    if (duplicatePhotos.length === 0) {
+      const newImagesSelector = imagesSelector.concat(photos)
 
-  useEffect(() => {
-    if (croppedAreaPixels) {
-      getCroppedImg(imageUrl, croppedAreaPixels).then(croppedImage => {
-        setSelectedPhoto(String(croppedImage))
-        setCropImg(String(croppedImage))
-      })
+      setImageSelector(newImagesSelector)
     }
-  }, [croppedAreaPixels])
+  }
 
-  useEffect(() => {
-    const objectUrl = URL.createObjectURL(image as File)
-
-    setImageUrl(objectUrl)
+  const {
+    deleteImage,
+    imagesSelector,
+    setCropForImage,
+    setImageSelector,
+    setZoomForImage,
+    setAspectForImage,
+    setCroppedAreaPixelsForImage,
+  } = useImageSelector()
+  const onCropComplete = useCallback((id: string, croppedArea: Rect, croppedAreaPixels: Rect) => {
+    setCroppedAreaPixelsForImage(id, croppedArea, croppedAreaPixels)
   }, [])
+
+  function handleCropChange(id: string, location: Point) {
+    setCropForImage(id, location)
+  }
+  const handleZoomChange = (id: string, newZoom: number) => {
+    setZoomForImage(id, newZoom)
+  }
+
+  const onCloseClick = async () => {
+    setImageSelector([])
+    onClose()
+  }
+
+  const onNextClick = async () => {
+    try {
+      const updatedImages = await Promise.all(
+        imagesSelector.map(async image => {
+          const { croppedAreaPixels } = image.cropData || {}
+          const { url } = image
+
+          if (!url) {
+            console.error(`Image with id "${image.id}" does not have crop data`)
+
+            return image
+          }
+
+          const croppedImage = await getCroppedImg(url, croppedAreaPixels)
+
+          return {
+            ...image,
+            filteredUrl: croppedImage as string,
+          }
+        })
+      )
+
+      setImageSelector(updatedImages)
+      setModal('filters-editor')
+    } catch (error) {
+      console.error('Error updating images:', error)
+    }
+  }
+  const onBackClick = () => {
+    setModal('photo-uploader')
+  }
+
+  const onDeleteImage = (url: string | Blob) => {
+    deleteImage(url)
+  }
 
   return (
     <CreatePostModal
       showBackArrow={true}
-      variant={'Next'}
+      variant={imagesSelector.length === 0 ? undefined : 'Next'}
       isOpen={isModalOpen}
       title={'Cropping'}
-      onClose={onClose}
-      onBackClick={onClose}
+      onClose={onCloseClick}
+      onBackClick={onBackClick}
       onBtnClick={onNextClick}
     >
-      <div className={'relative h-[500px]'}>
-        <Cropper
-          image={imageUrl}
-          crop={crop}
-          zoom={zoom}
-          aspect={aspect}
-          onCropChange={setCrop}
-          onCropComplete={onCropComplete}
-          onZoomChange={setZoom}
-          zoomWithScroll={false}
-        />
-        <div className={'flex gap-3 absolute bottom-3 left-3'}>
-          <CropPopup setAspect={setAspect} />
-          <ZoomPopup zoom={zoom} setZoom={setZoom} />
+      {imagesSelector.length === 0 ? (
+        <div className={'flex flex-col pt-10 justify-center items-center'}>
+          {' '}
+          <ImagePlaceholder src={placeholder} alt={'placeholder'} width={300} height={300} />
         </div>
-      </div>
+      ) : (
+        <Slider {...settings}>
+          {imagesSelector.map((e, key) => {
+            return (
+              <div key={e.id} className="relative h-[500px]">
+                <Crop
+                  src={e}
+                  aspect={e.cropData?.aspect || 3 / 4}
+                  crop={e.cropData?.crop || { x: 0, y: 0 }}
+                  onCropChange={location => handleCropChange(e.id, location)}
+                  zoom={e.cropData?.zoom || 1}
+                  onZoomChange={zoom => handleZoomChange(e.id, zoom)}
+                  onCropComplete={(croppedArea, croppedAreaPixels) =>
+                    onCropComplete(e.id, croppedArea, croppedAreaPixels)
+                  }
+                />
+                <div className="absolute bottom-[3rem] left-[3rem] ">
+                  <ZoomPopup
+                    zoom={e.cropData?.zoom || 1}
+                    setZoom={zoom => handleZoomChange(e.id, zoom)}
+                  />
+                  <CropPopup setAspect={aspect => setAspectForImage(e.id, aspect)} />
+                  <button
+                    type={'submit'}
+                    onClick={() => onDeleteImage(e.name)}
+                    className={'h-6 w-6 bg-dark-500 pt-0.5'}
+                  >
+                    X
+                  </button>
+                </div>
+              </div>
+            )
+          })}
+        </Slider>
+      )}
+
+      <PhotoSelector onAdd={handleAddPhoto} showButton={false} placeholderShow={false} />
     </CreatePostModal>
   )
 }

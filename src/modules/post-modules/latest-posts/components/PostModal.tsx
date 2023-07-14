@@ -4,8 +4,8 @@ import Image from 'next/image'
 import { FaPen, FaTimes, FaTrash } from 'react-icons/fa'
 import Modal from 'react-modal'
 
-import { AllEditPost } from '@/modules/post-modules/create-post-module/components/description-edit/AllEditPost'
 import { DeletePost } from '@/modules/post-modules/edit-post-module/components/DeletePost'
+import { EditPost } from '@/modules/post-modules/edit-post-module/components/description-edit/AllEditPost'
 import { PostImagesSlider } from '@/modules/post-modules/latest-posts/components/PostImagesSlider'
 import { useGetPost } from '@/modules/post-modules/latest-posts/hooks/useGetPost'
 import { useGetProfile } from '@/modules/profile-modules/settings-edit-profile-module'
@@ -42,24 +42,34 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
     setIsEditModalOpen(true)
   }
 
+  const onRequestClose = () => {
+    setIsOpenDropdown(false)
+    onClose()
+  }
+
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={onClose}
+      onRequestClose={onRequestClose}
       ariaHideApp={false}
       overlayClassName="fixed w-full h-full top-0 left-0 bg-dark-900/60 z-[100]"
       className="absolute w-full h-full max-h-[564px] max-w-[972px] bg-dark-300 border-dark-100 border rounded-sm top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200] focus:outline-none"
     >
       {isEditModalOpen && (
-        <AllEditPost
-          location={false}
-          description={post!.description}
-          imageUrl={post!.images[0].versions.huge.url}
-          setOpenModal={setIsEditModalOpen}
-          isModalOpen={isEditModalOpen}
-          onCloseClick={() => setIsEditModalOpen(false)}
-        />
+        <>
+          {post!.images.map((e, index) => (
+            <EditPost
+              key={index}
+              description={post!.description}
+              imageUrl={e.versions.huge.url}
+              setOpenModal={setIsEditModalOpen}
+              isModalOpen={isEditModalOpen}
+              onCloseClick={() => setIsEditModalOpen(false)}
+            />
+          ))}
+        </>
       )}
+
       <button
         className="absolute -top-8 -right-8 text-base w-6 h-6 flex items-center justify-center text-white"
         onClick={() => onClose()}
@@ -104,11 +114,11 @@ export const PostModal: FC<Props> = ({ isOpen, onClose }) => {
             onPostModalClose={onClose}
           />
           <div className="px-6 py-3 flex items-center justify-between">
-            <div className="flex items-center">
+            <div className="flex">
               <Avatar
                 src={profileAvatar && profileAvatar}
-                width={43}
-                height={43}
+                width={36}
+                height={36}
                 alt={profileData.userName}
                 className={'mb-[5rem]'}
               />

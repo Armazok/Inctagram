@@ -14,6 +14,7 @@ interface Props {
   description: string
   totalImagesCount: number
   ownerId: number
+  showIconDelete?: boolean
 }
 
 export const PostImagesSlide: FC<Props> = ({
@@ -22,13 +23,12 @@ export const PostImagesSlide: FC<Props> = ({
   description,
   totalImagesCount,
   ownerId,
+  showIconDelete = false,
 }) => {
   const { mutate, isLoading } = useDeletePostImage(postId, image.uploadId)
   const { data: me } = useMeQuery()
 
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
-
-  const isCanDeleteImage = totalImagesCount > 1 && me?.data.userId === ownerId
 
   const onConfirmDelete = () => {
     mutate()
@@ -43,11 +43,18 @@ export const PostImagesSlide: FC<Props> = ({
     setIsConfirmOpen(false)
   }
 
+  const isCanDeleteImage = totalImagesCount > 1 && me?.data.userId === ownerId
+
   return (
     <>
-      <Image src={image.versions.huge.url} fill alt={description || ''} className="object-cover" />
+      <Image
+        src={image.versions.huge.url}
+        fill
+        alt={description || ''}
+        className="object-cover max-w-[480px]"
+      />
 
-      {isCanDeleteImage && (
+      {isCanDeleteImage && showIconDelete && (
         <button
           onClick={() => setIsConfirmOpen(true)}
           className="text-white absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-red-600 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"

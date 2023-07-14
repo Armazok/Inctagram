@@ -11,7 +11,7 @@ import {
   editAccountData,
   useGetProfile,
 } from '@/modules/profile-modules/settings-edit-profile-module'
-import { Preloader } from '@/ui'
+import { SkeletonEditSettingsProfile } from '@/ui'
 
 export const EditSettingProfile = () => {
   const client = useQueryClient()
@@ -41,14 +41,18 @@ export const EditSettingProfile = () => {
 
   const editProfileData = (data: SettingsSchemaType) => editeProfile?.(data)
 
-  if (isProfileLoading || isEditProfileLoading) return <Preloader />
-
   return (
     <SettingsAccountLayout>
-      <div className="sm:flex sm:justify-center">
-        <UploadAvatarBlock avatarUrl={profileAvatar} />
-      </div>
-      <AccountSettingForm onSubmit={editProfileData} initialProfileData={profileData} />
+      {isProfileLoading || isEditProfileLoading ? (
+        <SkeletonEditSettingsProfile />
+      ) : (
+        <>
+          <div className="sm:flex sm:justify-center">
+            <UploadAvatarBlock avatarUrl={profileAvatar} />
+          </div>
+          <AccountSettingForm onSubmit={editProfileData} initialProfileData={profileData} />
+        </>
+      )}
     </SettingsAccountLayout>
   )
 }

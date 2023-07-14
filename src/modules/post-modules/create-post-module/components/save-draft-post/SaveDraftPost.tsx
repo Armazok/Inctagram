@@ -1,48 +1,35 @@
 import React from 'react'
 
-import { clearDatabase } from '@/common/utils/indexedDb/clearDatabase'
 import { Confirm } from '@/components/modals'
-import { IMAGES } from '@/modules/post-modules/create-post-module/constants/db-image-names'
-import { setNewPostToIndexedDB } from '@/modules/post-modules/create-post-module/utils/setNewPostToIndexedDB'
-import { usePostStore } from '@/store'
+import { modalType } from '@/modules/post-modules/create-post-module'
+import { indexedDbPostDraft } from '@/modules/post-modules/create-post-module/indexedDB/indexedDbPostDraft.repository'
+import { saveDraftPost } from '@/modules/post-modules/create-post-module/indexedDB/saveDraftPost'
+import { useImageSelector } from '@/store/storeSelectorPhoto'
 
-type PropsType = {
-  isDraftModalOpen: boolean
-  setIsDraftModalOpen: (isDraftModalOpen: boolean) => void
-}
+type PropsType = modalType
 
-export const SaveDraftPost = ({ setIsDraftModalOpen, isDraftModalOpen }: PropsType) => {
-  const { postPhotos, clearPostPhotos, postDescription } = usePostStore()
-
-  const clearPreviousDraft = async () => {
-    await clearDatabase({
-      dbName: IMAGES.DB_NAME,
-      storeName: IMAGES.STORE_NAME,
-      keyPath: IMAGES.KEY_PATH,
-    })
-  }
+export const SaveDraftPost = ({ isModalOpen, onClose }: PropsType) => {
+  const { imagesSelector, description, setDescription } = useImageSelector()
 
   const onConfirmClick = async () => {
-    await clearPreviousDraft()
-    setNewPostToIndexedDB(postPhotos, postDescription)
-    clearPostPhotos()
-    setIsDraftModalOpen(false)
+    await saveDraftPost(imagesSelector, description)
+    onClose()
+    setDescription('')
   }
 
   const onDiscardClick = async () => {
-    clearPreviousDraft()
-    await postPhotos.forEach(photo => {
-      URL.revokeObjectURL(photo.croppedPhoto)
-      URL.revokeObjectURL(photo.filteredPhoto)
-    })
-    clearPostPhotos()
-    setIsDraftModalOpen(false)
+    // await postPhotos.forEach(photo => {
+    //   URL.revokeObjectURL(photo.croppedPhoto)
+    //   URL.revokeObjectURL(photo.filteredPhoto)
+    // })
+    await indexedDbPostDraft.clearPreviousDraft()
+    onClose()
   }
 
   return (
     <div>
       <Confirm
-        isOpen={isDraftModalOpen}
+        isOpen={isModalOpen}
         onConfirm={onConfirmClick}
         onClose={onDiscardClick}
         onDecline={onDiscardClick}

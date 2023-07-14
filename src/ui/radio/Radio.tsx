@@ -25,6 +25,7 @@ export const Radio: React.FC<RadioType> = ({
   return (
     <div>
       <input
+        disabled={disabled}
         className={s.customRadio}
         id={id}
         onChange={onChange}

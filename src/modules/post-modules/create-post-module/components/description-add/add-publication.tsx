@@ -1,19 +1,21 @@
 import React, { FC } from 'react'
 
-import { RightDescription } from '@/modules/post-modules/create-post-module/components/description-add/rightDescription'
+import { IPhoto } from '@/store/storeSelectorPhoto'
 
 type AddPublicationType = {
-  imageUrl: string
-  location: boolean
+  imageUrl: IPhoto
+  location?: boolean
   callback?: () => void
+  text?: string
+  setText?: (newText: string) => void
 }
 
-export const AddPublication: FC<AddPublicationType> = ({ imageUrl, location, callback }) => {
+export const AddPublication: FC<AddPublicationType> = ({ imageUrl }) => {
   return (
     <div className={'flex flex-wrap w-[972px] justify-between'}>
       <div className={'w-[436px]'}>
         <img
-          src={imageUrl}
+          src={String(imageUrl.finalUrl)}
           alt="photo"
           style={{
             width: '434px',
@@ -21,7 +23,6 @@ export const AddPublication: FC<AddPublicationType> = ({ imageUrl, location, cal
           id={'image-publication'}
         />
       </div>
-      <RightDescription location={location} callback={callback} />
     </div>
   )
 }

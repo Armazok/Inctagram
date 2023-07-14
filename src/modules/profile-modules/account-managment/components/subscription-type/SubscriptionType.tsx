@@ -1,47 +1,56 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-import {
-  accountAPI,
-  CostType,
-  SubscriptionPeriodType,
-} from '@/modules/profile-modules/account-managment/api/account-api'
+import { SubscriptionPeriodType } from '@/modules/profile-modules/account-managment/api/account-api'
 import { useGetCosts } from '@/modules/profile-modules/account-managment/hooks/useGetCosts'
 import { useSubscription } from '@/modules/profile-modules/account-managment/store/subscriptionStore'
-import { useGetMyPayments } from '@/modules/profile-modules/my-payments/components/MyPayments'
-import login from '@/pages/auth/login'
 import { Radio } from '@/ui/radio/Radio'
 
 export const SubscriptionType = () => {
   const { setNewSubscription } = useSubscription()
-  const costs = [
-    { amount: 10, typeDescription: 'MONTHLY' },
-    { amount: 60, typeDescription: 'SEMI_ANNUALLY' },
-    { amount: 100, typeDescription: 'YEARLY' },
-  ]
+
+  const { data, isSuccess } = useGetCosts()
 
   const [subscriptionTypeValue, setSubscriptionTypeValue] = useState('')
 
-  const onSubscriptionTypeChange = (option: any) => {
-    setSubscriptionTypeValue(option)
-    let amount = Number(option.split(' ')[0])
-    let typeDescription = option.split(' ')[1].toUpperCase()
+  const getFinalPriceDescription = (amount: number, typeDescription: SubscriptionPeriodType) => {
+    return `${amount}$ ${typeDescription.replace('_', '-').toLowerCase()}`
+  }
 
+  const onSubscriptionTypeChange = (
+    amount: number,
+    typeDescription: SubscriptionPeriodType,
+    option: any
+  ) => {
+    setSubscriptionTypeValue(option)
     setNewSubscription(typeDescription, amount)
   }
 
+  useEffect(() => {
+    if (data) {
+      let { amount, typeDescription } = data.data.data[0]
+
+      setSubscriptionTypeValue(getFinalPriceDescription(amount, typeDescription))
+      setNewSubscription(typeDescription, amount)
+    }
+  }, [isSuccess])
+
   return (
     <div>
-      <h3>Your subscription costs:</h3>
-      <div className={'bg-dark-300 border-1 border-b-dark-300 mt-[6px] py-[14px] px-[26px]'}>
-        {costs
-          ? costs.map(({ amount, typeDescription }: any): any => {
+      <h3 className={'text-blue-50'}>Choose subscription:</h3>
+      <div
+        className={'bg-dark-300 border-1 border-b-dark-300 mt-[6px] py-[14px] px-[26px] h-[115px]'}
+      >
+        {isSuccess && data && data.data.data
+          ? data.data.data.map(({ amount, typeDescription }: any): any => {
+              let value = getFinalPriceDescription(amount, typeDescription)
+
               return (
                 <Radio
                   key={amount}
-                  callBack={onSubscriptionTypeChange}
+                  callBack={() => onSubscriptionTypeChange(amount, typeDescription, value)}
                   name="subscriptionType"
-                  value={`${amount} ${typeDescription.toLowerCase()}`}
-                  checked={`${amount} ${typeDescription.toLowerCase()}` === subscriptionTypeValue}
+                  value={value}
+                  checked={value === subscriptionTypeValue}
                   id={typeDescription}
                 />
               )

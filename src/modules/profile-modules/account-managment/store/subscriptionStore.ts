@@ -11,7 +11,6 @@ interface PostStore {
   subscription: SubscriptionType
   setPaymentType: (payment: PaymentType) => void
   setNewSubscription: (subscriptionType: SubscriptionPeriodType, price: number) => void
-  setAutoRenewal: (autoRenewal: boolean) => void
 }
 
 export const useSubscription = create<PostStore>()(
@@ -20,7 +19,6 @@ export const useSubscription = create<PostStore>()(
       typeSubscription: 'MONTHLY',
       paymentType: 'STRIPE',
       amount: 0,
-      autoRenew: true,
     } as SubscriptionType,
     setPaymentType(payment: PaymentType) {
       set((state): any => {
@@ -31,11 +29,6 @@ export const useSubscription = create<PostStore>()(
       set((state): any => {
         state.subscription.typeSubscription = subscriptionType
         state.subscription.amount = price
-      })
-    },
-    setAutoRenewal(autoRenewal: boolean) {
-      set((state): any => {
-        state.subscription.autoRenew = autoRenewal
       })
     },
   }))

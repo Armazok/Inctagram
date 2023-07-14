@@ -11,6 +11,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify'
+import 'react-advanced-cropper/dist/style.css'
 
 import client from '@/apolloClient'
 import '../../src/styles/nprogress.css'

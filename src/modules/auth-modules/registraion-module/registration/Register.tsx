@@ -4,8 +4,11 @@ import Link from 'next/link'
 
 import { PATH_ROUTE } from '@/common/constants/PATH_ROUTE'
 import { FormLayout } from '@/components/FormLayout'
-import { RegistrationForm } from '@/modules/auth-modules/registraion-module'
-import { GoogleFacebook, NameTitle } from '@/ui'
+import {
+  GoogleGithubRegistration,
+  RegistrationForm,
+} from '@/modules/auth-modules/registraion-module'
+import { NameTitle } from '@/ui'
 
 export const Register = () => {
   return (
@@ -14,7 +17,7 @@ export const Register = () => {
         nameTitle="Sing Up"
         className="font-bold text-light-100 text-[20px] leading-[36px] mb-[12px]"
       />
-      <GoogleFacebook />
+      <GoogleGithubRegistration />
       <RegistrationForm />
       <Link
         href={PATH_ROUTE.RESEND_FORM}
