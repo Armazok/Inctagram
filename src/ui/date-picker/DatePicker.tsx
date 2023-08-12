@@ -119,10 +119,12 @@ export const DateCalendar: FC<DatePickerProps> = ({
           changeMonth,
           decreaseMonth,
           increaseMonth,
+          monthDate,
           ...rest
         }) => (
           <CustomHeader
             date={date}
+            monthDate={monthDate}
             decreaseMonth={decreaseMonth}
             increaseMonth={increaseMonth}
             changeYear={changeYear}

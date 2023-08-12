@@ -1,0 +1,16 @@
+.DropDownMenuTrigger {
+  @apply flex items-center bg-dark-500 border border-dark-100 px-3 text-sm h-9 w-[168px] outline-none;
+}
+
+.DropDownMenuContent {
+  @apply bg-dark-500 border z-10 border-dark-100 px-3 text-sm text-white select-none;
+  width: var(--radix-dropdown-menu-trigger-width);
+}
+
+.DropDownMenuItem {
+  @apply flex items-center my-3 cursor-pointer hover:text-accent-500 hover:outline-none transition-colors;
+}
+
+.DropDownMenuFlag {
+  @apply h-5 w-5 flex items-center justify-center mr-3;
+}
