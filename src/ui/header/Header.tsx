@@ -2,6 +2,8 @@ import React from 'react'
 
 import { useRouter } from 'next/router'
 
+import { Container } from '@/components/container'
+import { LanguageSwitcher } from '@/components/translation'
 import { useMeQuery } from '@/services/hookMe'
 
 export const Header = () => {
@@ -11,15 +13,17 @@ export const Header = () => {
   const route = isSuccess ? '/profile' : '/auth/login'
 
   return (
-    <header className="flex items-center w-full h-16 text-light-100 bg-bgColor border-b-[1px] border-b-bgLogBorder">
-      <div className="px-[60px] flex justify-between w-full">
-        <span
-          className="cursor-pointer"
-          onClick={() => replace(route, undefined, { shallow: true })}
-        >
-          Inctagram
-        </span>
-      </div>
+    <header className="h-[60px] flex items-center text-white bg-dark-700 border-b border-dark-100">
+      <Container>
+        <div className="flex items-center justify-between">
+          <div>
+            <span className="block" onClick={() => replace(route, undefined, { shallow: true })}>
+              Inctagram
+            </span>
+          </div>
+          <LanguageSwitcher />
+        </div>
+      </Container>
     </header>
   )
 }

@@ -5,23 +5,26 @@ import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { className } from 'postcss-selector-parser'
 
-import bookmarkOutline from '../../assets/icons/bookmark-outline.svg'
-import bookmark from '../../assets/icons/bookmark.svg'
-import homeOutline from '../../assets/icons/home-outline.svg'
-import home from '../../assets/icons/home.svg'
-import personOutline from '../../assets/icons/person-outline.svg'
-import person from '../../assets/icons/person.svg'
-import trendingOutline from '../../assets/icons/trending-up-outline.svg'
-import trending from '../../assets/icons/trending-up.svg'
-
+import bookmarkOutline from '@/assets/icons/sidebar/bookmark-outline.svg'
+import bookmark from '@/assets/icons/sidebar/bookmark.svg'
+import homeOutline from '@/assets/icons/sidebar/home-outline.svg'
+import home from '@/assets/icons/sidebar/home.svg'
+import messengerOutline from '@/assets/icons/sidebar/message-circle-outline.svg'
+import messenger from '@/assets/icons/sidebar/message-circle.svg'
+import personOutline from '@/assets/icons/sidebar/person-outline.svg'
+import person from '@/assets/icons/sidebar/person.svg'
+import searchOutline from '@/assets/icons/sidebar/search-outline.svg'
+import search from '@/assets/icons/sidebar/search.svg'
+import trendingOutline from '@/assets/icons/sidebar/trending-up-outline.svg'
+import trending from '@/assets/icons/sidebar/trending-up.svg'
+import { useTranslation } from '@/components/translation'
 import { LogoutButton } from '@/modules/auth-modules/login-module/logout'
 import { CreatePost } from '@/modules/post-modules/create-post-module'
 
 export const Sidebar: FC = () => {
   const { pathname } = useRouter()
-
+  const { t } = useTranslation()
   // CSS Styles
   const className = {
     home: clsx(pathname === '/' ? 'text-accent-500' : '', 'flex gap-[15px] items-center'),
@@ -29,6 +32,11 @@ export const Sidebar: FC = () => {
       pathname === '/profile' ? 'text-accent-500' : '',
       'flex gap-[15px] items-center'
     ),
+    messenger: clsx(
+      pathname === '/messenger' ? 'text-accent-500' : '',
+      'flex gap-[15px] items-center'
+    ),
+    search: clsx(pathname === '/search' ? 'text-accent-500' : '', 'flex gap-[15px] items-center'),
     statistics: clsx(
       pathname === '/statistics' ? 'text-accent-500' : '',
       'flex gap-[15px] items-center mt-14'
@@ -48,11 +56,11 @@ export const Sidebar: FC = () => {
             <Link href={'/'} className={className.home}>
               <Image
                 src={pathname === '/' ? home : homeOutline}
-                alt={'Home'}
+                alt={t.navBar.home}
                 height={24}
                 width={24}
               />
-              <span className={className.hidden}>Home</span>
+              <span className={className.hidden}>{t.navBar.home}</span>
             </Link>
           </li>
           <li>
@@ -62,33 +70,55 @@ export const Sidebar: FC = () => {
             <Link href={'/profile'} className={className.myProfile}>
               <Image
                 src={pathname === '/profile' ? person : personOutline}
-                alt={'Profile'}
+                alt={t.navBar.myProfile}
                 height={24}
                 width={24}
               />
-              <span className={className.hidden}>My profile</span>
+              <span className={className.hidden}>{t.navBar.myProfile}</span>
+            </Link>
+          </li>
+          <li className="">
+            <Link href={'/messenger'} className={className.messenger}>
+              <Image
+                src={pathname === '/messenger' ? messenger : messengerOutline}
+                alt={t.navBar.messenger}
+                height={24}
+                width={24}
+              />
+              <span className={className.hidden}>{t.navBar.messenger}</span>
+            </Link>
+          </li>
+          <li className="">
+            <Link href={'/search'} className={className.search}>
+              <Image
+                src={pathname === '/search' ? search : searchOutline}
+                alt={t.navBar.search}
+                height={24}
+                width={24}
+              />
+              <span className={className.hidden}>{t.navBar.search}</span>
             </Link>
           </li>
           <li className="">
             <Link href={'/statistics'} className={className.statistics}>
               <Image
                 src={pathname === '/statistics' ? trending : trendingOutline}
-                alt={'Statistic'}
+                alt={t.navBar.statistics}
                 height={24}
                 width={24}
               />
-              <span className={className.hidden}>Statistics</span>
+              <span className={className.hidden}>{t.navBar.statistics}</span>
             </Link>
           </li>
           <li className="">
             <Link href={'/favorites'} className={className.favorites}>
               <Image
                 src={pathname === '/favorites' ? bookmark : bookmarkOutline}
-                alt={'Favorites'}
+                alt={t.navBar.favorites}
                 height={24}
                 width={24}
               />
-              <span className={className.hidden}>Favorites</span>
+              <span className={className.hidden}>{t.navBar.favorites}</span>
             </Link>
           </li>
         </ul>

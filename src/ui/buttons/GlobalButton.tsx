@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 
-type ButtonVariant = 'default' | 'white' | 'transparent' | 'black'
+type ButtonVariant = 'default' | 'grey' | 'transparent' | 'black' | 'white'
 
 interface PropsType {
   callback?: () => void
@@ -16,6 +16,7 @@ const variantClassName: variantClassNameType = {
   black: 'black',
   default: 'default',
   transparent: 'transparent',
+  grey: 'grey',
   white: 'white',
 }
 
