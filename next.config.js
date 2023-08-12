@@ -5,6 +5,10 @@ const nextConfig = withTM({
   images: {
     unoptimized: true,
   },
+  i18n: {
+    locales: ['en', 'ru', 'uk'],
+    defaultLocale: 'en',
+  },
 })
 
 module.exports = nextConfig
