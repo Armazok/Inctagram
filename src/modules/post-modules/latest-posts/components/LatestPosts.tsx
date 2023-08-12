@@ -4,7 +4,6 @@ import { useInView } from 'react-intersection-observer'
 
 import { useStoreIsLoadingPublication } from '@/modules/post-modules/create-post-module'
 import { LatestPost } from '@/modules/post-modules/latest-posts/components/LatestPost'
-import { LatestPostsLoader } from '@/modules/post-modules/latest-posts/components/LatestPostsLoader'
 import { PostModal } from '@/modules/post-modules/latest-posts/components/PostModal'
 import { useGetLatestPosts } from '@/modules/post-modules/latest-posts/hooks/useGetLatestPosts'
 import { useMeQuery } from '@/services/hookMe'
@@ -26,7 +25,6 @@ export const LatestPosts: FC = () => {
       return <SkeletonPost key={i} />
     })
   }
-
   const onClose = () => {
     setIsOpenPostModal(false)
   }

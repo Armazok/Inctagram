@@ -1,9 +1,10 @@
 import { getGlobalLayout } from '@/components/layout'
+import { SearchUsers } from '@/modules/search-modules'
 
 const Search = () => {
   return (
-    <div className="text-light-100 w-full pt-3 font-normal leading-6 flex justify-center">
-      <span>There is a development on search</span>
+    <div className="w-full">
+      <SearchUsers />
     </div>
   )
 }

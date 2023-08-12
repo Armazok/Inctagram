@@ -21,7 +21,7 @@ export const ProfilePage = () => {
 
   return (
     <div className="flex w-full">
-      <main className="pl-6 py-9 pr-16 grow">
+      <main className="pr-16 grow">
         <div className="flex text-light-100 gap-9">
           <Avatar src={avatar} alt={'photo'} />
           <div className="flex w-full flex-col gap-5">

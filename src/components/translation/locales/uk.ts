@@ -43,4 +43,5 @@ export const uk: LocaleType = {
       devices: {},
     },
   },
+  search: { searchTitle: 'Пошук', searchInput: 'Пошук', recentRequests: 'Останні запити' },
 }
