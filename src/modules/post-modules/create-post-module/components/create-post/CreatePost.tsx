@@ -8,13 +8,14 @@ import { useRouter } from 'next/router'
 
 import plusOutline from '@/assets/icons/plus-square-outline.svg'
 import plus from '@/assets/icons/plus-square.svg'
+import { useTranslation } from '@/components/translation'
 import { ModalManagerPost, stateModalType } from '@/modules/post-modules/create-post-module'
 import { createPostEffect } from '@/modules/post-modules/create-post-module/components/create-post/custom/custom'
 
 export const CreatePost = () => {
   const [modalOpen, setModal] = useState<stateModalType>('')
   const { query, replace, pathname } = useRouter()
-
+  const { t } = useTranslation()
   const onCloseClick = () => {
     setModal('')
     replace(pathname)
@@ -30,9 +31,9 @@ export const CreatePost = () => {
           query: { create: true },
         }}
       >
-        <Image src={modalOpen ? plus : plusOutline} alt={'Create'} height={24} width={24} />
+        <Image src={modalOpen ? plus : plusOutline} alt={t.navBar.create} height={24} width={24} />
         <div className={clsx('cursor-pointer', modalOpen && 'text-accent-500', 'lg:hidden')}>
-          Create
+          {t.navBar.create}
         </div>
       </Link>
       {query.create && (

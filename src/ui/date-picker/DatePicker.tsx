@@ -134,7 +134,6 @@ export const DateCalendar: FC<DatePickerProps> = ({
             {...rest}
           />
         )}
-        monthsShown={2}
         onChange={(dates: [Date | null, Date | null] | Date | null) => DatePickerHandler(dates)}
         customInput={
           <CustomInput

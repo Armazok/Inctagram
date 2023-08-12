@@ -20,8 +20,8 @@ interface Language {
 
 const languages: Language[] = [
   { slug: 'en', name: 'English', flag: en },
-  { slug: 'ru', name: 'Русский', flag: ru },
   { slug: 'uk', name: 'Українська', flag: ukraine },
+  { slug: 'ru', name: 'Русский', flag: ru },
 ]
 
 export const LanguageSwitcher: FC = () => {
