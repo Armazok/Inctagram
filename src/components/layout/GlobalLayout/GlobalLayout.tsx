@@ -10,7 +10,7 @@ export const GlobalLayout: NextPage<PropsWithChildren> = ({ children }) => {
     <LayoutWithHeader>
       <div className="flex">
         <Sidebar />
-        {children}
+        <div className="pt-9 w-full pl-6">{children}</div>
       </div>
     </LayoutWithHeader>
   )

@@ -7,8 +7,6 @@ export * from './date-picker/custom/icon-components/Calendar'
 export * from './date-picker/custom/icon-components/KeyboardArrowRight'
 export * from './date-picker/custom/icon-components/KeyboardArrowLeft'
 export * from './header/Header'
-export * from './inputs/input/Input'
-export * from './inputs/inputWithEye/InputWithEye'
 export * from './label/Label'
 export * from './preloader/Preloader'
 export * from '@/components/sidebar/Sidebar'
@@ -19,3 +17,12 @@ export * from './checkbox/Checkbox'
 export * from './skeletons/SkeletonMyPayments'
 export * from './skeletons/skeletons-ediit-settings-profile/SkeletonEditSettingsProfile'
 export * from './skeletons/SkeletonPost'
+
+//input
+export * from './inputs/input-search/IconInputSearch'
+export * from './inputs/input-search/inputSearch'
+export * from './inputs/input/Input'
+export * from './inputs/inputWithEye/InputWithEye'
+
+//placeholder
+export * from './placeholder/Placeholder'

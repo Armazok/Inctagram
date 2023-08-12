@@ -43,4 +43,5 @@ export const ru: LocaleType = {
       devices: {},
     },
   },
+  search: { searchTitle: 'Поиск', searchInput: 'Поиск', recentRequests: 'Недавние запросы' },
 }

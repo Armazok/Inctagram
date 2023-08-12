@@ -41,6 +41,11 @@ export const en = {
       devices: {},
     },
   },
+  search: {
+    searchTitle: 'Search',
+    searchInput: 'Search',
+    recentRequests: 'Recent requests',
+  },
 }
 
 export type LocaleType = typeof en
