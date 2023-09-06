@@ -1,38 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# The  Inct🍊gr🍊m  - copy of Instagram
+[![GitHub contributors](https://img.shields.io/github/contributors/Alexsandr3/Inctagram.svg)](https://github.com/Armazok/Inctagram/graphs/contributors)
 
-## Getting Started
 
-First, run the development server:
+## Description
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+**The Inct🍊gr🍊m** is a social network application built on the **NextJS** framework with a microservices architecture. 
+It aims to replicate the functionality of Instagram, offering users a platform to create posts, stories, highlights, comments, likes, follow other users, engage in chats and messages, and purchase subscriptions.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.ts`. The page auto-updates as you edit the file.
+## Features
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- [User Registration and Authorization:](#user-registration-and-authorization)
+Register and authorize users using traditional credentials with **JWT** and **Refresh Tokens**. 
+Additionally, users can sign up and log in using **OAuth2.0** with **Google** and **Github**, as well as Recaptcha Enterprise for enhanced security.
+- [Post Creation:](#post-creation)
+Users can create posts by uploading photos along with descriptions to share their content with others.
+- [Comments and Likes:](#comments-and-likes)
+Users can engage with posts by commenting and liking them.
+- [Subscriptions:](#subscriptions)
+Users can purchase subscriptions to access premium features and exclusive content.
+- [User Interactions:](#user-interactions)
+Stay connected with other users by following their profiles and staying up to date with their activities.
+- [Messaging:](#messaging)
+Initiate private conversations by creating chats and exchanging messages with other users.
+- [Stories and Highlights:](#stories-and-highlights)
+Create temporary stories consisting of photos and descriptions. Users can also highlight their favorite stories for long-term display.
+- [Story Interactions:](#story-interactions)
+Like and comment on stories, as well as like and reply to comments.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Technologies Used
+- [**Framework:**](#framework)
+  **Next JS** 
+- [**Language:**](#language)
+  **TypeScript** 
+- [**Communication With The Server:**](#communicationWithTheServer)
+  **TanStackQuery v4**
+- [**State Manager:**](#stateManager)
+  **Zustand** 
+- [**Form:**](#form)
+  **React-hook-form** 
+- [**Storybook:**](#storybook)
+  **Storybook** 
+- [**Internationalization:**](#internationalization)
+  **118n** 
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## App Screenshots
+<a href="https://ibb.co.com/0V1vQR5"><img src="https://i.ibb.co.com/sJcztd7/2023-09-06-16-24-33.png" alt="2023-09-06-16-24-33" border="0"></a>
+<a href="https://ibb.co.com/85YqS6j"><img src="https://i.ibb.co.com/NjT5HZL/2023-09-06-16-24-03.png" alt="2023-09-06-16-24-03" border="0"></a>
+<a href="https://ibb.co.com/hBxkBc5"><img src="https://i.ibb.co.com/6Hc2H8h/2023-09-06-16-24-47.png" alt="2023-09-06-16-24-47" border="0"></a>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Start the project
+To start the project, get a local copy up and running follow these simple example steps.
+- Clone the repository into your local machine
+- Use `yarn` to install dependencies.
+- Use `yarn start` to start project.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
